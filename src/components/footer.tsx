@@ -2,7 +2,7 @@ import { Link } from "react-router"
 
 export function Footer() {
   return (
-    <footer className="relative mt-32 bg-ink text-paper">
+    <footer className="relative bg-ink text-paper">
       <div className="mx-auto grid max-w-[1600px] gap-12 px-6 py-20 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:px-12">
         <div>
           <div className="flex items-baseline gap-2">
@@ -101,9 +101,19 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link className="under hover:text-sienna-bright" to="/events">
+              <Link className="under hover:text-sienna-bright" to="/catering">
                 Catering
               </Link>
+            </li>
+            <li>
+              <a
+                className="under hover:text-sienna-bright"
+                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Order Online
+              </a>
             </li>
             <li>
               <a

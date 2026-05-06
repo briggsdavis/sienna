@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { Link } from "react-router"
+import { FadeIn, useParallax } from "../components/animations"
 
 const SPACES = [
   {
@@ -16,6 +17,12 @@ const SPACES = [
       "Birthdays",
     ],
     desc: "Ground floor. Modern-industrial brick and steel, the open kitchen running through service, the bar long enough to seat your whole guest list. Customizable food stations, cocktail packages, no dress code.",
+    highlights: [
+      "Up to 105 guests, full buyout available",
+      "Twelve meatball sauces, custom stations",
+      "Full craft cocktail bar & tap program",
+      "No dress code, no ceremony required",
+    ],
     image:
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=70",
     accent: "text-sienna",
@@ -35,6 +42,12 @@ const SPACES = [
       "Corporate entertaining",
     ],
     desc: "Second floor. Hardwood floors, exposed brick, a wood-beamed ceiling and open-air garage windows that look out over Penn Avenue. Custom menus, custom beverage pairings, wine list included.",
+    highlights: [
+      "Up to 90 guests, intimate candlelit setting",
+      "Chef-built custom menus for every event",
+      "90-bottle wine list with full pairings",
+      "Wood-fired oven on site, live-fire cooking",
+    ],
     image:
       "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1600&q=70",
     accent: "text-sienna-deep",
@@ -54,47 +67,17 @@ const SPACES = [
       "Award-night socials",
     ],
     desc: "Third floor. Award-winning rooftop with a retractable glass roof, bistro lights overhead, the Pittsburgh skyline behind every photograph. Chef-crafted catering, curated beverages, a dedicated event team.",
+    highlights: [
+      "Up to 200 guests, Pittsburgh skyline backdrop",
+      "Retractable glass roof, open in any season",
+      "Dedicated events team, full-service buyout",
+      "30 rotating drafts, full catering from below",
+    ],
     image:
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
     accent: "text-gold",
     href: "/tetto",
   },
-] as const
-
-const TIER_1 = [
-  { name: "Cheesy Bread", price: "$70 / $140" },
-  { name: "Buffalo Chicken Balls", price: "$55 / $110" },
-  {
-    name: "Choice of 2 Meatballs",
-    price: "$110",
-    note: "serves 25 · ten sauces",
-  },
-  { name: "Chicken Parmesan", price: "$57.50 / $115" },
-  { name: "Shepherd's Pie", price: "$42.50 half pan" },
-  { name: "Mac & Cheese", price: "$60 / $120" },
-  { name: "Mashed Potatoes", price: "$60 / $120" },
-  { name: "Roasted Brussels Sprouts", price: "$115 / $230" },
-  { name: "Cookies, chocolate chip & oatmeal raisin", price: "$70 / $140" },
-] as const
-
-const TIER_2 = [
-  {
-    name: "Cheese & Charcuterie Display",
-    price: "$100 / $200",
-    note: "3 meats · 3 cheeses · pickles · chutney",
-  },
-  { name: "Mini Crab Cakes", price: "$90 / $180" },
-  { name: "Caprese with Focaccia", price: "$50 / $100" },
-  {
-    name: "Hand-Tossed Pizza",
-    price: "$20 / $24",
-    note: "one or two toppings · 8-cut",
-  },
-  { name: "Chicken Picatta · Veal Picatta", price: "$90 / $110" },
-  { name: "Chicken Marsala · Veal Marsala", price: "$90 / $110" },
-  { name: "Rigatoni Bolognese", price: "$80 / $160" },
-  { name: "Stuffed Shells, cheese or sausage", price: "$60 / $75" },
-  { name: "Cannolis · pick 2 flavors", price: "$30 per dozen" },
 ] as const
 
 const RECURRING = [
@@ -156,50 +139,22 @@ function StarRow({ n }: { n: number }) {
   )
 }
 
-function CateringRow({
-  name,
-  price,
-  note,
-}: {
-  name: string
-  price: string
-  note?: string
-}) {
-  return (
-    <li className="flex items-baseline gap-3 py-3">
-      <div className="flex-1">
-        <div className="font-serif text-lg text-ink">{name}</div>
-        {note && (
-          <div className="mt-0.5 font-italic text-sm text-ink-soft italic">
-            {note}
-          </div>
-        )}
-      </div>
-      <span
-        className="mx-2 hidden max-w-[35%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
-      <span className="font-serif text-base text-sienna-deep tabular-nums">
-        {price}
-      </span>
-    </li>
-  )
-}
-
 export function Events() {
   const [submitted, setSubmitted] = useState(false)
+  const heroParallax = useParallax(0.15)
 
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-[88svh] min-h-[640px] w-full overflow-hidden bg-ink">
-        <img
-          src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2400&q=80"
-          alt="A long candlelit table set for a private event at Sienna Mercato"
-          className="slow-zoom absolute inset-0 h-full w-full object-cover opacity-85"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/30 to-ink/95" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(232,160,74,0.25),transparent_60%)]" />
+      <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden bg-ink">
+        <div ref={heroParallax} className="parallax-hero-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2400&q=80"
+            alt="A long candlelit table set for a private event at Sienna Mercato"
+            className="slow-zoom h-full w-full object-cover opacity-85"
+          />
+        </div>
+        <div className="absolute inset-0 bg-black/58" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
           <Link
@@ -210,8 +165,7 @@ export function Events() {
             all of sienna
           </Link>
           <span className="hidden items-center gap-2 md:inline-flex">
-            <i className="ph ph-house-line text-sm" /> Three floors · 942 Penn
-            Ave
+            <i className="ph ph-house-line text-sm" /> Three floors · 942 Penn Ave
           </span>
           <span className="flex items-center gap-2">
             up to 200 guests
@@ -221,40 +175,35 @@ export function Events() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-6 flex items-center gap-3 font-italic text-xl text-gold italic">
-              <span className="swash" />
-              <span>three floors of possibilities</span>
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
+              <span className="swash swash-white" />
+              <span>private events</span>
             </div>
-            <h1 className="font-display text-[clamp(4rem,12vw,11rem)] leading-[0.85] tracking-tight text-cream">
-              Events
-              <br />
-              <span className="font-italic font-light text-gold italic">
-                & Catering.
-              </span>
+            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
+              Events.
             </h1>
-            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85 md:text-2xl">
-              Rehearsal dinners on the second floor. Weddings on the rooftop.
-              Corporate happy hours on the ground floor. Or a half pan of
-              meatballs delivered to your office by noon.
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
+              Three floors available for private hire: a meatball joint, a trattoria, and a rooftop with the Pittsburgh skyline. Up to 400 guests.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#inquire"
-                className="group inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
               >
-                <i className="ph ph-envelope text-lg" />
-                Inquire about a private event
-                <i className="ph ph-arrow-down text-base transition-transform group-hover:translate-y-0.5" />
+                <i className="ph ph-envelope text-sm" />
+                Inquire now
+                <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
               </a>
               <a
-                href="https://www.siennamercato.com/catering-store-v2"
+                href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
               >
-                <i className="ph ph-bag text-lg" />
-                Order catering pickup
+                <i className="ph-duotone ph-cube text-sm" />
+                Virtual tour · 360°
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
             </div>
           </div>
@@ -263,31 +212,33 @@ export function Events() {
 
       {/* THREE FLOORS, at a glance */}
       <section className="relative bg-paper py-28">
-        <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
-          <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna italic">
-                the venue
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <FadeIn>
+            <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 font-italic text-lg text-sienna italic">
+                  the venue
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                  Three rooms.
+                  <br />
+                  <span className="font-italic text-sienna italic">
+                    Three vibes.
+                  </span>{" "}
+                  Pick a floor.
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-                Three rooms.
-                <br />
-                <span className="font-italic text-sienna italic">
-                  Three vibes.
-                </span>{" "}
-                Pick a floor.
-              </h2>
+              <p className="font-italic text-lg leading-relaxed text-ink-soft italic md:text-right">
+                Each floor stands alone or stacks with the others, the whole
+                building seats nearly four hundred.
+              </p>
             </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-              Each floor stands alone or stacks with the others, the whole
-              building seats nearly four hundred.
-            </p>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {SPACES.map((s) => (
+            {SPACES.map((s, i) => (
+              <FadeIn key={s.id} delay={i * 0.1}>
               <article
-                key={s.id}
                 className="group flex flex-col overflow-hidden border border-ink/10 bg-cream"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -319,6 +270,14 @@ export function Events() {
                   <p className="mt-4 font-body text-base leading-relaxed text-ink-soft">
                     {s.desc}
                   </p>
+                  <ul className="mt-5 space-y-2">
+                    {s.highlights.map((h) => (
+                      <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
+                        <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
                   <div className="mt-6">
                     <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
                       Perfect for
@@ -336,168 +295,57 @@ export function Events() {
                   </div>
                   <Link
                     to={s.href}
-                    className="under mt-6 inline-flex items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
+                    className="under mt-auto pt-6 inline-flex items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
                   >
                     See the floor
                     <i className="ph ph-arrow-right text-sm" />
                   </Link>
                 </div>
               </article>
+              </FadeIn>
             ))}
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-none border border-ink/10 bg-cream px-6 py-4 font-serif text-xs tracking-[0.3em] text-ink-soft uppercase">
-            <span className="flex items-center gap-3">
-              <i className="ph-duotone ph-cube text-2xl text-sienna" />
-              Want to see the rooms before you book?
-            </span>
-            <a
-              href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center gap-2 text-sienna hover:text-sienna-deep"
-            >
-              Tour all three floors in 360°
-              <i className="ph ph-arrow-up-right text-sm transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* CATERING, TWO TIERS */}
-      <section className="relative bg-paper-deep py-28">
-        <div className="mx-auto max-w-[1500px] px-6 lg:px-12">
-          <div className="mb-14 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna italic">
-                catering · delivery & pickup
-              </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
-                Two kitchens,
-                <br />
-                <span className="font-italic text-sienna italic">
-                  two tiers.
-                </span>
-              </h2>
-            </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-              Every catering order ships out of one of our two kitchens, the
-              casual ground floor or the refined second. Half pans serve 12,
-              full pans serve 24. Forty-eight hours notice, please.
-            </p>
-          </div>
-
-          <div className="grid gap-12 lg:grid-cols-2">
-            <div className="border border-ink/10 bg-cream p-8 lg:p-10">
-              <div className="mb-2 flex items-baseline justify-between">
-                <span className="font-display text-3xl text-ink">Tier 1</span>
-                <span className="font-italic text-sm text-sienna italic">
-                  Emporio kitchen
-                </span>
-              </div>
-              <h3 className="font-display text-5xl leading-[0.9] text-ink">
-                Casual,
-                <br />
-                <span className="font-italic text-sienna italic">
-                  family-style.
-                </span>
-              </h3>
-              <p className="mt-4 font-italic text-base text-ink-soft italic">
-                Meatballs, mac & cheese, chicken parm, feeds a conference room
-                or a graduation party without ceremony.
-              </p>
-              <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
-                {TIER_1.map((r) => (
-                  <CateringRow key={r.name} {...r} />
-                ))}
-              </ul>
-              <div className="mt-4 font-italic text-xs text-ink-soft italic">
-                Half pan / full pan, unless noted.
-              </div>
-            </div>
-
-            <div className="border border-ink/10 bg-cream p-8 lg:p-10">
-              <div className="mb-2 flex items-baseline justify-between">
-                <span className="font-display text-3xl text-ink">Tier 2</span>
-                <span className="font-italic text-sm text-sienna-deep italic">
-                  Mezzo kitchen
-                </span>
-              </div>
-              <h3 className="font-display text-5xl leading-[0.9] text-ink">
-                Refined,
-                <br />
-                <span className="font-italic text-sienna-deep italic">
-                  plated-ready.
-                </span>
-              </h3>
-              <p className="mt-4 font-italic text-base text-ink-soft italic">
-                Charcuterie boards, picatta and marsala, hand-tossed pizzas,
-                pasta with chicken add-ons, for the dinners that need to look
-                the part.
-              </p>
-              <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
-                {TIER_2.map((r) => (
-                  <CateringRow key={r.name} {...r} />
-                ))}
-              </ul>
-              <div className="mt-4 font-italic text-xs text-ink-soft italic">
-                Half pan / full pan, unless noted.
-              </div>
-            </div>
-          </div>
-
-          {/* fees row */}
-          <div className="mt-12 grid gap-px bg-ink/15 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                k: "20%",
-                v: "service gratuity · in-house",
-                icon: "ph-receipt",
-              },
-              {
-                k: "10%",
-                v: "kitchen gratuity · catering",
-                icon: "ph-chef-hat",
-              },
-              {
-                k: "$50 / $25",
-                v: "delivery · regular / downtown",
-                icon: "ph-truck",
-              },
-              {
-                k: "$55",
-                v: "serviceware per 25 guests",
-                icon: "ph-fork-knife",
-              },
-            ].map((f) => (
-              <div key={f.v} className="flex items-center gap-5 bg-cream p-6">
-                <i className={`ph-duotone ${f.icon} text-3xl text-sienna`} />
-                <div>
-                  <div className="font-display text-2xl leading-none text-ink">
-                    {f.k}
-                  </div>
-                  <div className="mt-1 font-italic text-sm text-ink-soft italic">
-                    {f.v}
-                  </div>
+          <FadeIn delay={0.1}>
+            <div className="mt-14 grid gap-px bg-ink/10 sm:grid-cols-[1fr_auto]">
+              <div className="bg-paper px-8 py-8">
+                <div className="mb-2 font-italic text-lg text-sienna italic">
+                  ready to book a floor?
+                </div>
+                <h3 className="font-display text-3xl leading-tight text-ink">
+                  Tell us the date, the headcount,
+                  <br />
+                  <span className="font-italic text-sienna italic">and we'll handle the rest.</span>
+                </h3>
+                <p className="mt-3 max-w-lg font-italic text-base text-ink-soft italic">
+                  The events team replies within one business day with a floor recommendation, a draft menu, and a price range. No commitment required.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="#inquire"
+                    className="btn-lift group inline-flex items-center gap-2 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                  >
+                    <i className="ph ph-envelope text-sm" />
+                    Send an inquiry
+                    <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
+                  </a>
+                  <a
+                    href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-lift group inline-flex items-center gap-2 border border-ink/25 px-6 py-3 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:bg-ink/5"
+                  >
+                    <i className="ph-duotone ph-cube text-sm" />
+                    Virtual tour · 360°
+                    <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 font-italic text-sm text-ink-soft italic">
-            <span className="flex items-center gap-2">
-              <i className="ph ph-clock text-sienna" />
-              Forty-eight hours notice for catering requests.
-            </span>
-            <a
-              href="https://www.siennamercato.com/catering-store-v2"
-              target="_blank"
-              rel="noreferrer"
-              className="under text-sienna hover:text-sienna-deep"
-            >
-              Order catering online →
-            </a>
-          </div>
+              <div className="hidden items-center justify-center bg-sienna-deep/8 px-10 sm:flex">
+                <i className="ph-duotone ph-buildings text-6xl text-sienna/40" />
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -505,7 +353,8 @@ export function Events() {
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full bg-sienna opacity-30 blur-[160px]" />
         <div className="pointer-events-none absolute -bottom-40 -left-32 h-[420px] w-[420px] rounded-full bg-gold opacity-20 blur-[140px]" />
-        <div className="relative mx-auto max-w-[1500px] px-6 lg:px-12">
+        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+          <FadeIn>
           <div className="mb-12 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
             <div>
               <div className="mb-3 font-italic text-lg text-gold italic">
@@ -520,11 +369,12 @@ export function Events() {
               Walk in, sit down, ask for the running tab.
             </p>
           </div>
+          </FadeIn>
 
           <div className="grid gap-px bg-paper/15 sm:grid-cols-2">
-            {RECURRING.map((e) => (
+            {RECURRING.map((e, i) => (
+              <FadeIn key={e.title} delay={i * 0.12}>
               <article
-                key={e.title}
                 className="group bg-ink p-8 transition-colors hover:bg-sienna-deep"
               >
                 <div className="flex items-start justify-between gap-6">
@@ -549,6 +399,7 @@ export function Events() {
                   {e.when}
                 </div>
               </article>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -557,23 +408,25 @@ export function Events() {
       {/* TESTIMONIALS */}
       <section className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
-          <div className="mb-14 text-center">
-            <div className="mb-3 font-italic text-lg text-sienna italic">
-              from the guestbook
+          <FadeIn>
+            <div className="mb-14 text-center">
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                from the guestbook
+              </div>
+              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
+                We host the night.
+                <br />
+                <span className="font-italic text-sienna italic">
+                  You take the credit.
+                </span>
+              </h2>
             </div>
-            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
-              We host the night.
-              <br />
-              <span className="font-italic text-sienna italic">
-                You take the credit.
-              </span>
-            </h2>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-10 md:grid-cols-2">
-            {REVIEWS.map((r) => (
+            {REVIEWS.map((r, i) => (
+              <FadeIn key={r.by} delay={i * 0.12}>
               <figure
-                key={r.by}
                 className="relative border-l-2 border-sienna bg-cream/60 p-8 lg:p-10"
               >
                 <div className="absolute -top-3 left-8 bg-paper px-3 font-display text-5xl leading-none text-sienna">
@@ -587,6 +440,7 @@ export function Events() {
                   , {r.by} · five-star review
                 </figcaption>
               </figure>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -598,7 +452,7 @@ export function Events() {
         className="relative overflow-hidden bg-sienna py-28 text-cream"
       >
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
-        <div className="relative mx-auto grid max-w-[1500px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
+        <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
           <div>
             <div className="mb-4 font-italic text-lg text-cream/85 italic">
               inquire now
@@ -759,32 +613,28 @@ export function Events() {
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
             <div className="mb-2 font-italic text-base text-gold italic">
-              ready to climb?
+              need catering instead?
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
-              Pick a floor.
+              Two kitchens.
               <br />
-              <span className="font-italic italic">We'll handle the rest.</span>
+              <span className="font-italic italic">Delivered to you.</span>
             </h3>
           </div>
           <div className="flex flex-wrap gap-4">
             <Link
-              to="/emporio"
-              className="inline-flex items-center gap-3 border border-cream/40 px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
+              to="/catering"
+              className="btn-lift inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-bright"
             >
-              I · Emporio
+              <i className="ph ph-bag text-lg" />
+              Catering menu
             </Link>
             <Link
-              to="/mezzo"
-              className="inline-flex items-center gap-3 border border-cream/40 px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
+              to="/"
+              className="btn-lift inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
             >
-              II · Mezzo
-            </Link>
-            <Link
-              to="/tetto"
-              className="inline-flex items-center gap-3 border border-cream/40 px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
-            >
-              III · Il Tetto
+              All of Sienna
+              <i className="ph ph-arrow-up-right text-lg" />
             </Link>
           </div>
         </div>

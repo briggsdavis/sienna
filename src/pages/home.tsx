@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { FadeIn, useParallax } from "../components/animations"
 
 const FLOORS = [
   {
@@ -166,18 +167,22 @@ const MARQUEE_WORDS = [
 ]
 
 export function Home() {
+  const heroParallax = useParallax(0.15)
+
   return (
     <div className="relative">
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
-            alt="A wood-fired Italian dining room"
-            className="slow-zoom h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/20 to-ink/85" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent,rgba(26,18,11,0.35))]" />
+          <div ref={heroParallax} className="parallax-hero-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
+              alt="A wood-fired Italian dining room"
+              className="slow-zoom h-full w-full object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/65 via-ink/30 to-ink/88" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent,rgba(26,18,11,0.4))]" />
         </div>
 
         {/* top meta strip */}
@@ -196,43 +201,39 @@ export function Home() {
           </span>
         </div>
 
-        {/* center */}
-        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 lg:px-12">
-          <div className="rise max-w-4xl" style={{ animationDelay: "0.1s" }}>
-            <div className="mb-6 flex items-center gap-3 font-italic text-lg tracking-wide text-sienna-bright italic md:text-2xl">
+        {/* center — centered & chique */}
+        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-center px-6 text-center lg:px-12">
+          <div className="rise mx-auto max-w-3xl" style={{ animationDelay: "0.1s" }}>
+            <div className="mb-5 flex items-center justify-center gap-3 font-italic text-base tracking-wide text-cream/65 italic">
               <span className="swash" />
               <span>Trattoria · Pizzeria · Rooftop</span>
+              <span className="swash" />
             </div>
-            <h1 className="font-display text-[clamp(4rem,14vw,12rem)] leading-[0.85] tracking-tight text-cream">
+            <h1 className="text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream">
               Sienna
               <br />
-              <span className="font-italic font-light text-sienna-bright italic">
+              <span className="font-italic font-light text-cream/90 italic">
                 Mercato
               </span>
             </h1>
-            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85 md:text-2xl">
-              An Italian house on Penn Avenue. Three concepts, stacked one over
-              the other, meatballs at the door, pasta at the heart, the city
-              skyline over the last glass of wine.
-            </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 bg-sienna px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase"
               >
-                <i className="ph ph-fork-knife text-lg" />
+                <i className="ph ph-fork-knife text-base" />
                 Reserve a table
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 border border-cream/40 px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
               >
-                <i className="ph ph-bag text-lg" />
+                <i className="ph ph-bag text-base" />
                 Order pickup
               </a>
             </div>
@@ -241,23 +242,18 @@ export function Home() {
 
         {/* scroll cue */}
         <div className="absolute right-0 bottom-8 left-0 z-10 flex justify-center">
-          <div className="flex flex-col items-center gap-3 text-cream/70">
+          <div className="flex flex-col items-center gap-3 text-cream/60">
             <span className="font-serif text-2xs tracking-[0.4em] uppercase">
               scroll
             </span>
-            <i className="ph ph-caret-down animate-bounce text-2xl" />
+            <i className="ph ph-caret-down animate-bounce text-xl" />
           </div>
         </div>
 
-        {/* corner ornament */}
-        <div className="absolute top-32 right-8 z-10 hidden text-cream/50 lg:block">
-          <div className="origin-right rotate-90 font-serif text-xs tracking-[0.5em] whitespace-nowrap uppercase">
-            est. 2013 · pittsburgh
-          </div>
-        </div>
       </section>
 
       {/* MARQUEE */}
+      <FadeIn>
       <section className="relative overflow-hidden border-y border-ink/15 bg-paper-deep py-6">
         <div className="marquee-track flex whitespace-nowrap">
           {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
@@ -271,26 +267,40 @@ export function Home() {
           ))}
         </div>
       </section>
+      </FadeIn>
 
       {/* MANIFESTO */}
-      <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
-        <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-          The manifesto
+      <section className="grain relative overflow-hidden bg-paper py-32 text-center">
+        <div className="pointer-events-none absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2000&q=60"
+            alt=""
+            className="h-full w-full object-cover opacity-[0.045] mix-blend-multiply"
+          />
         </div>
-        <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
-          Three floors.
-          <span className="font-italic text-sienna italic"> Three rooms. </span>
-          One Italian house, built into a hundred-year-old building on Penn
-          Avenue, in the only city that calls itself a triangle.
-        </p>
-        <div className="mt-10 flex justify-center">
-          <span className="swash" />
+        <div className="relative mx-auto max-w-5xl px-6">
+          <FadeIn>
+            <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+              the italian house
+            </div>
+            <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
+              Three floors.
+              <span className="font-italic text-sienna italic"> Three rooms. </span>
+              One Italian house, built into a hundred-year-old building on Penn
+              Avenue, in the only city that calls itself a triangle.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.18}>
+            <div className="mt-10 flex justify-center">
+              <span className="swash" />
+            </div>
+            <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
+              Walk in for a meatball. Stay for the wood-fired pizza. End the night
+              on the roof with thirty taps and the lights of downtown. Your evening
+              climbs the staircase with you.
+            </p>
+          </FadeIn>
         </div>
-        <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-          Walk in for a meatball. Stay for the wood-fired pizza. End the night
-          on the roof with thirty taps and the lights of downtown. Your evening
-          climbs the staircase with you.
-        </p>
       </section>
 
       {/* THREE FLOORS */}
@@ -298,9 +308,9 @@ export function Home() {
         {FLOORS.map((floor, idx) => {
           const flipped = idx % 2 === 1
           return (
+            <FadeIn key={floor.id} delay={0.05}>
             <div
               id={floor.id}
-              key={floor.id}
               className="relative overflow-hidden"
               style={{
                 background: idx === 1 ? "var(--color-cream)" : undefined,
@@ -315,12 +325,12 @@ export function Home() {
               >
                 {/* image side */}
                 <div
-                  className={`relative h-[420px] lg:h-auto ${flipped ? "lg:order-2" : ""}`}
+                  className={`group relative h-[420px] overflow-hidden lg:h-auto ${flipped ? "lg:order-2" : ""}`}
                 >
                   <img
                     src={floor.image}
                     alt={floor.name}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${floor.color} opacity-25 mix-blend-multiply`}
@@ -380,7 +390,7 @@ export function Home() {
                   <div className="mt-10 flex flex-wrap gap-4">
                     <Link
                       to={floor.href}
-                      className="group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+                      className="btn-lift group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
                     >
                       Explore the floor
                       <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
@@ -396,11 +406,13 @@ export function Home() {
                 </div>
               </div>
             </div>
+            </FadeIn>
           )
         })}
       </section>
 
       {/* SIGNATURE DISHES */}
+      <FadeIn>
       <section className="grain relative bg-paper py-32">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -456,6 +468,7 @@ export function Home() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* TONIGHT, happy hour & rotating */}
       <section
@@ -467,22 +480,24 @@ export function Home() {
           <div className="absolute -right-20 -bottom-40 h-[380px] w-[380px] rounded-full bg-gold blur-[120px]" />
         </div>
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <div className="mb-2 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
-                <i className="ph-fill ph-flame neon-flicker text-xl" />
-                tonight
+          <FadeIn>
+            <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <div className="mb-2 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
+                  <i className="ph-fill ph-flame neon-flicker text-xl" />
+                  tonight
+                </div>
+                <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
+                  Tonight at{" "}
+                  <span className="text-sienna-bright italic">Sienna</span>
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
-                Tonight at{" "}
-                <span className="text-sienna-bright italic">Sienna</span>
-              </h2>
+              <div className="max-w-sm font-serif text-sm tracking-[0.3em] text-paper/60 uppercase">
+                Updated daily · what's pouring, what's frying, what's on the
+                chalkboard.
+              </div>
             </div>
-            <div className="max-w-sm font-serif text-sm tracking-[0.3em] text-paper/60 uppercase">
-              Updated daily · what's pouring, what's frying, what's on the
-              chalkboard.
-            </div>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-px bg-paper/15 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -492,6 +507,7 @@ export function Home() {
                 desc: "Housemade meatballs fried golden, glazed in sweet chili with a touch of heat.",
                 meta: "$14 · Emporio",
                 icon: "ph-bowl-food",
+                delay: 0,
               },
               {
                 tag: "Beer of the Month",
@@ -499,6 +515,7 @@ export function Home() {
                 desc: "Kona Brewing · Hawaiian blonde ale, light hop aroma, beach-ready.",
                 meta: "4.4% ABV · Il Tetto",
                 icon: "ph-beer-stein",
+                delay: 0.1,
               },
               {
                 tag: "Happy Hour",
@@ -506,6 +523,7 @@ export function Home() {
                 desc: "½-off drafts · ½-off well drinks · ½-off small plates · $5 espresso martini.",
                 meta: "Tue–Fri · floors I & III",
                 icon: "ph-clock-countdown",
+                delay: 0.2,
               },
               {
                 tag: "Seasonal",
@@ -513,28 +531,28 @@ export function Home() {
                 desc: "Big Springs whiskey, ginger beer, fresh lime, a whisper of cinnamon.",
                 meta: "$13 · all floors",
                 icon: "ph-wine",
+                delay: 0.3,
               },
             ].map((card) => (
-              <div
-                key={card.title}
-                className="group relative bg-ink p-8 transition-colors hover:bg-sienna-deep"
-              >
-                <i
-                  className={`ph-duotone ${card.icon} text-4xl text-sienna-bright transition-colors group-hover:text-cream`}
-                />
-                <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-paper/50 uppercase group-hover:text-paper/80">
-                  {card.tag}
+              <FadeIn key={card.title} delay={card.delay} className="h-full">
+                <div className="group relative h-full bg-ink p-8 transition-colors hover:bg-sienna-deep">
+                  <i
+                    className={`ph-duotone ${card.icon} text-4xl text-sienna-bright transition-colors group-hover:text-cream`}
+                  />
+                  <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-paper/50 uppercase group-hover:text-paper/80">
+                    {card.tag}
+                  </div>
+                  <h3 className="mt-2 font-display text-3xl leading-tight">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 font-italic text-sm leading-relaxed text-paper/70 italic group-hover:text-paper/90">
+                    {card.desc}
+                  </p>
+                  <div className="mt-6 font-serif text-xs tracking-[0.25em] text-sienna-bright uppercase group-hover:text-cream">
+                    {card.meta}
+                  </div>
                 </div>
-                <h3 className="mt-2 font-display text-3xl leading-tight">
-                  {card.title}
-                </h3>
-                <p className="mt-3 font-italic text-sm leading-relaxed text-paper/70 italic group-hover:text-paper/90">
-                  {card.desc}
-                </p>
-                <div className="mt-6 font-serif text-xs tracking-[0.25em] text-sienna-bright uppercase group-hover:text-cream">
-                  {card.meta}
-                </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -543,101 +561,101 @@ export function Home() {
       {/* THE BUILDING */}
       <section className="relative bg-paper py-32">
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
-          <div className="relative aspect-[4/5] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
-              alt="Pittsburgh skyline"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-            <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">
-              <div className="font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
-                the house
-              </div>
-              <div className="mt-1 font-display text-3xl">942 Penn Avenue</div>
-            </div>
-            {/* corner mark */}
-            <div className="absolute top-6 right-6 flex flex-col items-center gap-1 font-serif text-2xs tracking-[0.3em] text-cream/90 uppercase">
-              <i className="ph ph-cube text-2xl" />
-              <span>Tour 360°</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center">
-            <div className="mb-3 font-italic text-lg text-sienna italic">
-              the story
-            </div>
-            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
-              A century of brick,
-              <br />
-              <span className="font-italic text-sienna italic">
-                a decade of dinner.
-              </span>
-            </h2>
-            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-              The building came first, a Cultural District landmark with a
-              façade that's watched the city change three times over. We took
-              the lease in 2013 with a single idea: don't pick one Italian
-              restaurant when the floors will let you have three.
-            </p>
-            <p className="mt-6 max-w-xl font-italic text-lg leading-relaxed text-ink-soft italic">
-              The kitchens stack vertically. The dining rooms tell three
-              different stories. Walk it from the bottom up, by the time you
-              reach the roof, you've had an evening.
-            </p>
-
-            <div className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
-              {[
-                {
-                  icon: "ph-house-line",
-                  k: "Three floors",
-                  v: "Emporio · Mezzo · Il Tetto",
-                },
-                {
-                  icon: "ph-armchair",
-                  k: "Seats",
-                  v: "230 indoor + 120 rooftop",
-                },
-                {
-                  icon: "ph-wine",
-                  k: "Wine list",
-                  v: "Italian-led, 90+ bottles",
-                },
-                {
-                  icon: "ph-beer-bottle",
-                  k: "Drafts",
-                  v: "30 rotating · roof + ground",
-                },
-              ].map((s) => (
-                <div key={s.k} className="flex items-start gap-3">
-                  <i
-                    className={`ph-duotone ${s.icon} mt-0.5 text-2xl text-sienna`}
-                  />
-                  <div>
-                    <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                      {s.k}
-                    </div>
-                    <div className="font-italic text-ink italic">{s.v}</div>
-                  </div>
+          <FadeIn>
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
+                alt="Pittsburgh skyline"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+              <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">
+                <div className="font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                  the house
                 </div>
-              ))}
+                <div className="mt-1 font-display text-3xl">942 Penn Avenue</div>
+              </div>
             </div>
+          </FadeIn>
 
-            <a
-              href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
-              target="_blank"
-              rel="noreferrer"
-              className="group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
-            >
-              <i className="ph ph-cube text-base" />
-              Walk through in 360°
-              <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          </div>
+          <FadeIn delay={0.15}>
+            <div className="flex flex-col justify-center">
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                the story
+              </div>
+              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
+                A century of brick,
+                <br />
+                <span className="font-italic text-sienna italic">
+                  a decade of dinner.
+                </span>
+              </h2>
+              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
+                The building came first, a Cultural District landmark with a
+                façade that's watched the city change three times over. We took
+                the lease in 2013 with a single idea: don't pick one Italian
+                restaurant when the floors will let you have three.
+              </p>
+              <p className="mt-6 max-w-xl font-italic text-lg leading-relaxed text-ink-soft italic">
+                The kitchens stack vertically. The dining rooms tell three
+                different stories. Walk it from the bottom up, by the time you
+                reach the roof, you've had an evening.
+              </p>
+
+              <div className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
+                {[
+                  {
+                    icon: "ph-house-line",
+                    k: "Three floors",
+                    v: "Emporio · Mezzo · Il Tetto",
+                  },
+                  {
+                    icon: "ph-armchair",
+                    k: "Seats",
+                    v: "230 indoor + 120 rooftop",
+                  },
+                  {
+                    icon: "ph-wine",
+                    k: "Wine list",
+                    v: "Italian-led, 90+ bottles",
+                  },
+                  {
+                    icon: "ph-beer-bottle",
+                    k: "Drafts",
+                    v: "30 rotating · roof + ground",
+                  },
+                ].map((s) => (
+                  <div key={s.k} className="flex items-start gap-3">
+                    <i
+                      className={`ph-duotone ${s.icon} mt-0.5 text-2xl text-sienna`}
+                    />
+                    <div>
+                      <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+                        {s.k}
+                      </div>
+                      <div className="font-italic text-ink italic">{s.v}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-lift group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+              >
+                <i className="ph ph-cube text-base" />
+                See the building in 360°
+                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* RESERVE / VISIT BAND */}
+      <FadeIn>
       <section
         id="visit"
         className="relative overflow-hidden bg-sienna text-cream"
@@ -719,6 +737,7 @@ export function Home() {
           </div>
         </div>
       </section>
+      </FadeIn>
     </div>
   )
 }

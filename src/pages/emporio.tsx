@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
 
 const SAUCES = [
   { name: "Marinara", note: "the classic, slow-cooked San Marzano", heat: 0 },
@@ -246,16 +247,21 @@ function MenuRow({
 }
 
 export function Emporio() {
+  const heroParallax = useParallax(0.15)
+  const sauceListRef = useStaggerObserver<HTMLUListElement>(0.06)
+
   return (
     <div className="relative">
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
-        <img
-          src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=2400&q=80"
-          alt="A platter of meatballs in red sauce"
-          className="slow-zoom absolute inset-0 h-full w-full object-cover opacity-90"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/30 to-ink/90" />
+        <div ref={heroParallax} className="parallax-hero-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=2400&q=80"
+            alt="A platter of meatballs in red sauce"
+            className="slow-zoom h-full w-full object-cover opacity-90"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/35 to-ink/92" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(201,65,42,0.35),transparent_60%)]" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
@@ -277,73 +283,122 @@ export function Emporio() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-6 flex items-center gap-3 font-italic text-xl text-sienna-bright italic">
-              <span className="mr-1 font-display text-3xl text-cream/70">
-                I
-              </span>
-              <span className="swash" />
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream italic">
+              <span className="mr-1 font-display text-2xl text-cream/60">I</span>
+              <span className="swash swash-white" />
               <span>the meatball joint</span>
             </div>
-            <h1 className="font-display text-[clamp(5rem,18vw,16rem)] leading-[0.85] tracking-tight text-cream">
+            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
               Emporio
             </h1>
-            <p className="mt-4 font-italic text-2xl text-cream/85 italic md:text-3xl">
+            <p className="mt-3 font-italic text-lg text-cream/80 italic">
               A Meatball Joint.
             </p>
-            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85">
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
               Five meats, ten sauces, one ground floor that runs loud. Pull up a
               stool, build a bowl, ask the bartender what's on the chalkboard.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
               >
-                <i className="ph ph-bag text-lg" />
+                <i className="ph ph-bag text-sm" />
                 Order pickup
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="#menu"
-                className="group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
               >
-                <i className="ph ph-list-magnifying-glass text-lg" />
+                <i className="ph ph-list-magnifying-glass text-sm" />
                 View the menu
               </a>
             </div>
           </div>
         </div>
 
-        {/* big "I" watermark */}
-        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/10 select-none lg:right-12 lg:text-[28vw]">
-          I
+        {/* Roman numeral — mirrors nav container for exact margin alignment */}
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
+          <div className="mx-auto flex max-w-[1600px] justify-end px-6 pb-20 lg:px-12">
+            <span className="hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
+              I
+            </span>
+          </div>
         </div>
       </section>
 
-      {/* PHILOSOPHY */}
-      <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
-        <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-          philosophy
+      {/* PHILOSOPHY + LOCATION */}
+      <section className="relative overflow-hidden bg-paper py-24">
+        <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
+          <FadeIn>
+            <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
+              <img
+                src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1200&q=80"
+                alt="Emporio meatballs"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                  Floor I · Ground Floor
+                </div>
+                <div className="font-display text-3xl leading-tight text-cream">
+                  942 Penn Avenue
+                </div>
+                <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                  Pittsburgh, PA · Open Tue–Sun from 4:30 PM
+                </div>
+              </div>
+              <div className="absolute top-6 left-6 flex items-center gap-2 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.35em] text-cream uppercase">
+                Walk-in only · no reservations
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.15}>
+            <div className="flex flex-col justify-center">
+              <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+                philosophy
+              </div>
+              <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
+                The meatball is sacred.
+                <span className="font-italic text-sienna italic">
+                  {" "}
+                  Everything else{" "}
+                </span>
+                is a delivery system, bun, bowl, hoagie, fork.
+              </p>
+              <div className="mt-8 flex">
+                <span className="swash" />
+              </div>
+              <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+                We grind the meat in-house. We roll by hand at noon. The sauce
+                list runs ten deep so the same ball can be a different dinner ten
+                nights running.
+              </p>
+              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
+                {[
+                  { k: "5", v: "meatball varieties" },
+                  { k: "10", v: "house sauces" },
+                  { k: "$18", v: "build-your-own bowl" },
+                ].map((s) => (
+                  <div key={s.v}>
+                    <div className="font-display text-4xl leading-none text-sienna">
+                      {s.k}
+                    </div>
+                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                      {s.v}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeIn>
         </div>
-        <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
-          The meatball is sacred.
-          <span className="font-italic text-sienna italic">
-            {" "}
-            Everything else{" "}
-          </span>
-          is a delivery system, bun, bowl, hoagie, fork.
-        </p>
-        <div className="mt-10 flex justify-center">
-          <span className="swash" />
-        </div>
-        <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-          We grind the meat in-house. We roll by hand at noon. The sauce list
-          runs ten deep so the same ball can be a different dinner ten nights
-          running.
-        </p>
       </section>
 
       {/* THE BALLS */}
@@ -353,53 +408,59 @@ export function Emporio() {
         </div>
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <div className="mb-2 font-italic text-lg text-sienna-bright italic">
-                five kinds
+            <FadeIn>
+              <div>
+                <div className="mb-2 font-italic text-lg text-sienna-bright italic">
+                  five kinds
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9]">
+                  Five balls.
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9]">
-                Five balls.
-              </h2>
-            </div>
-            <p className="max-w-md font-italic text-lg text-paper/70 italic">
-              Pick any combination. Three to a hoagie, three to a bowl, six on a
-              plate of six over polenta.
-            </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="max-w-md font-italic text-lg text-paper/70 italic">
+                Pick any combination. Three to a hoagie, three to a bowl, six on a
+                plate of six over polenta.
+              </p>
+            </FadeIn>
           </div>
 
-          <div className="grid grid-cols-2 gap-px bg-paper/15 md:grid-cols-5">
-            {BALL_TYPES.map((b) => (
-              <div
-                key={b.name}
-                className={`group relative bg-ink p-6 text-center transition-colors hover:bg-sienna-deep ${
-                  b.featured ? "bg-sienna text-cream" : ""
-                }`}
-              >
-                {b.featured && (
-                  <span className="absolute top-2 right-2 font-serif text-2xs tracking-[0.3em] text-cream uppercase">
-                    feat.
-                  </span>
-                )}
-                <i
-                  className={`ph-duotone ${b.icon} text-5xl ${
-                    b.featured
-                      ? "text-cream"
-                      : "text-sienna-bright group-hover:text-cream"
-                  } transition-colors`}
-                />
-                <div className="mt-5 font-display text-2xl">{b.name}</div>
+          <FadeIn delay={0.18}>
+            <div className="grid grid-cols-2 gap-px bg-paper/15 md:grid-cols-5">
+              {BALL_TYPES.map((b) => (
                 <div
-                  className={`mt-1 font-italic text-sm italic ${
-                    b.featured
-                      ? "text-cream/80"
-                      : "text-paper/60 group-hover:text-cream/80"
+                  key={b.name}
+                  className={`hover-lift group relative bg-ink p-6 text-center transition-all hover:bg-sienna-deep ${
+                    b.featured ? "bg-sienna text-cream" : ""
                   }`}
                 >
-                  {b.sub}
+                  {b.featured && (
+                    <span className="absolute top-2 right-2 font-serif text-2xs tracking-[0.3em] text-cream uppercase">
+                      feat.
+                    </span>
+                  )}
+                  <i
+                    className={`ph-duotone ${b.icon} text-5xl ${
+                      b.featured
+                        ? "text-cream"
+                        : "text-sienna-bright group-hover:text-cream"
+                    } transition-colors`}
+                  />
+                  <div className="mt-5 font-display text-2xl">{b.name}</div>
+                  <div
+                    className={`mt-1 font-italic text-sm italic ${
+                      b.featured
+                        ? "text-cream/80"
+                        : "text-paper/60 group-hover:text-cream/80"
+                    }`}
+                  >
+                    {b.sub}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -407,29 +468,36 @@ export function Emporio() {
       <section className="relative bg-paper-deep py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-            <div>
-              <div className="mb-2 font-italic text-lg text-sienna italic">
-                ten sauces
+            <FadeIn>
+              <div>
+                <div className="mb-2 font-italic text-lg text-sienna italic">
+                  ten sauces
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                  Ten sauces.
+                  <br />
+                  <span className="font-italic text-sienna italic">
+                    Pick a mood.
+                  </span>
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-                Ten sauces.
-                <br />
-                <span className="font-italic text-sienna italic">
-                  Pick a mood.
-                </span>
-              </h2>
-            </div>
-            <p className="max-w-md font-italic text-lg text-ink-soft italic">
-              From the polite (marinara, pesto) to the unrepentant (Government
-              Cheese). Heat dots aren't a dare, they're a warning.
-            </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <p className="max-w-md font-italic text-lg text-ink-soft italic">
+                From the polite (marinara, pesto) to the unrepentant (Government
+                Cheese). Heat dots aren't a dare, they're a warning.
+              </p>
+            </FadeIn>
           </div>
 
-          <ul className="grid grid-cols-1 gap-px bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
+          <ul
+            ref={sauceListRef}
+            className="grid grid-cols-1 gap-px bg-ink/10 sm:grid-cols-2"
+          >
             {SAUCES.map((s, i) => (
               <li
                 key={s.name}
-                className="group relative bg-paper p-6 transition-colors hover:bg-cream"
+                className="hover-lift group relative bg-paper p-6 transition-colors hover:bg-cream"
               >
                 <div className="flex items-baseline justify-between">
                   <span className="font-serif text-2xs tracking-[0.3em] text-ink/40 uppercase">
@@ -453,17 +521,19 @@ export function Emporio() {
       <section className="relative overflow-hidden bg-sienna py-28 text-cream">
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-14 text-center">
-            <div className="mb-3 font-italic text-lg text-cream/80 italic">
-              build your bowl
+          <FadeIn>
+            <div className="mb-14 text-center">
+              <div className="mb-3 font-italic text-lg text-cream/80 italic">
+                build your bowl
+              </div>
+              <h2 className="font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.9]">
+                Build a bowl.
+              </h2>
+              <p className="mx-auto mt-6 max-w-2xl font-italic text-xl text-cream/85 italic">
+                Three steps. Eighteen dollars. Hundreds of combinations.
+              </p>
             </div>
-            <h2 className="font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.9]">
-              Build a bowl.
-            </h2>
-            <p className="mx-auto mt-6 max-w-2xl font-italic text-xl text-cream/85 italic">
-              Three steps. Eighteen dollars. Hundreds of combinations.
-            </p>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-3">
             {[
@@ -478,6 +548,7 @@ export function Emporio() {
                   "Polenta",
                 ],
                 icon: "ph-bowl-food",
+                delay: 0.08,
               },
               {
                 step: "two",
@@ -487,6 +558,7 @@ export function Emporio() {
                   "Classic · chicken · pork · veggie · or the ball of the month, mix and match",
                 ],
                 icon: "ph-circles-three",
+                delay: 0.16,
               },
               {
                 step: "three",
@@ -498,31 +570,31 @@ export function Emporio() {
                   "Add parm for $1",
                 ],
                 icon: "ph-drop",
+                delay: 0.24,
               },
             ].map((step) => (
-              <div
-                key={step.num}
-                className="relative border border-cream/20 p-8 backdrop-blur-sm"
-              >
-                <div className="flex items-baseline justify-between">
-                  <span className="font-italic text-cream/70 italic">
-                    {step.step}
-                  </span>
-                  <span className="font-display text-5xl text-cream/40">
-                    {step.num}
-                  </span>
+              <FadeIn key={step.num} delay={step.delay}>
+                <div className="relative border border-cream/20 p-8 backdrop-blur-sm">
+                  <div className="flex items-baseline justify-between">
+                    <span className="font-italic text-cream/70 italic">
+                      {step.step}
+                    </span>
+                    <span className="font-display text-5xl text-cream/40">
+                      {step.num}
+                    </span>
+                  </div>
+                  <i className={`ph-duotone ${step.icon} mt-6 block text-5xl`} />
+                  <h3 className="mt-6 font-display text-3xl">{step.title}</h3>
+                  <ul className="mt-4 space-y-2 font-italic text-cream/85 italic">
+                    {step.items.map((it) => (
+                      <li key={it} className="flex items-start gap-2">
+                        <i className="ph ph-dot-outline mt-1 text-sienna-bright" />
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <i className={`ph-duotone ${step.icon} mt-6 block text-5xl`} />
-                <h3 className="mt-6 font-display text-3xl">{step.title}</h3>
-                <ul className="mt-4 space-y-2 font-italic text-cream/85 italic">
-                  {step.items.map((it) => (
-                    <li key={it} className="flex items-start gap-2">
-                      <i className="ph ph-dot-outline mt-1 text-sienna-bright" />
-                      {it}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
@@ -531,114 +603,136 @@ export function Emporio() {
       {/* BALL OF THE MONTH */}
       <section className="relative bg-paper py-24">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="grid overflow-hidden bg-ink text-cream lg:grid-cols-[1.1fr_1fr]">
-            <div className="relative aspect-square lg:aspect-auto">
-              <img
-                src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1400&q=80"
-                alt="The Dragon Ball"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-ink/30 to-transparent" />
-              <div className="absolute top-6 left-6 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.4em] text-cream/80 uppercase">
-                ball of the month · may
+          <FadeIn>
+            <div className="grid overflow-hidden bg-ink text-cream lg:grid-cols-[1.1fr_1fr]">
+              <div className="relative aspect-square lg:aspect-auto">
+                <img
+                  src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1400&q=80"
+                  alt="The Dragon Ball"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-ink/30 to-transparent" />
+                <div className="absolute top-6 left-6 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.4em] text-cream/80 uppercase">
+                  ball of the month · may
+                </div>
+                <div className="absolute right-6 bottom-6 flex items-center gap-2 font-italic text-sm text-cream italic">
+                  <i className="ph-fill ph-flame text-sienna-bright" />
+                  <i className="ph-fill ph-flame text-sienna-bright" />
+                  medium heat
+                </div>
               </div>
-              <div className="absolute right-6 bottom-6 flex items-center gap-2 font-italic text-sm text-cream italic">
-                <i className="ph-fill ph-flame text-sienna-bright" />
-                <i className="ph-fill ph-flame text-sienna-bright" />
-                medium heat
+              <div className="flex flex-col justify-center p-10 lg:p-16">
+                <div className="mb-3 font-italic text-lg text-sienna-bright italic">
+                  ball of the month
+                </div>
+                <h2 className="font-display text-6xl leading-[0.9]">
+                  Dragon Ball
+                </h2>
+                <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-cream/85">
+                  Housemade meatballs fried golden, glazed in a glossy sweet-chili
+                  sauce with a touch of heat. Available May only, through the
+                  month, then she sleeps.
+                </p>
+                <div className="mt-10 flex items-baseline gap-6">
+                  <span className="font-display text-5xl text-sienna-bright">
+                    $14
+                  </span>
+                  <span className="font-italic text-cream/60 italic">
+                    six balls · house-made glaze · sesame, scallion
+                  </span>
+                </div>
+                <a
+                  href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-lift group mt-10 inline-flex w-fit items-center gap-3 bg-sienna-bright px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
+                >
+                  Order before she's gone
+                  <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
               </div>
             </div>
-            <div className="flex flex-col justify-center p-10 lg:p-16">
-              <div className="mb-3 font-italic text-lg text-sienna-bright italic">
-                ball of the month
-              </div>
-              <h2 className="font-display text-6xl leading-[0.9]">
-                Dragon Ball
-              </h2>
-              <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-cream/85">
-                Housemade meatballs fried golden, glazed in a glossy sweet-chili
-                sauce with a touch of heat. Available May only, through the
-                month, then she sleeps.
-              </p>
-              <div className="mt-10 flex items-baseline gap-6">
-                <span className="font-display text-5xl text-sienna-bright">
-                  $14
-                </span>
-                <span className="font-italic text-cream/60 italic">
-                  six balls · house-made glaze · sesame, scallion
-                </span>
-              </div>
-              <a
-                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
-                target="_blank"
-                rel="noreferrer"
-                className="group mt-10 inline-flex w-fit items-center gap-3 bg-sienna-bright px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
-              >
-                Order before she's gone
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </div>
-          </div>
+          </FadeIn>
         </div>
       </section>
 
       {/* THE FULL MENU */}
       <section id="menu" className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
-          <div className="mb-16 text-center">
-            <div className="mb-3 font-italic text-lg text-sienna italic">
-              the whole menu
+          <FadeIn>
+            <div className="mb-4 text-center">
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                the whole menu
+              </div>
+              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                The whole menu.
+              </h2>
             </div>
-            <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-              The whole menu.
-            </h2>
-            <div className="mt-6 flex justify-center">
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <div className="mb-12 mt-6 flex justify-center">
               <span className="swash" />
             </div>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
-            <MenuColumn title="Starters" italian="antipasti" rows={STARTERS} />
-            <MenuColumn
-              title="Soups & Salads"
-              italian="zuppe & insalate"
-              rows={SOUPS}
-            />
-            <MenuColumn title="Entrées" italian="secondi" rows={ENTREES} />
-            <MenuColumn
-              title="On the Bun"
-              italian="al panino"
-              rows={ON_THE_BUN}
-            />
-            <MenuColumn
-              title="Bowls"
-              italian="le ciotole"
-              rows={BOWLS.map((b) =>
-                b.build ? { ...b, flag: "build-your-own" } : b,
-              )}
-            />
-            <MenuColumn title="Sides" italian="contorni" rows={SIDES} />
-            <MenuColumn title="Desserts" italian="dolci" rows={DESSERTS} />
+            <FadeIn delay={0.05}>
+              <MenuColumn title="Starters" italian="antipasti" rows={STARTERS} />
+            </FadeIn>
+            <FadeIn delay={0.12}>
+              <MenuColumn
+                title="Soups & Salads"
+                italian="zuppe & insalate"
+                rows={SOUPS}
+              />
+            </FadeIn>
+            <FadeIn delay={0.19}>
+              <MenuColumn title="Entrées" italian="secondi" rows={ENTREES} />
+            </FadeIn>
+            <FadeIn delay={0.26}>
+              <MenuColumn
+                title="On the Bun"
+                italian="al panino"
+                rows={ON_THE_BUN}
+              />
+            </FadeIn>
+            <FadeIn delay={0.33}>
+              <MenuColumn
+                title="Bowls"
+                italian="le ciotole"
+                rows={BOWLS.map((b) =>
+                  b.build ? { ...b, flag: "build-your-own" } : b,
+                )}
+              />
+            </FadeIn>
+            <FadeIn delay={0.40}>
+              <MenuColumn title="Sides" italian="contorni" rows={SIDES} />
+            </FadeIn>
+            <FadeIn delay={0.47}>
+              <MenuColumn title="Desserts" italian="dolci" rows={DESSERTS} />
+            </FadeIn>
 
-            <div>
-              <div className="mb-6">
-                <div className="mb-1 font-italic text-base text-sienna italic">
-                  for the kids
+            <FadeIn delay={0.54}>
+              <div>
+                <div className="mb-6">
+                  <div className="mb-1 font-italic text-base text-sienna italic">
+                    for the kids
+                  </div>
+                  <h3 className="font-display text-4xl text-ink">Kid's Menu</h3>
+                  <p className="mt-2 font-italic text-ink-soft italic">
+                    Pick any two, $7 each.
+                  </p>
                 </div>
-                <h3 className="font-display text-4xl text-ink">Kid's Menu</h3>
-                <p className="mt-2 font-italic text-ink-soft italic">
-                  Pick any two, $7 each.
-                </p>
+                <ul className="grid grid-cols-2 gap-2 font-serif text-ink/85">
+                  {KIDS.map((k) => (
+                    <li key={k} className="flex items-center gap-2 py-1">
+                      <i className="ph ph-asterisk text-xs text-sienna" />
+                      {k}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="grid grid-cols-2 gap-2 font-serif text-ink/85">
-                {KIDS.map((k) => (
-                  <li key={k} className="flex items-center gap-2 py-1">
-                    <i className="ph ph-asterisk text-xs text-sienna" />
-                    {k}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -648,50 +742,54 @@ export function Emporio() {
         <div className="absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-40 blur-[140px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna-bright italic">
-                aperitivo · happy hour
+            <FadeIn>
+              <div>
+                <div className="mb-3 font-italic text-lg text-sienna-bright italic">
+                  aperitivo · happy hour
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
+                  Happy Hour.
+                </h2>
+                <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
+                  Tuesday through Friday, 4:30 to 6:30. Half off the things that
+                  matter, full price on the espresso martinis, except they're $5.
+                </p>
+                <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
+                  <i className="ph ph-clock text-base text-sienna-bright" />
+                  Tue to Fri · 4:30 to 6:30 PM
+                </div>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
-                Happy Hour.
-              </h2>
-              <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
-                Tuesday through Friday, 4:30 → 6:30. Half off the things that
-                matter, full price on the espresso martinis, except they're $5.
-              </p>
-              <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
-                <i className="ph ph-clock text-base text-sienna-bright" />
-                Tue → Fri · 4:30 → 6:30 PM
-              </div>
-            </div>
-            <ul className="grid gap-px bg-paper/10 sm:grid-cols-2">
-              {[
-                { k: "½ off", v: "drafts", icon: "ph-beer-stein" },
-                {
-                  k: "½ off",
-                  v: "well & call mixed drinks",
-                  icon: "ph-martini",
-                },
-                { k: "$5", v: "espresso martinis", icon: "ph-coffee" },
-                {
-                  k: "½ off",
-                  v: "small plates & starters",
-                  icon: "ph-bowl-food",
-                },
-              ].map((row) => (
-                <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
-                  <i
-                    className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`}
-                  />
-                  <div>
-                    <div className="font-display text-3xl">{row.k}</div>
-                    <div className="font-italic text-paper/75 italic">
-                      {row.v}
+            </FadeIn>
+            <FadeIn delay={0.15}>
+              <ul className="grid gap-px bg-paper/10 sm:grid-cols-2">
+                {[
+                  { k: "½ off", v: "drafts", icon: "ph-beer-stein" },
+                  {
+                    k: "½ off",
+                    v: "well & call mixed drinks",
+                    icon: "ph-martini",
+                  },
+                  { k: "$5", v: "espresso martinis", icon: "ph-coffee" },
+                  {
+                    k: "½ off",
+                    v: "small plates & starters",
+                    icon: "ph-bowl-food",
+                  },
+                ].map((row) => (
+                  <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
+                    <i
+                      className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`}
+                    />
+                    <div>
+                      <div className="font-display text-3xl">{row.k}</div>
+                      <div className="font-italic text-paper/75 italic">
+                        {row.v}
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -709,19 +807,19 @@ export function Emporio() {
               <span className="font-italic italic">Stay loud.</span>
             </h3>
           </div>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap justify-end gap-4">
             <a
               href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
               target="_blank"
               rel="noreferrer"
-              className="group inline-flex items-center gap-3 bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
+              className="btn-lift group inline-flex items-center gap-3 bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
             >
               <i className="ph ph-bag text-lg" />
               Order Pickup
             </a>
             <Link
               to="/mezzo"
-              className="group inline-flex items-center gap-3 border border-cream/60 px-7 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
+              className="btn-lift group inline-flex items-center gap-3 border border-cream/60 px-7 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
             >
               Climb to Mezzo
               <i className="ph ph-arrow-up text-lg" />
@@ -742,6 +840,7 @@ function MenuColumn({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
+  const listRef = useStaggerObserver<HTMLUListElement>(0.07)
   return (
     <div>
       <div className="mb-2">
@@ -750,7 +849,10 @@ function MenuColumn({
         </div>
         <h3 className="font-display text-4xl text-ink">{title}</h3>
       </div>
-      <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
+      <ul
+        ref={listRef}
+        className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10"
+      >
         {rows.map((r) => (
           <MenuRow
             key={r.name}
