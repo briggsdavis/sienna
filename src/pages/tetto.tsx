@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { FadeIn, useParallax } from "../components/animations"
+import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
 
 const FEATURED_DRAFT = {
   name: "Big Wave",
@@ -217,6 +217,8 @@ function FoodRow({
 
 export function Tetto() {
   const heroParallax = useParallax(0.15)
+  const draftListRef = useStaggerObserver<HTMLUListElement>(0.05)
+  const foodListRef = useStaggerObserver<HTMLUListElement>(0.07)
 
   return (
     <div className="relative">
@@ -229,9 +231,7 @@ export function Tetto() {
             className="slow-zoom h-full w-full object-cover"
           />
         </div>
-        {/* sunset gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f20] via-[#7a2510]/72 to-ink" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_85%_25%,rgba(232,160,74,0.4),transparent_55%)]" />
+        <div className="absolute inset-0 bg-black/55" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase lg:px-12">
           <span className="flex items-center gap-2">
@@ -249,11 +249,11 @@ export function Tetto() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-24 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-gold italic">
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream italic">
               <span className="mr-1 font-display text-2xl text-cream/60">
                 III
               </span>
-              <span className="swash" />
+              <span className="swash swash-white" />
               <span>the rooftop beer garden</span>
             </div>
             <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
@@ -271,7 +271,7 @@ export function Tetto() {
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="#chalkboard"
-                className="btn-lift group inline-flex items-center gap-2 bg-gold px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
               >
                 <i className="ph ph-beer-stein text-sm" />
                 Tonight on tap
@@ -292,15 +292,18 @@ export function Tetto() {
             </div>
           </div>
 
-          {/* Roman numeral — right-6 lg:right-12 aligns right edge with nav margin */}
-          <div className="pointer-events-none absolute right-6 bottom-24 hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:right-12 lg:block">
-            III
+          {/* Roman numeral — mirrors nav container for exact margin alignment */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
+            <div className="mx-auto flex max-w-[1600px] justify-end px-6 pb-24 lg:px-12">
+              <span className="hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
+                III
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* MANIFESTO + WEATHER */}
-      <FadeIn>
       <section className="relative overflow-hidden bg-paper py-28">
         <div className="pointer-events-none absolute inset-0">
           <img
@@ -310,93 +313,99 @@ export function Tetto() {
           />
         </div>
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:px-12">
-          <div>
-            <div className="mb-4 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-              the roof
+          <FadeIn>
+            <div>
+              <div className="mb-4 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+                the roof
+              </div>
+              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                Climb three flights.
+                <br />
+                <span className="font-italic text-sienna italic">
+                  The view does the rest.
+                </span>
+              </h2>
+              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
+                No reservations, no covers, no dress code. Find a stool at the
+                bar, find a corner at a long table, find a friend you didn't know
+                you'd run into. The retractable roof opens by 6 if the forecast
+                says yes, and stays open until the wind says otherwise.
+              </p>
+              <p className="mt-6 font-italic text-lg leading-relaxed text-ink-soft italic">
+                Whole pies from the wood oven downstairs ride the dumbwaiter up.
+                The chalkboard rotates. The bartender remembers your last pour.
+              </p>
             </div>
-            <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-              Climb three flights.
-              <br />
-              <span className="font-italic text-sienna italic">
-                The view does the rest.
-              </span>
-            </h2>
-            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-              No reservations, no covers, no dress code. Find a stool at the
-              bar, find a corner at a long table, find a friend you didn't know
-              you'd run into. The retractable roof opens by 6 if the forecast
-              says yes, and stays open until the wind says otherwise.
-            </p>
-            <p className="mt-6 font-italic text-lg leading-relaxed text-ink-soft italic">
-              Whole pies from the wood oven downstairs ride the dumbwaiter up.
-              The chalkboard rotates. The bartender remembers your last pour.
-            </p>
-          </div>
+          </FadeIn>
 
-          <ul className="grid grid-cols-2 gap-6 self-start">
-            {[
-              { k: "30", v: "rotating drafts", icon: "ph-beer-stein" },
-              { k: "120", v: "rooftop seats", icon: "ph-armchair" },
-              { k: "0", v: "reservations needed", icon: "ph-stairs" },
-              { k: "weather", v: "permitting", icon: "ph-cloud-sun" },
-            ].map((s) => (
-              <li
-                key={s.v}
-                className="flex flex-col items-start gap-3 border border-ink/10 bg-cream p-6"
-              >
-                <i className={`ph-duotone ${s.icon} text-3xl text-sienna`} />
-                <div className="font-display text-4xl leading-none text-ink">
-                  {s.k}
-                </div>
-                <div className="font-italic text-sm text-ink-soft italic">
-                  {s.v}
-                </div>
-              </li>
-            ))}
-          </ul>
+          <FadeIn delay={0.12}>
+            <ul className="grid grid-cols-2 gap-6 self-start">
+              {[
+                { k: "30", v: "rotating drafts", icon: "ph-beer-stein" },
+                { k: "120", v: "rooftop seats", icon: "ph-armchair" },
+                { k: "0", v: "reservations needed", icon: "ph-stairs" },
+                { k: "weather", v: "permitting", icon: "ph-cloud-sun" },
+              ].map((s) => (
+                <li
+                  key={s.v}
+                  className="flex flex-col items-start gap-3 border border-ink/10 bg-cream p-6"
+                >
+                  <i className={`ph-duotone ${s.icon} text-3xl text-sienna`} />
+                  <div className="font-display text-4xl leading-none text-ink">
+                    {s.k}
+                  </div>
+                  <div className="font-italic text-sm text-ink-soft italic">
+                    {s.v}
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
         </div>
       </section>
-      </FadeIn>
 
       {/* THE CHALKBOARD */}
-      <FadeIn>
       <section id="chalkboard" className="relative bg-paper py-28">
         <div className="relative mx-auto max-w-[1100px] px-6 lg:px-12">
-          <div className="mb-14 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
-            <div>
-              <div className="mb-3 flex items-center gap-3 font-italic text-lg text-sienna italic">
-                <i className="ph ph-chalkboard-simple text-2xl" />
-                tonight on tap
+          <FadeIn>
+            <div className="mb-14 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
+              <div>
+                <div className="mb-3 flex items-center gap-3 font-italic text-lg text-sienna italic">
+                  <i className="ph ph-chalkboard-simple text-2xl" />
+                  tonight on tap
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                  The chalkboard.
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
-                The chalkboard.
-              </h2>
+              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                Thirty rotating lines. Local first, then everywhere else. We
+                update Untappd every morning, but the bartender's the source of
+                truth.
+              </p>
             </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-              Thirty rotating lines. Local first, then everywhere else. We
-              update Untappd every morning, but the bartender's the source of
-              truth.
-            </p>
-          </div>
+          </FadeIn>
 
           {/* the chalkboard "hangs" on the wall, wood frame, dark inset */}
-          <div className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
-            <ul>
-              {DRAFTS.map((d, i) => (
-                <DraftCard
-                  key={d.name}
-                  number={String(i + 1).padStart(2, "0")}
-                  {...d}
-                />
-              ))}
-              <li className="px-6 py-6 text-center sm:px-8">
-                <span className="font-italic text-paper/55 italic">
-                  + 17 more on rotation ,{" "}
-                  <span className="text-gold">ask the bartender</span>
-                </span>
-              </li>
-            </ul>
-          </div>
+          <FadeIn delay={0.08}>
+            <div className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
+              <ul ref={draftListRef}>
+                {DRAFTS.map((d, i) => (
+                  <DraftCard
+                    key={d.name}
+                    number={String(i + 1).padStart(2, "0")}
+                    {...d}
+                  />
+                ))}
+                <li className="px-6 py-6 text-center sm:px-8">
+                  <span className="font-italic text-paper/55 italic">
+                    + 17 more on rotation ,{" "}
+                    <span className="text-gold">ask the bartender</span>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </FadeIn>
 
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
             <span>Powered by Untappd · ratings on request</span>
@@ -407,173 +416,178 @@ export function Tetto() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* BEER OF THE MONTH FEATURE */}
-      <FadeIn>
       <section className="relative bg-ink py-24 text-paper">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <div className="mb-2 font-italic text-base text-gold italic">
-                beer of the month · may
+          <FadeIn>
+            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <div className="mb-2 font-italic text-base text-gold italic">
+                  beer of the month · may
+                </div>
+                <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
+                  {FEATURED_DRAFT.name}
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
-                {FEATURED_DRAFT.name}
-              </h2>
+              <p className="font-italic text-base text-paper/65 italic">
+                {FEATURED_DRAFT.brewery} · {FEATURED_DRAFT.style} · {FEATURED_DRAFT.abv} ABV
+              </p>
             </div>
-            <p className="font-italic text-base text-paper/65 italic">
-              {FEATURED_DRAFT.brewery} · {FEATURED_DRAFT.style} · {FEATURED_DRAFT.abv} ABV
-            </p>
-          </div>
-          <div className="group relative aspect-[21/9] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=2400&q=80"
-              alt="A pint of Big Wave blonde ale at sunset"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
-          </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <div className="group relative aspect-[21/9] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=2400&q=80"
+                alt="A pint of Big Wave blonde ale at sunset"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
+            </div>
+          </FadeIn>
         </div>
       </section>
-      </FadeIn>
 
       {/* FOOD MENU */}
-      <FadeIn>
       <section id="menu" className="relative bg-paper-deep py-28">
         <div className="mx-auto max-w-[1100px] px-6 lg:px-12">
-          <div className="mb-14 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna italic">
-                eat on the roof
+          <FadeIn>
+            <div className="mb-14 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
+              <div>
+                <div className="mb-3 font-italic text-lg text-sienna italic">
+                  eat on the roof
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                  Whole pies,
+                  <br />
+                  <span className="font-italic text-sienna italic">
+                    pulled hot.
+                  </span>
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
-                Whole pies,
-                <br />
-                <span className="font-italic text-sienna italic">
-                  pulled hot.
-                </span>
-              </h2>
+              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                The rooftop kitchen runs a tight bar menu, whole pies from the
+                wood oven below, the meatball hoagie, fries that have business
+                being on a roof.
+              </p>
             </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-              The rooftop kitchen runs a tight bar menu, whole pies from the
-              wood oven below, the meatball hoagie, fries that have business
-              being on a roof.
-            </p>
-          </div>
+          </FadeIn>
 
-          <ul className="divide-y divide-ink/10 border-t border-b border-ink/10">
+          <ul ref={foodListRef} className="divide-y divide-ink/10 border-t border-b border-ink/10">
             {FOOD.map((f) => (
               <FoodRow key={f.name} {...f} />
             ))}
           </ul>
         </div>
       </section>
-      </FadeIn>
 
       {/* HAPPY HOUR */}
-      <FadeIn>
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-30 blur-[140px]" />
         <div className="pointer-events-none absolute -bottom-20 -left-20 h-[380px] w-[380px] rounded-full bg-gold opacity-20 blur-[130px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
-            <div>
-              <div className="mb-3 font-italic text-lg text-gold italic">
-                aperitivo · happy hour
+            <FadeIn>
+              <div>
+                <div className="mb-3 font-italic text-lg text-gold italic">
+                  aperitivo · happy hour
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
+                  Sunset hour.
+                </h2>
+                <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
+                  Tuesday through Friday, 4:30 → 6:30, golden hour, half-price
+                  everything that matters. Best seats on the roof go fast.
+                </p>
+                <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
+                  <i className="ph ph-clock text-base text-gold" />
+                  Tue → Fri · 4:30 → 6:30 PM
+                </div>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
-                Sunset hour.
-              </h2>
-              <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
-                Tuesday through Friday, 4:30 → 6:30, golden hour, half-price
-                everything that matters. Best seats on the roof go fast.
-              </p>
-              <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
-                <i className="ph ph-clock text-base text-gold" />
-                Tue → Fri · 4:30 → 6:30 PM
-              </div>
-            </div>
-            <ul className="grid gap-px bg-paper/10 sm:grid-cols-2">
-              {[
-                { k: "½ off", v: "drafts", icon: "ph-beer-stein" },
-                { k: "½ off", v: "well & call mixed", icon: "ph-martini" },
-                { k: "$5", v: "espresso martinis", icon: "ph-coffee" },
-                { k: "½ off", v: "small plates", icon: "ph-bowl-food" },
-              ].map((row) => (
-                <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
-                  <i className={`ph-duotone ${row.icon} text-4xl text-gold`} />
-                  <div>
-                    <div className="font-display text-3xl">{row.k}</div>
-                    <div className="font-italic text-paper/75 italic">
-                      {row.v}
+            </FadeIn>
+            <FadeIn delay={0.12}>
+              <ul className="grid gap-px bg-paper/10 sm:grid-cols-2">
+                {[
+                  { k: "½ off", v: "drafts", icon: "ph-beer-stein" },
+                  { k: "½ off", v: "well & call mixed", icon: "ph-martini" },
+                  { k: "$5", v: "espresso martinis", icon: "ph-coffee" },
+                  { k: "½ off", v: "small plates", icon: "ph-bowl-food" },
+                ].map((row) => (
+                  <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
+                    <i className={`ph-duotone ${row.icon} text-4xl text-gold`} />
+                    <div>
+                      <div className="font-display text-3xl">{row.k}</div>
+                      <div className="font-italic text-paper/75 italic">
+                        {row.v}
+                      </div>
                     </div>
-                  </div>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </FadeIn>
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* WEATHER & HOURS */}
-      <FadeIn>
       <section className="relative bg-paper py-24">
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
-          <div>
-            <div className="mb-3 font-italic text-lg text-sienna italic">
-              il tempo · the weather
+          <FadeIn>
+            <div>
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                il tempo · the weather
+              </div>
+              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
+                We open the roof
+                <br />
+                <span className="font-italic text-sienna italic">
+                  when the sky lets us.
+                </span>
+              </h2>
+              <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
+                The retractable roof closes for rain, high wind, or surprise snow.
+                When it's closed we keep the heaters on, but the view goes away.
+                Call the host stand before climbing if you're chasing a specific
+                view.
+              </p>
             </div>
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
-              We open the roof
-              <br />
-              <span className="font-italic text-sienna italic">
-                when the sky lets us.
-              </span>
-            </h2>
-            <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-              The retractable roof closes for rain, high wind, or surprise snow.
-              When it's closed we keep the heaters on, but the view goes away.
-              Call the host stand before climbing if you're chasing a specific
-              view.
-            </p>
-          </div>
+          </FadeIn>
 
-          <div>
-            <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
-              Hours · Floor III
+          <FadeIn delay={0.12}>
+            <div>
+              <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
+                Hours · Floor III
+              </div>
+              <ul className="divide-y divide-ink/10 border-t border-b border-ink/10">
+                {[
+                  { d: "Thu", h: "4:00 PM, late" },
+                  { d: "Fri", h: "4:00 PM, late" },
+                  { d: "Sat", h: "2:00 PM, late" },
+                  { d: "Sun", h: "2:00 → 9:00 PM" },
+                  { d: "Mon to Wed", h: "Closed" },
+                ].map((row) => (
+                  <li key={row.d} className="flex items-baseline gap-5 py-4">
+                    <span className="w-24 font-serif text-sm tracking-[0.2em] text-ink uppercase">
+                      {row.d}
+                    </span>
+                    <span
+                      className="mx-2 hidden flex-1 translate-y-[-4px] border-b border-dotted border-ink/25 sm:block"
+                      aria-hidden
+                    />
+                    <span className="font-italic text-sm text-ink-soft italic tabular-nums">
+                      {row.h}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-6 font-italic text-sm leading-relaxed text-ink-soft italic">
+                "Late" is weather, crowd, and bartender's discretion. The
+                chalkboard tells you when last call is.
+              </p>
             </div>
-            <ul className="divide-y divide-ink/10 border-t border-b border-ink/10">
-              {[
-                { d: "Thu", h: "4:00 PM, late" },
-                { d: "Fri", h: "4:00 PM, late" },
-                { d: "Sat", h: "2:00 PM, late" },
-                { d: "Sun", h: "2:00 → 9:00 PM" },
-                { d: "Mon to Wed", h: "Closed" },
-              ].map((row) => (
-                <li key={row.d} className="flex items-baseline gap-5 py-4">
-                  <span className="w-24 font-serif text-sm tracking-[0.2em] text-ink uppercase">
-                    {row.d}
-                  </span>
-                  <span
-                    className="mx-2 hidden flex-1 translate-y-[-4px] border-b border-dotted border-ink/25 sm:block"
-                    aria-hidden
-                  />
-                  <span className="font-italic text-sm text-ink-soft italic tabular-nums">
-                    {row.h}
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 font-italic text-sm leading-relaxed text-ink-soft italic">
-              "Late" is weather, crowd, and bartender's discretion. The
-              chalkboard tells you when last call is.
-            </p>
-          </div>
+          </FadeIn>
         </div>
       </section>
-      </FadeIn>
 
       {/* CTA STRIP, descend */}
       <section className="relative bg-ink text-cream">

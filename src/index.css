@@ -133,6 +133,10 @@ body {
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 14'><path d='M0 7 Q 16 0, 32 7 T 64 7' fill='none' stroke='%23a4341f' stroke-width='1.5'/><circle cx='32' cy='7' r='1.6' fill='%23a4341f'/></svg>")
     no-repeat center / contain;
 }
+.swash-white {
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 14'><path d='M0 7 Q 16 0, 32 7 T 64 7' fill='none' stroke='%23ffffff' stroke-width='1.5'/><circle cx='32' cy='7' r='1.6' fill='%23ffffff'/></svg>")
+    no-repeat center / contain;
+}
 
 /* slow zoom for hero image */
 @keyframes slowzoom {

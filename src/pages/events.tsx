@@ -202,8 +202,7 @@ export function Events() {
             className="slow-zoom h-full w-full object-cover opacity-85"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/78 via-ink/39 to-ink" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(232,160,74,0.2),transparent_60%)]" />
+        <div className="absolute inset-0 bg-black/58" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
           <Link
@@ -225,7 +224,7 @@ export function Events() {
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
             <div className="mb-4 flex items-center gap-3 font-italic text-base text-gold italic">
-              <span className="swash" />
+              <span className="swash swash-white" />
               <span>private events & catering</span>
             </div>
             <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
@@ -236,7 +235,7 @@ export function Events() {
               </span>
             </h1>
             <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Three floors available for private hire — a meatball joint, a trattoria,
+              Three floors available for private hire: a meatball joint, a trattoria,
               and a rooftop. Or catering delivered anywhere in the city.
             </p>
 
@@ -264,33 +263,34 @@ export function Events() {
       </section>
 
       {/* THREE FLOORS, at a glance */}
-      <FadeIn>
       <section className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna italic">
-                the venue
+          <FadeIn>
+            <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-3 font-italic text-lg text-sienna italic">
+                  the venue
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                  Three rooms.
+                  <br />
+                  <span className="font-italic text-sienna italic">
+                    Three vibes.
+                  </span>{" "}
+                  Pick a floor.
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-                Three rooms.
-                <br />
-                <span className="font-italic text-sienna italic">
-                  Three vibes.
-                </span>{" "}
-                Pick a floor.
-              </h2>
+              <p className="font-italic text-lg leading-relaxed text-ink-soft italic md:text-right">
+                Each floor stands alone or stacks with the others, the whole
+                building seats nearly four hundred.
+              </p>
             </div>
-            <p className="font-italic text-lg leading-relaxed text-ink-soft italic md:text-right">
-              Each floor stands alone or stacks with the others, the whole
-              building seats nearly four hundred.
-            </p>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {SPACES.map((s) => (
+            {SPACES.map((s, i) => (
+              <FadeIn key={s.id} delay={i * 0.1}>
               <article
-                key={s.id}
                 className="group flex flex-col overflow-hidden border border-ink/10 bg-cream"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
@@ -346,6 +346,7 @@ export function Events() {
                   </Link>
                 </div>
               </article>
+              </FadeIn>
             ))}
           </div>
 
@@ -366,34 +367,34 @@ export function Events() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* CATERING, TWO TIERS */}
-      <FadeIn>
       <section className="relative bg-paper-deep py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-14 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna italic">
-                catering · delivery & pickup
+          <FadeIn>
+            <div className="mb-14 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
+              <div>
+                <div className="mb-3 font-italic text-lg text-sienna italic">
+                  catering · delivery & pickup
+                </div>
+                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                  Two kitchens,
+                  <br />
+                  <span className="font-italic text-sienna italic">
+                    two tiers.
+                  </span>
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
-                Two kitchens,
-                <br />
-                <span className="font-italic text-sienna italic">
-                  two tiers.
-                </span>
-              </h2>
+              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                Every catering order ships out of one of our two kitchens, the
+                casual ground floor or the refined second. Half pans serve 12,
+                full pans serve 24. Forty-eight hours notice, please.
+              </p>
             </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-              Every catering order ships out of one of our two kitchens, the
-              casual ground floor or the refined second. Half pans serve 12,
-              full pans serve 24. Forty-eight hours notice, please.
-            </p>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-12 lg:grid-cols-2">
-            <div className="border border-ink/10 bg-cream p-8 lg:p-10">
+            <FadeIn delay={0.08}><div className="border border-ink/10 bg-cream p-8 lg:p-10">
               <div className="mb-2 flex items-baseline justify-between">
                 <span className="font-display text-3xl text-ink">Tier 1</span>
                 <span className="font-italic text-sm text-sienna italic">
@@ -419,9 +420,9 @@ export function Events() {
               <div className="mt-4 font-italic text-xs text-ink-soft italic">
                 Half pan / full pan, unless noted.
               </div>
-            </div>
+            </div></FadeIn>
 
-            <div className="border border-ink/10 bg-cream p-8 lg:p-10">
+            <FadeIn delay={0.16}><div className="border border-ink/10 bg-cream p-8 lg:p-10">
               <div className="mb-2 flex items-baseline justify-between">
                 <span className="font-display text-3xl text-ink">Tier 2</span>
                 <span className="font-italic text-sm text-sienna-deep italic">
@@ -448,7 +449,7 @@ export function Events() {
               <div className="mt-4 font-italic text-xs text-ink-soft italic">
                 Half pan / full pan, unless noted.
               </div>
-            </div>
+            </div></FadeIn>
           </div>
 
           {/* fees row */}
@@ -505,14 +506,13 @@ export function Events() {
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* RECURRING NIGHTS */}
-      <FadeIn>
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full bg-sienna opacity-30 blur-[160px]" />
         <div className="pointer-events-none absolute -bottom-40 -left-32 h-[420px] w-[420px] rounded-full bg-gold opacity-20 blur-[140px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+          <FadeIn>
           <div className="mb-12 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
             <div>
               <div className="mb-3 font-italic text-lg text-gold italic">
@@ -527,11 +527,12 @@ export function Events() {
               Walk in, sit down, ask for the running tab.
             </p>
           </div>
+          </FadeIn>
 
           <div className="grid gap-px bg-paper/15 sm:grid-cols-2">
-            {RECURRING.map((e) => (
+            {RECURRING.map((e, i) => (
+              <FadeIn key={e.title} delay={i * 0.12}>
               <article
-                key={e.title}
                 className="group bg-ink p-8 transition-colors hover:bg-sienna-deep"
               >
                 <div className="flex items-start justify-between gap-6">
@@ -556,33 +557,34 @@ export function Events() {
                   {e.when}
                 </div>
               </article>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* TESTIMONIALS */}
-      <FadeIn>
       <section className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
-          <div className="mb-14 text-center">
-            <div className="mb-3 font-italic text-lg text-sienna italic">
-              from the guestbook
+          <FadeIn>
+            <div className="mb-14 text-center">
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                from the guestbook
+              </div>
+              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
+                We host the night.
+                <br />
+                <span className="font-italic text-sienna italic">
+                  You take the credit.
+                </span>
+              </h2>
             </div>
-            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
-              We host the night.
-              <br />
-              <span className="font-italic text-sienna italic">
-                You take the credit.
-              </span>
-            </h2>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-10 md:grid-cols-2">
-            {REVIEWS.map((r) => (
+            {REVIEWS.map((r, i) => (
+              <FadeIn key={r.by} delay={i * 0.12}>
               <figure
-                key={r.by}
                 className="relative border-l-2 border-sienna bg-cream/60 p-8 lg:p-10"
               >
                 <div className="absolute -top-3 left-8 bg-paper px-3 font-display text-5xl leading-none text-sienna">
@@ -596,11 +598,11 @@ export function Events() {
                   , {r.by} · five-star review
                 </figcaption>
               </figure>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* INQUIRY FORM + CONTACTS */}
       <section

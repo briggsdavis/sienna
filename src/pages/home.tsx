@@ -217,7 +217,7 @@ export function Home() {
               </span>
             </h1>
             <p className="mx-auto mt-7 max-w-xl font-body text-lg leading-relaxed text-cream/80">
-              An Italian house on Penn Avenue. Three concepts, one staircase —
+              An Italian house on Penn Avenue. Three concepts, one staircase:
               meatballs at the door, pasta at the heart, the city skyline over
               the last glass of wine.
             </p>
