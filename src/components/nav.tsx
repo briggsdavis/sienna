@@ -197,7 +197,7 @@ export function Nav() {
 
       {/* Full-screen menu overlay */}
       <div
-        className={`fixed inset-0 z-40 flex flex-col bg-paper transition-all duration-500 ${
+        className={`fixed inset-0 z-[60] flex flex-col bg-paper transition-all duration-500 ${
           menuOpen
             ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"

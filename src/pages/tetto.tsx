@@ -230,7 +230,7 @@ export function Tetto() {
           />
         </div>
         {/* sunset gradient */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f20]/82 via-[#7a2510]/55 to-ink/96" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a0f20] via-[#7a2510]/72 to-ink" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_85%_25%,rgba(232,160,74,0.4),transparent_55%)]" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase lg:px-12">
@@ -248,55 +248,53 @@ export function Tetto() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-24 lg:px-12">
-          <div className="flex items-end justify-between">
-            <div className="rise" style={{ animationDelay: "0.05s" }}>
-              <div className="mb-4 flex items-center gap-3 font-italic text-base text-gold italic">
-                <span className="mr-1 font-display text-2xl text-cream/60">
-                  III
-                </span>
-                <span className="swash" />
-                <span>the rooftop beer garden</span>
-              </div>
-              <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-                Il Tetto
-              </h1>
-              <p className="mt-3 font-italic text-lg text-cream/80 italic">
-                Rooftop Beer Garden.
-              </p>
-              <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-                Thirty drafts on a chalkboard. A retractable roof that opens when
-                the sky agrees. The skyline of a triangular city, lit from below,
-                over your last pint of the night.
-              </p>
+          <div className="rise" style={{ animationDelay: "0.05s" }}>
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-gold italic">
+              <span className="mr-1 font-display text-2xl text-cream/60">
+                III
+              </span>
+              <span className="swash" />
+              <span>the rooftop beer garden</span>
+            </div>
+            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
+              Il Tetto
+            </h1>
+            <p className="mt-3 font-italic text-lg text-cream/80 italic">
+              Rooftop Beer Garden.
+            </p>
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
+              Thirty drafts on a chalkboard. A retractable roof that opens when
+              the sky agrees. The skyline of a triangular city, lit from below,
+              over your last pint of the night.
+            </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a
-                  href="#chalkboard"
-                  className="btn-lift group inline-flex items-center gap-2 bg-gold px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-                >
-                  <i className="ph ph-beer-stein text-sm" />
-                  Tonight on tap
-                  <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
-                </a>
-                <a
-                  href="#menu"
-                  className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-                >
-                  <i className="ph ph-pizza text-sm" />
-                  Eat on the roof
-                </a>
-              </div>
-
-              <div className="mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase">
-                <i className="ph ph-stairs text-sm text-gold" />
-                No reservations · climb the stairs
-              </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="#chalkboard"
+                className="btn-lift group inline-flex items-center gap-2 bg-gold px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+              >
+                <i className="ph ph-beer-stein text-sm" />
+                Tonight on tap
+                <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
+              </a>
+              <a
+                href="#menu"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+              >
+                <i className="ph ph-pizza text-sm" />
+                Eat on the roof
+              </a>
             </div>
 
-            {/* Roman numeral watermark — bottom aligns with content, right aligns with nav margin */}
-            <div className="pointer-events-none hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
-              III
+            <div className="mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase">
+              <i className="ph ph-stairs text-sm text-gold" />
+              No reservations · climb the stairs
             </div>
+          </div>
+
+          {/* Roman numeral — right-6 lg:right-12 aligns right edge with nav margin */}
+          <div className="pointer-events-none absolute right-6 bottom-24 hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:right-12 lg:block">
+            III
           </div>
         </div>
       </section>

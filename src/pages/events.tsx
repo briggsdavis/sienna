@@ -202,7 +202,7 @@ export function Events() {
             className="slow-zoom h-full w-full object-cover opacity-85"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/30 to-ink/95" />
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/78 via-ink/39 to-ink" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(232,160,74,0.2),transparent_60%)]" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
@@ -281,7 +281,7 @@ export function Events() {
                 Pick a floor.
               </h2>
             </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+            <p className="font-italic text-lg leading-relaxed text-ink-soft italic md:text-right">
               Each floor stands alone or stacks with the others, the whole
               building seats nearly four hundred.
             </p>

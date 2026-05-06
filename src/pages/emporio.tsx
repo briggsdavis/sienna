@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { FadeIn, useParallax } from "../components/animations"
+import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
 
 const SAUCES = [
   { name: "Marinara", note: "the classic, slow-cooked San Marzano", heat: 0 },
@@ -281,51 +281,49 @@ export function Emporio() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="flex items-end justify-between">
-            <div className="rise" style={{ animationDelay: "0.05s" }}>
-              <div className="mb-4 flex items-center gap-3 font-italic text-base text-sienna-bright italic">
-                <span className="mr-1 font-display text-2xl text-cream/60">
-                  I
-                </span>
-                <span className="swash" />
-                <span>the meatball joint</span>
-              </div>
-              <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-                Emporio
-              </h1>
-              <p className="mt-3 font-italic text-lg text-cream/80 italic">
-                A Meatball Joint.
-              </p>
-              <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-                Five meats, ten sauces, one ground floor that runs loud. Pull up a
-                stool, build a bowl, ask the bartender what's on the chalkboard.
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <a
-                  href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase"
-                >
-                  <i className="ph ph-bag text-sm" />
-                  Order pickup
-                  <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-                <a
-                  href="#menu"
-                  className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-                >
-                  <i className="ph ph-list-magnifying-glass text-sm" />
-                  View the menu
-                </a>
-              </div>
+          <div className="rise" style={{ animationDelay: "0.05s" }}>
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream italic">
+              <span className="mr-1 font-display text-2xl text-cream/60">
+                I
+              </span>
+              <span className="swash" />
+              <span>the meatball joint</span>
             </div>
+            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
+              Emporio
+            </h1>
+            <p className="mt-3 font-italic text-lg text-cream/80 italic">
+              A Meatball Joint.
+            </p>
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
+              Five meats, ten sauces, one ground floor that runs loud. Pull up a
+              stool, build a bowl, ask the bartender what's on the chalkboard.
+            </p>
 
-            {/* Roman numeral watermark — bottom aligns with button row, right aligns with nav margin */}
-            <div className="pointer-events-none hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
-              I
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase"
+              >
+                <i className="ph ph-bag text-sm" />
+                Order pickup
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href="#menu"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+              >
+                <i className="ph ph-list-magnifying-glass text-sm" />
+                View the menu
+              </a>
             </div>
+          </div>
+
+          {/* Roman numeral — right-6 lg:right-12 aligns right edge with nav margin */}
+          <div className="pointer-events-none absolute right-6 bottom-20 hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:right-12 lg:block">
+            I
           </div>
         </div>
       </section>
@@ -808,6 +806,7 @@ function MenuColumn({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
+  const listRef = useStaggerObserver<HTMLUListElement>(0.07)
   return (
     <div>
       <div className="mb-2">
@@ -816,7 +815,10 @@ function MenuColumn({
         </div>
         <h3 className="font-display text-4xl text-ink">{title}</h3>
       </div>
-      <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
+      <ul
+        ref={listRef}
+        className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10"
+      >
         {rows.map((r) => (
           <MenuRow
             key={r.name}
