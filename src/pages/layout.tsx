@@ -13,7 +13,7 @@ function useWeightedScroll() {
     let tid: ReturnType<typeof setTimeout>
 
     const tick = () => {
-      curr += (target - curr) * 0.1
+      curr += (target - curr) * 0.22
       window.scrollTo(0, curr)
       if (Math.abs(target - curr) > 0.5) raf = requestAnimationFrame(tick)
       else { curr = target; raf = 0 }
