@@ -136,6 +136,7 @@ const CONTACTS = [
     name: "Susan Certo",
     role: "Events Director",
     email: "scerto@siennapgh.com",
+    phone: undefined,
   },
   {
     name: "Renee Sroka",
