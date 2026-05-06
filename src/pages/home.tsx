@@ -216,11 +216,6 @@ export function Home() {
                 Mercato
               </span>
             </h1>
-            <p className="mx-auto mt-7 max-w-xl font-body text-lg leading-relaxed text-cream/80">
-              An Italian house on Penn Avenue. Three concepts, one staircase:
-              meatballs at the door, pasta at the heart, the city skyline over
-              the last glass of wine.
-            </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
@@ -255,12 +250,6 @@ export function Home() {
           </div>
         </div>
 
-        {/* corner ornament */}
-        <div className="absolute top-32 right-8 z-10 hidden text-cream/40 lg:block">
-          <div className="origin-right rotate-90 font-serif text-xs tracking-[0.5em] whitespace-nowrap uppercase">
-            est. 2013 · pittsburgh
-          </div>
-        </div>
       </section>
 
       {/* MARQUEE */}

@@ -223,7 +223,7 @@ export function Events() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-gold italic">
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
               <span className="swash swash-white" />
               <span>private events & catering</span>
             </div>
