@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { FadeIn, useParallax } from "../components/animations"
 
 const FLOORS = [
   {
@@ -166,18 +167,22 @@ const MARQUEE_WORDS = [
 ]
 
 export function Home() {
+  const heroParallax = useParallax(0.15)
+
   return (
     <div className="relative">
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden">
         <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
-            alt="A wood-fired Italian dining room"
-            className="slow-zoom h-full w-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/20 to-ink/85" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent,rgba(26,18,11,0.35))]" />
+          <div ref={heroParallax} className="parallax-hero-wrap">
+            <img
+              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
+              alt="A wood-fired Italian dining room"
+              className="slow-zoom h-full w-full object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/65 via-ink/30 to-ink/88" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent,rgba(26,18,11,0.4))]" />
         </div>
 
         {/* top meta strip */}
@@ -196,43 +201,44 @@ export function Home() {
           </span>
         </div>
 
-        {/* center */}
-        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 lg:px-12">
-          <div className="rise max-w-4xl" style={{ animationDelay: "0.1s" }}>
-            <div className="mb-6 flex items-center gap-3 font-italic text-lg tracking-wide text-sienna-bright italic md:text-2xl">
+        {/* center — centered & chique */}
+        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-center px-6 text-center lg:px-12">
+          <div className="rise mx-auto max-w-3xl" style={{ animationDelay: "0.1s" }}>
+            <div className="mb-5 flex items-center justify-center gap-3 font-italic text-base tracking-wide text-sienna-bright italic">
               <span className="swash" />
               <span>Trattoria · Pizzeria · Rooftop</span>
+              <span className="swash" />
             </div>
-            <h1 className="font-display text-[clamp(4rem,14vw,12rem)] leading-[0.85] tracking-tight text-cream">
+            <h1 className="text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream">
               Sienna
               <br />
               <span className="font-italic font-light text-sienna-bright italic">
                 Mercato
               </span>
             </h1>
-            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85 md:text-2xl">
-              An Italian house on Penn Avenue. Three concepts, stacked one over
-              the other, meatballs at the door, pasta at the heart, the city
-              skyline over the last glass of wine.
+            <p className="mx-auto mt-7 max-w-xl font-body text-lg leading-relaxed text-cream/80">
+              An Italian house on Penn Avenue. Three concepts, one staircase —
+              meatballs at the door, pasta at the heart, the city skyline over
+              the last glass of wine.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 bg-sienna px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase"
               >
-                <i className="ph ph-fork-knife text-lg" />
+                <i className="ph ph-fork-knife text-base" />
                 Reserve a table
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 border border-cream/40 px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
               >
-                <i className="ph ph-bag text-lg" />
+                <i className="ph ph-bag text-base" />
                 Order pickup
               </a>
             </div>
@@ -241,16 +247,16 @@ export function Home() {
 
         {/* scroll cue */}
         <div className="absolute right-0 bottom-8 left-0 z-10 flex justify-center">
-          <div className="flex flex-col items-center gap-3 text-cream/70">
+          <div className="flex flex-col items-center gap-3 text-cream/60">
             <span className="font-serif text-2xs tracking-[0.4em] uppercase">
               scroll
             </span>
-            <i className="ph ph-caret-down animate-bounce text-2xl" />
+            <i className="ph ph-caret-down animate-bounce text-xl" />
           </div>
         </div>
 
         {/* corner ornament */}
-        <div className="absolute top-32 right-8 z-10 hidden text-cream/50 lg:block">
+        <div className="absolute top-32 right-8 z-10 hidden text-cream/40 lg:block">
           <div className="origin-right rotate-90 font-serif text-xs tracking-[0.5em] whitespace-nowrap uppercase">
             est. 2013 · pittsburgh
           </div>
@@ -258,6 +264,7 @@ export function Home() {
       </section>
 
       {/* MARQUEE */}
+      <FadeIn>
       <section className="relative overflow-hidden border-y border-ink/15 bg-paper-deep py-6">
         <div className="marquee-track flex whitespace-nowrap">
           {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
@@ -271,8 +278,10 @@ export function Home() {
           ))}
         </div>
       </section>
+      </FadeIn>
 
       {/* MANIFESTO */}
+      <FadeIn delay={0.05}>
       <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
         <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
           The manifesto
@@ -292,15 +301,16 @@ export function Home() {
           climbs the staircase with you.
         </p>
       </section>
+      </FadeIn>
 
       {/* THREE FLOORS */}
       <section className="relative">
         {FLOORS.map((floor, idx) => {
           const flipped = idx % 2 === 1
           return (
+            <FadeIn key={floor.id} delay={0.05}>
             <div
               id={floor.id}
-              key={floor.id}
               className="relative overflow-hidden"
               style={{
                 background: idx === 1 ? "var(--color-cream)" : undefined,
@@ -315,12 +325,12 @@ export function Home() {
               >
                 {/* image side */}
                 <div
-                  className={`relative h-[420px] lg:h-auto ${flipped ? "lg:order-2" : ""}`}
+                  className={`group relative h-[420px] overflow-hidden lg:h-auto ${flipped ? "lg:order-2" : ""}`}
                 >
                   <img
                     src={floor.image}
                     alt={floor.name}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${floor.color} opacity-25 mix-blend-multiply`}
@@ -380,7 +390,7 @@ export function Home() {
                   <div className="mt-10 flex flex-wrap gap-4">
                     <Link
                       to={floor.href}
-                      className="group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+                      className="btn-lift group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
                     >
                       Explore the floor
                       <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
@@ -396,11 +406,13 @@ export function Home() {
                 </div>
               </div>
             </div>
+            </FadeIn>
           )
         })}
       </section>
 
       {/* SIGNATURE DISHES */}
+      <FadeIn>
       <section className="grain relative bg-paper py-32">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
@@ -456,8 +468,10 @@ export function Home() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* TONIGHT, happy hour & rotating */}
+      <FadeIn>
       <section
         id="tonight"
         className="relative overflow-hidden bg-ink py-28 text-paper"
@@ -539,8 +553,10 @@ export function Home() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* THE BUILDING */}
+      <FadeIn>
       <section className="relative bg-paper py-32">
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
           <div className="relative aspect-[4/5] overflow-hidden">
@@ -627,7 +643,7 @@ export function Home() {
               href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
               target="_blank"
               rel="noreferrer"
-              className="group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+              className="btn-lift group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
             >
               <i className="ph ph-cube text-base" />
               Walk through in 360°
@@ -636,8 +652,10 @@ export function Home() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* RESERVE / VISIT BAND */}
+      <FadeIn>
       <section
         id="visit"
         className="relative overflow-hidden bg-sienna text-cream"
@@ -719,6 +737,7 @@ export function Home() {
           </div>
         </div>
       </section>
+      </FadeIn>
     </div>
   )
 }

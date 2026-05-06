@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { FadeIn, useParallax } from "../components/animations"
 
 const ANTIPASTO = [
   {
@@ -384,15 +385,19 @@ function WineRow({
 }
 
 export function Mezzo() {
+  const heroParallax = useParallax(0.15)
+
   return (
     <div className="relative">
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden bg-ink">
-        <img
-          src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2400&q=80"
-          alt="A wood-fired pizza fresh from the oven at Mezzo"
-          className="slow-zoom absolute inset-0 h-full w-full object-cover opacity-80"
-        />
+        <div ref={heroParallax} className="parallax-hero-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2400&q=80"
+            alt="A wood-fired pizza fresh from the oven at Mezzo"
+            className="slow-zoom h-full w-full object-cover opacity-80"
+          />
+        </div>
         <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/40 to-ink/95" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(110,31,18,0.35),transparent_60%)]" />
 
@@ -415,53 +420,54 @@ export function Mezzo() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-6 flex items-center gap-3 font-italic text-xl text-cream/85 italic">
-              <span className="mr-1 font-display text-3xl text-cream/70">
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
+              <span className="mr-1 font-display text-2xl text-cream/60">
                 II
               </span>
               <span className="swash" />
               <span>the trattoria</span>
             </div>
-            <h1 className="font-display text-[clamp(5rem,18vw,16rem)] leading-[0.85] tracking-tight text-cream">
+            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
               Mezzo
             </h1>
-            <p className="mt-4 font-italic text-2xl text-cream/85 italic md:text-3xl">
+            <p className="mt-3 font-italic text-lg text-cream/80 italic">
               Pizza & Charcuterie.
             </p>
-            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85">
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
               Linen, candlelight, and an oven that runs at eight hundred
               degrees. Pasta hand-rolled at noon, a wine list that speaks
               Piemontese, and the only OpenTable reservation in the building.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 bg-sienna-deep px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna"
+                className="btn-lift group inline-flex items-center gap-2 bg-sienna-deep px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna"
               >
-                <i className="ph ph-calendar-dots text-lg" />
+                <i className="ph ph-calendar-dots text-sm" />
                 Reserve a table
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="#menu"
-                className="group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
               >
-                <i className="ph ph-list-magnifying-glass text-lg" />
+                <i className="ph ph-list-magnifying-glass text-sm" />
                 View the menu
               </a>
             </div>
           </div>
         </div>
 
-        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/10 select-none lg:right-12 lg:text-[28vw]">
+        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/8 select-none lg:right-12 lg:text-[28vw]">
           II
         </div>
       </section>
 
       {/* MANIFESTO */}
+      <FadeIn>
       <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
         <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna-deep uppercase">
           philosophy
@@ -484,8 +490,10 @@ export function Mezzo() {
           chosen for the table you're sitting at, not the spreadsheet.
         </p>
       </section>
+      </FadeIn>
 
       {/* THE OVEN, HERO MOMENT */}
+      <FadeIn>
       <section className="relative overflow-hidden bg-ink py-28 text-paper">
         <div className="pointer-events-none absolute -top-32 -right-32 h-[600px] w-[600px] rounded-full bg-sienna-deep opacity-50 blur-[180px]" />
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:px-12">
@@ -545,8 +553,10 @@ export function Mezzo() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* THE MENU */}
+      <FadeIn>
       <section id="menu" className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <div className="mb-16 text-center">
@@ -727,8 +737,10 @@ export function Mezzo() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* RESERVATIONS BAND */}
+      <FadeIn>
       <section className="relative overflow-hidden bg-sienna-deep text-cream">
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
@@ -800,8 +812,10 @@ export function Mezzo() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* CTA STRIP, climb to the roof */}
+      <FadeIn>
       <section className="relative bg-paper">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
@@ -819,14 +833,14 @@ export function Mezzo() {
           <div className="flex flex-wrap gap-4">
             <Link
               to="/emporio"
-              className="group inline-flex items-center gap-3 border border-ink/30 px-7 py-4 font-serif text-sm tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+              className="btn-lift group inline-flex items-center gap-3 border border-ink/30 px-7 py-4 font-serif text-sm tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
             >
               <i className="ph ph-arrow-down text-lg" />
               Back to Emporio
             </Link>
             <Link
               to="/tetto"
-              className="group inline-flex items-center gap-3 bg-ink px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-deep"
+              className="btn-lift group inline-flex items-center gap-3 bg-ink px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-deep"
             >
               Climb to Il Tetto
               <i className="ph ph-arrow-up text-lg" />
@@ -834,6 +848,7 @@ export function Mezzo() {
           </div>
         </div>
       </section>
+      </FadeIn>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { Link } from "react-router"
+import { FadeIn, useParallax } from "../components/animations"
 
 const SAUCES = [
   { name: "Marinara", note: "the classic, slow-cooked San Marzano", heat: 0 },
@@ -246,16 +247,20 @@ function MenuRow({
 }
 
 export function Emporio() {
+  const heroParallax = useParallax(0.15)
+
   return (
     <div className="relative">
       {/* HERO */}
       <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
-        <img
-          src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=2400&q=80"
-          alt="A platter of meatballs in red sauce"
-          className="slow-zoom absolute inset-0 h-full w-full object-cover opacity-90"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/55 via-ink/30 to-ink/90" />
+        <div ref={heroParallax} className="parallax-hero-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=2400&q=80"
+            alt="A platter of meatballs in red sauce"
+            className="slow-zoom h-full w-full object-cover opacity-90"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/35 to-ink/92" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(201,65,42,0.35),transparent_60%)]" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
@@ -277,40 +282,40 @@ export function Emporio() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-6 flex items-center gap-3 font-italic text-xl text-sienna-bright italic">
-              <span className="mr-1 font-display text-3xl text-cream/70">
+            <div className="mb-4 flex items-center gap-3 font-italic text-base text-sienna-bright italic">
+              <span className="mr-1 font-display text-2xl text-cream/60">
                 I
               </span>
               <span className="swash" />
               <span>the meatball joint</span>
             </div>
-            <h1 className="font-display text-[clamp(5rem,18vw,16rem)] leading-[0.85] tracking-tight text-cream">
+            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
               Emporio
             </h1>
-            <p className="mt-4 font-italic text-2xl text-cream/85 italic md:text-3xl">
+            <p className="mt-3 font-italic text-lg text-cream/80 italic">
               A Meatball Joint.
             </p>
-            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85">
+            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
               Five meats, ten sauces, one ground floor that runs loud. Pull up a
               stool, build a bowl, ask the bartender what's on the chalkboard.
             </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <a
                 href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase"
               >
-                <i className="ph ph-bag text-lg" />
+                <i className="ph ph-bag text-sm" />
                 Order pickup
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="#menu"
-                className="group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
               >
-                <i className="ph ph-list-magnifying-glass text-lg" />
+                <i className="ph ph-list-magnifying-glass text-sm" />
                 View the menu
               </a>
             </div>
@@ -318,12 +323,13 @@ export function Emporio() {
         </div>
 
         {/* big "I" watermark */}
-        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/10 select-none lg:right-12 lg:text-[28vw]">
+        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/8 select-none lg:right-12 lg:text-[28vw]">
           I
         </div>
       </section>
 
       {/* PHILOSOPHY */}
+      <FadeIn>
       <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
         <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
           philosophy
@@ -345,8 +351,10 @@ export function Emporio() {
           running.
         </p>
       </section>
+      </FadeIn>
 
       {/* THE BALLS */}
+      <FadeIn>
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-32 left-1/2 -translate-x-1/2 font-display text-[26vw] leading-none text-sienna/15 select-none">
           MEATBALLS
@@ -371,7 +379,7 @@ export function Emporio() {
             {BALL_TYPES.map((b) => (
               <div
                 key={b.name}
-                className={`group relative bg-ink p-6 text-center transition-colors hover:bg-sienna-deep ${
+                className={`hover-lift group relative bg-ink p-6 text-center transition-all hover:bg-sienna-deep ${
                   b.featured ? "bg-sienna text-cream" : ""
                 }`}
               >
@@ -402,8 +410,10 @@ export function Emporio() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* SAUCE MATRIX */}
+      <FadeIn>
       <section className="relative bg-paper-deep py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
@@ -425,11 +435,11 @@ export function Emporio() {
             </p>
           </div>
 
-          <ul className="grid grid-cols-1 gap-px bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-px bg-ink/10 sm:grid-cols-2">
             {SAUCES.map((s, i) => (
               <li
                 key={s.name}
-                className="group relative bg-paper p-6 transition-colors hover:bg-cream"
+                className="hover-lift group relative bg-paper p-6 transition-colors hover:bg-cream"
               >
                 <div className="flex items-baseline justify-between">
                   <span className="font-serif text-2xs tracking-[0.3em] text-ink/40 uppercase">
@@ -448,8 +458,10 @@ export function Emporio() {
           </ul>
         </div>
       </section>
+      </FadeIn>
 
       {/* BUILD-YOUR-OWN */}
+      <FadeIn>
       <section className="relative overflow-hidden bg-sienna py-28 text-cream">
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
@@ -527,8 +539,10 @@ export function Emporio() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* BALL OF THE MONTH */}
+      <FadeIn>
       <section className="relative bg-paper py-24">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid overflow-hidden bg-ink text-cream lg:grid-cols-[1.1fr_1fr]">
@@ -572,7 +586,7 @@ export function Emporio() {
                 href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                 target="_blank"
                 rel="noreferrer"
-                className="group mt-10 inline-flex w-fit items-center gap-3 bg-sienna-bright px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
+                className="btn-lift group mt-10 inline-flex w-fit items-center gap-3 bg-sienna-bright px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
               >
                 Order before she's gone
                 <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -581,8 +595,10 @@ export function Emporio() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* THE FULL MENU */}
+      <FadeIn>
       <section id="menu" className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
           <div className="mb-16 text-center">
@@ -642,8 +658,10 @@ export function Emporio() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* HAPPY HOUR */}
+      <FadeIn>
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-40 blur-[140px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
@@ -695,8 +713,10 @@ export function Emporio() {
           </div>
         </div>
       </section>
+      </FadeIn>
 
       {/* CTA STRIP */}
+      <FadeIn>
       <section className="relative bg-sienna text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
@@ -714,14 +734,14 @@ export function Emporio() {
               href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
               target="_blank"
               rel="noreferrer"
-              className="group inline-flex items-center gap-3 bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
+              className="btn-lift group inline-flex items-center gap-3 bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
             >
               <i className="ph ph-bag text-lg" />
               Order Pickup
             </a>
             <Link
               to="/mezzo"
-              className="group inline-flex items-center gap-3 border border-cream/60 px-7 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
+              className="btn-lift group inline-flex items-center gap-3 border border-cream/60 px-7 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
             >
               Climb to Mezzo
               <i className="ph ph-arrow-up text-lg" />
@@ -729,6 +749,7 @@ export function Emporio() {
           </div>
         </div>
       </section>
+      </FadeIn>
     </div>
   )
 }
