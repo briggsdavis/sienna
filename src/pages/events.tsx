@@ -17,6 +17,12 @@ const SPACES = [
       "Birthdays",
     ],
     desc: "Ground floor. Modern-industrial brick and steel, the open kitchen running through service, the bar long enough to seat your whole guest list. Customizable food stations, cocktail packages, no dress code.",
+    highlights: [
+      "Up to 105 guests, full buyout available",
+      "Twelve meatball sauces, custom stations",
+      "Full craft cocktail bar & tap program",
+      "No dress code, no ceremony required",
+    ],
     image:
       "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1600&q=70",
     accent: "text-sienna",
@@ -36,6 +42,12 @@ const SPACES = [
       "Corporate entertaining",
     ],
     desc: "Second floor. Hardwood floors, exposed brick, a wood-beamed ceiling and open-air garage windows that look out over Penn Avenue. Custom menus, custom beverage pairings, wine list included.",
+    highlights: [
+      "Up to 90 guests, intimate candlelit setting",
+      "Chef-built custom menus for every event",
+      "90-bottle wine list with full pairings",
+      "Wood-fired oven on site, live-fire cooking",
+    ],
     image:
       "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1600&q=70",
     accent: "text-sienna-deep",
@@ -55,6 +67,12 @@ const SPACES = [
       "Award-night socials",
     ],
     desc: "Third floor. Award-winning rooftop with a retractable glass roof, bistro lights overhead, the Pittsburgh skyline behind every photograph. Chef-crafted catering, curated beverages, a dedicated event team.",
+    highlights: [
+      "Up to 200 guests, Pittsburgh skyline backdrop",
+      "Retractable glass roof, open in any season",
+      "Dedicated events team, full-service buyout",
+      "30 rotating drafts, full catering from below",
+    ],
     image:
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
     accent: "text-gold",
@@ -322,6 +340,14 @@ export function Events() {
                   <p className="mt-4 font-body text-base leading-relaxed text-ink-soft">
                     {s.desc}
                   </p>
+                  <ul className="mt-5 space-y-2">
+                    {s.highlights.map((h) => (
+                      <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
+                        <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
                   <div className="mt-6">
                     <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
                       Perfect for
@@ -339,7 +365,7 @@ export function Events() {
                   </div>
                   <Link
                     to={s.href}
-                    className="under mt-6 inline-flex items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
+                    className="under mt-auto pt-6 inline-flex items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
                   >
                     See the floor
                     <i className="ph ph-arrow-right text-sm" />
@@ -350,21 +376,46 @@ export function Events() {
             ))}
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-between gap-4 rounded-none border border-ink/10 bg-cream px-6 py-4 font-serif text-xs tracking-[0.3em] text-ink-soft uppercase">
-            <span className="flex items-center gap-3">
-              <i className="ph-duotone ph-cube text-2xl text-sienna" />
-              Want to see the building before you commit?
-            </span>
-            <a
-              href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
-              target="_blank"
-              rel="noreferrer"
-              className="group inline-flex items-center gap-2 text-sienna hover:text-sienna-deep"
-            >
-              Virtual street-level tour · 360°
-              <i className="ph ph-arrow-up-right text-sm transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          </div>
+          <FadeIn delay={0.1}>
+            <div className="mt-14 grid gap-px bg-ink/10 sm:grid-cols-[1fr_auto]">
+              <div className="bg-paper px-8 py-8">
+                <div className="mb-2 font-italic text-lg text-sienna italic">
+                  ready to book a floor?
+                </div>
+                <h3 className="font-display text-3xl leading-tight text-ink">
+                  Tell us the date, the headcount,
+                  <br />
+                  <span className="font-italic text-sienna italic">and we'll handle the rest.</span>
+                </h3>
+                <p className="mt-3 max-w-lg font-italic text-base text-ink-soft italic">
+                  The events team replies within one business day with a floor recommendation, a draft menu, and a price range. No commitment required.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="#inquire"
+                    className="btn-lift group inline-flex items-center gap-2 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                  >
+                    <i className="ph ph-envelope text-sm" />
+                    Send an inquiry
+                    <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
+                  </a>
+                  <a
+                    href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-lift group inline-flex items-center gap-2 border border-ink/25 px-6 py-3 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:bg-ink/5"
+                  >
+                    <i className="ph-duotone ph-cube text-sm" />
+                    Virtual tour · 360°
+                    <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </div>
+              </div>
+              <div className="hidden items-center justify-center bg-sienna-deep/8 px-10 sm:flex">
+                <i className="ph-duotone ph-buildings text-6xl text-sienna/40" />
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -372,7 +423,7 @@ export function Events() {
       <section className="relative bg-paper-deep py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
-            <div className="mb-14 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
+            <div className="mb-14 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-end">
               <div>
                 <div className="mb-3 font-italic text-lg text-sienna italic">
                   catering · delivery & pickup
@@ -385,11 +436,36 @@ export function Events() {
                   </span>
                 </h2>
               </div>
-              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-                Every catering order ships out of one of our two kitchens, the
-                casual ground floor or the refined second. Half pans serve 12,
-                full pans serve 24. Forty-eight hours notice, please.
-              </p>
+              <div>
+                <p className="font-italic text-lg leading-relaxed text-ink-soft italic">
+                  Everything comes out of our own kitchens, cooked to order. Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival. You're getting the restaurant, just at your location.
+                </p>
+                <div className="mt-6 flex flex-wrap gap-3">
+                  <a
+                    href="https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                  >
+                    <i className="ph ph-bag text-sm" />
+                    Order catering
+                    <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                  <a
+                    href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn-lift group inline-flex items-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-ink/5"
+                  >
+                    <i className="ph ph-storefront text-sm" />
+                    Order online · Emporio
+                    <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </div>
+                <p className="mt-3 font-italic text-xs text-ink-soft italic">
+                  Online ordering available from Floor I · Emporio only. For Mezzo catering, contact the events team.
+                </p>
+              </div>
             </div>
           </FadeIn>
 
@@ -490,19 +566,15 @@ export function Events() {
             ))}
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 font-italic text-sm text-ink-soft italic">
+          <div className="mt-8 flex flex-wrap items-center gap-6 font-italic text-sm text-ink-soft italic">
             <span className="flex items-center gap-2">
               <i className="ph ph-clock text-sienna" />
-              Forty-eight hours notice for catering requests.
+              Forty-eight hours notice for all catering requests.
             </span>
-            <a
-              href="https://www.siennamercato.com/catering-store-v2"
-              target="_blank"
-              rel="noreferrer"
-              className="under text-sienna hover:text-sienna-deep"
-            >
-              Order catering online →
-            </a>
+            <span className="flex items-center gap-2">
+              <i className="ph ph-map-pin text-sienna" />
+              Delivery available · downtown Pittsburgh & surrounding areas.
+            </span>
           </div>
         </div>
       </section>
