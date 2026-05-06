@@ -1,393 +1,724 @@
 import { Link } from "react-router"
-import SectionLabel from "@/components/section-label"
-import { img } from "@/lib/images"
 
-export default function Home() {
+const FLOORS = [
+  {
+    id: "emporio",
+    href: "/emporio",
+    roman: "I",
+    name: "Emporio",
+    sub: "A Meatball Joint",
+    italian: "the meatball joint",
+    color: "from-[#7a2218] via-[#a4341f] to-[#c9412a]",
+    accent: "#c9412a",
+    desc: "Ground floor. Loud, fast, family. Twelve sauces, six meats, one philosophy: the meatball is sacred. Pull up a stool, order a Dragon Ball, and let the kitchen show off.",
+    image:
+      "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1600&q=70",
+    items: [
+      {
+        name: "Meatball Hoagie",
+        price: "18",
+        note: "choice of three meatballs",
+      },
+      {
+        name: "Buffalo Chicken Balls",
+        price: "12",
+        note: "bleu cheese, celery",
+      },
+      { name: "Jacked Mac Bowl", price: "18", note: "house cheese sauce" },
+      {
+        name: "Dragon Ball · Ball of the Month",
+        price: "14",
+        note: "sweet chili glaze",
+      },
+    ],
+  },
+  {
+    id: "mezzo",
+    href: "/mezzo",
+    roman: "II",
+    name: "Mezzo",
+    sub: "Pizza & Charcuterie",
+    italian: "the trattoria",
+    color: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
+    accent: "#a4341f",
+    desc: "Second floor. Linen, candlelight, a wood-fired oven that runs at eight hundred degrees. Pasta hand-rolled at noon, a wine list that speaks Piemontese, and the only OpenTable reservation in the building.",
+    image:
+      "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1600&q=70",
+    items: [
+      {
+        name: "Soppressata & Hot Honey",
+        price: "25",
+        note: "marinara, mozzarella",
+      },
+      {
+        name: "Crab-Stuffed Ravioli",
+        price: "29",
+        note: "white truffle cream",
+      },
+      { name: "Braised Short Rib", price: "32", note: "demi, broccolini" },
+      {
+        name: "Vietti Rocche di Castiglione Barolo",
+        price: "180",
+        note: "2017 · per bottle",
+      },
+    ],
+  },
+  {
+    id: "tetto",
+    href: "/tetto",
+    roman: "III",
+    name: "Il Tetto",
+    sub: "Rooftop Beer Garden",
+    italian: "the rooftop garden",
+    color: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
+    accent: "#e7a04a",
+    desc: "Third floor. Sky, retractable roof, thirty drafts on a chalkboard, the steel-city skyline doing its thing at golden hour. Whole pies, cold pints, no reservations, climb the stairs and find out.",
+    image:
+      "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
+    items: [
+      { name: "Whole Pepperoni Pie", price: "25", note: "8 slices, baked hot" },
+      {
+        name: "Big Wave · Kona",
+        price: "",
+        note: "blonde · 4.4% · beer of the month",
+      },
+      {
+        name: "Negley's Nectar Peach Cider",
+        price: "",
+        note: "Arsenal · Pittsburgh, 8.4%",
+      },
+      {
+        name: "Espresso Martini",
+        price: "5",
+        note: "happy hour, Tue–Fri 4:30–6:30",
+      },
+    ],
+  },
+] as const
+
+const SIGNATURE_DISHES = [
+  {
+    name: "Warm Burrata",
+    en: "Roasted tomatoes, basil, focaccia",
+    floor: "Mezzo",
+    price: "14",
+    img: "https://images.unsplash.com/photo-1608897013039-887f21d8c804?auto=format&fit=crop&w=1100&q=75",
+    span: "row-span-2",
+  },
+  {
+    name: "Classic Meatballs",
+    en: "Beef-pork blend, crack sauce",
+    floor: "Emporio",
+    price: "12",
+    img: "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1100&q=75",
+    span: "",
+  },
+  {
+    name: "Soppressata Pizza",
+    en: "Hot honey, mozzarella, marinara",
+    floor: "Mezzo",
+    price: "25",
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1100&q=75",
+    span: "",
+  },
+  {
+    name: "Molten Chocolate",
+    en: "Lava cake, vanilla gelato",
+    floor: "Mezzo",
+    price: "14",
+    img: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=1100&q=75",
+    span: "",
+  },
+  {
+    name: "Crack Fries",
+    en: "Smothered in crack sauce, buffalo-ranch",
+    floor: "Emporio",
+    price: "12",
+    img: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=1100&q=75",
+    span: "",
+  },
+  {
+    name: "Carbonara",
+    en: "Pancetta, pecorino, egg yolk, pepper",
+    floor: "Mezzo",
+    price: "27",
+    img: "https://images.unsplash.com/photo-1612874742237-6526221588e3?auto=format&fit=crop&w=1100&q=75",
+    span: "row-span-2",
+  },
+] as const
+
+const MARQUEE_WORDS = [
+  "meatballs",
+  "wood-fired pizza",
+  "rooftop garden",
+  "thirty drafts",
+  "carbonara",
+  "tiramisù",
+  "burrata",
+  "soppressata",
+  "espresso",
+  "house cocktails",
+  "barolo",
+  "happy hour",
+  "ricotta doughnuts",
+  "private events",
+  "catering",
+]
+
+export function Home() {
   return (
-    <>
-      <Hero />
-      <ChalkboardStrip />
-      <TodaysPasta />
-      <Cucina />
-      <StoryTeaser />
-      <Press />
-      <VisitCta />
-    </>
-  )
-}
-
-function Hero() {
-  return (
-    <section className="relative bg-paper">
-      <div className="mx-auto grid max-w-[1480px] grid-cols-12 gap-6 px-6 pt-16 pb-10 lg:px-10">
-        <div className="relative z-10 col-span-12 md:col-span-7">
-          <p
-            className="animate-rise text-eyebrow text-rosso uppercase"
-            style={{ animationDelay: "60ms" }}
-          >
-            ✻ &nbsp; Brooklyn · Est. 2019
-          </p>
-          <h1
-            className="animate-rise mt-8 font-sans leading-none font-black tracking-tight text-olive uppercase"
-            style={{
-              fontSize: "clamp(72px, 11vw, 168px)",
-              animationDelay: "120ms",
-            }}
-          >
-            Eat
-            <br />
-            <span className="font-display font-normal text-rosso normal-case italic">
-              loud,
-            </span>
-            <br />
-            drink
-            <br />
-            <span className="font-display font-normal normal-case italic">
-              red.
-            </span>
-          </h1>
-          <p
-            className="animate-rise mt-10 max-w-xl text-lg text-olive/80"
-            style={{ animationDelay: "240ms" }}
-          >
-            A loud, lamp-lit trattoria in north Brooklyn pouring natural wine,
-            tearing fresh focaccia, and turning out the kind of red-sauce
-            cooking that makes the table forget its phones.
-          </p>
-
-          <div
-            className="animate-rise mt-10 flex flex-wrap items-center gap-4"
-            style={{ animationDelay: "320ms" }}
-          >
-            <Link
-              to="/reserve"
-              className="inline-flex items-center gap-3 rounded-full bg-olive px-7 py-4 text-sm font-semibold tracking-wider text-cream uppercase transition-colors hover:bg-ink"
-            >
-              Reserve a table
-              <span aria-hidden>→</span>
-            </Link>
-            <Link
-              to="/menu"
-              className="inline-flex items-center gap-3 rounded-full border border-olive/30 px-7 py-4 text-sm font-semibold tracking-wider text-olive uppercase transition-all hover:border-olive hover:bg-olive hover:text-cream"
-            >
-              See the menu
-            </Link>
-          </div>
+    <div className="relative">
+      {/* HERO */}
+      <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
+            alt="A wood-fired Italian dining room"
+            className="slow-zoom h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/20 to-ink/85" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_30%,transparent,rgba(26,18,11,0.35))]" />
         </div>
 
-        <div className="relative col-span-12 md:col-span-5">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-sm">
-            <img
-              src={img.pasta}
-              alt="A bowl of bucatini in tomato sauce"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <span className="absolute top-4 left-4 rounded-full bg-rosso px-3 py-1.5 text-eyebrow text-cream uppercase">
-              Tonight · 6:30
-            </span>
-          </div>
-
-          <div className="animate-spin-slow absolute -bottom-12 -left-10 hidden md:flex">
-            <Stamp />
-          </div>
+        {/* top meta strip */}
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
+          <span className="flex items-center gap-2">
+            <span className="inline-block h-px w-8 bg-cream/40" />
+            Established 2013
+          </span>
+          <span className="hidden items-center gap-2 md:inline-flex">
+            <i className="ph ph-map-pin text-sm" />
+            942 Penn Avenue · Pittsburgh
+          </span>
+          <span className="flex items-center gap-2">
+            Three floors · One roof
+            <span className="inline-block h-px w-8 bg-cream/40" />
+          </span>
         </div>
-      </div>
 
-      <div className="mx-auto mt-12 grid max-w-[1480px] grid-cols-2 gap-6 border-t border-olive/15 px-6 pt-10 pb-12 md:grid-cols-4 lg:px-10">
-        {[
-          ["32", "wines by the glass"],
-          ["7", "pastas made daily"],
-          ["3hr", "Sunday gravy simmer"],
-          ["1939", "the year nonna's recipe was written"],
-        ].map(([num, label]) => (
-          <div key={label}>
-            <p className="font-display text-h1 leading-none text-rosso italic">
-              {num}
+        {/* center */}
+        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-6 lg:px-12">
+          <div className="rise max-w-4xl" style={{ animationDelay: "0.1s" }}>
+            <div className="mb-6 flex items-center gap-3 font-italic text-lg tracking-wide text-sienna-bright italic md:text-2xl">
+              <span className="swash" />
+              <span>Trattoria · Pizzeria · Rooftop</span>
+            </div>
+            <h1 className="font-display text-[clamp(4rem,14vw,12rem)] leading-[0.85] tracking-tight text-cream">
+              Sienna
+              <br />
+              <span className="font-italic font-light text-sienna-bright italic">
+                Mercato
+              </span>
+            </h1>
+            <p className="mt-8 max-w-2xl font-body text-xl leading-snug text-cream/85 md:text-2xl">
+              An Italian house on Penn Avenue. Three concepts, stacked one over
+              the other, meatballs at the door, pasta at the heart, the city
+              skyline over the last glass of wine.
             </p>
-            <p className="mt-3 max-w-[14ch] text-sm text-olive/70">{label}</p>
-          </div>
-        ))}
-      </div>
-    </section>
-  )
-}
-
-function Stamp() {
-  return (
-    <svg viewBox="0 0 200 200" className="h-44 w-44 text-rosso">
-      <defs>
-        <path
-          id="circle"
-          d="M 100,100 m -80,0 a 80,80 0 1,1 160,0 a 80,80 0 1,1 -160,0"
-        />
-      </defs>
-      <text
-        className="fill-current text-eyebrow uppercase"
-        style={{ fontSize: "13px", letterSpacing: "0.28em" }}
-      >
-        <textPath href="#circle">
-          ✻ Made by hand · Cucina dal 2019 · Brooklyn USA ·
-        </textPath>
-      </text>
-      <text
-        x="100"
-        y="108"
-        textAnchor="middle"
-        className="fill-current"
-        style={{
-          fontFamily: "var(--font-serif)",
-          fontStyle: "italic",
-          fontSize: "30px",
-        }}
-      >
-        SM
-      </text>
-    </svg>
-  )
-}
-
-function ChalkboardStrip() {
-  return (
-    <section className="bg-olive text-cream">
-      <div className="mx-auto flex max-w-[1480px] flex-col items-start gap-6 px-6 py-10 md:flex-row md:items-center md:gap-12 lg:px-10">
-        <p className="text-eyebrow text-cream/50 uppercase">
-          Tonight at the bar
-        </p>
-        <p className="font-display flex-1 text-h2 leading-tight italic">
-          Spritz Veneziano, anchovy toast, and a Lambrusco so cold it bruises.
-        </p>
-        <Link
-          to="/menu"
-          className="text-sm font-semibold tracking-wider whitespace-nowrap text-rosso uppercase hover:text-cream"
-        >
-          See drinks →
-        </Link>
-      </div>
-    </section>
-  )
-}
-
-function TodaysPasta() {
-  return (
-    <section className="mx-auto max-w-[1480px] px-6 py-28 lg:px-10">
-      <SectionLabel number="01" className="mb-10">
-        Pasta of the day
-      </SectionLabel>
-      <div className="grid grid-cols-12 items-end gap-8">
-        <div className="order-2 col-span-12 md:order-1 md:col-span-5">
-          <h2 className="font-sans text-h1 leading-none font-black text-olive uppercase">
-            Cacio e
-            <br />
-            <span className="font-display font-normal text-rosso normal-case italic">
-              pepe nero.
-            </span>
-          </h2>
-          <p className="mt-8 max-w-md text-lg text-olive/80">
-            Hand-rolled tonnarelli, two-year Pecorino di Pienza, cracked
-            Tellicherry pepper — and a splash of pasta water that is, more or
-            less, the only sauce we ever needed.
-          </p>
-          <dl className="mt-10 grid max-w-md grid-cols-2 gap-x-10 gap-y-4 text-sm">
-            {[
-              ["Pasta", "Tonnarelli, hand-cut"],
-              ["Cheese", "Pecorino di Pienza"],
-              ["Pepper", "Tellicherry, cracked"],
-              ["Price", "$24"],
-            ].map(([k, v]) => (
-              <div
-                key={k}
-                className="flex flex-col border-t border-olive/15 pt-3"
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <a
+                href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-3 bg-sienna px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
               >
-                <dt className="text-eyebrow text-olive/50 uppercase">{k}</dt>
-                <dd className="mt-1 text-olive">{v}</dd>
+                <i className="ph ph-fork-knife text-lg" />
+                Reserve a table
+                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-3 border border-cream/40 px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+              >
+                <i className="ph ph-bag text-lg" />
+                Order pickup
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* scroll cue */}
+        <div className="absolute right-0 bottom-8 left-0 z-10 flex justify-center">
+          <div className="flex flex-col items-center gap-3 text-cream/70">
+            <span className="font-serif text-2xs tracking-[0.4em] uppercase">
+              scroll
+            </span>
+            <i className="ph ph-caret-down animate-bounce text-2xl" />
+          </div>
+        </div>
+
+        {/* corner ornament */}
+        <div className="absolute top-32 right-8 z-10 hidden text-cream/50 lg:block">
+          <div className="origin-right rotate-90 font-serif text-xs tracking-[0.5em] whitespace-nowrap uppercase">
+            est. 2013 · pittsburgh
+          </div>
+        </div>
+      </section>
+
+      {/* MARQUEE */}
+      <section className="relative overflow-hidden border-y border-ink/15 bg-paper-deep py-6">
+        <div className="marquee-track flex whitespace-nowrap">
+          {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
+            <span
+              key={i}
+              className="flex items-center gap-8 px-8 font-italic text-3xl text-sienna italic md:text-5xl"
+            >
+              {word}
+              <i className="ph ph-asterisk text-xl text-ink/40" />
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* MANIFESTO */}
+      <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
+        <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+          The manifesto
+        </div>
+        <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
+          Three floors.
+          <span className="font-italic text-sienna italic"> Three rooms. </span>
+          One Italian house, built into a hundred-year-old building on Penn
+          Avenue, in the only city that calls itself a triangle.
+        </p>
+        <div className="mt-10 flex justify-center">
+          <span className="swash" />
+        </div>
+        <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
+          Walk in for a meatball. Stay for the wood-fired pizza. End the night
+          on the roof with thirty taps and the lights of downtown. Your evening
+          climbs the staircase with you.
+        </p>
+      </section>
+
+      {/* THREE FLOORS */}
+      <section className="relative">
+        {FLOORS.map((floor, idx) => {
+          const flipped = idx % 2 === 1
+          return (
+            <div
+              id={floor.id}
+              key={floor.id}
+              className="relative overflow-hidden"
+              style={{
+                background: idx === 1 ? "var(--color-cream)" : undefined,
+              }}
+            >
+              <div
+                className={`mx-auto grid max-w-[1600px] gap-0 lg:min-h-[720px] ${
+                  flipped
+                    ? "lg:grid-cols-[1.1fr_1fr]"
+                    : "lg:grid-cols-[1fr_1.1fr]"
+                }`}
+              >
+                {/* image side */}
+                <div
+                  className={`relative h-[420px] lg:h-auto ${flipped ? "lg:order-2" : ""}`}
+                >
+                  <img
+                    src={floor.image}
+                    alt={floor.name}
+                    className="h-full w-full object-cover"
+                  />
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-t ${floor.color} opacity-25 mix-blend-multiply`}
+                  />
+                  {/* floating roman */}
+                  <div
+                    className={`absolute ${flipped ? "right-8" : "left-8"} top-8 font-display text-8xl leading-none text-cream/90 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] md:text-9xl`}
+                  >
+                    {floor.roman}
+                  </div>
+                  <div
+                    className={`absolute ${flipped ? "right-8" : "left-8"} bottom-8 flex items-center gap-3 font-serif text-xs tracking-[0.4em] text-cream/80 uppercase`}
+                  >
+                    <span className="inline-block h-px w-10 bg-cream/60" />
+                    {`Floor ${idx + 1}`}
+                  </div>
+                </div>
+
+                {/* text side */}
+                <div className="relative flex flex-col justify-center px-6 py-20 lg:px-20">
+                  <div className="mb-3 font-italic text-base tracking-wide text-sienna italic">
+                    {floor.italian}
+                  </div>
+                  <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.9] text-ink">
+                    {floor.name}
+                  </h2>
+                  <div className="mt-3 font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
+                    {floor.sub}
+                  </div>
+                  <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
+                    {floor.desc}
+                  </p>
+
+                  <ul className="mt-10 max-w-xl divide-y divide-ink/10 border-y border-ink/10">
+                    {floor.items.map((it) => (
+                      <li
+                        key={it.name}
+                        className="group flex items-baseline gap-4 py-4"
+                      >
+                        <span className="font-serif text-base tracking-wide text-ink">
+                          {it.name}
+                        </span>
+                        <span
+                          className="mx-2 flex-1 translate-y-[-4px] border-b border-dotted border-ink/25"
+                          aria-hidden
+                        />
+                        <span className="hidden font-italic text-sm text-ink-soft italic sm:inline">
+                          {it.note}
+                        </span>
+                        <span className="font-serif text-base text-sienna tabular-nums">
+                          {it.price ? `$${it.price}` : ""}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-10 flex flex-wrap gap-4">
+                    <Link
+                      to={floor.href}
+                      className="group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+                    >
+                      Explore the floor
+                      <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+                    </Link>
+                    <a
+                      href="#visit"
+                      className="under inline-flex items-center gap-2 font-italic text-sienna italic hover:text-sienna-deep"
+                    >
+                      <i className="ph ph-clock text-lg" />
+                      Hours
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )
+        })}
+      </section>
+
+      {/* SIGNATURE DISHES */}
+      <section className="grain relative bg-paper py-32">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                the kitchen
+              </div>
+              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                Six plates,
+                <br />
+                <span className="font-italic text-sienna italic">
+                  three floors.
+                </span>
+              </h2>
+            </div>
+            <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+              A walking tour, plate by plate, from the meatball joint at street
+              level to the carbonara two stories up.
+            </p>
+          </div>
+
+          <div className="grid auto-rows-[minmax(280px,1fr)] grid-cols-1 gap-4 md:grid-cols-3">
+            {SIGNATURE_DISHES.map((dish) => (
+              <article
+                key={dish.name}
+                className={`dish-card group relative overflow-hidden bg-ink ${dish.span}`}
+              >
+                <img
+                  src={dish.img}
+                  alt={dish.name}
+                  className="dish-img absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+                <div className="absolute top-4 left-4 flex items-center gap-2 bg-paper/90 px-3 py-1 font-serif text-2xs tracking-[0.3em] text-ink uppercase">
+                  <i className="ph ph-house-line text-xs text-sienna" />
+                  {dish.floor}
+                </div>
+                <div className="absolute right-0 bottom-0 left-0 p-6">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <h3 className="font-display text-3xl leading-tight text-cream">
+                      {dish.name}
+                    </h3>
+                    <span className="font-serif text-lg text-cream tabular-nums">
+                      ${dish.price}
+                    </span>
+                  </div>
+                  <p className="mt-2 font-italic text-sm leading-snug text-cream/75 italic">
+                    {dish.en}
+                  </p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TONIGHT, happy hour & rotating */}
+      <section
+        id="tonight"
+        className="relative overflow-hidden bg-ink py-28 text-paper"
+      >
+        <div className="pointer-events-none absolute inset-0 opacity-30">
+          <div className="absolute -top-40 -left-40 h-[480px] w-[480px] rounded-full bg-sienna blur-[140px]" />
+          <div className="absolute -right-20 -bottom-40 h-[380px] w-[380px] rounded-full bg-gold blur-[120px]" />
+        </div>
+        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="mb-2 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
+                <i className="ph-fill ph-flame neon-flicker text-xl" />
+                tonight
+              </div>
+              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
+                Tonight at{" "}
+                <span className="text-sienna-bright italic">Sienna</span>
+              </h2>
+            </div>
+            <div className="max-w-sm font-serif text-sm tracking-[0.3em] text-paper/60 uppercase">
+              Updated daily · what's pouring, what's frying, what's on the
+              chalkboard.
+            </div>
+          </div>
+
+          <div className="grid gap-px bg-paper/15 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                tag: "Ball of the Month",
+                title: "Dragon Ball",
+                desc: "Housemade meatballs fried golden, glazed in sweet chili with a touch of heat.",
+                meta: "$14 · Emporio",
+                icon: "ph-bowl-food",
+              },
+              {
+                tag: "Beer of the Month",
+                title: "Big Wave",
+                desc: "Kona Brewing · Hawaiian blonde ale, light hop aroma, beach-ready.",
+                meta: "4.4% ABV · Il Tetto",
+                icon: "ph-beer-stein",
+              },
+              {
+                tag: "Happy Hour",
+                title: "4:30 → 6:30",
+                desc: "½-off drafts · ½-off well drinks · ½-off small plates · $5 espresso martini.",
+                meta: "Tue–Fri · floors I & III",
+                icon: "ph-clock-countdown",
+              },
+              {
+                tag: "Seasonal",
+                title: "Spiced Kentucky Mule",
+                desc: "Big Springs whiskey, ginger beer, fresh lime, a whisper of cinnamon.",
+                meta: "$13 · all floors",
+                icon: "ph-wine",
+              },
+            ].map((card) => (
+              <div
+                key={card.title}
+                className="group relative bg-ink p-8 transition-colors hover:bg-sienna-deep"
+              >
+                <i
+                  className={`ph-duotone ${card.icon} text-4xl text-sienna-bright transition-colors group-hover:text-cream`}
+                />
+                <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-paper/50 uppercase group-hover:text-paper/80">
+                  {card.tag}
+                </div>
+                <h3 className="mt-2 font-display text-3xl leading-tight">
+                  {card.title}
+                </h3>
+                <p className="mt-3 font-italic text-sm leading-relaxed text-paper/70 italic group-hover:text-paper/90">
+                  {card.desc}
+                </p>
+                <div className="mt-6 font-serif text-xs tracking-[0.25em] text-sienna-bright uppercase group-hover:text-cream">
+                  {card.meta}
+                </div>
               </div>
             ))}
-          </dl>
+          </div>
         </div>
+      </section>
 
-        <div className="relative order-1 col-span-12 md:order-2 md:col-span-7">
-          <div className="relative aspect-[5/4] overflow-hidden">
+      {/* THE BUILDING */}
+      <section className="relative bg-paper py-32">
+        <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
+          <div className="relative aspect-[4/5] overflow-hidden">
             <img
-              src={img.pastaClose}
-              alt="Cacio e pepe"
+              src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
+              alt="Pittsburgh skyline"
               className="absolute inset-0 h-full w-full object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+            <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">
+              <div className="font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                the house
+              </div>
+              <div className="mt-1 font-display text-3xl">942 Penn Avenue</div>
+            </div>
+            {/* corner mark */}
+            <div className="absolute top-6 right-6 flex flex-col items-center gap-1 font-serif text-2xs tracking-[0.3em] text-cream/90 uppercase">
+              <i className="ph ph-cube text-2xl" />
+              <span>Tour 360°</span>
+            </div>
           </div>
-          <div className="absolute -top-6 -left-6 hidden md:block">
-            <span className="inline-block -rotate-6 rounded-full bg-rosso px-4 py-2 text-eyebrow text-cream uppercase">
-              ✻ Special · Thursday only
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
-function Cucina() {
-  const tiles: Array<[string, string, string]> = [
-    [img.dough, "Pasta fresca", "Rolled at 7am, every day."],
-    [img.pizza, "Pizza al taglio", "Bar snack from 4pm."],
-    [img.antipasti, "Antipasti", "Sliced to order, share generously."],
-    [img.wine, "Wine bar", "120 small-grower bottles."],
-  ]
-  return (
-    <section className="bg-bone">
-      <div className="mx-auto max-w-[1480px] px-6 py-28 lg:px-10">
-        <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <SectionLabel number="02" className="mb-6">
-              The kitchen
-            </SectionLabel>
-            <h2 className="max-w-xl font-sans text-h1 leading-none font-black text-olive uppercase">
-              Four corners of
+          <div className="flex flex-col justify-center">
+            <div className="mb-3 font-italic text-lg text-sienna italic">
+              the story
+            </div>
+            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
+              A century of brick,
               <br />
-              <span className="font-display font-normal text-rosso normal-case italic">
-                the kitchen.
+              <span className="font-italic text-sienna italic">
+                a decade of dinner.
               </span>
             </h2>
+            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
+              The building came first, a Cultural District landmark with a
+              façade that's watched the city change three times over. We took
+              the lease in 2013 with a single idea: don't pick one Italian
+              restaurant when the floors will let you have three.
+            </p>
+            <p className="mt-6 max-w-xl font-italic text-lg leading-relaxed text-ink-soft italic">
+              The kitchens stack vertically. The dining rooms tell three
+              different stories. Walk it from the bottom up, by the time you
+              reach the roof, you've had an evening.
+            </p>
+
+            <div className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
+              {[
+                {
+                  icon: "ph-house-line",
+                  k: "Three floors",
+                  v: "Emporio · Mezzo · Il Tetto",
+                },
+                {
+                  icon: "ph-armchair",
+                  k: "Seats",
+                  v: "230 indoor + 120 rooftop",
+                },
+                {
+                  icon: "ph-wine",
+                  k: "Wine list",
+                  v: "Italian-led, 90+ bottles",
+                },
+                {
+                  icon: "ph-beer-bottle",
+                  k: "Drafts",
+                  v: "30 rotating · roof + ground",
+                },
+              ].map((s) => (
+                <div key={s.k} className="flex items-start gap-3">
+                  <i
+                    className={`ph-duotone ${s.icon} mt-0.5 text-2xl text-sienna`}
+                  />
+                  <div>
+                    <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+                      {s.k}
+                    </div>
+                    <div className="font-italic text-ink italic">{s.v}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <a
+              href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
+              target="_blank"
+              rel="noreferrer"
+              className="group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+            >
+              <i className="ph ph-cube text-base" />
+              Walk through in 360°
+              <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
           </div>
-          <Link
-            to="/menu"
-            className="text-sm font-semibold tracking-wider text-rosso uppercase hover:text-rosso-deep"
-          >
-            Browse the full menu →
-          </Link>
         </div>
+      </section>
 
-        <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
-          {tiles.map(([src, title, sub], i) => (
-            <article key={title} className="group">
-              <div className="relative aspect-[4/5] overflow-hidden bg-olive/5">
-                <img
-                  src={src}
-                  alt={title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <span className="absolute top-3 left-3 rounded-full bg-olive/80 px-2.5 py-1 text-eyebrow text-cream uppercase">
-                  0{i + 1}
-                </span>
-              </div>
-              <h3 className="font-display mt-5 text-h3 text-olive italic">
-                {title}
-              </h3>
-              <p className="mt-1 text-base text-olive/70">{sub}</p>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
+      {/* RESERVE / VISIT BAND */}
+      <section
+        id="visit"
+        className="relative overflow-hidden bg-sienna text-cream"
+      >
+        <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
+        <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
+          <div>
+            <div className="mb-4 font-italic text-lg text-cream/80 italic">
+              come hungry
+            </div>
+            <h2 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85]">
+              Reserve
+              <br />
+              <span className="font-italic italic">a table.</span>
+            </h2>
+            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-cream/85">
+              Mezzo (floor II) takes reservations through OpenTable. Emporio and
+              Il Tetto are first-come, climb the stairs, find a stool, ask for
+              the chalkboard.
+            </p>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-3 bg-cream px-8 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
+              >
+                <i className="ph ph-calendar-dots text-lg" />
+                Reserve Mezzo
+                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+              <a
+                href="tel:14122812810"
+                className="inline-flex items-center gap-3 border border-cream/60 px-8 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
+              >
+                <i className="ph ph-phone text-lg" />
+                412.281.2810
+              </a>
+            </div>
+          </div>
 
-function StoryTeaser() {
-  return (
-    <section className="mx-auto grid max-w-[1480px] grid-cols-12 items-center gap-8 px-6 py-28 lg:px-10">
-      <div className="col-span-12 md:col-span-6">
-        <div className="grid grid-cols-2 gap-4">
-          <img
-            src={img.hands}
-            alt="A chef shaping pasta"
-            className="aspect-[4/5] object-cover"
-          />
-          <img
-            src={img.tomatoes}
-            alt="Vine tomatoes"
-            className="mt-12 aspect-[4/5] object-cover"
-          />
+          <div>
+            <div className="mb-6 font-serif text-xs tracking-[0.4em] text-cream/70 uppercase">
+              Hours · by floor
+            </div>
+            <ul className="divide-y divide-cream/20 border-y border-cream/20">
+              {[
+                {
+                  roman: "I",
+                  name: "Emporio",
+                  hours: "Tue–Sun · 4:30 PM → 11 PM",
+                },
+                { roman: "II", name: "Mezzo", hours: "Wed–Sun · 5 PM → 10 PM" },
+                {
+                  roman: "III",
+                  name: "Il Tetto",
+                  hours: "Thu–Sat · 4 PM → late, weather-permitting",
+                },
+              ].map((row) => (
+                <li key={row.name} className="flex items-baseline gap-5 py-5">
+                  <span className="w-8 font-display text-3xl text-cream/70">
+                    {row.roman}
+                  </span>
+                  <span className="font-display text-2xl">{row.name}</span>
+                  <span
+                    className="mx-2 flex-1 translate-y-[-4px] border-b border-dotted border-cream/30"
+                    aria-hidden
+                  />
+                  <span className="font-italic text-sm text-cream/85 italic tabular-nums">
+                    {row.hours}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 font-italic text-sm leading-relaxed text-cream/70 italic">
+              Hours vary on holidays and during private events. The rooftop
+              closes when the sky says so.
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="col-span-12 md:col-span-6 md:pl-12">
-        <SectionLabel number="03" className="mb-8">
-          Our story
-        </SectionLabel>
-        <h2 className="font-sans text-h1 leading-none font-black text-olive uppercase">
-          Two grandmothers,
-          <br />
-          <span className="font-display font-normal text-rosso normal-case italic">
-            one stove.
-          </span>
-        </h2>
-        <p className="mt-8 max-w-md text-lg text-olive/80">
-          Sienna Mercato grew out of a notebook of recipes our chef Giulia
-          inherited from her grandmother in Modena — and a stubborn refusal to
-          let any of them be fancied up. We cook from that notebook, and we
-          argue about it nightly.
-        </p>
-        <Link
-          to="/story"
-          className="mt-10 inline-flex items-center gap-3 rounded-full border border-olive/30 px-6 py-3 text-sm font-semibold tracking-wider text-olive uppercase transition-all hover:bg-olive hover:text-cream"
-        >
-          Read our story →
-        </Link>
-      </div>
-    </section>
-  )
-}
-
-function Press() {
-  const quotes: Array<[string, string]> = [
-    [
-      '"The bucatini will ruin you for any other red sauce in the borough."',
-      "— The New York Times",
-    ],
-    ['"A trattoria that talks back, in the best possible way."', "— Eater NY"],
-    ['"Order the cacio. Order it twice."', "— Resy Hit List"],
-  ]
-  return (
-    <section className="bg-rosso text-cream">
-      <div className="mx-auto max-w-[1480px] px-6 py-28 lg:px-10">
-        <p className="mb-10 text-eyebrow text-cream/70 uppercase">
-          As heard around the table
-        </p>
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
-          {quotes.map(([q, attr]) => (
-            <figure key={q}>
-              <blockquote className="font-display text-h2 leading-tight italic">
-                {q}
-              </blockquote>
-              <figcaption className="mt-6 text-eyebrow text-cream/60 uppercase">
-                {attr}
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
-function VisitCta() {
-  return (
-    <section className="relative">
-      <div className="absolute inset-0">
-        <img src={img.interior} alt="" className="h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-olive/70" />
-      </div>
-      <div className="relative mx-auto max-w-[1480px] px-6 py-32 text-center text-cream lg:px-10">
-        <p className="text-eyebrow text-cream/70 uppercase">Come find us</p>
-        <h2 className="font-display mt-6 text-display leading-none italic">
-          Pull up a chair.
-        </h2>
-        <p className="mx-auto mt-8 max-w-xl text-lg text-cream/85">
-          The kitchen opens at five. The wine opens earlier. Hold a seat — we'll
-          save the corner booth.
-        </p>
-        <div className="mt-10 flex flex-wrap justify-center gap-4">
-          <Link
-            to="/reserve"
-            className="inline-flex items-center gap-3 rounded-full bg-rosso px-8 py-4 text-sm font-semibold tracking-wider text-cream uppercase transition-colors hover:bg-rosso-deep"
-          >
-            Reserve a table →
-          </Link>
-          <Link
-            to="/visit"
-            className="inline-flex items-center gap-3 rounded-full border border-cream/40 bg-cream/10 px-8 py-4 text-sm font-semibold tracking-wider text-cream uppercase transition-colors hover:bg-cream hover:text-olive"
-          >
-            Find us
-          </Link>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   )
 }
