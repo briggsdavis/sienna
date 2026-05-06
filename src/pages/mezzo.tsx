@@ -419,50 +419,52 @@ export function Mezzo() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
-              <span className="mr-1 font-display text-2xl text-cream/60">
-                II
-              </span>
-              <span className="swash" />
-              <span>the trattoria</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Mezzo
-            </h1>
-            <p className="mt-3 font-italic text-lg text-cream/80 italic">
-              Pizza & Charcuterie.
-            </p>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Linen, candlelight, and an oven that runs at eight hundred
-              degrees. Pasta hand-rolled at noon, a wine list that speaks
-              Piemontese, and the only OpenTable reservation in the building.
-            </p>
+          <div className="flex items-end justify-between">
+            <div className="rise" style={{ animationDelay: "0.05s" }}>
+              <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
+                <span className="mr-1 font-display text-2xl text-cream/60">
+                  II
+                </span>
+                <span className="swash" />
+                <span>the trattoria</span>
+              </div>
+              <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
+                Mezzo
+              </h1>
+              <p className="mt-3 font-italic text-lg text-cream/80 italic">
+                Pizza & Charcuterie.
+              </p>
+              <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
+                Linen, candlelight, and an oven at eight hundred degrees.
+                Pasta hand-rolled at noon, a wine list that speaks Piemontese.
+              </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 bg-sienna-deep px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna"
-              >
-                <i className="ph ph-calendar-dots text-sm" />
-                Reserve a table
-                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="#menu"
-                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-              >
-                <i className="ph ph-list-magnifying-glass text-sm" />
-                View the menu
-              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-lift group inline-flex items-center gap-2 bg-sienna-deep px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna"
+                >
+                  <i className="ph ph-calendar-dots text-sm" />
+                  Reserve a table
+                  <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href="#menu"
+                  className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                >
+                  <i className="ph ph-list-magnifying-glass text-sm" />
+                  View the menu
+                </a>
+              </div>
+            </div>
+
+            {/* Roman numeral watermark — bottom aligns with button row, right aligns with nav margin */}
+            <div className="pointer-events-none hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
+              II
             </div>
           </div>
-        </div>
-
-        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/8 select-none lg:right-12 lg:text-[28vw]">
-          II
         </div>
       </section>
 
@@ -823,7 +825,6 @@ export function Mezzo() {
       </FadeIn>
 
       {/* CTA STRIP, climb to the roof */}
-      <FadeIn>
       <section className="relative bg-paper">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
@@ -856,7 +857,6 @@ export function Mezzo() {
           </div>
         </div>
       </section>
-      </FadeIn>
     </div>
   )
 }

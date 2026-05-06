@@ -281,50 +281,52 @@ export function Emporio() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-sienna-bright italic">
-              <span className="mr-1 font-display text-2xl text-cream/60">
-                I
-              </span>
-              <span className="swash" />
-              <span>the meatball joint</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Emporio
-            </h1>
-            <p className="mt-3 font-italic text-lg text-cream/80 italic">
-              A Meatball Joint.
-            </p>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Five meats, ten sauces, one ground floor that runs loud. Pull up a
-              stool, build a bowl, ask the bartender what's on the chalkboard.
-            </p>
+          <div className="flex items-end justify-between">
+            <div className="rise" style={{ animationDelay: "0.05s" }}>
+              <div className="mb-4 flex items-center gap-3 font-italic text-base text-sienna-bright italic">
+                <span className="mr-1 font-display text-2xl text-cream/60">
+                  I
+                </span>
+                <span className="swash" />
+                <span>the meatball joint</span>
+              </div>
+              <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
+                Emporio
+              </h1>
+              <p className="mt-3 font-italic text-lg text-cream/80 italic">
+                A Meatball Joint.
+              </p>
+              <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
+                Five meats, ten sauces, one ground floor that runs loud. Pull up a
+                stool, build a bowl, ask the bartender what's on the chalkboard.
+              </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase"
-              >
-                <i className="ph ph-bag text-sm" />
-                Order pickup
-                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="#menu"
-                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-              >
-                <i className="ph ph-list-magnifying-glass text-sm" />
-                View the menu
-              </a>
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase"
+                >
+                  <i className="ph ph-bag text-sm" />
+                  Order pickup
+                  <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </a>
+                <a
+                  href="#menu"
+                  className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+                >
+                  <i className="ph ph-list-magnifying-glass text-sm" />
+                  View the menu
+                </a>
+              </div>
+            </div>
+
+            {/* Roman numeral watermark — bottom aligns with button row, right aligns with nav margin */}
+            <div className="pointer-events-none hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
+              I
             </div>
           </div>
-        </div>
-
-        {/* big "I" watermark */}
-        <div className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 font-display text-[40vw] leading-none text-cream/8 select-none lg:right-12 lg:text-[28vw]">
-          I
         </div>
       </section>
 
@@ -761,7 +763,6 @@ export function Emporio() {
       </FadeIn>
 
       {/* CTA STRIP */}
-      <FadeIn>
       <section className="relative bg-sienna text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
@@ -794,7 +795,6 @@ export function Emporio() {
           </div>
         </div>
       </section>
-      </FadeIn>
     </div>
   )
 }

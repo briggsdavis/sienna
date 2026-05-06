@@ -34,14 +34,23 @@ const RESERVE_OPTIONS = [
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [reserveOpen, setReserveOpen] = useState(false)
   const { pathname } = useLocation()
   const onHome = pathname === "/"
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const lastScrollY = useRef(0)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const onScroll = () => {
+      const y = window.scrollY
+      const dy = y - lastScrollY.current
+      if (dy > 6 && y > 80) setHidden(true)
+      else if (dy < -2) setHidden(false)
+      setScrolled(y > 40)
+      lastScrollY.current = y
+    }
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
@@ -76,6 +85,8 @@ export function Nav() {
     <>
       <header
         className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
+          hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"
+        } ${
           transparent
             ? "bg-transparent"
             : "border-b border-ink/10 bg-paper/92 backdrop-blur-md"
