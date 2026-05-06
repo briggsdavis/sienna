@@ -231,7 +231,7 @@ export function Tetto() {
             className="slow-zoom h-full w-full object-cover"
           />
         </div>
-        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-black/72" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase lg:px-12">
           <span className="flex items-center gap-2">
@@ -303,63 +303,69 @@ export function Tetto() {
         </div>
       </section>
 
-      {/* MANIFESTO + WEATHER */}
-      <section className="relative overflow-hidden bg-paper py-28">
-        <div className="pointer-events-none absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=60"
-            alt=""
-            className="h-full w-full object-cover opacity-[0.04] mix-blend-multiply"
-          />
-        </div>
-        <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:px-12">
+      {/* PHILOSOPHY */}
+      <section className="relative overflow-hidden bg-paper py-24">
+        <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
           <FadeIn>
-            <div>
-              <div className="mb-4 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-                the roof
+            <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
+              <img
+                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80"
+                alt="Il Tetto rooftop"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-gold uppercase">
+                  Floor III · Rooftop
+                </div>
+                <div className="font-display text-3xl leading-tight text-cream">
+                  942 Penn Avenue
+                </div>
+                <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                  Pittsburgh, PA · Thu–Sun from 4 PM
+                </div>
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-                Climb three flights.
-                <br />
-                <span className="font-italic text-sienna italic">
-                  The view does the rest.
-                </span>
-              </h2>
-              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-                No reservations, no covers, no dress code. Find a stool at the
-                bar, find a corner at a long table, find a friend you didn't know
-                you'd run into. The retractable roof opens by 6 if the forecast
-                says yes, and stays open until the wind says otherwise.
-              </p>
-              <p className="mt-6 font-italic text-lg leading-relaxed text-ink-soft italic">
-                Whole pies from the wood oven downstairs ride the dumbwaiter up.
-                The chalkboard rotates. The bartender remembers your last pour.
-              </p>
+              <div className="absolute top-6 left-6 bg-ink px-3 py-1.5 font-serif text-2xs tracking-[0.35em] text-cream uppercase">
+                Walk-in only · no reservations
+              </div>
             </div>
           </FadeIn>
 
-          <FadeIn delay={0.12}>
-            <ul className="grid grid-cols-2 gap-6 self-start">
-              {[
-                { k: "30", v: "rotating drafts", icon: "ph-beer-stein" },
-                { k: "120", v: "rooftop seats", icon: "ph-armchair" },
-                { k: "0", v: "reservations needed", icon: "ph-stairs" },
-                { k: "weather", v: "permitting", icon: "ph-cloud-sun" },
-              ].map((s) => (
-                <li
-                  key={s.v}
-                  className="flex flex-col items-start gap-3 border border-ink/10 bg-cream p-6"
-                >
-                  <i className={`ph-duotone ${s.icon} text-3xl text-sienna`} />
-                  <div className="font-display text-4xl leading-none text-ink">
-                    {s.k}
+          <FadeIn delay={0.15}>
+            <div className="flex flex-col justify-center">
+              <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+                philosophy
+              </div>
+              <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
+                The view is the menu.
+                <span className="font-italic text-sienna italic">
+                  {" "}Everything else{" "}
+                </span>
+                is cold pints and good company.
+              </p>
+              <div className="mt-8 flex">
+                <span className="swash" />
+              </div>
+              <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+                No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest.
+              </p>
+              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
+                {[
+                  { k: "30", v: "rotating drafts" },
+                  { k: "120", v: "rooftop seats" },
+                  { k: "0", v: "reservations needed" },
+                ].map((s) => (
+                  <div key={s.v}>
+                    <div className="font-display text-4xl leading-none text-sienna">
+                      {s.k}
+                    </div>
+                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                      {s.v}
+                    </div>
                   </div>
-                  <div className="font-italic text-sm text-ink-soft italic">
-                    {s.v}
-                  </div>
-                </li>
-              ))}
-            </ul>
+                ))}
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>

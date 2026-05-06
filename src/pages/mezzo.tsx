@@ -390,7 +390,6 @@ function WineRow({
 
 export function Mezzo() {
   const heroParallax = useParallax(0.15)
-  const statsRef = useStaggerObserver<HTMLUListElement>(0.1)
 
   return (
     <div className="relative">
@@ -475,47 +474,75 @@ export function Mezzo() {
         </div>
       </section>
 
-      {/* MANIFESTO */}
-      <section className="grain relative overflow-hidden bg-paper py-32 text-center">
-        <div className="pointer-events-none absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2000&q=60"
-            alt=""
-            className="h-full w-full object-cover opacity-[0.04] mix-blend-multiply"
-          />
-        </div>
-        <div className="relative mx-auto max-w-5xl px-6">
+      {/* PHILOSOPHY */}
+      <section className="relative overflow-hidden bg-paper py-24">
+        <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
           <FadeIn>
-            <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna-deep uppercase">
-              philosophy
+            <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
+              <img
+                src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1200&q=80"
+                alt="Mezzo wood-fired pizza"
+                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                  Floor II · Second Floor
+                </div>
+                <div className="font-display text-3xl leading-tight text-cream">
+                  942 Penn Avenue
+                </div>
+                <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                  Pittsburgh, PA · Wed–Sun from 5 PM
+                </div>
+              </div>
+              <div className="absolute top-6 left-6 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.35em] text-cream uppercase">
+                Reservations via OpenTable
+              </div>
             </div>
-            <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
-              A second floor is for
-              <span className="font-italic text-sienna-deep italic">
-                {" "}
-                slowing down.{" "}
-              </span>
-              Two hours, four courses, a bottle that's still a few sips from empty
-              when the candle burns down.
-            </p>
           </FadeIn>
-          <FadeIn delay={0.12}>
-            <div className="mt-10 flex justify-center">
-              <span className="swash" />
+
+          <FadeIn delay={0.15}>
+            <div className="flex flex-col justify-center">
+              <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna-deep uppercase">
+                philosophy
+              </div>
+              <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
+                A second floor is for
+                <span className="font-italic text-sienna-deep italic">
+                  {" "}slowing down.{" "}
+                </span>
+                Two hours, four courses, a bottle still a few sips from empty when the candle burns low.
+              </p>
+              <div className="mt-8 flex">
+                <span className="swash" />
+              </div>
+              <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+                The kitchen rolls pasta at noon and lights the wood-fired oven before dinner. The cellar is Italian-led but not Italian-only, bottles chosen for the table you're sitting at, not the spreadsheet.
+              </p>
+              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
+                {[
+                  { k: "800°F", v: "oven temperature" },
+                  { k: "90 sec", v: "average pizza bake" },
+                  { k: "noon", v: "pasta rolled daily" },
+                ].map((s) => (
+                  <div key={s.v}>
+                    <div className="font-display text-4xl leading-none text-sienna-deep">
+                      {s.k}
+                    </div>
+                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                      {s.v}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </FadeIn>
-          <FadeIn delay={0.22}>
-            <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-              The kitchen rolls pasta at noon and lights the wood-fired oven before
-              dinner. The cellar is Italian-led but not Italian-only, with bottles
-              chosen for the table you're sitting at, not the spreadsheet.
-            </p>
           </FadeIn>
         </div>
       </section>
 
-      {/* THE OVEN, HERO MOMENT */}
-      <section className="relative overflow-hidden bg-ink py-28 text-paper">
+      {/* THE OVEN */}
+      <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-32 -right-32 h-[600px] w-[600px] rounded-full bg-sienna-deep opacity-50 blur-[180px]" />
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:px-12">
           <FadeIn>
@@ -526,7 +553,7 @@ export function Mezzo() {
                 className="absolute inset-0 h-full w-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
-              <div className="absolute right-6 bottom-6 left-6 flex items-end justify-between gap-4">
+              <div className="absolute right-6 bottom-6 left-6">
                 <div className="font-serif text-2xs tracking-[0.4em] text-cream/80 uppercase">
                   <i className="ph-fill ph-flame mr-2 text-sienna-bright" />
                   live fire · oak & cherry
@@ -548,32 +575,8 @@ export function Mezzo() {
                 </span>
               </h2>
               <p className="mt-8 max-w-md font-body text-xl leading-relaxed text-paper/85">
-                A wood-fired oven from Naples, lit at four, holding eight-hundred
-                before service. Each pizza takes ninety seconds, leopard-spotted
-                crust, blistered edge, mozzarella that pulls in long strings.
+                A wood-fired oven from Naples, lit at four, holding eight-hundred before service. Each pizza takes ninety seconds, leopard-spotted crust, blistered edge, mozzarella that pulls in long strings.
               </p>
-              <ul ref={statsRef} className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
-                {[
-                  { k: "800°F", v: "deck temperature", icon: "ph-flame" },
-                  { k: "90 sec", v: "average bake", icon: "ph-timer" },
-                  { k: "5", v: "pies on the menu", icon: "ph-pizza" },
-                  { k: "noon", v: "pasta rolled daily", icon: "ph-clock" },
-                ].map((s) => (
-                  <li key={s.k} className="flex items-start gap-3">
-                    <i
-                      className={`ph-duotone ${s.icon} mt-0.5 text-2xl text-sienna-bright`}
-                    />
-                    <div>
-                      <div className="font-display text-2xl text-cream">
-                        {s.k}
-                      </div>
-                      <div className="font-italic text-sm text-paper/70 italic">
-                        {s.v}
-                      </div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
             </div>
           </FadeIn>
         </div>
