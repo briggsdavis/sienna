@@ -101,7 +101,7 @@ export function Footer() {
               </Link>
             </li>
             <li>
-              <Link className="under hover:text-sienna-bright" to="/events">
+              <Link className="under hover:text-sienna-bright" to="/catering">
                 Catering
               </Link>
             </li>

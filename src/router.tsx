@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router"
+import { Catering } from "@/pages/catering"
 import { Emporio } from "@/pages/emporio"
 import { Events } from "@/pages/events"
 import { Home } from "@/pages/home"
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
       { path: "/mezzo", element: <Mezzo /> },
       { path: "/tetto", element: <Tetto /> },
       { path: "/events", element: <Events /> },
+      { path: "/catering", element: <Catering /> },
       { path: "/order", element: <Order /> },
       { path: "*", element: <NotFound /> },
     ],

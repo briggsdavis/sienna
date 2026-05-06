@@ -5,7 +5,8 @@ const LINKS = [
   { to: "/emporio", label: "Emporio", roman: "I" },
   { to: "/mezzo", label: "Mezzo", roman: "II" },
   { to: "/tetto", label: "Il Tetto", roman: "III" },
-  { to: "/events", label: "Events & Catering", roman: "" },
+  { to: "/events", label: "Events", roman: "" },
+  { to: "/catering", label: "Catering", roman: "" },
 ] as const
 
 const ORDER_URL =
