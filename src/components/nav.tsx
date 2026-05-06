@@ -8,6 +8,9 @@ const LINKS = [
   { to: "/events", label: "Events & Catering", roman: "" },
 ] as const
 
+const ORDER_URL =
+  "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+
 const RESERVE_OPTIONS = [
   {
     label: "Emporio",
@@ -248,7 +251,21 @@ export function Nav() {
             </NavLink>
           ))}
 
-          <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="mt-8">
+            <a
+              href={ORDER_URL}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="btn-lift inline-flex items-center gap-3 bg-sienna px-8 py-3 font-serif text-sm tracking-[0.25em] text-cream uppercase"
+            >
+              <i className="ph ph-bag text-base" />
+              Order Online
+              <i className="ph ph-arrow-up-right text-xs" />
+            </a>
+          </div>
+
+          <div className="mt-8 flex flex-col items-center gap-4">
             <a
               href="tel:14122812810"
               className="flex items-center gap-2 font-serif text-sm tracking-wider text-ink-soft transition-colors hover:text-sienna"

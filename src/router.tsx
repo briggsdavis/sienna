@@ -5,6 +5,7 @@ import { Home } from "@/pages/home"
 import { Layout } from "@/pages/layout"
 import { Mezzo } from "@/pages/mezzo"
 import { NotFound } from "@/pages/not-found"
+import { Order } from "@/pages/order"
 import { Tetto } from "@/pages/tetto"
 
 export const router = createBrowserRouter([
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
       { path: "/mezzo", element: <Mezzo /> },
       { path: "/tetto", element: <Tetto /> },
       { path: "/events", element: <Events /> },
+      { path: "/order", element: <Order /> },
       { path: "*", element: <NotFound /> },
     ],
   },

@@ -112,6 +112,16 @@ export function Footer() {
                 target="_blank"
                 rel="noreferrer"
               >
+                Order Online
+              </a>
+            </li>
+            <li>
+              <a
+                className="under hover:text-sienna-bright"
+                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+                target="_blank"
+                rel="noreferrer"
+              >
                 Gift Cards
               </a>
             </li>

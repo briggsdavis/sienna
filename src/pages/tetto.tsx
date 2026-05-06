@@ -311,7 +311,7 @@ export function Tetto() {
             className="h-full w-full object-cover opacity-[0.04] mix-blend-multiply"
           />
         </div>
-        <div className="mx-auto grid max-w-[1400px] gap-16 px-6 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:px-12 relative">
+        <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.4fr_1fr] lg:items-center lg:px-12">
           <div>
             <div className="mb-4 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
               the roof
@@ -413,59 +413,28 @@ export function Tetto() {
 
       {/* BEER OF THE MONTH FEATURE */}
       <FadeIn>
-      <section className="relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="pointer-events-none absolute -top-32 -right-20 h-[480px] w-[480px] rounded-full bg-gold/40 blur-[160px]" />
-        <div className="relative mx-auto grid max-w-[1400px] gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:px-12">
-          <div className="group relative aspect-[4/5] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=1400&q=80"
-              alt="A pint of Big Wave blonde ale at sunset"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-            <div className="absolute top-6 left-6 bg-gold px-3 py-1.5 font-serif text-2xs tracking-[0.4em] text-ink uppercase">
-              beer of the month
+      <section className="relative bg-ink py-24 text-paper">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div className="mb-2 font-italic text-base text-gold italic">
+                beer of the month · may
+              </div>
+              <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
+                {FEATURED_DRAFT.name}
+              </h2>
             </div>
-          </div>
-
-          <div>
-            <div className="mb-3 flex items-center gap-3 font-italic text-lg text-gold italic">
-              <i className="ph-duotone ph-beer-stein text-2xl" />
-              {FEATURED_DRAFT.brewery} · {FEATURED_DRAFT.origin}
-            </div>
-            <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85]">
-              {FEATURED_DRAFT.name}
-            </h2>
-            <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
-              {FEATURED_DRAFT.notes}
+            <p className="font-italic text-base text-paper/65 italic">
+              {FEATURED_DRAFT.brewery} · {FEATURED_DRAFT.style} · {FEATURED_DRAFT.abv} ABV
             </p>
-
-            <dl className="mt-10 grid max-w-md grid-cols-3 gap-6">
-              <div>
-                <dt className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
-                  Style
-                </dt>
-                <dd className="mt-1 font-display text-xl text-cream">
-                  {FEATURED_DRAFT.style}
-                </dd>
-              </div>
-              <div>
-                <dt className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
-                  ABV
-                </dt>
-                <dd className="mt-1 font-display text-xl text-gold">
-                  {FEATURED_DRAFT.abv}
-                </dd>
-              </div>
-              <div>
-                <dt className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
-                  IBU
-                </dt>
-                <dd className="mt-1 font-display text-xl text-cream">
-                  {FEATURED_DRAFT.ibu}
-                </dd>
-              </div>
-            </dl>
+          </div>
+          <div className="group relative aspect-[21/9] overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=2400&q=80"
+              alt="A pint of Big Wave blonde ale at sunset"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
           </div>
         </div>
       </section>
@@ -509,7 +478,7 @@ export function Tetto() {
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-30 blur-[140px]" />
         <div className="pointer-events-none absolute -bottom-20 -left-20 h-[380px] w-[380px] rounded-full bg-gold opacity-20 blur-[130px]" />
-        <div className="relative mx-auto max-w-[1400px] px-6 lg:px-12">
+        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <div>
               <div className="mb-3 font-italic text-lg text-gold italic">
@@ -553,7 +522,7 @@ export function Tetto() {
       {/* WEATHER & HOURS */}
       <FadeIn>
       <section className="relative bg-paper py-24">
-        <div className="mx-auto grid max-w-[1400px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
+        <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
           <div>
             <div className="mb-3 font-italic text-lg text-sienna italic">
               il tempo · the weather
