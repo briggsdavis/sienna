@@ -282,7 +282,16 @@ export function Home() {
 
       {/* MANIFESTO */}
       <FadeIn delay={0.05}>
-      <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
+      <section className="grain relative overflow-hidden bg-paper py-32 text-center">
+        {/* subtle background image */}
+        <div className="pointer-events-none absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2000&q=60"
+            alt=""
+            className="h-full w-full object-cover opacity-[0.045] mix-blend-multiply"
+          />
+        </div>
+        <div className="relative mx-auto max-w-5xl px-6">
         <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
           The manifesto
         </div>
@@ -300,6 +309,7 @@ export function Home() {
           on the roof with thirty taps and the lights of downtown. Your evening
           climbs the staircase with you.
         </p>
+        </div>
       </section>
       </FadeIn>
 

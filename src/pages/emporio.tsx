@@ -328,28 +328,73 @@ export function Emporio() {
         </div>
       </section>
 
-      {/* PHILOSOPHY */}
+      {/* PHILOSOPHY + LOCATION */}
       <FadeIn>
-      <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
-        <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-          philosophy
+      <section className="relative overflow-hidden bg-paper py-24">
+        <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
+          {/* Image with location overlay */}
+          <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
+            <img
+              src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1200&q=80"
+              alt="Emporio meatballs"
+              className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                Floor I · Ground Floor
+              </div>
+              <div className="font-display text-3xl leading-tight text-cream">
+                942 Penn Avenue
+              </div>
+              <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                Pittsburgh, PA · Open Tue–Sun from 4:30 PM
+              </div>
+            </div>
+            <div className="absolute top-6 left-6 flex items-center gap-2 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.35em] text-cream uppercase">
+              Walk-in only · no reservations
+            </div>
+          </div>
+
+          {/* Text */}
+          <div className="flex flex-col justify-center">
+            <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+              philosophy
+            </div>
+            <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
+              The meatball is sacred.
+              <span className="font-italic text-sienna italic">
+                {" "}
+                Everything else{" "}
+              </span>
+              is a delivery system, bun, bowl, hoagie, fork.
+            </p>
+            <div className="mt-8 flex">
+              <span className="swash" />
+            </div>
+            <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+              We grind the meat in-house. We roll by hand at noon. The sauce
+              list runs ten deep so the same ball can be a different dinner ten
+              nights running.
+            </p>
+            <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
+              {[
+                { k: "5", v: "meatball varieties" },
+                { k: "10", v: "house sauces" },
+                { k: "$18", v: "build-your-own bowl" },
+              ].map((s) => (
+                <div key={s.v}>
+                  <div className="font-display text-4xl leading-none text-sienna">
+                    {s.k}
+                  </div>
+                  <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                    {s.v}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
-          The meatball is sacred.
-          <span className="font-italic text-sienna italic">
-            {" "}
-            Everything else{" "}
-          </span>
-          is a delivery system, bun, bowl, hoagie, fork.
-        </p>
-        <div className="mt-10 flex justify-center">
-          <span className="swash" />
-        </div>
-        <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-          We grind the meat in-house. We roll by hand at noon. The sauce list
-          runs ten deep so the same ball can be a different dinner ten nights
-          running.
-        </p>
       </section>
       </FadeIn>
 
@@ -729,7 +774,7 @@ export function Emporio() {
               <span className="font-italic italic">Stay loud.</span>
             </h3>
           </div>
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap justify-end gap-4">
             <a
               href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
               target="_blank"

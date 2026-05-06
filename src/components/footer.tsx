@@ -2,7 +2,7 @@ import { Link } from "react-router"
 
 export function Footer() {
   return (
-    <footer className="relative mt-32 bg-ink text-paper">
+    <footer className="relative bg-ink text-paper">
       <div className="mx-auto grid max-w-[1600px] gap-12 px-6 py-20 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:px-12">
         <div>
           <div className="flex items-baseline gap-2">

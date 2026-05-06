@@ -468,27 +468,36 @@ export function Mezzo() {
 
       {/* MANIFESTO */}
       <FadeIn>
-      <section className="grain relative mx-auto max-w-5xl px-6 py-32 text-center">
-        <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna-deep uppercase">
-          philosophy
+      <section className="grain relative overflow-hidden bg-paper py-32 text-center">
+        <div className="pointer-events-none absolute inset-0">
+          <img
+            src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2000&q=60"
+            alt=""
+            className="h-full w-full object-cover opacity-[0.04] mix-blend-multiply"
+          />
         </div>
-        <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
-          A second floor is for
-          <span className="font-italic text-sienna-deep italic">
-            {" "}
-            slowing down.{" "}
-          </span>
-          Two hours, four courses, a bottle that's still a few sips from empty
-          when the candle burns down.
-        </p>
-        <div className="mt-10 flex justify-center">
-          <span className="swash" />
+        <div className="relative mx-auto max-w-5xl px-6">
+          <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna-deep uppercase">
+            philosophy
+          </div>
+          <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
+            A second floor is for
+            <span className="font-italic text-sienna-deep italic">
+              {" "}
+              slowing down.{" "}
+            </span>
+            Two hours, four courses, a bottle that's still a few sips from empty
+            when the candle burns down.
+          </p>
+          <div className="mt-10 flex justify-center">
+            <span className="swash" />
+          </div>
+          <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
+            The kitchen rolls pasta at noon and lights the wood-fired oven before
+            dinner. The cellar is Italian-led but not Italian-only, with bottles
+            chosen for the table you're sitting at, not the spreadsheet.
+          </p>
         </div>
-        <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-          The kitchen rolls pasta at noon and lights the wood-fired oven before
-          dinner. The cellar is Italian-led but not Italian-only, with bottles
-          chosen for the table you're sitting at, not the spreadsheet.
-        </p>
       </section>
       </FadeIn>
 
@@ -743,61 +752,60 @@ export function Mezzo() {
       <FadeIn>
       <section className="relative overflow-hidden bg-sienna-deep text-cream">
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
-        <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
-          <div>
-            <div className="mb-4 font-italic text-lg text-cream/80 italic">
+        <div className="mx-auto grid max-w-[1600px] gap-12 px-6 py-20 lg:grid-cols-2 lg:items-start lg:px-12">
+          {/* Left: CTA */}
+          <div className="pt-0 lg:pt-2">
+            <div className="mb-3 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
               the only reservation in the building
             </div>
-            <h2 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85]">
-              Book a table
-              <br />
-              <span className="font-italic italic">on Floor II.</span>
+            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-[0.9]">
+              Book a table on Floor II.
             </h2>
-            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-cream/85">
+            <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-cream/80">
               Mezzo takes reservations through OpenTable, seven days out. Bar
-              seats are walk-in. Larger parties, six or more, call us, and we'll
-              put you near the window.
+              seats are walk-in. Larger parties of six or more, call us directly.
             </p>
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="mt-8 flex flex-wrap gap-3">
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                 target="_blank"
                 rel="noreferrer"
-                className="group inline-flex items-center gap-3 bg-cream px-8 py-4 font-serif text-sm tracking-[0.3em] text-sienna-deep uppercase transition-colors hover:bg-paper"
+                className="btn-lift group inline-flex items-center gap-2 bg-cream px-6 py-3 font-serif text-xs tracking-[0.25em] text-sienna-deep uppercase transition-colors hover:bg-paper"
               >
-                <i className="ph ph-calendar-dots text-lg" />
+                <i className="ph ph-calendar-dots text-sm" />
                 Reserve on OpenTable
-                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </a>
               <a
                 href="tel:14122812810"
-                className="inline-flex items-center gap-3 border border-cream/60 px-8 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
+                className="btn-lift inline-flex items-center gap-2 border border-cream/50 px-6 py-3 font-serif text-xs tracking-[0.25em] uppercase transition-colors hover:bg-cream/10"
               >
-                <i className="ph ph-phone text-lg" />
+                <i className="ph ph-phone text-sm" />
                 412.281.2810
               </a>
             </div>
           </div>
 
-          <div>
-            <div className="mb-6 font-serif text-xs tracking-[0.4em] text-cream/70 uppercase">
+          {/* Right: Hours */}
+          <div className="border-t border-cream/20 pt-12 lg:border-t-0 lg:border-l lg:border-l-cream/20 lg:pl-12 lg:pt-2">
+            <div className="mb-5 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
               Hours · Floor II
             </div>
-            <ul className="divide-y divide-cream/20 border-y border-cream/20">
+            <ul className="divide-y divide-cream/15">
               {[
                 { d: "Wed", h: "5:00 → 9:30 PM" },
                 { d: "Thu", h: "5:00 → 10:00 PM" },
                 { d: "Fri", h: "5:00 → 11:00 PM" },
                 { d: "Sat", h: "4:30 → 11:00 PM" },
                 { d: "Sun", h: "4:30 → 9:30 PM" },
-                { d: "Mon to Tue", h: "Closed" },
+                { d: "Mon – Tue", h: "Closed" },
               ].map((row) => (
-                <li key={row.d} className="flex items-baseline gap-5 py-4">
-                  <span className="w-24 font-serif text-sm tracking-[0.2em] text-cream/85 uppercase">
+                <li key={row.d} className="flex items-baseline gap-4 py-3">
+                  <span className="w-20 font-serif text-xs tracking-[0.2em] text-cream/70 uppercase">
                     {row.d}
                   </span>
                   <span
-                    className="mx-2 hidden flex-1 translate-y-[-4px] border-b border-dotted border-cream/30 sm:block"
+                    className="mx-1 hidden flex-1 translate-y-[-4px] border-b border-dotted border-cream/20 sm:block"
                     aria-hidden
                   />
                   <span className="font-italic text-sm text-cream/85 italic tabular-nums">
@@ -806,8 +814,8 @@ export function Mezzo() {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 font-italic text-sm leading-relaxed text-cream/70 italic">
-              Last seating thirty minutes before close. The bar pours later.
+            <p className="mt-5 font-italic text-xs leading-relaxed text-cream/55 italic">
+              Last seating 30 min before close. Bar pours later.
             </p>
           </div>
         </div>
