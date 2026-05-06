@@ -31,10 +31,11 @@ export function FadeIn({
   useEffect(() => {
     const el = ref.current
     if (!el) return
+    const BASE = 0.12
     const obs = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          el.style.transitionDelay = `${delay}s`
+          el.style.transitionDelay = `${BASE + delay}s`
           el.classList.add("fade-in-visible")
           obs.disconnect()
         }

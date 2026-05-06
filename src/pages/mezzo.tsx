@@ -444,7 +444,7 @@ export function Mezzo() {
                   href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                   target="_blank"
                   rel="noreferrer"
-                  className="btn-lift group inline-flex items-center gap-2 bg-sienna-deep px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna"
+                  className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
                 >
                   <i className="ph ph-calendar-dots text-sm" />
                   Reserve a table

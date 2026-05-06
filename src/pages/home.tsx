@@ -204,7 +204,7 @@ export function Home() {
         {/* center — centered & chique */}
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-center px-6 text-center lg:px-12">
           <div className="rise mx-auto max-w-3xl" style={{ animationDelay: "0.1s" }}>
-            <div className="mb-5 flex items-center justify-center gap-3 font-italic text-base tracking-wide text-sienna-bright italic">
+            <div className="mb-5 flex items-center justify-center gap-3 font-italic text-base tracking-wide text-cream/65 italic">
               <span className="swash" />
               <span>Trattoria · Pizzeria · Rooftop</span>
               <span className="swash" />
@@ -212,7 +212,7 @@ export function Home() {
             <h1 className="text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream">
               Sienna
               <br />
-              <span className="font-italic font-light text-sienna-bright italic">
+              <span className="font-italic font-light text-cream/90 italic">
                 Mercato
               </span>
             </h1>
@@ -281,9 +281,7 @@ export function Home() {
       </FadeIn>
 
       {/* MANIFESTO */}
-      <FadeIn delay={0.05}>
       <section className="grain relative overflow-hidden bg-paper py-32 text-center">
-        {/* subtle background image */}
         <div className="pointer-events-none absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2000&q=60"
@@ -292,26 +290,29 @@ export function Home() {
           />
         </div>
         <div className="relative mx-auto max-w-5xl px-6">
-        <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-          The manifesto
-        </div>
-        <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
-          Three floors.
-          <span className="font-italic text-sienna italic"> Three rooms. </span>
-          One Italian house, built into a hundred-year-old building on Penn
-          Avenue, in the only city that calls itself a triangle.
-        </p>
-        <div className="mt-10 flex justify-center">
-          <span className="swash" />
-        </div>
-        <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-          Walk in for a meatball. Stay for the wood-fired pizza. End the night
-          on the roof with thirty taps and the lights of downtown. Your evening
-          climbs the staircase with you.
-        </p>
+          <FadeIn>
+            <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+              the italian house
+            </div>
+            <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
+              Three floors.
+              <span className="font-italic text-sienna italic"> Three rooms. </span>
+              One Italian house, built into a hundred-year-old building on Penn
+              Avenue, in the only city that calls itself a triangle.
+            </p>
+          </FadeIn>
+          <FadeIn delay={0.18}>
+            <div className="mt-10 flex justify-center">
+              <span className="swash" />
+            </div>
+            <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
+              Walk in for a meatball. Stay for the wood-fired pizza. End the night
+              on the roof with thirty taps and the lights of downtown. Your evening
+              climbs the staircase with you.
+            </p>
+          </FadeIn>
         </div>
       </section>
-      </FadeIn>
 
       {/* THREE FLOORS */}
       <section className="relative">
@@ -481,7 +482,6 @@ export function Home() {
       </FadeIn>
 
       {/* TONIGHT, happy hour & rotating */}
-      <FadeIn>
       <section
         id="tonight"
         className="relative overflow-hidden bg-ink py-28 text-paper"
@@ -491,22 +491,24 @@ export function Home() {
           <div className="absolute -right-20 -bottom-40 h-[380px] w-[380px] rounded-full bg-gold blur-[120px]" />
         </div>
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <div className="mb-2 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
-                <i className="ph-fill ph-flame neon-flicker text-xl" />
-                tonight
+          <FadeIn>
+            <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <div className="mb-2 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
+                  <i className="ph-fill ph-flame neon-flicker text-xl" />
+                  tonight
+                </div>
+                <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
+                  Tonight at{" "}
+                  <span className="text-sienna-bright italic">Sienna</span>
+                </h2>
               </div>
-              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
-                Tonight at{" "}
-                <span className="text-sienna-bright italic">Sienna</span>
-              </h2>
+              <div className="max-w-sm font-serif text-sm tracking-[0.3em] text-paper/60 uppercase">
+                Updated daily · what's pouring, what's frying, what's on the
+                chalkboard.
+              </div>
             </div>
-            <div className="max-w-sm font-serif text-sm tracking-[0.3em] text-paper/60 uppercase">
-              Updated daily · what's pouring, what's frying, what's on the
-              chalkboard.
-            </div>
-          </div>
+          </FadeIn>
 
           <div className="grid gap-px bg-paper/15 sm:grid-cols-2 lg:grid-cols-4">
             {[
@@ -516,6 +518,7 @@ export function Home() {
                 desc: "Housemade meatballs fried golden, glazed in sweet chili with a touch of heat.",
                 meta: "$14 · Emporio",
                 icon: "ph-bowl-food",
+                delay: 0,
               },
               {
                 tag: "Beer of the Month",
@@ -523,6 +526,7 @@ export function Home() {
                 desc: "Kona Brewing · Hawaiian blonde ale, light hop aroma, beach-ready.",
                 meta: "4.4% ABV · Il Tetto",
                 icon: "ph-beer-stein",
+                delay: 0.1,
               },
               {
                 tag: "Happy Hour",
@@ -530,6 +534,7 @@ export function Home() {
                 desc: "½-off drafts · ½-off well drinks · ½-off small plates · $5 espresso martini.",
                 meta: "Tue–Fri · floors I & III",
                 icon: "ph-clock-countdown",
+                delay: 0.2,
               },
               {
                 tag: "Seasonal",
@@ -537,132 +542,128 @@ export function Home() {
                 desc: "Big Springs whiskey, ginger beer, fresh lime, a whisper of cinnamon.",
                 meta: "$13 · all floors",
                 icon: "ph-wine",
+                delay: 0.3,
               },
             ].map((card) => (
-              <div
-                key={card.title}
-                className="group relative bg-ink p-8 transition-colors hover:bg-sienna-deep"
-              >
-                <i
-                  className={`ph-duotone ${card.icon} text-4xl text-sienna-bright transition-colors group-hover:text-cream`}
-                />
-                <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-paper/50 uppercase group-hover:text-paper/80">
-                  {card.tag}
+              <FadeIn key={card.title} delay={card.delay} className="h-full">
+                <div className="group relative h-full bg-ink p-8 transition-colors hover:bg-sienna-deep">
+                  <i
+                    className={`ph-duotone ${card.icon} text-4xl text-sienna-bright transition-colors group-hover:text-cream`}
+                  />
+                  <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-paper/50 uppercase group-hover:text-paper/80">
+                    {card.tag}
+                  </div>
+                  <h3 className="mt-2 font-display text-3xl leading-tight">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 font-italic text-sm leading-relaxed text-paper/70 italic group-hover:text-paper/90">
+                    {card.desc}
+                  </p>
+                  <div className="mt-6 font-serif text-xs tracking-[0.25em] text-sienna-bright uppercase group-hover:text-cream">
+                    {card.meta}
+                  </div>
                 </div>
-                <h3 className="mt-2 font-display text-3xl leading-tight">
-                  {card.title}
-                </h3>
-                <p className="mt-3 font-italic text-sm leading-relaxed text-paper/70 italic group-hover:text-paper/90">
-                  {card.desc}
-                </p>
-                <div className="mt-6 font-serif text-xs tracking-[0.25em] text-sienna-bright uppercase group-hover:text-cream">
-                  {card.meta}
-                </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
-      </FadeIn>
 
       {/* THE BUILDING */}
-      <FadeIn>
       <section className="relative bg-paper py-32">
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
-          <div className="relative aspect-[4/5] overflow-hidden">
-            <img
-              src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
-              alt="Pittsburgh skyline"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-            <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">
-              <div className="font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
-                the house
-              </div>
-              <div className="mt-1 font-display text-3xl">942 Penn Avenue</div>
-            </div>
-            {/* corner mark */}
-            <div className="absolute top-6 right-6 flex flex-col items-center gap-1 font-serif text-2xs tracking-[0.3em] text-cream/90 uppercase">
-              <i className="ph ph-cube text-2xl" />
-              <span>Tour 360°</span>
-            </div>
-          </div>
-
-          <div className="flex flex-col justify-center">
-            <div className="mb-3 font-italic text-lg text-sienna italic">
-              the story
-            </div>
-            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
-              A century of brick,
-              <br />
-              <span className="font-italic text-sienna italic">
-                a decade of dinner.
-              </span>
-            </h2>
-            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-              The building came first, a Cultural District landmark with a
-              façade that's watched the city change three times over. We took
-              the lease in 2013 with a single idea: don't pick one Italian
-              restaurant when the floors will let you have three.
-            </p>
-            <p className="mt-6 max-w-xl font-italic text-lg leading-relaxed text-ink-soft italic">
-              The kitchens stack vertically. The dining rooms tell three
-              different stories. Walk it from the bottom up, by the time you
-              reach the roof, you've had an evening.
-            </p>
-
-            <div className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
-              {[
-                {
-                  icon: "ph-house-line",
-                  k: "Three floors",
-                  v: "Emporio · Mezzo · Il Tetto",
-                },
-                {
-                  icon: "ph-armchair",
-                  k: "Seats",
-                  v: "230 indoor + 120 rooftop",
-                },
-                {
-                  icon: "ph-wine",
-                  k: "Wine list",
-                  v: "Italian-led, 90+ bottles",
-                },
-                {
-                  icon: "ph-beer-bottle",
-                  k: "Drafts",
-                  v: "30 rotating · roof + ground",
-                },
-              ].map((s) => (
-                <div key={s.k} className="flex items-start gap-3">
-                  <i
-                    className={`ph-duotone ${s.icon} mt-0.5 text-2xl text-sienna`}
-                  />
-                  <div>
-                    <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                      {s.k}
-                    </div>
-                    <div className="font-italic text-ink italic">{s.v}</div>
-                  </div>
+          <FadeIn>
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
+                alt="Pittsburgh skyline"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+              <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">
+                <div className="font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                  the house
                 </div>
-              ))}
+                <div className="mt-1 font-display text-3xl">942 Penn Avenue</div>
+              </div>
             </div>
+          </FadeIn>
 
-            <a
-              href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
-              target="_blank"
-              rel="noreferrer"
-              className="btn-lift group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
-            >
-              <i className="ph ph-cube text-base" />
-              Walk through in 360°
-              <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          </div>
+          <FadeIn delay={0.15}>
+            <div className="flex flex-col justify-center">
+              <div className="mb-3 font-italic text-lg text-sienna italic">
+                the story
+              </div>
+              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
+                A century of brick,
+                <br />
+                <span className="font-italic text-sienna italic">
+                  a decade of dinner.
+                </span>
+              </h2>
+              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
+                The building came first, a Cultural District landmark with a
+                façade that's watched the city change three times over. We took
+                the lease in 2013 with a single idea: don't pick one Italian
+                restaurant when the floors will let you have three.
+              </p>
+              <p className="mt-6 max-w-xl font-italic text-lg leading-relaxed text-ink-soft italic">
+                The kitchens stack vertically. The dining rooms tell three
+                different stories. Walk it from the bottom up, by the time you
+                reach the roof, you've had an evening.
+              </p>
+
+              <div className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
+                {[
+                  {
+                    icon: "ph-house-line",
+                    k: "Three floors",
+                    v: "Emporio · Mezzo · Il Tetto",
+                  },
+                  {
+                    icon: "ph-armchair",
+                    k: "Seats",
+                    v: "230 indoor + 120 rooftop",
+                  },
+                  {
+                    icon: "ph-wine",
+                    k: "Wine list",
+                    v: "Italian-led, 90+ bottles",
+                  },
+                  {
+                    icon: "ph-beer-bottle",
+                    k: "Drafts",
+                    v: "30 rotating · roof + ground",
+                  },
+                ].map((s) => (
+                  <div key={s.k} className="flex items-start gap-3">
+                    <i
+                      className={`ph-duotone ${s.icon} mt-0.5 text-2xl text-sienna`}
+                    />
+                    <div>
+                      <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+                        {s.k}
+                      </div>
+                      <div className="font-italic text-ink italic">{s.v}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-lift group mt-10 inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+              >
+                <i className="ph ph-cube text-base" />
+                See the building in 360°
+                <i className="ph ph-arrow-up-right text-base transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </a>
+            </div>
+          </FadeIn>
         </div>
       </section>
-      </FadeIn>
 
       {/* RESERVE / VISIT BAND */}
       <FadeIn>

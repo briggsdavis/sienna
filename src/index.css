@@ -189,6 +189,12 @@ body {
   background-size: 100% 1px;
 }
 
+/* Sections appear to slide over the previous as you scroll — subtle depth */
+section + section {
+  position: relative;
+  box-shadow: 0 -24px 60px -12px rgba(26, 18, 11, 0.12);
+}
+
 /* Page fade-in on route change */
 @keyframes page-enter {
   from {
