@@ -301,10 +301,6 @@ function Row({
           </div>
         )}
       </div>
-      <span
-        className="mx-2 hidden max-w-[35%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
       <span className="font-serif text-lg text-sienna-deep tabular-nums">
         ${price}
       </span>
@@ -423,6 +419,38 @@ function WineRow({
 
 export function Mezzo() {
   const heroParallax = useParallax(0.22)
+
+  const wineLeftRef = useRef<HTMLDivElement>(null)
+  const wineRightRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    for (const ref of [wineLeftRef, wineRightRef]) {
+      const el = ref.current
+      if (!el) continue
+      const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
+      items.forEach((node) => {
+        node.style.opacity = "0"
+        node.style.transform = "translateY(28px)"
+        node.style.transition =
+          "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+      })
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            items.forEach((node, i) => {
+              setTimeout(() => {
+                node.style.opacity = "1"
+                node.style.transform = "translateY(0)"
+              }, i * 170)
+            })
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
+      )
+      obs.observe(el)
+    }
+  }, [])
 
   return (
     <div className="relative">
@@ -703,9 +731,8 @@ export function Mezzo() {
           </FadeIn>
 
           <div className="grid gap-12 lg:grid-cols-2">
-            <FadeIn delay={0.08}>
-              <div>
-                <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
+            <div ref={wineLeftRef}>
+              <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
                     <div className="font-italic text-sm text-sienna-bright italic">
                       featured imports
@@ -754,11 +781,9 @@ export function Mezzo() {
                     <WineRow key={w.name} {...w} />
                   ))}
                 </ul>
-              </div>
-            </FadeIn>
+            </div>
 
-            <FadeIn delay={0.16}>
-              <div>
+            <div ref={wineRightRef}>
                 <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
                     <div className="font-italic text-sm text-sienna-bright italic">
@@ -793,8 +818,7 @@ export function Mezzo() {
                     of the wood oven.
                   </p>
                 </div>
-              </div>
-            </FadeIn>
+            </div>
           </div>
         </div>
       </section>
@@ -857,10 +881,6 @@ export function Mezzo() {
                     <span className="w-20 font-serif text-xs tracking-[0.2em] text-cream/70 uppercase">
                       {row.d}
                     </span>
-                    <span
-                      className="mx-1 hidden flex-1 translate-y-[-4px] border-b border-dotted border-cream/20 sm:block"
-                      aria-hidden
-                    />
                     <span className="font-italic text-sm text-cream/85 italic tabular-nums">
                       {row.h}
                     </span>

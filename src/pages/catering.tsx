@@ -56,10 +56,6 @@ function CateringRow({
           </div>
         )}
       </div>
-      <span
-        className="mx-2 hidden max-w-[35%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
       <span className="font-serif text-base text-sienna-deep tabular-nums">
         {price}
       </span>
@@ -294,7 +290,7 @@ export function Catering() {
       <section className="relative bg-ink text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-gold italic">
+            <div className="mb-2 font-italic text-base text-sienna-bright italic">
               need a private venue too?
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">

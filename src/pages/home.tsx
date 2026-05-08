@@ -363,10 +363,6 @@ export function Home() {
                         <span className="font-serif text-base tracking-wide text-ink">
                           {it.name}
                         </span>
-                        <span
-                          className="mx-2 flex-1 translate-y-[-4px] border-b border-dotted border-ink/25"
-                          aria-hidden
-                        />
                         <span className="hidden font-italic text-sm text-ink-soft italic sm:inline">
                           {it.note}
                         </span>
@@ -715,10 +711,6 @@ export function Home() {
                     {row.roman}
                   </span>
                   <span className="font-display text-2xl">{row.name}</span>
-                  <span
-                    className="mx-2 flex-1 translate-y-[-4px] border-b border-dotted border-cream/30"
-                    aria-hidden
-                  />
                   <span className="font-italic text-sm text-cream/85 italic tabular-nums">
                     {row.hours}
                   </span>

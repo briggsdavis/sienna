@@ -236,10 +236,6 @@ function MenuRow({
           </div>
         )}
       </div>
-      <span
-        className="mx-2 hidden max-w-[40%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
       <span className="font-serif text-lg text-sienna tabular-nums">
         ${price}
       </span>
@@ -790,9 +786,9 @@ export function Emporio() {
               ground floor · I
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
-              Come hungry.
+              Show up hungry.
               <br />
-              <span className="font-italic italic">Stay loud.</span>
+              <span className="font-italic italic">Leave slower.</span>
             </h3>
           </div>
           <div className="flex flex-wrap justify-end gap-4">

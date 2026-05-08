@@ -75,8 +75,41 @@ const SPACES = [
     ],
     image:
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
-    accent: "text-gold",
+    accent: "text-sienna-bright",
     href: "/tetto",
+  },
+] as const
+
+const UPCOMING = [
+  {
+    date: "May 17",
+    day: "Sun",
+    title: "Jazz Night on the Roof",
+    sub: "Live trio · no cover",
+    floor: "Il Tetto · Floor III",
+    when: "7 PM → close",
+    icon: "ph-music-notes",
+    tag: "this week",
+  },
+  {
+    date: "May 24",
+    day: "Sat",
+    title: "Summer Kickoff",
+    sub: "Rooftop buyout · open to all",
+    floor: "Il Tetto · Floor III",
+    when: "5 PM → late",
+    icon: "ph-sun-horizon",
+    tag: "next week",
+  },
+  {
+    date: "Jun 7",
+    day: "Sat",
+    title: "Barolo Night",
+    sub: "Chef's wine dinner · four courses",
+    floor: "Mezzo · Floor II",
+    when: "6:30 PM · ticketed",
+    icon: "ph-wine",
+    tag: "upcoming",
   },
 ] as const
 
@@ -210,6 +243,60 @@ export function Events() {
         </div>
       </section>
 
+      {/* UPCOMING EVENTS */}
+      <section className="relative bg-ink py-24 text-paper">
+        <div className="pointer-events-none absolute -top-20 -right-20 h-[380px] w-[380px] rounded-full bg-sienna opacity-20 blur-[140px]" />
+        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
+          <FadeIn>
+            <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <div className="mb-2 font-italic text-lg text-sienna-bright italic">
+                  on the calendar
+                </div>
+                <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
+                  Three nights coming up.
+                </h2>
+              </div>
+              <p className="max-w-sm font-italic text-base leading-relaxed text-paper/65 italic">
+                Walk-ins welcome unless noted. Check back for new dates.
+              </p>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-px bg-paper/15 sm:grid-cols-3">
+            {UPCOMING.map((e, i) => (
+              <FadeIn key={e.title} delay={i * 0.1}>
+                <article className="group bg-ink p-8 transition-colors hover:bg-sienna-deep/60">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <div className="font-serif text-xs tracking-[0.35em] text-paper/50 uppercase">
+                        {e.day} · {e.date}
+                      </div>
+                      <div className="mt-4 font-serif text-xs tracking-[0.3em] text-sienna-bright uppercase">
+                        {e.tag}
+                      </div>
+                    </div>
+                    <i className={`ph-duotone ${e.icon} text-4xl text-sienna-bright/70`} />
+                  </div>
+                  <h3 className="mt-5 font-display text-4xl leading-tight">{e.title}</h3>
+                  <p className="mt-2 font-italic text-base text-paper/70 italic">{e.sub}</p>
+                  <div className="mt-6 flex flex-col gap-2">
+                    <div className="flex items-center gap-2 font-serif text-2xs tracking-[0.3em] text-paper/55 uppercase">
+                      <i className="ph ph-house-line text-sm" />
+                      {e.floor}
+                    </div>
+                    <div className="flex items-center gap-2 font-serif text-2xs tracking-[0.3em] text-paper/55 uppercase">
+                      <i className="ph ph-clock text-sm" />
+                      {e.when}
+                    </div>
+                  </div>
+                </article>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* THREE FLOORS, at a glance */}
       <section className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
@@ -235,11 +322,11 @@ export function Events() {
             </div>
           </FadeIn>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid items-stretch gap-6 md:grid-cols-3">
             {SPACES.map((s, i) => (
-              <FadeIn key={s.id} delay={i * 0.1}>
+              <FadeIn key={s.id} delay={i * 0.1} className="h-full">
               <article
-                className="group flex flex-col overflow-hidden border border-ink/10 bg-cream"
+                className="group flex h-full flex-col overflow-hidden border border-ink/10 bg-cream"
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
@@ -352,12 +439,12 @@ export function Events() {
       {/* RECURRING NIGHTS */}
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full bg-sienna opacity-30 blur-[160px]" />
-        <div className="pointer-events-none absolute -bottom-40 -left-32 h-[420px] w-[420px] rounded-full bg-gold opacity-20 blur-[140px]" />
+        <div className="pointer-events-none absolute -bottom-40 -left-32 h-[420px] w-[420px] rounded-full bg-sienna opacity-15 blur-[140px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
           <div className="mb-12 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
             <div>
-              <div className="mb-3 font-italic text-lg text-gold italic">
+              <div className="mb-3 font-italic text-lg text-sienna-bright italic">
                 on the calendar
               </div>
               <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
@@ -379,13 +466,13 @@ export function Events() {
               >
                 <div className="flex items-start justify-between gap-6">
                   <i
-                    className={`ph-duotone ${e.icon} text-5xl text-gold transition-colors group-hover:text-cream`}
+                    className={`ph-duotone ${e.icon} text-5xl text-sienna-bright transition-colors group-hover:text-cream`}
                   />
                   <span className="font-serif text-2xs tracking-[0.3em] text-paper/60 uppercase">
                     Floor · {e.floor}
                   </span>
                 </div>
-                <div className="mt-8 font-italic text-base text-gold italic">
+                <div className="mt-8 font-italic text-base text-sienna-bright italic">
                   {e.sub}
                 </div>
                 <h3 className="mt-2 font-display text-4xl leading-tight">
@@ -395,7 +482,7 @@ export function Events() {
                   {e.desc}
                 </p>
                 <div className="mt-6 inline-flex items-center gap-3 border border-paper/30 px-4 py-2 font-serif text-xs tracking-[0.3em] text-paper/85 uppercase">
-                  <i className="ph ph-clock text-sm text-gold" />
+                  <i className="ph ph-clock text-sm text-sienna-bright" />
                   {e.when}
                 </div>
               </article>
@@ -612,7 +699,7 @@ export function Events() {
       <section className="relative bg-ink text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-gold italic">
+            <div className="mb-2 font-italic text-base text-sienna-bright italic">
               need catering instead?
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
