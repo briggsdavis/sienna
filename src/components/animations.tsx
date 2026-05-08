@@ -21,7 +21,9 @@ export function useStaggerObserver<T extends HTMLElement>(_stagger = 0.09) {
           if (entry.isIntersecting) {
             child.style.opacity = "1"
             child.style.transform = "translateY(0)"
-            obs.disconnect()
+          } else {
+            child.style.opacity = "0"
+            child.style.transform = "translateY(20px)"
           }
         },
         { threshold: 0.15, rootMargin: "0px 0px -20px 0px" },
@@ -113,7 +115,9 @@ export function FadeIn({
         if (entry.isIntersecting) {
           el.style.transitionDelay = `${BASE + delay}s`
           el.classList.add("fade-in-visible")
-          obs.disconnect()
+        } else {
+          el.style.transitionDelay = "0s"
+          el.classList.remove("fade-in-visible")
         }
       },
       { threshold: 0.08, rootMargin: "0px 0px -80px 0px" },

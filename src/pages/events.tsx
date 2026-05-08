@@ -194,7 +194,7 @@ export function Events() {
             <span>private events</span>
           </div>
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
-            Events.
+            Private Events.
           </h1>
           <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.45s" }}>
             Three floors available for private hire: a meatball joint, a trattoria, and a rooftop with the Pittsburgh skyline. Up to 400 guests.
@@ -282,15 +282,14 @@ export function Events() {
             <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
                 <div className="mb-3 font-italic text-lg text-sienna italic">
-                  the venue
+                  private event venues
                 </div>
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-                  Three rooms.
+                  Three rooms
                   <br />
                   <span className="font-italic text-sienna italic">
-                    Three vibes.
-                  </span>{" "}
-                  Pick a floor.
+                    for private hire.
+                  </span>
                 </h2>
               </div>
               <p className="font-italic text-lg leading-relaxed text-ink-soft italic md:text-right">

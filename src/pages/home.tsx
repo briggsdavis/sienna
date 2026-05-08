@@ -17,7 +17,6 @@ const FLOORS = [
       { name: "Meatball Hoagie", price: "18", note: "choice of three meatballs" },
       { name: "Buffalo Chicken Balls", price: "12", note: "bleu cheese, celery" },
       { name: "Jacked Mac Bowl", price: "18", note: "house cheese sauce" },
-      { name: "Dragon Ball · Ball of the Month", price: "14", note: "sweet chili glaze" },
     ],
   },
   {
@@ -35,7 +34,6 @@ const FLOORS = [
       { name: "Soppressata & Hot Honey", price: "25", note: "marinara, mozzarella" },
       { name: "Crab-Stuffed Ravioli", price: "29", note: "white truffle cream" },
       { name: "Braised Short Rib", price: "32", note: "demi, broccolini" },
-      { name: "Vietti Rocche di Castiglione Barolo", price: "180", note: "2017 · per bottle" },
     ],
   },
   {
@@ -53,7 +51,6 @@ const FLOORS = [
       { name: "Whole Pepperoni Pie", price: "25", note: "8 slices, baked hot" },
       { name: "Big Wave · Kona", price: "", note: "blonde · 4.4% · beer of the month" },
       { name: "Negley's Nectar Peach Cider", price: "", note: "Arsenal · Pittsburgh, 8.4%" },
-      { name: "Espresso Martini", price: "5", note: "happy hour, Tue–Fri 4:30–6:30" },
     ],
   },
 ] as const
@@ -134,7 +131,7 @@ function FloorText({
           </li>
         ))}
       </ul>
-      <div className="flex flex-wrap gap-4">
+      <div className="mt-6 flex flex-wrap gap-4">
         <Link
           to={floor.href}
           className="btn-lift group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
@@ -326,7 +323,7 @@ export function Home() {
       </section>
 
       {/* FEATURED DISHES */}
-      <section className="grain relative bg-paper py-32">
+      <section className="grain relative bg-cream py-32">
         <FadeIn>
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
