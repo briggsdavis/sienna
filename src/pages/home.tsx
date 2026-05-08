@@ -8,7 +8,7 @@ const FLOORS = [
     roman: "I",
     name: "Emporio",
     sub: "A Meatball Joint",
-    italian: "the meatball joint",
+    italian: "meatball joint",
     color: "from-[#7a2218] via-[#a4341f] to-[#c9412a]",
     desc: "Ground floor. Twelve sauces, six meats, one rule: the meatball is sacred.",
     image:
@@ -25,7 +25,7 @@ const FLOORS = [
     roman: "II",
     name: "Mezzo",
     sub: "Pizza & Charcuterie",
-    italian: "the trattoria",
+    italian: "trattoria",
     color: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
     desc: "Linen, candlelight, an eight-hundred-degree oven. The only OpenTable reservation in the building.",
     image:
@@ -42,7 +42,7 @@ const FLOORS = [
     roman: "III",
     name: "Il Tetto",
     sub: "Rooftop Beer Garden",
-    italian: "the rooftop garden",
+    italian: "rooftop garden",
     color: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
     desc: "Open sky. Thirty drafts on the chalkboard. No reservations. Climb the stairs.",
     image:
@@ -323,7 +323,7 @@ export function Home() {
       </section>
 
       {/* FEATURED DISHES */}
-      <section className="grain relative bg-cream py-32">
+      <section className="relative bg-cream py-32">
         <FadeIn>
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

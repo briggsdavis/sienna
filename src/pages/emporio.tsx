@@ -282,7 +282,7 @@ export function Emporio() {
           <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream italic" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">I</span>
             <span className="swash swash-white" />
-            <span>the meatball joint</span>
+            <span>meatball joint</span>
           </div>
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Emporio
