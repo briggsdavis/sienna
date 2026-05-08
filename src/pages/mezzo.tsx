@@ -320,7 +320,7 @@ function Column({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
-  const listRef = useStaggerObserver<HTMLUListElement>(0.09)
+  const listRef = useStaggerObserver<HTMLUListElement>()
   return (
     <div>
       <FadeIn>

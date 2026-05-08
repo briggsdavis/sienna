@@ -248,7 +248,7 @@ function MenuRow({
 
 export function Emporio() {
   const heroParallax = useParallax(0.22)
-  const sauceListRef = useStaggerObserver<HTMLUListElement>(0.06)
+  const sauceListRef = useStaggerObserver<HTMLUListElement>()
 
   return (
     <div className="relative">
@@ -827,7 +827,7 @@ function MenuColumn({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
-  const listRef = useStaggerObserver<HTMLUListElement>(0.09)
+  const listRef = useStaggerObserver<HTMLUListElement>()
   return (
     <div>
       <FadeIn>
