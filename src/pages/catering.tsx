@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Link } from "react-router"
 import { FadeIn, useParallax } from "../components/animations"
 
@@ -88,6 +88,29 @@ const TIERS = [
   },
 ] as const
 
+function TierPanel({ isOpen, children }: { isOpen: boolean; children: ReactNode }) {
+  const innerRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    const el = innerRef.current
+    if (!el) return
+    setHeight(isOpen ? el.scrollHeight : 0)
+  }, [isOpen])
+
+  return (
+    <div
+      style={{
+        height,
+        overflow: "hidden",
+        transition: "height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+      }}
+    >
+      <div ref={innerRef}>{children}</div>
+    </div>
+  )
+}
+
 function TierAccordion() {
   const [open, setOpen] = useState<Set<string>>(new Set())
 
@@ -127,15 +150,8 @@ function TierAccordion() {
               />
             </button>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition: "grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1)",
-              }}
-            >
-              <div className="overflow-hidden">
-                <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
+            <TierPanel isOpen={isOpen}>
+              <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
                   <h4 className="font-display text-4xl leading-[0.95] text-ink">
                     {tier.headlinePlain}
                     <br />
@@ -155,8 +171,7 @@ function TierAccordion() {
                     Half pan / full pan, unless noted.
                   </div>
                 </div>
-              </div>
-            </div>
+            </TierPanel>
           </div>
         )
       })}
