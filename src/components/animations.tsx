@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react"
 
-export function useStaggerObserver<T extends HTMLElement>(stagger = 0.09) {
+export function useStaggerObserver<T extends HTMLElement>(_stagger = 0.09) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -8,35 +8,30 @@ export function useStaggerObserver<T extends HTMLElement>(stagger = 0.09) {
     if (!el) return
 
     const children = Array.from(el.children) as HTMLElement[]
+    const observers: IntersectionObserver[] = []
 
     children.forEach((child) => {
       child.style.opacity = "0"
-      child.style.transform = "translateY(28px)"
+      child.style.transform = "translateY(20px)"
       child.style.transition =
-        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+        "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            child.style.opacity = "1"
+            child.style.transform = "translateY(0)"
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.15, rootMargin: "0px 0px -20px 0px" },
+      )
+      obs.observe(child)
+      observers.push(obs)
     })
 
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          children.forEach((child, i) => {
-            setTimeout(
-              () => {
-                child.style.opacity = "1"
-                child.style.transform = "translateY(0)"
-              },
-              i * stagger * 1000,
-            )
-          })
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
-    )
-    obs.observe(el)
-
-    return () => obs.disconnect()
-  }, [stagger])
+    return () => observers.forEach((obs) => obs.disconnect())
+  }, [])
 
   return ref
 }

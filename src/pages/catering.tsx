@@ -57,7 +57,7 @@ function CateringRow({
           </div>
         )}
       </div>
-      <span className="font-serif text-base text-sienna-deep tabular-nums">
+      <span className="font-serif text-base text-sienna tabular-nums">
         {price}
       </span>
     </li>
@@ -73,7 +73,7 @@ const TIERS = [
     headlineItalic: "family-style.",
     headlinePlain: "Casual,",
     accent: "text-sienna",
-    desc: "Meatballs, mac & cheese, chicken parm — feeds a conference room or a graduation party without ceremony.",
+    desc: "Meatballs, mac & cheese, chicken parm. Feeds a conference room or a graduation party without ceremony.",
     items: TIER_1,
   },
   {
@@ -83,7 +83,7 @@ const TIERS = [
     headlinePlain: "Refined,",
     headlineItalic: "plated-ready.",
     accent: "text-sienna-deep",
-    desc: "Charcuterie boards, picatta and marsala, hand-tossed pizzas, pasta — for the dinners that need to look the part.",
+    desc: "Charcuterie boards, picatta and marsala, hand-tossed pizzas, pasta. For the dinners that need to look the part.",
     items: TIER_2,
   },
 ] as const
@@ -127,28 +127,36 @@ function TierAccordion() {
               />
             </button>
 
-            {isOpen && (
-              <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
-                <h4 className="font-display text-4xl leading-[0.95] text-ink">
-                  {tier.headlinePlain}
-                  <br />
-                  <span className={`font-italic italic ${tier.accent}`}>
-                    {tier.headlineItalic}
-                  </span>
-                </h4>
-                <p className="mt-3 max-w-xl font-italic text-base text-ink-soft italic">
-                  {tier.desc}
-                </p>
-                <ul className="mt-5 divide-y divide-ink/10 border-t border-b border-ink/10">
-                  {tier.items.map((r) => (
-                    <CateringRow key={r.name} {...r} />
-                  ))}
-                </ul>
-                <div className="mt-4 font-italic text-xs text-ink-soft italic">
-                  Half pan / full pan, unless noted.
+            <div
+              style={{
+                display: "grid",
+                gridTemplateRows: isOpen ? "1fr" : "0fr",
+                transition: "grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="overflow-hidden">
+                <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
+                  <h4 className="font-display text-4xl leading-[0.95] text-ink">
+                    {tier.headlinePlain}
+                    <br />
+                    <span className={`font-italic italic ${tier.accent}`}>
+                      {tier.headlineItalic}
+                    </span>
+                  </h4>
+                  <p className="mt-3 max-w-xl font-italic text-base text-ink-soft italic">
+                    {tier.desc}
+                  </p>
+                  <ul className="mt-5 divide-y divide-ink/10 border-t border-b border-ink/10">
+                    {tier.items.map((r) => (
+                      <CateringRow key={r.name} {...r} />
+                    ))}
+                  </ul>
+                  <div className="mt-4 font-italic text-xs text-ink-soft italic">
+                    Half pan / full pan, unless noted.
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )
       })}
@@ -195,7 +203,7 @@ export function Catering() {
             <span>catering · delivery & pickup</span>
           </div>
           <h1
-            className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream"
+            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
             style={{ animationDelay: "0.25s" }}
           >
             Catering.
@@ -236,7 +244,7 @@ export function Catering() {
       </section>
 
       {/* TWO TIERS */}
-      <section className="relative bg-paper-deep py-28">
+      <section className="relative bg-cream py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-end">

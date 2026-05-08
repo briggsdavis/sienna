@@ -290,7 +290,7 @@ function Row({
         <div className="flex flex-wrap items-baseline gap-3">
           <span className="font-serif text-xl text-ink">{name}</span>
           {flag && (
-            <span className="font-italic text-2xs tracking-[0.3em] text-sienna-deep uppercase italic">
+            <span className="font-italic text-2xs tracking-[0.3em] text-sienna uppercase italic">
               {flag}
             </span>
           )}
@@ -301,7 +301,7 @@ function Row({
           </div>
         )}
       </div>
-      <span className="font-serif text-lg text-sienna-deep tabular-nums">
+      <span className="font-serif text-lg text-sienna tabular-nums">
         ${price}
       </span>
     </li>
@@ -326,37 +326,35 @@ function Column({
     const header = el.firstElementChild as HTMLElement
     const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
     const all = [header, ...items]
+    const observers: IntersectionObserver[] = []
 
     all.forEach((node) => {
       node.style.opacity = "0"
-      node.style.transform = "translateY(28px)"
+      node.style.transform = "translateY(20px)"
       node.style.transition =
-        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+        "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            node.style.opacity = "1"
+            node.style.transform = "translateY(0)"
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.2, rootMargin: "0px 0px -20px 0px" },
+      )
+      obs.observe(node)
+      observers.push(obs)
     })
 
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          all.forEach((node, i) => {
-            setTimeout(() => {
-              node.style.opacity = "1"
-              node.style.transform = "translateY(0)"
-            }, i * 170)
-          })
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
-    )
-    obs.observe(el)
-
-    return () => obs.disconnect()
+    return () => observers.forEach((obs) => obs.disconnect())
   }, [])
 
   return (
     <div ref={ref}>
       <div className="mb-2">
-        <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
+        <div className="mb-1 font-italic text-sm tracking-wide text-sienna italic">
           {italian}
         </div>
         <h3 className="font-display text-4xl text-ink">{english}</h3>
@@ -424,32 +422,31 @@ export function Mezzo() {
   const wineRightRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const observers: IntersectionObserver[] = []
     for (const ref of [wineLeftRef, wineRightRef]) {
       const el = ref.current
       if (!el) continue
       const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
       items.forEach((node) => {
         node.style.opacity = "0"
-        node.style.transform = "translateY(28px)"
+        node.style.transform = "translateY(20px)"
         node.style.transition =
-          "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+          "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+        const obs = new IntersectionObserver(
+          ([entry]) => {
+            if (entry.isIntersecting) {
+              node.style.opacity = "1"
+              node.style.transform = "translateY(0)"
+              obs.disconnect()
+            }
+          },
+          { threshold: 0.2, rootMargin: "0px 0px -20px 0px" },
+        )
+        obs.observe(node)
+        observers.push(obs)
       })
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            items.forEach((node, i) => {
-              setTimeout(() => {
-                node.style.opacity = "1"
-                node.style.transform = "translateY(0)"
-              }, i * 170)
-            })
-            obs.disconnect()
-          }
-        },
-        { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
-      )
-      obs.observe(el)
     }
+    return () => observers.forEach((obs) => obs.disconnect())
   }, [])
 
   return (
@@ -489,7 +486,7 @@ export function Mezzo() {
             <span className="swash swash-white" />
             <span>the trattoria</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Mezzo
           </h1>
           <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
@@ -560,12 +557,12 @@ export function Mezzo() {
 
           <FadeIn delay={0.15}>
             <div className="flex flex-col justify-center">
-              <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna-deep uppercase">
+              <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
                 philosophy
               </div>
               <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
                 A second floor is for
-                <span className="font-italic text-sienna-deep italic">
+                <span className="font-italic text-sienna italic">
                   {" "}slowing down.{" "}
                 </span>
                 Candlelight, four courses, a bottle that lingers past the candle.
@@ -583,7 +580,7 @@ export function Mezzo() {
                   { k: "noon", v: "pasta rolled daily" },
                 ].map((s) => (
                   <div key={s.v}>
-                    <div className="font-display text-4xl leading-none text-sienna-deep">
+                    <div className="font-display text-4xl leading-none text-sienna">
                       {s.k}
                     </div>
                     <div className="mt-1 font-italic text-sm text-ink-soft italic">
@@ -622,7 +619,7 @@ export function Mezzo() {
                 <span className="swash" />
                 the oven
               </div>
-              <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.85]">
+              <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.85]">
                 Eight hundred
                 <br />
                 <span className="font-italic text-sienna-bright italic">
@@ -642,13 +639,13 @@ export function Mezzo() {
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-16 text-center">
-              <div className="mb-3 font-italic text-lg text-sienna-deep italic">
+              <div className="mb-3 font-italic text-lg text-sienna italic">
                 the menu
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+              <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
                 From oven,
                 <br />
-                <span className="font-italic text-sienna-deep italic">
+                <span className="font-italic text-sienna italic">
                   pan, and cellar.
                 </span>
               </h2>
@@ -667,7 +664,7 @@ export function Mezzo() {
             <FadeIn>
               <div>
                 <div className="mb-2">
-                  <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
+                  <div className="mb-1 font-italic text-sm tracking-wide text-sienna italic">
                     cocktails
                   </div>
                   <h3 className="font-display text-4xl text-ink">House Bar</h3>
@@ -678,7 +675,7 @@ export function Mezzo() {
                   ))}
                 </ul>
                 <div className="mt-10">
-                  <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
+                  <div className="mb-1 font-italic text-sm tracking-wide text-sienna italic">
                     seasonal
                   </div>
                   <h4 className="font-display text-2xl text-ink">
@@ -706,9 +703,8 @@ export function Mezzo() {
                   <i className="ph-duotone ph-wine text-2xl" />
                   la cantina · the cellar
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85]">
-                  Ninety bottles.
-                  <br />
+                <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.9]">
+                  Ninety bottles.{" "}
                   <span className="font-italic text-sienna-bright italic">
                     Four Barolos.
                   </span>
@@ -837,7 +833,7 @@ export function Mezzo() {
                   href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                   target="_blank"
                   rel="noreferrer"
-                  className="btn-lift group inline-flex items-center gap-2 bg-cream px-6 py-3 font-serif text-xs tracking-[0.25em] text-sienna-deep uppercase transition-colors hover:bg-paper"
+                  className="btn-lift group inline-flex items-center gap-2 bg-cream px-6 py-3 font-serif text-xs tracking-[0.25em] text-sienna uppercase transition-colors hover:bg-paper"
                 >
                   <i className="ph ph-calendar-dots text-sm" />
                   Reserve on OpenTable
@@ -892,7 +888,7 @@ export function Mezzo() {
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
             <FadeIn>
-              <div className="mb-2 font-italic text-base text-sienna-deep italic">
+              <div className="mb-2 font-italic text-base text-sienna italic">
                 second floor · II
               </div>
             </FadeIn>
@@ -900,7 +896,7 @@ export function Mezzo() {
               <h3 className="font-display text-5xl leading-[0.9] text-ink">
                 Two more flights to
                 <br />
-                <span className="font-italic text-sienna-deep italic">the roof.</span>
+                <span className="font-italic text-sienna italic">the roof.</span>
               </h3>
             </FadeIn>
           </div>

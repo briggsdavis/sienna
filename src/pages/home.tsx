@@ -46,7 +46,7 @@ const FLOORS = [
     sub: "Rooftop Beer Garden",
     italian: "the rooftop garden",
     color: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
-    desc: "Open sky. Thirty drafts on the chalkboard. No reservations — climb the stairs.",
+    desc: "Open sky. Thirty drafts on the chalkboard. No reservations. Climb the stairs.",
     image:
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
     items: [
@@ -144,7 +144,7 @@ function FloorText({
         </Link>
         <a
           href="#visit"
-          className="under inline-flex items-center gap-2 font-italic text-sienna italic hover:text-sienna-deep"
+          className="under inline-flex items-center gap-2 font-italic text-sienna italic hover:text-sienna-bright"
         >
           <i className="ph ph-clock text-lg" />
           Hours
@@ -207,8 +207,14 @@ export function Home() {
               Sienna <span className="font-italic font-light text-cream/90 italic">Mercato</span>
             </h1>
             <div
+              className="rise mt-4 font-serif text-2xs tracking-[0.4em] text-cream/55 uppercase"
+              style={{ animationDelay: "0.5s" }}
+            >
+              942 Penn Avenue · Pittsburgh
+            </div>
+            <div
               className="rise mt-8 flex flex-wrap items-center justify-center gap-3"
-              style={{ animationDelay: "0.6s" }}
+              style={{ animationDelay: "0.65s" }}
             >
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
@@ -262,7 +268,7 @@ export function Home() {
               One Italian house on Penn Avenue.
             </p>
             <p className="mx-auto mt-10 max-w-2xl font-body text-lg leading-relaxed text-ink-soft">
-              A Cultural District landmark since 2013. Three floors, three concepts — one address at 942 Penn Avenue. 230 indoor seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating drafts.
+              A Cultural District landmark since 2013. Three floors, three concepts. One address at 942 Penn Avenue. 230 indoor seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating drafts.
             </p>
           </FadeIn>
         </div>
@@ -440,6 +446,64 @@ export function Home() {
         </div>
       </section>
 
+      {/* PRIVATE EVENTS + CATERING */}
+      <section className="relative bg-paper py-28">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+          <div className="grid gap-px bg-ink/10 lg:grid-cols-2">
+            <FadeIn>
+              <div className="flex flex-col justify-between gap-10 bg-paper p-10 lg:p-14">
+                <div>
+                  <div className="mb-3 font-serif text-2xs tracking-[0.5em] text-sienna uppercase">
+                    private events
+                  </div>
+                  <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
+                    Book a floor.
+                    <br />
+                    <span className="font-italic text-sienna italic">Make it yours.</span>
+                  </h2>
+                  <p className="mt-6 max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                    Three floors available for private hire. Up to 400 guests. The events team handles the rest.
+                  </p>
+                </div>
+                <Link
+                  to="/events"
+                  className="btn-lift group inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+                >
+                  <i className="ph ph-calendar-dots text-base" />
+                  Private events
+                  <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <div className="flex flex-col justify-between gap-10 bg-cream p-10 lg:p-14">
+                <div>
+                  <div className="mb-3 font-serif text-2xs tracking-[0.5em] text-sienna uppercase">
+                    catering
+                  </div>
+                  <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
+                    Two kitchens.
+                    <br />
+                    <span className="font-italic text-sienna italic">Delivered to you.</span>
+                  </h2>
+                  <p className="mt-6 max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                    Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice.
+                  </p>
+                </div>
+                <Link
+                  to="/catering"
+                  className="btn-lift group inline-flex w-fit items-center gap-3 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                >
+                  <i className="ph ph-bag text-base" />
+                  Catering menu
+                  <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+                </Link>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
       {/* RESERVE / VISIT BAND */}
       <FadeIn>
         <section id="visit" className="relative overflow-hidden bg-sienna text-cream">
@@ -447,7 +511,7 @@ export function Home() {
           <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
             <div>
               <div className="mb-4 font-italic text-lg text-cream/80 italic">come hungry</div>
-              <h2 className="font-display text-[clamp(3.5rem,8vw,7rem)] leading-[0.85]">
+              <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.85]">
                 Reserve
                 <br />
                 <span className="font-italic italic">a table.</span>

@@ -284,7 +284,7 @@ export function Emporio() {
             <span className="swash swash-white" />
             <span>the meatball joint</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Emporio
           </h1>
           <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
@@ -408,7 +408,7 @@ export function Emporio() {
                 <div className="mb-2 font-italic text-lg text-sienna-bright italic">
                   five kinds
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9]">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
                   Five balls.
                 </h2>
               </div>
@@ -460,7 +460,7 @@ export function Emporio() {
       </section>
 
       {/* SAUCE MATRIX */}
-      <section className="relative bg-paper-deep py-28">
+      <section className="relative bg-cream py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
             <FadeIn>
@@ -468,7 +468,7 @@ export function Emporio() {
                 <div className="mb-2 font-italic text-lg text-sienna italic">
                   ten sauces
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
                   Ten sauces.
                   <br />
                   <span className="font-italic text-sienna italic">
@@ -521,7 +521,7 @@ export function Emporio() {
               <div className="mb-3 font-italic text-lg text-cream/80 italic">
                 build your bowl
               </div>
-              <h2 className="font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.9]">
+              <h2 className="font-display text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.9]">
                 Build a bowl.
               </h2>
               <p className="mx-auto mt-6 max-w-2xl font-italic text-xl text-cream/85 italic">
@@ -659,7 +659,7 @@ export function Emporio() {
               <div className="mb-3 font-italic text-lg text-sienna italic">
                 the whole menu
               </div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+              <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
                 The whole menu.
               </h2>
             </div>
@@ -829,31 +829,29 @@ function MenuColumn({
     const header = el.firstElementChild as HTMLElement
     const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
     const all = [header, ...items]
+    const observers: IntersectionObserver[] = []
 
     all.forEach((node) => {
       node.style.opacity = "0"
-      node.style.transform = "translateY(28px)"
+      node.style.transform = "translateY(20px)"
       node.style.transition =
-        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+        "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            node.style.opacity = "1"
+            node.style.transform = "translateY(0)"
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.2, rootMargin: "0px 0px -20px 0px" },
+      )
+      obs.observe(node)
+      observers.push(obs)
     })
 
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          all.forEach((node, i) => {
-            setTimeout(() => {
-              node.style.opacity = "1"
-              node.style.transform = "translateY(0)"
-            }, i * 170)
-          })
-          obs.disconnect()
-        }
-      },
-      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
-    )
-    obs.observe(el)
-
-    return () => obs.disconnect()
+    return () => observers.forEach((obs) => obs.disconnect())
   }, [])
 
   return (

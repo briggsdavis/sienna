@@ -249,7 +249,7 @@ export function Tetto() {
             <span className="swash swash-white" />
             <span>the rooftop beer garden</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Il Tetto
           </h1>
           <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
@@ -370,7 +370,7 @@ export function Tetto() {
                   <i className="ph ph-chalkboard-simple text-2xl" />
                   tonight on tap
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
                   The chalkboard.
                 </h2>
               </div>
@@ -453,7 +453,7 @@ export function Tetto() {
                 <div className="mb-3 font-italic text-lg text-sienna italic">
                   eat on the roof
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
                   Whole pies,
                   <br />
                   <span className="font-italic text-sienna italic">
@@ -486,7 +486,7 @@ export function Tetto() {
                 <div className="mb-3 font-italic text-lg text-sienna-bright italic">
                   aperitivo · happy hour
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
                   Sunset hour.
                 </h2>
                 <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">

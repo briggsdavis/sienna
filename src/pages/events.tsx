@@ -50,7 +50,7 @@ const SPACES = [
     ],
     image:
       "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1600&q=70",
-    accent: "text-sienna-deep",
+    accent: "text-sienna",
     href: "/mezzo",
   },
   {
@@ -193,7 +193,7 @@ export function Events() {
             <span className="swash swash-white" />
             <span>private events</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Events.
           </h1>
           <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.45s" }}>
@@ -339,7 +339,7 @@ export function Events() {
                   </a>
                 </div>
               </div>
-              <div className="relative hidden overflow-hidden sm:block" style={{ minWidth: "280px" }}>
+              <div className="relative hidden overflow-hidden sm:block" style={{ minWidth: "420px" }}>
                 <img
                   src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80"
                   alt="Private event at Sienna Mercato"
@@ -360,11 +360,11 @@ export function Events() {
               <div className="mb-3 font-italic text-lg text-sienna italic">
                 from the guestbook
               </div>
-              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9] text-ink">
-                We host the night.
+              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
+                The guests
                 <br />
                 <span className="font-italic text-sienna italic">
-                  You take the credit.
+                  say it best.
                 </span>
               </h2>
             </div>
@@ -626,46 +626,54 @@ function VenueAccordion({
               </div>
             </button>
 
-            {isOpen && (
-              <div className="grid gap-0 overflow-hidden border-t border-ink/8 bg-cream/40 pb-8 lg:grid-cols-[1.1fr_1fr]">
-                <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[340px]">
-                  <img
-                    src={s.image}
-                    alt={`${s.name} private event space`}
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-                  <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
-                    <span className="font-italic text-sm text-cream/80 italic">{s.vibe}</span>
-                    <span className={`font-display text-2xl ${s.accent}`}>{s.capacity}</span>
-                  </div>
-                </div>
-                <div className="flex flex-col justify-center px-8 py-6">
-                  <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
-                  <ul className="mt-5 space-y-2">
-                    {s.highlights.map((h) => (
-                      <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
-                        <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-5">
-                    <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">Perfect for</div>
-                    <div className="mt-1.5 font-italic text-sm text-ink italic">
-                      {s.perfect.join(" · ")}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateRows: isOpen ? "1fr" : "0fr",
+                transition: "grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1)",
+              }}
+            >
+              <div className="overflow-hidden">
+                <div className="grid gap-0 border-t border-ink/8 bg-cream/40 pb-8 lg:grid-cols-[1.1fr_1fr]">
+                  <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[340px]">
+                    <img
+                      src={s.image}
+                      alt={`${s.name} private event space`}
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+                    <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
+                      <span className="font-italic text-sm text-cream/80 italic">{s.vibe}</span>
+                      <span className={`font-display text-2xl ${s.accent}`}>{s.capacity}</span>
                     </div>
                   </div>
-                  <Link
-                    to={s.href}
-                    className="under mt-6 inline-flex w-fit items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
-                  >
-                    See the floor
-                    <i className="ph ph-arrow-right text-sm" />
-                  </Link>
+                  <div className="flex flex-col justify-center px-8 py-6">
+                    <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
+                    <ul className="mt-5 space-y-2">
+                      {s.highlights.map((h) => (
+                        <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
+                          <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
+                          {h}
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="mt-5">
+                      <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">Perfect for</div>
+                      <div className="mt-1.5 font-italic text-sm text-ink italic">
+                        {s.perfect.join(" · ")}
+                      </div>
+                    </div>
+                    <Link
+                      to={s.href}
+                      className="under mt-6 inline-flex w-fit items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna"
+                    >
+                      See the floor
+                      <i className="ph ph-arrow-right text-sm" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )
       })}
