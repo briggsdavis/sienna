@@ -1,5 +1,6 @@
+import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
+import { FadeIn, ParallaxImage, useParallax, useStaggerObserver } from "../components/animations"
 
 const SAUCES = [
   { name: "Marinara", note: "the classic, slow-cooked San Marzano", heat: 0 },
@@ -235,10 +236,6 @@ function MenuRow({
           </div>
         )}
       </div>
-      <span
-        className="mx-2 hidden max-w-[40%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
       <span className="font-serif text-lg text-sienna tabular-nums">
         ${price}
       </span>
@@ -247,8 +244,8 @@ function MenuRow({
 }
 
 export function Emporio() {
-  const heroParallax = useParallax(0.15)
-  const sauceListRef = useStaggerObserver<HTMLUListElement>(0.06)
+  const heroParallax = useParallax(0.22)
+  const sauceListRef = useStaggerObserver<HTMLUListElement>()
 
   return (
     <div className="relative">
@@ -336,10 +333,11 @@ export function Emporio() {
         <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
           <FadeIn>
             <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
-              <img
+              <ParallaxImage
                 src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1200&q=80"
                 alt="Emporio meatballs"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                className="transition-transform duration-700 group-hover:scale-[1.03]"
+                speed={0.12}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
@@ -535,7 +533,7 @@ export function Emporio() {
             </div>
           </FadeIn>
 
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid items-stretch gap-6 md:grid-cols-3">
             {[
               {
                 step: "one",
@@ -573,8 +571,8 @@ export function Emporio() {
                 delay: 0.24,
               },
             ].map((step) => (
-              <FadeIn key={step.num} delay={step.delay}>
-                <div className="relative border border-cream/20 p-8 backdrop-blur-sm">
+              <FadeIn key={step.num} delay={step.delay} className="h-full">
+                <div className="relative h-full border border-cream/20 p-8 backdrop-blur-sm">
                   <div className="flex items-baseline justify-between">
                     <span className="font-italic text-cream/70 italic">
                       {step.step}
@@ -605,11 +603,11 @@ export function Emporio() {
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
             <div className="grid overflow-hidden bg-ink text-cream lg:grid-cols-[1.1fr_1fr]">
-              <div className="relative aspect-square lg:aspect-auto">
-                <img
+              <div className="relative aspect-square overflow-hidden lg:aspect-auto">
+                <ParallaxImage
                   src="https://images.unsplash.com/photo-1574484284002-952d92456975?auto=format&fit=crop&w=1400&q=80"
                   alt="The Dragon Ball"
-                  className="absolute inset-0 h-full w-full object-cover"
+                  speed={0.1}
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-ink/30 to-transparent" />
                 <div className="absolute top-6 left-6 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.4em] text-cream/80 uppercase">
@@ -676,43 +674,29 @@ export function Emporio() {
           </FadeIn>
 
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
-            <FadeIn delay={0.05}>
-              <MenuColumn title="Starters" italian="antipasti" rows={STARTERS} />
-            </FadeIn>
-            <FadeIn delay={0.12}>
-              <MenuColumn
-                title="Soups & Salads"
-                italian="zuppe & insalate"
-                rows={SOUPS}
-              />
-            </FadeIn>
-            <FadeIn delay={0.19}>
-              <MenuColumn title="Entrées" italian="secondi" rows={ENTREES} />
-            </FadeIn>
-            <FadeIn delay={0.26}>
-              <MenuColumn
-                title="On the Bun"
-                italian="al panino"
-                rows={ON_THE_BUN}
-              />
-            </FadeIn>
-            <FadeIn delay={0.33}>
-              <MenuColumn
-                title="Bowls"
-                italian="le ciotole"
-                rows={BOWLS.map((b) =>
-                  b.build ? { ...b, flag: "build-your-own" } : b,
-                )}
-              />
-            </FadeIn>
-            <FadeIn delay={0.40}>
-              <MenuColumn title="Sides" italian="contorni" rows={SIDES} />
-            </FadeIn>
-            <FadeIn delay={0.47}>
-              <MenuColumn title="Desserts" italian="dolci" rows={DESSERTS} />
-            </FadeIn>
+            <MenuColumn title="Starters" italian="antipasti" rows={STARTERS} />
+            <MenuColumn
+              title="Soups & Salads"
+              italian="zuppe & insalate"
+              rows={SOUPS}
+            />
+            <MenuColumn title="Entrées" italian="secondi" rows={ENTREES} />
+            <MenuColumn
+              title="On the Bun"
+              italian="al panino"
+              rows={ON_THE_BUN}
+            />
+            <MenuColumn
+              title="Bowls"
+              italian="le ciotole"
+              rows={BOWLS.map((b) =>
+                b.build ? { ...b, flag: "build-your-own" } : b,
+              )}
+            />
+            <MenuColumn title="Sides" italian="contorni" rows={SIDES} />
+            <MenuColumn title="Desserts" italian="dolci" rows={DESSERTS} />
 
-            <FadeIn delay={0.54}>
+            <FadeIn>
               <div>
                 <div className="mb-6">
                   <div className="mb-1 font-italic text-base text-sienna italic">
@@ -802,9 +786,9 @@ export function Emporio() {
               ground floor · I
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
-              Come hungry.
+              Show up hungry.
               <br />
-              <span className="font-italic italic">Stay loud.</span>
+              <span className="font-italic italic">Leave slower.</span>
             </h3>
           </div>
           <div className="flex flex-wrap justify-end gap-4">
@@ -840,19 +824,51 @@ function MenuColumn({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
-  const listRef = useStaggerObserver<HTMLUListElement>(0.07)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const header = el.firstElementChild as HTMLElement
+    const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
+    const all = [header, ...items]
+
+    all.forEach((node) => {
+      node.style.opacity = "0"
+      node.style.transform = "translateY(28px)"
+      node.style.transition =
+        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+    })
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          all.forEach((node, i) => {
+            setTimeout(() => {
+              node.style.opacity = "1"
+              node.style.transform = "translateY(0)"
+            }, i * 170)
+          })
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
+    )
+    obs.observe(el)
+
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <div>
+    <div ref={ref}>
       <div className="mb-2">
         <div className="mb-1 font-italic text-base text-sienna italic">
           {italian}
         </div>
         <h3 className="font-display text-4xl text-ink">{title}</h3>
       </div>
-      <ul
-        ref={listRef}
-        className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10"
-      >
+      <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
         {rows.map((r) => (
           <MenuRow
             key={r.name}

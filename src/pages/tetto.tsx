@@ -1,5 +1,6 @@
+import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
+import { FadeIn, useParallax } from "../components/animations"
 
 const FEATURED_DRAFT = {
   name: "Big Wave",
@@ -179,7 +180,7 @@ function DraftCard({
             {style}
           </div>
         </div>
-        <span className="font-serif text-base text-gold tabular-nums">
+        <span className="font-serif text-base text-paper/55 tabular-nums">
           {abv}
         </span>
       </div>
@@ -204,10 +205,6 @@ function FoodRow({
           {desc}
         </div>
       </div>
-      <span
-        className="mx-2 hidden max-w-[35%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
       <span className="font-serif text-lg text-sienna tabular-nums">
         ${price}
       </span>
@@ -216,9 +213,40 @@ function FoodRow({
 }
 
 export function Tetto() {
-  const heroParallax = useParallax(0.15)
-  const draftListRef = useStaggerObserver<HTMLUListElement>(0.05)
-  const foodListRef = useStaggerObserver<HTMLUListElement>(0.07)
+  const heroParallax = useParallax(0.22)
+  const draftRef = useRef<HTMLDivElement>(null)
+  const foodRef = useRef<HTMLUListElement>(null)
+
+  useEffect(() => {
+    for (const [el, delay] of [
+      [draftRef.current, 0],
+      [foodRef.current, 0],
+    ] as [HTMLElement | null, number][]) {
+      if (!el) continue
+      const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
+      items.forEach((node) => {
+        node.style.opacity = "0"
+        node.style.transform = "translateY(28px)"
+        node.style.transition =
+          "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+      })
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            items.forEach((node, i) => {
+              setTimeout(() => {
+                node.style.opacity = "1"
+                node.style.transform = "translateY(0)"
+              }, delay + i * 170)
+            })
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
+      )
+      obs.observe(el)
+    }
+  }, [])
 
   return (
     <div className="relative">
@@ -287,7 +315,7 @@ export function Tetto() {
             </div>
 
             <div className="mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase">
-              <i className="ph ph-stairs text-sm text-gold" />
+              <i className="ph ph-stairs text-sm text-cream/50" />
               No reservations · climb the stairs
             </div>
           </div>
@@ -315,7 +343,7 @@ export function Tetto() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-gold uppercase">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
                   Floor III · Rooftop
                 </div>
                 <div className="font-display text-3xl leading-tight text-cream">
@@ -393,25 +421,22 @@ export function Tetto() {
           </FadeIn>
 
           {/* the chalkboard "hangs" on the wall, wood frame, dark inset */}
-          <FadeIn delay={0.08}>
-            <div className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
-              <ul ref={draftListRef}>
-                {DRAFTS.map((d, i) => (
-                  <DraftCard
-                    key={d.name}
-                    number={String(i + 1).padStart(2, "0")}
-                    {...d}
-                  />
-                ))}
-                <li className="px-6 py-6 text-center sm:px-8">
-                  <span className="font-italic text-paper/55 italic">
-                    + 17 more on rotation ,{" "}
-                    <span className="text-gold">ask the bartender</span>
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </FadeIn>
+          <div ref={draftRef} className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
+            <ul>
+              {DRAFTS.map((d, i) => (
+                <DraftCard
+                  key={d.name}
+                  number={String(i + 1).padStart(2, "0")}
+                  {...d}
+                />
+              ))}
+              <li className="px-6 py-6 text-center sm:px-8">
+                <span className="font-italic text-paper/55 italic">
+                  + 17 more on rotation · ask the bartender
+                </span>
+              </li>
+            </ul>
+          </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-between gap-4 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
             <span>Powered by Untappd · ratings on request</span>
@@ -429,7 +454,7 @@ export function Tetto() {
           <FadeIn>
             <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <div className="mb-2 font-italic text-base text-gold italic">
+                <div className="mb-2 font-italic text-base text-sienna-bright italic">
                   beer of the month · may
                 </div>
                 <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
@@ -479,7 +504,7 @@ export function Tetto() {
             </div>
           </FadeIn>
 
-          <ul ref={foodListRef} className="divide-y divide-ink/10 border-t border-b border-ink/10">
+          <ul ref={foodRef} className="divide-y divide-ink/10 border-t border-b border-ink/10">
             {FOOD.map((f) => (
               <FoodRow key={f.name} {...f} />
             ))}
@@ -490,12 +515,12 @@ export function Tetto() {
       {/* HAPPY HOUR */}
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="pointer-events-none absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-30 blur-[140px]" />
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-[380px] w-[380px] rounded-full bg-gold opacity-20 blur-[130px]" />
+        <div className="pointer-events-none absolute -bottom-20 -left-20 h-[380px] w-[380px] rounded-full bg-sienna opacity-15 blur-[130px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
               <div>
-                <div className="mb-3 font-italic text-lg text-gold italic">
+                <div className="mb-3 font-italic text-lg text-sienna-bright italic">
                   aperitivo · happy hour
                 </div>
                 <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
@@ -506,7 +531,7 @@ export function Tetto() {
                   everything that matters. Best seats on the roof go fast.
                 </p>
                 <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
-                  <i className="ph ph-clock text-base text-gold" />
+                  <i className="ph ph-clock text-base text-sienna-bright" />
                   Tue → Fri · 4:30 → 6:30 PM
                 </div>
               </div>
@@ -520,7 +545,7 @@ export function Tetto() {
                   { k: "½ off", v: "small plates", icon: "ph-bowl-food" },
                 ].map((row) => (
                   <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
-                    <i className={`ph-duotone ${row.icon} text-4xl text-gold`} />
+                    <i className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`} />
                     <div>
                       <div className="font-display text-3xl">{row.k}</div>
                       <div className="font-italic text-paper/75 italic">
@@ -576,10 +601,6 @@ export function Tetto() {
                     <span className="w-24 font-serif text-sm tracking-[0.2em] text-ink uppercase">
                       {row.d}
                     </span>
-                    <span
-                      className="mx-2 hidden flex-1 translate-y-[-4px] border-b border-dotted border-ink/25 sm:block"
-                      aria-hidden
-                    />
                     <span className="font-italic text-sm text-ink-soft italic tabular-nums">
                       {row.h}
                     </span>
@@ -599,7 +620,7 @@ export function Tetto() {
       <section className="relative bg-ink text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-gold italic">
+            <div className="mb-2 font-italic text-base text-cream/60 italic">
               third floor · III
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
@@ -618,7 +639,7 @@ export function Tetto() {
             </Link>
             <Link
               to="/"
-              className="btn-lift group inline-flex items-center gap-3 bg-gold px-7 py-4 font-serif text-sm tracking-[0.3em] text-ink uppercase transition-colors hover:bg-cream"
+              className="btn-lift group inline-flex items-center gap-3 bg-sienna-bright px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
             >
               All of Sienna
               <i className="ph ph-arrow-up-right text-lg" />

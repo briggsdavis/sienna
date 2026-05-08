@@ -1,9 +1,6 @@
 import { useEffect, useRef, type ReactNode } from "react"
 
-export function useStaggerObserver<T extends HTMLElement>(
-  stagger = 0.07,
-  initialDelay = 0.05,
-) {
+export function useStaggerObserver<T extends HTMLElement>(stagger = 0.09) {
   const ref = useRef<T>(null)
 
   useEffect(() => {
@@ -14,9 +11,9 @@ export function useStaggerObserver<T extends HTMLElement>(
 
     children.forEach((child) => {
       child.style.opacity = "0"
-      child.style.transform = "translateY(20px)"
+      child.style.transform = "translateY(28px)"
       child.style.transition =
-        "opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)"
+        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
     })
 
     const obs = new IntersectionObserver(
@@ -28,7 +25,7 @@ export function useStaggerObserver<T extends HTMLElement>(
                 child.style.opacity = "1"
                 child.style.transform = "translateY(0)"
               },
-              (initialDelay + i * stagger) * 1000,
+              i * stagger * 1000,
             )
           })
           obs.disconnect()
@@ -39,7 +36,7 @@ export function useStaggerObserver<T extends HTMLElement>(
     obs.observe(el)
 
     return () => obs.disconnect()
-  }, [stagger, initialDelay])
+  }, [stagger])
 
   return ref
 }
@@ -59,6 +56,46 @@ export function useParallax(speed = 0.18) {
   }, [speed])
 
   return ref
+}
+
+export function ParallaxImage({
+  src,
+  alt,
+  className = "",
+  speed = 0.12,
+}: {
+  src: string
+  alt: string
+  className?: string
+  speed?: number
+}) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const onScroll = () => {
+      const parent = el.parentElement
+      if (!parent) return
+      const rect = parent.getBoundingClientRect()
+      const offset =
+        (window.innerHeight / 2 - (rect.top + rect.height / 2)) * speed
+      el.style.transform = `translateY(${offset}px)`
+    }
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [speed])
+
+  return (
+    <div ref={ref} className="absolute" style={{ inset: "-22% 0" }}>
+      <img
+        src={src}
+        alt={alt}
+        className={`h-full w-full object-cover ${className}`}
+      />
+    </div>
+  )
 }
 
 export function FadeIn({
@@ -84,7 +121,7 @@ export function FadeIn({
           obs.disconnect()
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -120px 0px" },
+      { threshold: 0.08, rootMargin: "0px 0px -80px 0px" },
     )
     obs.observe(el)
     return () => obs.disconnect()
@@ -96,3 +133,4 @@ export function FadeIn({
     </div>
   )
 }
+

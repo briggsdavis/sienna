@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { FadeIn, useParallax } from "../components/animations"
+import { FadeIn, ParallaxImage, useParallax } from "../components/animations"
 
 const FLOORS = [
   {
@@ -11,7 +11,7 @@ const FLOORS = [
     italian: "the meatball joint",
     color: "from-[#7a2218] via-[#a4341f] to-[#c9412a]",
     accent: "#c9412a",
-    desc: "Ground floor. Loud, fast, family. Twelve sauces, six meats, one philosophy: the meatball is sacred. Pull up a stool, order a Dragon Ball, and let the kitchen show off.",
+    desc: "Ground floor. Twelve sauces, six meats, one rule: the meatball is sacred.",
     image:
       "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1600&q=70",
     items: [
@@ -42,7 +42,7 @@ const FLOORS = [
     italian: "the trattoria",
     color: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
     accent: "#a4341f",
-    desc: "Second floor. Linen, candlelight, a wood-fired oven that runs at eight hundred degrees. Pasta hand-rolled at noon, a wine list that speaks Piemontese, and the only OpenTable reservation in the building.",
+    desc: "Linen, candlelight, an eight-hundred-degree oven. The only OpenTable reservation in the building.",
     image:
       "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1600&q=70",
     items: [
@@ -73,7 +73,7 @@ const FLOORS = [
     italian: "the rooftop garden",
     color: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
     accent: "#e7a04a",
-    desc: "Third floor. Sky, retractable roof, thirty drafts on a chalkboard, the steel-city skyline doing its thing at golden hour. Whole pies, cold pints, no reservations, climb the stairs and find out.",
+    desc: "Open sky. Thirty drafts on the chalkboard. No reservations — climb the stairs.",
     image:
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
     items: [
@@ -167,7 +167,7 @@ const MARQUEE_WORDS = [
 ]
 
 export function Home() {
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
 
   return (
     <div className="relative">
@@ -270,7 +270,7 @@ export function Home() {
       </FadeIn>
 
       {/* MANIFESTO */}
-      <section className="grain relative overflow-hidden bg-paper py-32 text-center">
+      <section className="grain relative overflow-hidden bg-paper py-40 text-center">
         <div className="pointer-events-none absolute inset-0">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2000&q=60"
@@ -280,24 +280,13 @@ export function Home() {
         </div>
         <div className="relative mx-auto max-w-5xl px-6">
           <FadeIn>
-            <div className="mb-6 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
+            <div className="mb-8 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
               the italian house
             </div>
-            <p className="font-display text-3xl leading-[1.15] text-ink md:text-5xl">
+            <p className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[1.1] text-ink">
               Three floors.
               <span className="font-italic text-sienna italic"> Three rooms. </span>
-              One Italian house, built into a hundred-year-old building on Penn
-              Avenue, in the only city that calls itself a triangle.
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.18}>
-            <div className="mt-10 flex justify-center">
-              <span className="swash" />
-            </div>
-            <p className="mx-auto mt-10 max-w-2xl font-italic text-xl leading-relaxed text-ink-soft italic">
-              Walk in for a meatball. Stay for the wood-fired pizza. End the night
-              on the roof with thirty taps and the lights of downtown. Your evening
-              climbs the staircase with you.
+              One Italian house on Penn Avenue.
             </p>
           </FadeIn>
         </div>
@@ -327,10 +316,11 @@ export function Home() {
                 <div
                   className={`group relative h-[420px] overflow-hidden lg:h-auto ${flipped ? "lg:order-2" : ""}`}
                 >
-                  <img
+                  <ParallaxImage
                     src={floor.image}
                     alt={floor.name}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    className="transition-transform duration-700 group-hover:scale-[1.04]"
+                    speed={0.13}
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${floor.color} opacity-25 mix-blend-multiply`}
@@ -360,7 +350,7 @@ export function Home() {
                   <div className="mt-3 font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
                     {floor.sub}
                   </div>
-                  <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
+                  <p className="mt-6 max-w-xl font-body text-lg leading-relaxed text-ink-soft">
                     {floor.desc}
                   </p>
 
@@ -373,10 +363,6 @@ export function Home() {
                         <span className="font-serif text-base tracking-wide text-ink">
                           {it.name}
                         </span>
-                        <span
-                          className="mx-2 flex-1 translate-y-[-4px] border-b border-dotted border-ink/25"
-                          aria-hidden
-                        />
                         <span className="hidden font-italic text-sm text-ink-soft italic sm:inline">
                           {it.note}
                         </span>
@@ -411,6 +397,22 @@ export function Home() {
         })}
       </section>
 
+      {/* EDITORIAL STATEMENT */}
+      <FadeIn>
+      <section className="bg-paper-deep py-28 text-center">
+        <div className="mx-auto max-w-4xl px-6">
+          <p className="font-display text-[clamp(2.6rem,6vw,5.5rem)] leading-[1.05] text-ink">
+            Three kitchens.
+            <br />
+            <span className="font-italic text-sienna italic">One address.</span>
+          </p>
+          <div className="mt-8 flex justify-center">
+            <span className="swash" />
+          </div>
+        </div>
+      </section>
+      </FadeIn>
+
       {/* SIGNATURE DISHES */}
       <FadeIn>
       <section className="grain relative bg-paper py-32">
@@ -429,8 +431,7 @@ export function Home() {
               </h2>
             </div>
             <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-              A walking tour, plate by plate, from the meatball joint at street
-              level to the carbonara two stories up.
+              Plate by plate, floor by floor.
             </p>
           </div>
 
@@ -493,8 +494,7 @@ export function Home() {
                 </h2>
               </div>
               <div className="max-w-sm font-serif text-sm tracking-[0.3em] text-paper/60 uppercase">
-                Updated daily · what's pouring, what's frying, what's on the
-                chalkboard.
+                Updated daily
               </div>
             </div>
           </FadeIn>
@@ -504,7 +504,7 @@ export function Home() {
               {
                 tag: "Ball of the Month",
                 title: "Dragon Ball",
-                desc: "Housemade meatballs fried golden, glazed in sweet chili with a touch of heat.",
+                desc: "Fried golden, glazed in sweet chili.",
                 meta: "$14 · Emporio",
                 icon: "ph-bowl-food",
                 delay: 0,
@@ -512,7 +512,7 @@ export function Home() {
               {
                 tag: "Beer of the Month",
                 title: "Big Wave",
-                desc: "Kona Brewing · Hawaiian blonde ale, light hop aroma, beach-ready.",
+                desc: "Kona Brewing · Hawaiian blonde ale, light and easy.",
                 meta: "4.4% ABV · Il Tetto",
                 icon: "ph-beer-stein",
                 delay: 0.1,
@@ -520,7 +520,7 @@ export function Home() {
               {
                 tag: "Happy Hour",
                 title: "4:30 → 6:30",
-                desc: "½-off drafts · ½-off well drinks · ½-off small plates · $5 espresso martini.",
+                desc: "½-off drafts, well drinks, and small plates. $5 espresso martini.",
                 meta: "Tue–Fri · floors I & III",
                 icon: "ph-clock-countdown",
                 delay: 0.2,
@@ -528,7 +528,7 @@ export function Home() {
               {
                 tag: "Seasonal",
                 title: "Spiced Kentucky Mule",
-                desc: "Big Springs whiskey, ginger beer, fresh lime, a whisper of cinnamon.",
+                desc: "Big Springs whiskey, ginger beer, fresh lime.",
                 meta: "$13 · all floors",
                 icon: "ph-wine",
                 delay: 0.3,
@@ -563,10 +563,10 @@ export function Home() {
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
           <FadeIn>
             <div className="relative aspect-[4/5] overflow-hidden">
-              <img
+              <ParallaxImage
                 src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
                 alt="Pittsburgh skyline"
-                className="absolute inset-0 h-full w-full object-cover"
+                speed={0.1}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
               <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">
@@ -590,16 +590,9 @@ export function Home() {
                   a decade of dinner.
                 </span>
               </h2>
-              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-                The building came first, a Cultural District landmark with a
-                façade that's watched the city change three times over. We took
-                the lease in 2013 with a single idea: don't pick one Italian
-                restaurant when the floors will let you have three.
-              </p>
-              <p className="mt-6 max-w-xl font-italic text-lg leading-relaxed text-ink-soft italic">
-                The kitchens stack vertically. The dining rooms tell three
-                different stories. Walk it from the bottom up, by the time you
-                reach the roof, you've had an evening.
+              <p className="mt-8 max-w-xl font-body text-lg leading-relaxed text-ink-soft">
+                A Cultural District landmark since 2013. Three floors, three
+                concepts — one address on Penn Avenue.
               </p>
 
               <div className="mt-10 grid max-w-md grid-cols-2 gap-x-8 gap-y-6">
@@ -671,10 +664,8 @@ export function Home() {
               <br />
               <span className="font-italic italic">a table.</span>
             </h2>
-            <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-cream/85">
-              Mezzo (floor II) takes reservations through OpenTable. Emporio and
-              Il Tetto are first-come, climb the stairs, find a stool, ask for
-              the chalkboard.
+            <p className="mt-8 max-w-xl font-body text-lg leading-relaxed text-cream/85">
+              Mezzo takes reservations via OpenTable. Emporio and Il Tetto are walk-in.
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <a
@@ -720,10 +711,6 @@ export function Home() {
                     {row.roman}
                   </span>
                   <span className="font-display text-2xl">{row.name}</span>
-                  <span
-                    className="mx-2 flex-1 translate-y-[-4px] border-b border-dotted border-cream/30"
-                    aria-hidden
-                  />
                   <span className="font-italic text-sm text-cream/85 italic tabular-nums">
                     {row.hours}
                   </span>
@@ -731,8 +718,7 @@ export function Home() {
               ))}
             </ul>
             <p className="mt-6 font-italic text-sm leading-relaxed text-cream/70 italic">
-              Hours vary on holidays and during private events. The rooftop
-              closes when the sky says so.
+              The rooftop closes when the sky says so.
             </p>
           </div>
         </div>

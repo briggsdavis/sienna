@@ -1,5 +1,6 @@
+import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
+import { FadeIn, useParallax } from "../components/animations"
 
 const ANTIPASTO = [
   {
@@ -300,10 +301,6 @@ function Row({
           </div>
         )}
       </div>
-      <span
-        className="mx-2 hidden max-w-[35%] flex-1 translate-y-[-6px] border-b border-dotted border-ink/25 sm:block"
-        aria-hidden
-      />
       <span className="font-serif text-lg text-sienna-deep tabular-nums">
         ${price}
       </span>
@@ -320,19 +317,51 @@ function Column({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
-  const listRef = useStaggerObserver<HTMLUListElement>(0.07)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const header = el.firstElementChild as HTMLElement
+    const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
+    const all = [header, ...items]
+
+    all.forEach((node) => {
+      node.style.opacity = "0"
+      node.style.transform = "translateY(28px)"
+      node.style.transition =
+        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+    })
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          all.forEach((node, i) => {
+            setTimeout(() => {
+              node.style.opacity = "1"
+              node.style.transform = "translateY(0)"
+            }, i * 170)
+          })
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
+    )
+    obs.observe(el)
+
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <div>
+    <div ref={ref}>
       <div className="mb-2">
         <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
           {italian}
         </div>
         <h3 className="font-display text-4xl text-ink">{english}</h3>
       </div>
-      <ul
-        ref={listRef}
-        className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10"
-      >
+      <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
         {rows.map((r) => (
           <Row
             key={r.name}
@@ -389,7 +418,39 @@ function WineRow({
 }
 
 export function Mezzo() {
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
+
+  const wineLeftRef = useRef<HTMLDivElement>(null)
+  const wineRightRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    for (const ref of [wineLeftRef, wineRightRef]) {
+      const el = ref.current
+      if (!el) continue
+      const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
+      items.forEach((node) => {
+        node.style.opacity = "0"
+        node.style.transform = "translateY(28px)"
+        node.style.transition =
+          "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
+      })
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            items.forEach((node, i) => {
+              setTimeout(() => {
+                node.style.opacity = "1"
+                node.style.transform = "translateY(0)"
+              }, i * 170)
+            })
+            obs.disconnect()
+          }
+        },
+        { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
+      )
+      obs.observe(el)
+    }
+  }, [])
 
   return (
     <div className="relative">
@@ -604,12 +665,12 @@ export function Mezzo() {
           </FadeIn>
 
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
-            <FadeIn delay={0.05}><Column english="Antipasti" italian="to begin" rows={ANTIPASTO} /></FadeIn>
-            <FadeIn delay={0.12}><Column english="Wood-Fired Pizza" italian="dal forno" rows={PIZZA} /></FadeIn>
-            <FadeIn delay={0.19}><Column english="Pasta" italian="hand-rolled at noon" rows={PASTA} /></FadeIn>
-            <FadeIn delay={0.26}><Column english="Mains" italian="secondi" rows={MAINS} /></FadeIn>
-            <FadeIn delay={0.33}><Column english="Dessert" italian="dolci" rows={DESSERT} /></FadeIn>
-            <FadeIn delay={0.40}>
+            <Column english="Antipasti" italian="to begin" rows={ANTIPASTO} />
+            <Column english="Wood-Fired Pizza" italian="dal forno" rows={PIZZA} />
+            <Column english="Pasta" italian="hand-rolled at noon" rows={PASTA} />
+            <Column english="Mains" italian="secondi" rows={MAINS} />
+            <Column english="Dessert" italian="dolci" rows={DESSERT} />
+            <FadeIn>
               <div>
                 <div className="mb-2">
                   <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
@@ -670,9 +731,8 @@ export function Mezzo() {
           </FadeIn>
 
           <div className="grid gap-12 lg:grid-cols-2">
-            <FadeIn delay={0.08}>
-              <div>
-                <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
+            <div ref={wineLeftRef}>
+              <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
                     <div className="font-italic text-sm text-sienna-bright italic">
                       featured imports
@@ -721,11 +781,9 @@ export function Mezzo() {
                     <WineRow key={w.name} {...w} />
                   ))}
                 </ul>
-              </div>
-            </FadeIn>
+            </div>
 
-            <FadeIn delay={0.16}>
-              <div>
+            <div ref={wineRightRef}>
                 <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
                     <div className="font-italic text-sm text-sienna-bright italic">
@@ -760,8 +818,7 @@ export function Mezzo() {
                     of the wood oven.
                   </p>
                 </div>
-              </div>
-            </FadeIn>
+            </div>
           </div>
         </div>
       </section>
@@ -824,10 +881,6 @@ export function Mezzo() {
                     <span className="w-20 font-serif text-xs tracking-[0.2em] text-cream/70 uppercase">
                       {row.d}
                     </span>
-                    <span
-                      className="mx-1 hidden flex-1 translate-y-[-4px] border-b border-dotted border-cream/20 sm:block"
-                      aria-hidden
-                    />
                     <span className="font-italic text-sm text-cream/85 italic tabular-nums">
                       {row.h}
                     </span>
