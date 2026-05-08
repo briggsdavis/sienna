@@ -21,7 +21,7 @@ export function useStaggerObserver<T extends HTMLElement>(_stagger = 0.09) {
           if (entry.isIntersecting) {
             child.style.opacity = "1"
             child.style.transform = "translateY(0)"
-          } else {
+          } else if (child.style.opacity === "1") {
             child.style.opacity = "0"
             child.style.transform = "translateY(20px)"
           }

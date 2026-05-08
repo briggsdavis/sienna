@@ -108,19 +108,19 @@ function FloorText({
   const staggerRef = useStaggerObserver<HTMLDivElement>(0.1)
   return (
     <div ref={staggerRef} className="relative flex flex-col justify-center px-6 py-20 lg:px-20">
-      <div className="font-italic text-base tracking-wide text-sienna italic">
+      <div className="mb-1 font-italic text-base tracking-wide text-sienna italic">
         {floor.italian}
       </div>
       <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.9] text-ink">
         {floor.name}
       </h2>
-      <div className="font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
+      <div className="mt-4 font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
         {floor.sub}
       </div>
-      <p className="max-w-xl font-body text-lg leading-relaxed text-ink-soft">
+      <p className="mt-3 max-w-xl font-body text-lg leading-relaxed text-ink-soft">
         {floor.desc}
       </p>
-      <ul className="max-w-xl divide-y divide-ink/10 border-y border-ink/10">
+      <ul className="mt-5 max-w-xl divide-y divide-ink/10 border-y border-ink/10">
         {floor.items.map((it) => (
           <li key={it.name} className="flex items-baseline gap-4 py-4">
             <span className="font-serif text-base tracking-wide text-ink">{it.name}</span>
