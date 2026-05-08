@@ -320,15 +320,17 @@ function Column({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
-  const listRef = useStaggerObserver<HTMLUListElement>(0.07)
+  const listRef = useStaggerObserver<HTMLUListElement>(0.09)
   return (
     <div>
-      <div className="mb-2">
-        <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
-          {italian}
+      <FadeIn>
+        <div className="mb-2">
+          <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
+            {italian}
+          </div>
+          <h3 className="font-display text-4xl text-ink">{english}</h3>
         </div>
-        <h3 className="font-display text-4xl text-ink">{english}</h3>
-      </div>
+      </FadeIn>
       <ul
         ref={listRef}
         className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10"
@@ -389,7 +391,7 @@ function WineRow({
 }
 
 export function Mezzo() {
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
 
   return (
     <div className="relative">
@@ -604,12 +606,12 @@ export function Mezzo() {
           </FadeIn>
 
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
-            <FadeIn delay={0.05}><Column english="Antipasti" italian="to begin" rows={ANTIPASTO} /></FadeIn>
-            <FadeIn delay={0.12}><Column english="Wood-Fired Pizza" italian="dal forno" rows={PIZZA} /></FadeIn>
-            <FadeIn delay={0.19}><Column english="Pasta" italian="hand-rolled at noon" rows={PASTA} /></FadeIn>
-            <FadeIn delay={0.26}><Column english="Mains" italian="secondi" rows={MAINS} /></FadeIn>
-            <FadeIn delay={0.33}><Column english="Dessert" italian="dolci" rows={DESSERT} /></FadeIn>
-            <FadeIn delay={0.40}>
+            <Column english="Antipasti" italian="to begin" rows={ANTIPASTO} />
+            <Column english="Wood-Fired Pizza" italian="dal forno" rows={PIZZA} />
+            <Column english="Pasta" italian="hand-rolled at noon" rows={PASTA} />
+            <Column english="Mains" italian="secondi" rows={MAINS} />
+            <Column english="Dessert" italian="dolci" rows={DESSERT} />
+            <FadeIn>
               <div>
                 <div className="mb-2">
                   <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">

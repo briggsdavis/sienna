@@ -68,7 +68,7 @@ function CateringRow({
 }
 
 export function Catering() {
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
 
   return (
     <div className="relative">

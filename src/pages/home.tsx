@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { FadeIn, useParallax } from "../components/animations"
+import { FadeIn, ParallaxImage, useParallax } from "../components/animations"
 
 const FLOORS = [
   {
@@ -167,7 +167,7 @@ const MARQUEE_WORDS = [
 ]
 
 export function Home() {
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
 
   return (
     <div className="relative">
@@ -316,10 +316,11 @@ export function Home() {
                 <div
                   className={`group relative h-[420px] overflow-hidden lg:h-auto ${flipped ? "lg:order-2" : ""}`}
                 >
-                  <img
+                  <ParallaxImage
                     src={floor.image}
                     alt={floor.name}
-                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                    className="transition-transform duration-700 group-hover:scale-[1.04]"
+                    speed={0.13}
                   />
                   <div
                     className={`absolute inset-0 bg-gradient-to-t ${floor.color} opacity-25 mix-blend-multiply`}
@@ -566,10 +567,10 @@ export function Home() {
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
           <FadeIn>
             <div className="relative aspect-[4/5] overflow-hidden">
-              <img
+              <ParallaxImage
                 src="https://images.unsplash.com/photo-1481833761820-0509d3217039?auto=format&fit=crop&w=1400&q=80"
                 alt="Pittsburgh skyline"
-                className="absolute inset-0 h-full w-full object-cover"
+                speed={0.1}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
               <div className="absolute right-0 bottom-0 left-0 p-8 text-cream">

@@ -141,7 +141,7 @@ function StarRow({ n }: { n: number }) {
 
 export function Events() {
   const [submitted, setSubmitted] = useState(false)
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
 
   return (
     <div className="relative">

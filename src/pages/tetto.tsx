@@ -216,7 +216,7 @@ function FoodRow({
 }
 
 export function Tetto() {
-  const heroParallax = useParallax(0.15)
+  const heroParallax = useParallax(0.22)
   const draftListRef = useStaggerObserver<HTMLUListElement>(0.05)
   const foodListRef = useStaggerObserver<HTMLUListElement>(0.07)
 

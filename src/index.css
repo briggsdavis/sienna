@@ -65,7 +65,7 @@ body {
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(28px);
+    transform: translateY(44px);
   }
   to {
     opacity: 1;
@@ -198,7 +198,7 @@ section {
   position: relative;
 }
 section + section {
-  box-shadow: 0 -40px 100px -10px rgba(26, 18, 11, 0.28);
+  box-shadow: 0 -60px 120px -8px rgba(26, 18, 11, 0.38);
 }
 
 /* Page fade-in on route change */
@@ -219,10 +219,10 @@ section + section {
 /* Fade in on scroll */
 .fade-in-base {
   opacity: 0;
-  transform: translateY(38px);
+  transform: translateY(56px);
   transition:
-    opacity 0.95s ease,
-    transform 0.95s cubic-bezier(0.2, 0.8, 0.2, 1);
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .fade-in-visible {
   opacity: 1;
@@ -239,8 +239,8 @@ section + section {
 /* Parallax hero image container — oversized so parallax has room to move */
 .parallax-hero-wrap {
   position: absolute;
-  top: -8%;
-  bottom: -22%;
+  top: -10%;
+  bottom: -32%;
   left: 0;
   right: 0;
 }
