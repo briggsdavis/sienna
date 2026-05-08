@@ -113,24 +113,6 @@ const UPCOMING = [
   },
 ] as const
 
-const RECURRING = [
-  {
-    title: "Wine Down Thursday",
-    sub: "Bottles & Boards",
-    floor: "Mezzo",
-    desc: "Half-off select bottles paired with a chef's charcuterie board. The sommelier picks four every week, when they're gone, they're gone.",
-    when: "Every Thursday · 5 → 9 PM",
-    icon: "ph-wine",
-  },
-  {
-    title: "Trivia on the Rooftop",
-    sub: "Pitcher · pizza · pop quiz",
-    floor: "Il Tetto",
-    desc: "Six rounds, three drinks deep, cash bar tab for the winning table. Show up early, the rooftop fills by question two.",
-    when: "Tuesdays · 7 → 9 PM",
-    icon: "ph-microphone",
-  },
-] as const
 
 const REVIEWS = [
   {
@@ -207,45 +189,41 @@ export function Events() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
-              <span className="swash swash-white" />
-              <span>private events</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Events.
-            </h1>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Three floors available for private hire: a meatball joint, a trattoria, and a rooftop with the Pittsburgh skyline. Up to 400 guests.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#inquire"
-                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
-              >
-                <i className="ph ph-envelope text-sm" />
-                Inquire now
-                <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
-              </a>
-              <a
-                href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-              >
-                <i className="ph-duotone ph-cube text-sm" />
-                Virtual tour · 360°
-                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-            </div>
+          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic" style={{ animationDelay: "0.05s" }}>
+            <span className="swash swash-white" />
+            <span>private events</span>
+          </div>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+            Events.
+          </h1>
+          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.45s" }}>
+            Three floors available for private hire: a meatball joint, a trattoria, and a rooftop with the Pittsburgh skyline. Up to 400 guests.
+          </p>
+          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.62s" }}>
+            <a
+              href="#inquire"
+              className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+            >
+              <i className="ph ph-envelope text-sm" />
+              Inquire now
+              <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
+            </a>
+            <a
+              href="https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+            >
+              <i className="ph-duotone ph-cube text-sm" />
+              Virtual tour · 360°
+              <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
           </div>
         </div>
       </section>
 
       {/* UPCOMING EVENTS */}
       <section className="relative bg-ink py-24 text-paper">
-        <div className="pointer-events-none absolute -top-20 -right-20 h-[380px] w-[380px] rounded-full bg-sienna opacity-20 blur-[140px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -265,8 +243,8 @@ export function Events() {
 
           <div className="grid gap-px bg-paper/15 sm:grid-cols-3">
             {UPCOMING.map((e, i) => (
-              <FadeIn key={e.title} delay={i * 0.1}>
-                <article className="group bg-ink p-8 transition-colors hover:bg-sienna-deep/60">
+              <FadeIn key={e.title} delay={i * 0.1} className="h-full">
+                <article className="group flex h-full flex-col bg-ink p-8 transition-colors hover:bg-sienna-deep/60">
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <div className="font-serif text-xs tracking-[0.35em] text-paper/50 uppercase">
@@ -280,7 +258,7 @@ export function Events() {
                   </div>
                   <h3 className="mt-5 font-display text-4xl leading-tight">{e.title}</h3>
                   <p className="mt-2 font-italic text-base text-paper/70 italic">{e.sub}</p>
-                  <div className="mt-6 flex flex-col gap-2">
+                  <div className="mt-auto pt-6 flex flex-col gap-2">
                     <div className="flex items-center gap-2 font-serif text-2xs tracking-[0.3em] text-paper/55 uppercase">
                       <i className="ph ph-house-line text-sm" />
                       {e.floor}
@@ -297,7 +275,7 @@ export function Events() {
         </div>
       </section>
 
-      {/* THREE FLOORS, at a glance */}
+      {/* THREE FLOORS, accordion */}
       <section className="relative bg-paper py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
@@ -322,76 +300,9 @@ export function Events() {
             </div>
           </FadeIn>
 
-          <div className="grid items-stretch gap-6 md:grid-cols-3">
-            {SPACES.map((s, i) => (
-              <FadeIn key={s.id} delay={i * 0.1} className="h-full">
-              <article
-                className="group flex h-full flex-col overflow-hidden border border-ink/10 bg-cream"
-              >
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img
-                    src={s.image}
-                    alt={`${s.name} private event space`}
-                    className="dish-img absolute inset-0 h-full w-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-                  <div className="absolute top-4 left-4 bg-cream px-3 py-1.5 font-serif text-2xs tracking-[0.4em] text-ink uppercase">
-                    Floor {s.roman}
-                  </div>
-                  <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
-                    <h3 className="font-display text-4xl text-cream drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
-                      {s.name}
-                    </h3>
-                    <span className={`font-display text-2xl ${s.accent}`}>
-                      {s.capacity}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex flex-1 flex-col p-7">
-                  <div className="font-italic text-sm text-sienna italic">
-                    {s.sub}
-                  </div>
-                  <div className="mt-2 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                    {s.vibe}
-                  </div>
-                  <p className="mt-4 font-body text-base leading-relaxed text-ink-soft">
-                    {s.desc}
-                  </p>
-                  <ul className="mt-5 space-y-2">
-                    {s.highlights.map((h) => (
-                      <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
-                        <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6">
-                    <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                      Perfect for
-                    </div>
-                    <ul className="mt-2 flex flex-wrap gap-x-3 gap-y-1 font-italic text-sm text-ink italic">
-                      {s.perfect.map((p, i) => (
-                        <li key={p} className="flex items-center gap-2">
-                          {p}
-                          {i < s.perfect.length - 1 && (
-                            <span className="text-sienna/50">·</span>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <Link
-                    to={s.href}
-                    className="under mt-auto pt-6 inline-flex items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
-                  >
-                    See the floor
-                    <i className="ph ph-arrow-right text-sm" />
-                  </Link>
-                </div>
-              </article>
-              </FadeIn>
-            ))}
-          </div>
+          <FadeIn delay={0.1}>
+            <VenueAccordion spaces={SPACES} />
+          </FadeIn>
 
           <FadeIn delay={0.1}>
             <div className="mt-14 grid gap-px bg-ink/10 sm:grid-cols-[1fr_auto]">
@@ -428,67 +339,16 @@ export function Events() {
                   </a>
                 </div>
               </div>
-              <div className="hidden items-center justify-center bg-sienna-deep/8 px-10 sm:flex">
-                <i className="ph-duotone ph-buildings text-6xl text-sienna/40" />
+              <div className="relative hidden overflow-hidden sm:block" style={{ minWidth: "280px" }}>
+                <img
+                  src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80"
+                  alt="Private event at Sienna Mercato"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-ink/30" />
               </div>
             </div>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* RECURRING NIGHTS */}
-      <section className="relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="pointer-events-none absolute -top-32 -right-32 h-[480px] w-[480px] rounded-full bg-sienna opacity-30 blur-[160px]" />
-        <div className="pointer-events-none absolute -bottom-40 -left-32 h-[420px] w-[420px] rounded-full bg-sienna opacity-15 blur-[140px]" />
-        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-          <FadeIn>
-          <div className="mb-12 grid gap-6 md:grid-cols-[1.2fr_1fr] md:items-end">
-            <div>
-              <div className="mb-3 font-italic text-lg text-sienna-bright italic">
-                on the calendar
-              </div>
-              <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
-                Two standing nights.
-              </h2>
-            </div>
-            <p className="max-w-md font-italic text-lg leading-relaxed text-paper/70 italic">
-              You don't need a private event to make a night out feel like one.
-              Walk in, sit down, ask for the running tab.
-            </p>
-          </div>
-          </FadeIn>
-
-          <div className="grid gap-px bg-paper/15 sm:grid-cols-2">
-            {RECURRING.map((e, i) => (
-              <FadeIn key={e.title} delay={i * 0.12}>
-              <article
-                className="group bg-ink p-8 transition-colors hover:bg-sienna-deep"
-              >
-                <div className="flex items-start justify-between gap-6">
-                  <i
-                    className={`ph-duotone ${e.icon} text-5xl text-sienna-bright transition-colors group-hover:text-cream`}
-                  />
-                  <span className="font-serif text-2xs tracking-[0.3em] text-paper/60 uppercase">
-                    Floor · {e.floor}
-                  </span>
-                </div>
-                <div className="mt-8 font-italic text-base text-sienna-bright italic">
-                  {e.sub}
-                </div>
-                <h3 className="mt-2 font-display text-4xl leading-tight">
-                  {e.title}
-                </h3>
-                <p className="mt-4 font-italic leading-relaxed text-paper/80 italic">
-                  {e.desc}
-                </p>
-                <div className="mt-6 inline-flex items-center gap-3 border border-paper/30 px-4 py-2 font-serif text-xs tracking-[0.3em] text-paper/85 uppercase">
-                  <i className="ph ph-clock text-sm text-sienna-bright" />
-                  {e.when}
-                </div>
-              </article>
-              </FadeIn>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -726,6 +586,89 @@ export function Events() {
           </div>
         </div>
       </section>
+    </div>
+  )
+}
+
+function VenueAccordion({
+  spaces,
+}: {
+  spaces: typeof SPACES
+}) {
+  const [openId, setOpenId] = useState<string | null>(null)
+
+  return (
+    <div className="divide-y divide-ink/10 border-t border-b border-ink/10">
+      {spaces.map((s) => {
+        const isOpen = openId === s.id
+        return (
+          <div key={s.id}>
+            <button
+              onClick={() => setOpenId(isOpen ? null : s.id)}
+              className="group flex w-full items-center justify-between gap-6 px-2 py-6 text-left transition-colors hover:text-sienna"
+            >
+              <div className="flex items-center gap-6">
+                <span className="font-display text-4xl text-ink/20 transition-colors group-hover:text-sienna/30">
+                  {s.roman}
+                </span>
+                <div>
+                  <h3 className="font-display text-3xl text-ink transition-colors group-hover:text-sienna">
+                    {s.name}
+                  </h3>
+                  <div className="font-italic text-sm text-ink-soft italic">{s.sub}</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-6 shrink-0">
+                <span className="hidden font-serif text-xs tracking-[0.3em] text-ink-soft uppercase sm:block">
+                  up to {s.capacity} guests
+                </span>
+                <i className={`ph ph-caret-${isOpen ? "up" : "down"} text-xl text-ink/40 transition-transform`} />
+              </div>
+            </button>
+
+            {isOpen && (
+              <div className="grid gap-0 overflow-hidden border-t border-ink/8 bg-cream/40 pb-8 lg:grid-cols-[1.1fr_1fr]">
+                <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[340px]">
+                  <img
+                    src={s.image}
+                    alt={`${s.name} private event space`}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
+                  <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
+                    <span className="font-italic text-sm text-cream/80 italic">{s.vibe}</span>
+                    <span className={`font-display text-2xl ${s.accent}`}>{s.capacity}</span>
+                  </div>
+                </div>
+                <div className="flex flex-col justify-center px-8 py-6">
+                  <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
+                  <ul className="mt-5 space-y-2">
+                    {s.highlights.map((h) => (
+                      <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
+                        <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-5">
+                    <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">Perfect for</div>
+                    <div className="mt-1.5 font-italic text-sm text-ink italic">
+                      {s.perfect.join(" · ")}
+                    </div>
+                  </div>
+                  <Link
+                    to={s.href}
+                    className="under mt-6 inline-flex w-fit items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna-deep"
+                  >
+                    See the floor
+                    <i className="ph ph-arrow-right text-sm" />
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }
