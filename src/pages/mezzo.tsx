@@ -333,9 +333,9 @@ function Column({
 
     all.forEach((node) => {
       node.style.opacity = "0"
-      node.style.transform = "translateY(20px)"
+      node.style.transform = "translateY(28px)"
       node.style.transition =
-        "opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1)"
+        "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
     })
 
     const obs = new IntersectionObserver(
@@ -345,7 +345,7 @@ function Column({
             setTimeout(() => {
               node.style.opacity = "1"
               node.style.transform = "translateY(0)"
-            }, i * 110)
+            }, i * 170)
           })
           obs.disconnect()
         }
