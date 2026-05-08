@@ -105,10 +105,8 @@ const SIGNATURE_DISHES = [
 
 function FloorText({
   floor,
-  idx,
 }: {
   floor: (typeof FLOORS)[number]
-  idx: number
 }) {
   const staggerRef = useStaggerObserver<HTMLDivElement>(0.1)
   return (
@@ -313,7 +311,7 @@ export function Home() {
                   </div>
 
                   {/* text side — staggered per line */}
-                  <FloorText floor={floor} idx={idx} />
+                  <FloorText floor={floor} />
                 </div>
               </div>
             </FadeIn>
