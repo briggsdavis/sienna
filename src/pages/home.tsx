@@ -157,7 +157,7 @@ export function Home() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden">
+      <section className="relative h-hero min-h-[720px] w-full overflow-hidden">
         <div className="absolute inset-0">
           <div ref={heroParallax} className="parallax-hero-wrap">
             <img

@@ -250,7 +250,7 @@ export function Emporio() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero min-h-[680px] w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=2400&q=80"

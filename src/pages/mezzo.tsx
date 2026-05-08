@@ -452,7 +452,7 @@ export function Mezzo() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero min-h-[720px] w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2400&q=80"

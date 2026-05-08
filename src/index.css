@@ -32,6 +32,12 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Full-viewport hero height with svh fallback to plain vh */
+.h-hero {
+  height: 100vh;
+  height: 100svh;
+}
+
 html,
 body {
   background: var(--color-paper);
@@ -211,15 +217,13 @@ body {
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(14px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 .page-enter {
-  animation: page-enter 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: page-enter 0.35s ease both;
 }
 
 /* Fade in on scroll */
