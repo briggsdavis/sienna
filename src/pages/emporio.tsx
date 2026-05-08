@@ -279,42 +279,39 @@ export function Emporio() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream italic">
-              <span className="mr-1 font-display text-2xl text-cream/60">I</span>
-              <span className="swash swash-white" />
-              <span>the meatball joint</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Emporio
-            </h1>
-            <p className="mt-3 font-italic text-lg text-cream/80 italic">
-              A Meatball Joint.
-            </p>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Five meats, ten sauces, one ground floor that runs loud. Pull up a
-              stool, build a bowl, ask the bartender what's on the chalkboard.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-              >
-                <i className="ph ph-bag text-sm" />
-                Order pickup
-                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="#menu"
-                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-              >
-                <i className="ph ph-list-magnifying-glass text-sm" />
-                View the menu
-              </a>
-            </div>
+          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream italic" style={{ animationDelay: "0.05s" }}>
+            <span className="mr-1 font-display text-2xl text-cream/60">I</span>
+            <span className="swash swash-white" />
+            <span>the meatball joint</span>
+          </div>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+            Emporio
+          </h1>
+          <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
+            A Meatball Joint.
+          </p>
+          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
+            Five meats, ten sauces, one ground floor that runs loud. Pull up a
+            stool, build a bowl, ask the bartender what's on the chalkboard.
+          </p>
+          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.7s" }}>
+            <a
+              href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+            >
+              <i className="ph ph-bag text-sm" />
+              Order pickup
+              <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <a
+              href="#menu"
+              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+            >
+              <i className="ph ph-list-magnifying-glass text-sm" />
+              View the menu
+            </a>
           </div>
         </div>
 
@@ -341,7 +338,7 @@ export function Emporio() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
                   Floor I · Ground Floor
                 </div>
                 <div className="font-display text-3xl leading-tight text-cream">
@@ -723,7 +720,6 @@ export function Emporio() {
 
       {/* HAPPY HOUR */}
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-40 blur-[140px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>

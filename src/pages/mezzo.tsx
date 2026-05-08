@@ -484,47 +484,42 @@ export function Mezzo() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
-              <span className="mr-1 font-display text-2xl text-cream/60">
-                II
-              </span>
-              <span className="swash swash-white" />
-              <span>the trattoria</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Mezzo
-            </h1>
-            <p className="mt-3 font-italic text-lg text-cream/80 italic">
-              Pizza & Charcuterie.
-            </p>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Linen, candlelight, and an oven at eight hundred degrees.
-              Pasta hand-rolled at noon, a wine list that speaks Piemontese.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-              >
-                <i className="ph ph-calendar-dots text-sm" />
-                Reserve a table
-                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="#menu"
-                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-              >
-                <i className="ph ph-list-magnifying-glass text-sm" />
-                View the menu
-              </a>
-            </div>
+          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic" style={{ animationDelay: "0.05s" }}>
+            <span className="mr-1 font-display text-2xl text-cream/60">II</span>
+            <span className="swash swash-white" />
+            <span>the trattoria</span>
+          </div>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+            Mezzo
+          </h1>
+          <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
+            Pizza & Charcuterie.
+          </p>
+          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
+            Linen, candlelight, and an oven at eight hundred degrees.
+            Pasta hand-rolled at noon, a wine list that speaks Piemontese.
+          </p>
+          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.7s" }}>
+            <a
+              href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+            >
+              <i className="ph ph-calendar-dots text-sm" />
+              Reserve a table
+              <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <a
+              href="#menu"
+              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+            >
+              <i className="ph ph-list-magnifying-glass text-sm" />
+              View the menu
+            </a>
           </div>
 
-          {/* Roman numeral — mirrors nav container for exact margin alignment */}
+          {/* Roman numeral */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
             <div className="mx-auto flex max-w-[1600px] justify-end px-6 pb-20 lg:px-12">
               <span className="hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
@@ -547,7 +542,7 @@ export function Mezzo() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
                   Floor II · Second Floor
                 </div>
                 <div className="font-display text-3xl leading-tight text-cream">
@@ -573,7 +568,7 @@ export function Mezzo() {
                 <span className="font-italic text-sienna-deep italic">
                   {" "}slowing down.{" "}
                 </span>
-                Two hours, four courses, a bottle still a few sips from empty when the candle burns low.
+                Candlelight, four courses, a bottle that lingers past the candle.
               </p>
               <div className="mt-8 flex">
                 <span className="swash" />
@@ -603,11 +598,10 @@ export function Mezzo() {
       </section>
 
       {/* THE OVEN */}
-      <section className="relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="pointer-events-none absolute -top-32 -right-32 h-[600px] w-[600px] rounded-full bg-sienna-deep opacity-50 blur-[180px]" />
-        <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:px-12">
+      <section className="relative overflow-hidden bg-ink py-14 text-paper">
+        <div className="relative mx-auto grid max-w-[1600px] gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:px-12">
           <FadeIn>
-            <div className="relative aspect-[4/5] overflow-hidden">
+            <div className="relative aspect-[3/2] overflow-hidden lg:aspect-[4/3]">
               <img
                 src="https://images.unsplash.com/photo-1593504049359-74330189a345?auto=format&fit=crop&w=1400&q=80"
                 alt="Flames in a wood-fired pizza oven"
@@ -704,8 +698,6 @@ export function Mezzo() {
 
       {/* WINE LIST */}
       <section className="relative overflow-hidden bg-ink py-28 text-paper">
-        <div className="pointer-events-none absolute -top-40 -left-32 h-[480px] w-[480px] rounded-full bg-sienna-deep opacity-50 blur-[160px]" />
-        <div className="pointer-events-none absolute -right-32 -bottom-40 h-[420px] w-[420px] rounded-full bg-sienna-deep opacity-30 blur-[160px]" />
         <div className="relative mx-auto max-w-[1300px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-16 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
@@ -715,10 +707,10 @@ export function Mezzo() {
                   la cantina · the cellar
                 </div>
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85]">
-                  Italian-led,
+                  Ninety bottles.
                   <br />
                   <span className="font-italic text-sienna-bright italic">
-                    not Italian-only.
+                    Four Barolos.
                   </span>
                 </h2>
               </div>
@@ -899,33 +891,37 @@ export function Mezzo() {
       <section className="relative bg-paper">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-sienna-deep italic">
-              second floor · II
+            <FadeIn>
+              <div className="mb-2 font-italic text-base text-sienna-deep italic">
+                second floor · II
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.12}>
+              <h3 className="font-display text-5xl leading-[0.9] text-ink">
+                Two more flights to
+                <br />
+                <span className="font-italic text-sienna-deep italic">the roof.</span>
+              </h3>
+            </FadeIn>
+          </div>
+          <FadeIn delay={0.24}>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/emporio"
+                className="btn-lift group inline-flex items-center gap-3 border border-ink/30 px-7 py-4 font-serif text-sm tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+              >
+                <i className="ph ph-arrow-down text-lg" />
+                Back to Emporio
+              </Link>
+              <Link
+                to="/tetto"
+                className="btn-lift group inline-flex items-center gap-3 bg-ink px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-deep"
+              >
+                Climb to Il Tetto
+                <i className="ph ph-arrow-up text-lg" />
+              </Link>
             </div>
-            <h3 className="font-display text-5xl leading-[0.9] text-ink">
-              Two more flights to
-              <br />
-              <span className="font-italic text-sienna-deep italic">
-                the roof.
-              </span>
-            </h3>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              to="/emporio"
-              className="btn-lift group inline-flex items-center gap-3 border border-ink/30 px-7 py-4 font-serif text-sm tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
-            >
-              <i className="ph ph-arrow-down text-lg" />
-              Back to Emporio
-            </Link>
-            <Link
-              to="/tetto"
-              className="btn-lift group inline-flex items-center gap-3 bg-ink px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-deep"
-            >
-              Climb to Il Tetto
-              <i className="ph ph-arrow-up text-lg" />
-            </Link>
-          </div>
+          </FadeIn>
         </div>
       </section>
     </div>
