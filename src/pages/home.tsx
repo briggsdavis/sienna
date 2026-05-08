@@ -148,24 +148,6 @@ const SIGNATURE_DISHES = [
   },
 ] as const
 
-const MARQUEE_WORDS = [
-  "meatballs",
-  "wood-fired pizza",
-  "rooftop garden",
-  "thirty drafts",
-  "carbonara",
-  "tiramisù",
-  "burrata",
-  "soppressata",
-  "espresso",
-  "house cocktails",
-  "barolo",
-  "happy hour",
-  "ricotta doughnuts",
-  "private events",
-  "catering",
-]
-
 export function Home() {
   const heroParallax = useParallax(0.22)
 
@@ -176,8 +158,8 @@ export function Home() {
         <div className="absolute inset-0">
           <div ref={heroParallax} className="parallax-hero-wrap">
             <img
-              src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
-              alt="A wood-fired Italian dining room"
+              src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=80"
+              alt="Sienna Mercato rooftop terrace"
               className="slow-zoom h-full w-full object-cover"
             />
           </div>
@@ -202,7 +184,7 @@ export function Home() {
         </div>
 
         {/* center — centered & chique */}
-        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-center px-6 text-center lg:px-12">
+        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-end px-6 pb-40 text-center lg:px-12">
           <div className="rise mx-auto max-w-3xl" style={{ animationDelay: "0.1s" }}>
             <div className="mb-5 flex items-center justify-center gap-3 font-italic text-base tracking-wide text-cream/65 italic">
               <span className="swash" />
@@ -210,11 +192,7 @@ export function Home() {
               <span className="swash" />
             </div>
             <h1 className="text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream">
-              Sienna
-              <br />
-              <span className="font-italic font-light text-cream/90 italic">
-                Mercato
-              </span>
+              Sienna <span className="font-italic font-light text-cream/90 italic">Mercato</span>
             </h1>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <a
@@ -251,23 +229,6 @@ export function Home() {
         </div>
 
       </section>
-
-      {/* MARQUEE */}
-      <FadeIn>
-      <section className="relative overflow-hidden border-y border-ink/15 bg-paper-deep py-6">
-        <div className="marquee-track flex whitespace-nowrap">
-          {[...MARQUEE_WORDS, ...MARQUEE_WORDS].map((word, i) => (
-            <span
-              key={i}
-              className="flex items-center gap-8 px-8 font-italic text-3xl text-sienna italic md:text-5xl"
-            >
-              {word}
-              <i className="ph ph-asterisk text-xl text-ink/40" />
-            </span>
-          ))}
-        </div>
-      </section>
-      </FadeIn>
 
       {/* MANIFESTO */}
       <section className="grain relative overflow-hidden bg-paper py-40 text-center">
