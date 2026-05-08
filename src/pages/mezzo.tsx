@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { Link } from "react-router"
 import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
 
@@ -320,21 +321,51 @@ function Column({
   italian: string
   rows: readonly { name: string; desc?: string; price: string; flag?: string }[]
 }) {
-  const listRef = useStaggerObserver<HTMLUListElement>()
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+
+    const header = el.firstElementChild as HTMLElement
+    const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
+    const all = [header, ...items]
+
+    all.forEach((node) => {
+      node.style.opacity = "0"
+      node.style.transform = "translateY(20px)"
+      node.style.transition =
+        "opacity 0.55s ease, transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1)"
+    })
+
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          all.forEach((node, i) => {
+            setTimeout(() => {
+              node.style.opacity = "1"
+              node.style.transform = "translateY(0)"
+            }, i * 110)
+          })
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
+    )
+    obs.observe(el)
+
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <div>
-      <FadeIn>
-        <div className="mb-2">
-          <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
-            {italian}
-          </div>
-          <h3 className="font-display text-4xl text-ink">{english}</h3>
+    <div ref={ref}>
+      <div className="mb-2">
+        <div className="mb-1 font-italic text-sm tracking-wide text-sienna-deep italic">
+          {italian}
         </div>
-      </FadeIn>
-      <ul
-        ref={listRef}
-        className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10"
-      >
+        <h3 className="font-display text-4xl text-ink">{english}</h3>
+      </div>
+      <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
         {rows.map((r) => (
           <Row
             key={r.name}
