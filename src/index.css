@@ -32,16 +32,12 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Full-viewport hero height — dvh tracks the current visible viewport exactly.
-   Split into @supports blocks so Lightning CSS cannot strip the vh fallback. */
+/* Full-viewport hero height.
+   --vh is set to window.innerHeight by layout.tsx (exact pixels, no rounding).
+   dvh is the fallback before JS runs. */
 .h-hero {
-  height: 100vh;
-}
-
-@supports (height: 100dvh) {
-  .h-hero {
-    height: 100dvh;
-  }
+  height: 100dvh;
+  height: var(--vh, 100dvh);
 }
 
 html,

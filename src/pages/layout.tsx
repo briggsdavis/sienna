@@ -28,9 +28,23 @@ function ScrollProgress() {
   )
 }
 
+function useViewportHeight() {
+  useEffect(() => {
+    const set = () => {
+      document.documentElement.style.setProperty(
+        "--vh",
+        `${window.innerHeight}px`,
+      )
+    }
+    set()
+    window.addEventListener("resize", set)
+    return () => window.removeEventListener("resize", set)
+  }, [])
+}
 
 export function Layout() {
   const { pathname } = useLocation()
+  useViewportHeight()
 
   return (
     <div id="top" className="relative bg-paper text-ink">
