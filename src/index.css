@@ -32,6 +32,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Full-viewport hero height.
+   --vh is set to window.innerHeight by layout.tsx (exact pixels, no rounding).
+   dvh is the fallback before JS runs. */
+.h-hero {
+  height: 100dvh;
+  height: var(--vh, 100dvh);
+}
+
 html,
 body {
   background: var(--color-paper);
@@ -182,17 +190,17 @@ body {
 
 /* subtle weighted scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 3px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(26, 18, 11, 0.18);
-  border-radius: 3px;
+  background: rgba(26, 18, 11, 0.10);
+  border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(26, 18, 11, 0.32);
+  background: rgba(26, 18, 11, 0.20);
 }
 
 /* link underline on hover */
@@ -207,27 +215,17 @@ body {
   background-size: 100% 1px;
 }
 
-/* Sections stack like cards — each one wipes over the previous */
-section {
-  position: relative;
-}
-section + section {
-  box-shadow: 0 -60px 120px -8px rgba(26, 18, 11, 0.38);
-}
-
 /* Page fade-in on route change */
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(14px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 .page-enter {
-  animation: page-enter 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: page-enter 0.35s ease both;
 }
 
 /* Fade in on scroll */
@@ -268,6 +266,13 @@ section + section {
 .hover-lift:hover {
   transform: translateY(-3px);
   box-shadow: 0 12px 32px rgba(26, 18, 11, 0.13);
+}
+
+/* White calendar picker icon on date inputs (used in event inquiry form on sienna bg) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 /* Hover lift for buttons */

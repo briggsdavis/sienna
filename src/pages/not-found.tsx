@@ -24,7 +24,7 @@ export function NotFound() {
   }
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col items-start justify-center bg-paper px-6 py-32 lg:px-12">
+    <section className="relative flex min-h-screen flex-col items-start justify-center bg-paper px-6 py-32 lg:px-12">
       <div className="mx-auto w-full max-w-3xl">
         <div className="font-serif text-xs tracking-[0.4em] text-sienna uppercase">
           Error · {code}

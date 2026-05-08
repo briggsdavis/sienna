@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { Link } from "react-router"
 import { FadeIn, useParallax } from "../components/animations"
 
@@ -56,10 +57,125 @@ function CateringRow({
           </div>
         )}
       </div>
-      <span className="font-serif text-base text-sienna-deep tabular-nums">
+      <span className="font-serif text-base text-sienna tabular-nums">
         {price}
       </span>
     </li>
+  )
+}
+
+const TIERS = [
+  {
+    id: "t1",
+    label: "Tier 1",
+    kitchen: "Emporio kitchen",
+    headline: "Casual, family-style.",
+    headlineItalic: "family-style.",
+    headlinePlain: "Casual,",
+    accent: "text-sienna",
+    desc: "Meatballs, mac & cheese, chicken parm. Feeds a conference room or a graduation party without ceremony.",
+    items: TIER_1,
+  },
+  {
+    id: "t2",
+    label: "Tier 2",
+    kitchen: "Mezzo kitchen",
+    headlinePlain: "Refined,",
+    headlineItalic: "plated-ready.",
+    accent: "text-sienna-deep",
+    desc: "Charcuterie boards, picatta and marsala, hand-tossed pizzas, pasta. For the dinners that need to look the part.",
+    items: TIER_2,
+  },
+] as const
+
+function TierPanel({ isOpen, children }: { isOpen: boolean; children: ReactNode }) {
+  const innerRef = useRef<HTMLDivElement>(null)
+  const [height, setHeight] = useState(0)
+
+  useEffect(() => {
+    const el = innerRef.current
+    if (!el) return
+    setHeight(isOpen ? el.scrollHeight : 0)
+  }, [isOpen])
+
+  return (
+    <div
+      style={{
+        height,
+        overflow: "hidden",
+        transition: "height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+      }}
+    >
+      <div ref={innerRef}>{children}</div>
+    </div>
+  )
+}
+
+function TierAccordion() {
+  const [open, setOpen] = useState<Set<string>>(new Set())
+
+  const toggle = (id: string) => {
+    setOpen((prev) => {
+      const next = new Set(prev)
+      next.has(id) ? next.delete(id) : next.add(id)
+      return next
+    })
+  }
+
+  return (
+    <div className="divide-y divide-ink/10 border-t border-b border-ink/10">
+      {TIERS.map((tier) => {
+        const isOpen = open.has(tier.id)
+        return (
+          <div key={tier.id}>
+            <button
+              onClick={() => toggle(tier.id)}
+              className="group flex w-full items-center justify-between gap-6 px-2 py-6 text-left transition-colors hover:text-sienna"
+            >
+              <div className="flex items-center gap-6">
+                <span className="font-display text-4xl text-ink/20 transition-colors group-hover:text-sienna/30">
+                  {tier.id === "t1" ? "I" : "II"}
+                </span>
+                <div>
+                  <h3 className="font-display text-3xl text-ink transition-colors group-hover:text-sienna">
+                    {tier.label}
+                  </h3>
+                  <div className="font-italic text-sm text-ink-soft italic">
+                    {tier.kitchen}
+                  </div>
+                </div>
+              </div>
+              <i
+                className={`ph ph-caret-${isOpen ? "up" : "down"} shrink-0 text-xl text-ink/40`}
+              />
+            </button>
+
+            <TierPanel isOpen={isOpen}>
+              <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
+                  <h4 className="font-display text-4xl leading-[0.95] text-ink">
+                    {tier.headlinePlain}
+                    <br />
+                    <span className={`font-italic italic ${tier.accent}`}>
+                      {tier.headlineItalic}
+                    </span>
+                  </h4>
+                  <p className="mt-3 max-w-xl font-italic text-base text-ink-soft italic">
+                    {tier.desc}
+                  </p>
+                  <ul className="mt-5 divide-y divide-ink/10 border-t border-b border-ink/10">
+                    {tier.items.map((r) => (
+                      <CateringRow key={r.name} {...r} />
+                    ))}
+                  </ul>
+                  <div className="mt-4 font-italic text-xs text-ink-soft italic">
+                    Half pan / full pan, unless noted.
+                  </div>
+                </div>
+            </TierPanel>
+          </div>
+        )
+      })}
+    </div>
   )
 }
 
@@ -69,7 +185,7 @@ export function Catering() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-[100svh] min-h-[680px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero min-h-[680px] w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
@@ -80,10 +196,7 @@ export function Catering() {
         <div className="absolute inset-0 bg-black/62" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
-          <Link
-            to="/"
-            className="under flex items-center gap-2 hover:text-cream"
-          >
+          <Link to="/" className="under flex items-center gap-2 hover:text-cream">
             <i className="ph ph-arrow-left text-sm" />
             all of sienna
           </Link>
@@ -97,47 +210,56 @@ export function Catering() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic">
-              <span className="swash swash-white" />
-              <span>catering · delivery & pickup</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Catering.
-            </h1>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Two kitchens. Corporate lunches, rehearsal dinners, family
-              celebrations. From casual family-style to charcuterie boards and
-              plated-ready pasta, delivered anywhere in the city.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
-              >
-                <i className="ph ph-bag text-sm" />
-                Order catering
-                <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </a>
-              <a
-                href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-              >
-                <i className="ph ph-storefront text-sm" />
-                Order online · Emporio
-              </a>
-            </div>
+          <div
+            className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic"
+            style={{ animationDelay: "0.05s" }}
+          >
+            <span className="swash swash-white" />
+            <span>catering · delivery & pickup</span>
+          </div>
+          <h1
+            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
+            style={{ animationDelay: "0.25s" }}
+          >
+            Catering.
+          </h1>
+          <p
+            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
+            style={{ animationDelay: "0.45s" }}
+          >
+            Two kitchens. Corporate lunches, rehearsal dinners, family
+            celebrations. From casual family-style to charcuterie boards and
+            plated-ready pasta, delivered anywhere in the city.
+          </p>
+          <div
+            className="rise mt-8 grid max-w-[460px] grid-cols-2 gap-3"
+            style={{ animationDelay: "0.62s" }}
+          >
+            <a
+              href="https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-lift group inline-flex w-full items-center justify-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+            >
+              <i className="ph ph-bag text-sm" />
+              Order catering
+              <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+            <a
+              href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+              target="_blank"
+              rel="noreferrer"
+              className="btn-lift group inline-flex w-full items-center justify-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+            >
+              <i className="ph ph-storefront text-sm" />
+              Order online · Emporio
+            </a>
           </div>
         </div>
       </section>
 
       {/* TWO TIERS */}
-      <section className="relative bg-paper-deep py-28">
+      <section className="relative bg-cream py-28">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-end">
@@ -155,14 +277,14 @@ export function Catering() {
               </div>
               <div>
                 <p className="font-italic text-lg leading-relaxed text-ink-soft italic">
-                  Everything comes out of our own kitchens, cooked to order. Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival. You're getting the restaurant, just at your location.
+                  Everything comes out of our own kitchens, cooked to order. Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-6 grid max-w-[460px] grid-cols-2 gap-3">
                   <a
                     href="https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                    className="btn-lift group inline-flex w-full items-center justify-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
                   >
                     <i className="ph ph-bag text-sm" />
                     Order catering
@@ -172,7 +294,7 @@ export function Catering() {
                     href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-lift group inline-flex items-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-ink/5"
+                    className="btn-lift group inline-flex w-full items-center justify-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-ink/5"
                   >
                     <i className="ph ph-storefront text-sm" />
                     Order online · Emporio
@@ -186,68 +308,9 @@ export function Catering() {
             </div>
           </FadeIn>
 
-          <div className="grid gap-12 lg:grid-cols-2">
-            <FadeIn delay={0.08}>
-              <div className="border border-ink/10 bg-cream p-8 lg:p-10">
-                <div className="mb-2 flex items-baseline justify-between">
-                  <span className="font-display text-3xl text-ink">Tier 1</span>
-                  <span className="font-italic text-sm text-sienna italic">
-                    Emporio kitchen
-                  </span>
-                </div>
-                <h3 className="font-display text-5xl leading-[0.9] text-ink">
-                  Casual,
-                  <br />
-                  <span className="font-italic text-sienna italic">
-                    family-style.
-                  </span>
-                </h3>
-                <p className="mt-4 font-italic text-base text-ink-soft italic">
-                  Meatballs, mac & cheese, chicken parm, feeds a conference room
-                  or a graduation party without ceremony.
-                </p>
-                <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
-                  {TIER_1.map((r) => (
-                    <CateringRow key={r.name} {...r} />
-                  ))}
-                </ul>
-                <div className="mt-4 font-italic text-xs text-ink-soft italic">
-                  Half pan / full pan, unless noted.
-                </div>
-              </div>
-            </FadeIn>
-
-            <FadeIn delay={0.16}>
-              <div className="border border-ink/10 bg-cream p-8 lg:p-10">
-                <div className="mb-2 flex items-baseline justify-between">
-                  <span className="font-display text-3xl text-ink">Tier 2</span>
-                  <span className="font-italic text-sm text-sienna-deep italic">
-                    Mezzo kitchen
-                  </span>
-                </div>
-                <h3 className="font-display text-5xl leading-[0.9] text-ink">
-                  Refined,
-                  <br />
-                  <span className="font-italic text-sienna-deep italic">
-                    plated-ready.
-                  </span>
-                </h3>
-                <p className="mt-4 font-italic text-base text-ink-soft italic">
-                  Charcuterie boards, picatta and marsala, hand-tossed pizzas,
-                  pasta with chicken add-ons, for the dinners that need to look
-                  the part.
-                </p>
-                <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
-                  {TIER_2.map((r) => (
-                    <CateringRow key={r.name} {...r} />
-                  ))}
-                </ul>
-                <div className="mt-4 font-italic text-xs text-ink-soft italic">
-                  Half pan / full pan, unless noted.
-                </div>
-              </div>
-            </FadeIn>
-          </div>
+          <FadeIn delay={0.08}>
+            <TierAccordion />
+          </FadeIn>
 
           {/* fees row */}
           <FadeIn delay={0.12}>

@@ -1,6 +1,5 @@
-import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import { FadeIn, useParallax } from "../components/animations"
+import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
 
 const FEATURED_DRAFT = {
   name: "Big Wave",
@@ -214,44 +213,13 @@ function FoodRow({
 
 export function Tetto() {
   const heroParallax = useParallax(0.22)
-  const draftRef = useRef<HTMLDivElement>(null)
-  const foodRef = useRef<HTMLUListElement>(null)
-
-  useEffect(() => {
-    for (const [el, delay] of [
-      [draftRef.current, 0],
-      [foodRef.current, 0],
-    ] as [HTMLElement | null, number][]) {
-      if (!el) continue
-      const items = Array.from(el.querySelectorAll("li")) as HTMLElement[]
-      items.forEach((node) => {
-        node.style.opacity = "0"
-        node.style.transform = "translateY(28px)"
-        node.style.transition =
-          "opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)"
-      })
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            items.forEach((node, i) => {
-              setTimeout(() => {
-                node.style.opacity = "1"
-                node.style.transform = "translateY(0)"
-              }, delay + i * 170)
-            })
-            obs.disconnect()
-          }
-        },
-        { threshold: 0.05, rootMargin: "0px 0px -60px 0px" },
-      )
-      obs.observe(el)
-    }
-  }, [])
+  const chalkboardRef = useStaggerObserver<HTMLUListElement>(0.08)
+  const foodRef = useStaggerObserver<HTMLUListElement>()
 
   return (
     <div className="relative">
       {/* HERO, sunset rooftop */}
-      <section className="relative h-[100svh] min-h-[720px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero min-h-[720px] w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=80"
@@ -276,51 +244,45 @@ export function Tetto() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-24 lg:px-12">
-          <div className="rise" style={{ animationDelay: "0.05s" }}>
-            <div className="mb-4 flex items-center gap-3 font-italic text-base text-cream italic">
-              <span className="mr-1 font-display text-2xl text-cream/60">
-                III
-              </span>
-              <span className="swash swash-white" />
-              <span>the rooftop beer garden</span>
-            </div>
-            <h1 className="text-hero-shadow font-display text-[clamp(3rem,9vw,8rem)] leading-[0.88] tracking-tight text-cream">
-              Il Tetto
-            </h1>
-            <p className="mt-3 font-italic text-lg text-cream/80 italic">
-              Rooftop Beer Garden.
-            </p>
-            <p className="mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75">
-              Thirty drafts on a chalkboard. A retractable roof that opens when
-              the sky agrees. The skyline of a triangular city, lit from below,
-              over your last pint of the night.
-            </p>
-
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="#chalkboard"
-                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-              >
-                <i className="ph ph-beer-stein text-sm" />
-                Tonight on tap
-                <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
-              </a>
-              <a
-                href="#menu"
-                className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-              >
-                <i className="ph ph-pizza text-sm" />
-                Eat on the roof
-              </a>
-            </div>
-
-            <div className="mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase">
-              <i className="ph ph-stairs text-sm text-cream/50" />
-              No reservations · climb the stairs
-            </div>
+          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream italic" style={{ animationDelay: "0.05s" }}>
+            <span className="mr-1 font-display text-2xl text-cream/60">III</span>
+            <span className="swash swash-white" />
+            <span>rooftop beer garden</span>
+          </div>
+          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+            Il Tetto
+          </h1>
+          <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
+            Rooftop Beer Garden.
+          </p>
+          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
+            Thirty drafts on a chalkboard. A retractable roof that opens when
+            the sky agrees. The skyline of a triangular city, lit from below,
+            over your last pint of the night.
+          </p>
+          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.7s" }}>
+            <a
+              href="#chalkboard"
+              className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+            >
+              <i className="ph ph-beer-stein text-sm" />
+              Tonight on tap
+              <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
+            </a>
+            <a
+              href="#menu"
+              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+            >
+              <i className="ph ph-pizza text-sm" />
+              Eat on the roof
+            </a>
+          </div>
+          <div className="rise mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase" style={{ animationDelay: "0.82s" }}>
+            <i className="ph ph-stairs text-sm text-cream/50" />
+            No reservations · climb the stairs
           </div>
 
-          {/* Roman numeral — mirrors nav container for exact margin alignment */}
+          {/* Roman numeral */}
           <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
             <div className="mx-auto flex max-w-[1600px] justify-end px-6 pb-24 lg:px-12">
               <span className="hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
@@ -343,7 +305,7 @@ export function Tetto() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-8">
-                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-sienna-bright uppercase">
+                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
                   Floor III · Rooftop
                 </div>
                 <div className="font-display text-3xl leading-tight text-cream">
@@ -408,7 +370,7 @@ export function Tetto() {
                   <i className="ph ph-chalkboard-simple text-2xl" />
                   tonight on tap
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
                   The chalkboard.
                 </h2>
               </div>
@@ -421,8 +383,8 @@ export function Tetto() {
           </FadeIn>
 
           {/* the chalkboard "hangs" on the wall, wood frame, dark inset */}
-          <div ref={draftRef} className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
-            <ul>
+          <div className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
+            <ul ref={chalkboardRef}>
               {DRAFTS.map((d, i) => (
                 <DraftCard
                   key={d.name}
@@ -449,38 +411,41 @@ export function Tetto() {
       </section>
 
       {/* BEER OF THE MONTH FEATURE */}
-      <section className="relative bg-ink py-24 text-paper">
+      <section className="relative bg-ink py-16 text-paper">
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
-            <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-              <div>
+            <div className="grid overflow-hidden lg:grid-cols-[1fr_2fr]">
+              <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto">
+                <img
+                  src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=1400&q=80"
+                  alt="A pint of Big Wave blonde ale"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex flex-col justify-center bg-paper/[0.04] p-8 lg:p-12">
                 <div className="mb-2 font-italic text-base text-sienna-bright italic">
                   beer of the month · may
                 </div>
-                <h2 className="font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9]">
+                <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[0.9]">
                   {FEATURED_DRAFT.name}
                 </h2>
+                <p className="mt-4 max-w-lg font-body text-lg leading-relaxed text-paper/80">
+                  {FEATURED_DRAFT.notes}
+                </p>
+                <div className="mt-6 flex flex-wrap gap-6 font-serif text-xs tracking-[0.3em] text-paper/55 uppercase">
+                  <span>{FEATURED_DRAFT.brewery}</span>
+                  <span>{FEATURED_DRAFT.style}</span>
+                  <span>{FEATURED_DRAFT.abv} ABV</span>
+                  <span>{FEATURED_DRAFT.ibu} IBU</span>
+                </div>
               </div>
-              <p className="font-italic text-base text-paper/65 italic">
-                {FEATURED_DRAFT.brewery} · {FEATURED_DRAFT.style} · {FEATURED_DRAFT.abv} ABV
-              </p>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <div className="group relative aspect-[21/9] overflow-hidden">
-              <img
-                src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=2400&q=80"
-                alt="A pint of Big Wave blonde ale at sunset"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
             </div>
           </FadeIn>
         </div>
       </section>
 
       {/* FOOD MENU */}
-      <section id="menu" className="relative bg-paper-deep py-28">
+      <section id="menu" className="relative bg-cream py-28">
         <div className="mx-auto max-w-[1100px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
@@ -488,7 +453,7 @@ export function Tetto() {
                 <div className="mb-3 font-italic text-lg text-sienna italic">
                   eat on the roof
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
                   Whole pies,
                   <br />
                   <span className="font-italic text-sienna italic">
@@ -514,8 +479,6 @@ export function Tetto() {
 
       {/* HAPPY HOUR */}
       <section className="relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="pointer-events-none absolute -top-20 -right-20 h-[420px] w-[420px] rounded-full bg-sienna opacity-30 blur-[140px]" />
-        <div className="pointer-events-none absolute -bottom-20 -left-20 h-[380px] w-[380px] rounded-full bg-sienna opacity-15 blur-[130px]" />
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
@@ -523,7 +486,7 @@ export function Tetto() {
                 <div className="mb-3 font-italic text-lg text-sienna-bright italic">
                   aperitivo · happy hour
                 </div>
-                <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
+                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
                   Sunset hour.
                 </h2>
                 <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
@@ -620,31 +583,37 @@ export function Tetto() {
       <section className="relative bg-ink text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-cream/60 italic">
-              third floor · III
+            <FadeIn>
+              <div className="mb-2 font-italic text-base text-cream/60 italic">
+                third floor · III
+              </div>
+            </FadeIn>
+            <FadeIn delay={0.12}>
+              <h3 className="font-display text-5xl leading-[0.9]">
+                You've reached
+                <br />
+                <span className="font-italic italic">the top.</span>
+              </h3>
+            </FadeIn>
+          </div>
+          <FadeIn delay={0.24}>
+            <div className="flex flex-wrap gap-4">
+              <Link
+                to="/mezzo"
+                className="btn-lift group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
+              >
+                <i className="ph ph-arrow-down text-lg" />
+                Down to Mezzo
+              </Link>
+              <Link
+                to="/"
+                className="btn-lift group inline-flex items-center gap-3 bg-sienna-bright px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
+              >
+                All of Sienna
+                <i className="ph ph-arrow-up-right text-lg" />
+              </Link>
             </div>
-            <h3 className="font-display text-5xl leading-[0.9]">
-              You've reached
-              <br />
-              <span className="font-italic italic">the top.</span>
-            </h3>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <Link
-              to="/mezzo"
-              className="btn-lift group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
-            >
-              <i className="ph ph-arrow-down text-lg" />
-              Down to Mezzo
-            </Link>
-            <Link
-              to="/"
-              className="btn-lift group inline-flex items-center gap-3 bg-sienna-bright px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
-            >
-              All of Sienna
-              <i className="ph ph-arrow-up-right text-lg" />
-            </Link>
-          </div>
+          </FadeIn>
         </div>
       </section>
     </div>
