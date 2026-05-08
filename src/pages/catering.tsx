@@ -217,14 +217,14 @@ export function Catering() {
             plated-ready pasta, delivered anywhere in the city.
           </p>
           <div
-            className="rise mt-8 flex flex-wrap items-center gap-3"
+            className="rise mt-8 grid max-w-[460px] grid-cols-2 gap-3"
             style={{ animationDelay: "0.62s" }}
           >
             <a
               href="https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
               target="_blank"
               rel="noreferrer"
-              className="btn-lift group inline-flex min-w-[200px] items-center justify-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+              className="btn-lift group inline-flex w-full items-center justify-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
             >
               <i className="ph ph-bag text-sm" />
               Order catering
@@ -234,7 +234,7 @@ export function Catering() {
               href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
               target="_blank"
               rel="noreferrer"
-              className="btn-lift group inline-flex min-w-[200px] items-center justify-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+              className="btn-lift group inline-flex w-full items-center justify-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
             >
               <i className="ph ph-storefront text-sm" />
               Order online · Emporio
@@ -264,12 +264,12 @@ export function Catering() {
                 <p className="font-italic text-lg leading-relaxed text-ink-soft italic">
                   Everything comes out of our own kitchens, cooked to order. Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival.
                 </p>
-                <div className="mt-6 flex flex-wrap gap-3">
+                <div className="mt-6 grid max-w-[460px] grid-cols-2 gap-3">
                   <a
                     href="https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-lift group inline-flex min-w-[200px] items-center justify-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                    className="btn-lift group inline-flex w-full items-center justify-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
                   >
                     <i className="ph ph-bag text-sm" />
                     Order catering
@@ -279,7 +279,7 @@ export function Catering() {
                     href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
                     target="_blank"
                     rel="noreferrer"
-                    className="btn-lift group inline-flex min-w-[200px] items-center justify-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-ink/5"
+                    className="btn-lift group inline-flex w-full items-center justify-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-ink/5"
                   >
                     <i className="ph ph-storefront text-sm" />
                     Order online · Emporio

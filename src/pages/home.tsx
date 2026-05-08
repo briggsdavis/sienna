@@ -326,8 +326,8 @@ export function Home() {
       </section>
 
       {/* FEATURED DISHES */}
-      <FadeIn>
-        <section className="grain relative bg-paper py-32">
+      <section className="grain relative bg-paper py-32">
+        <FadeIn>
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
@@ -370,8 +370,8 @@ export function Home() {
               ))}
             </div>
           </div>
-        </section>
-      </FadeIn>
+        </FadeIn>
+      </section>
 
       {/* TONIGHT */}
       <section id="tonight" className="bg-sienna py-28 text-cream">
@@ -505,9 +505,9 @@ export function Home() {
       </section>
 
       {/* RESERVE / VISIT BAND */}
-      <FadeIn>
-        <section id="visit" className="relative overflow-hidden bg-sienna text-cream">
-          <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
+      <section id="visit" className="relative overflow-hidden bg-sienna text-cream">
+        <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
+        <FadeIn>
           <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
             <div>
               <div className="mb-4 font-italic text-lg text-cream/80 italic">come hungry</div>
@@ -562,8 +562,8 @@ export function Home() {
               </p>
             </div>
           </div>
-        </section>
-      </FadeIn>
+        </FadeIn>
+      </section>
     </div>
   )
 }

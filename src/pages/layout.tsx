@@ -28,11 +28,73 @@ function ScrollProgress() {
   )
 }
 
+function SmoothScroll() {
+  useEffect(() => {
+    // Skip touch/pointer-coarse devices (mobile, tablets)
+    if (window.matchMedia("(pointer: coarse)").matches) return
+
+    let target = window.scrollY
+    let current = window.scrollY
+    let rafId: number
+    let active = false
+
+    const onWheel = (e: WheelEvent) => {
+      // Only intercept large deltaY (mouse wheel clicks), let small events (trackpad) pass
+      if (e.deltaMode === 0 && Math.abs(e.deltaY) < 40) return
+
+      e.preventDefault()
+      target = Math.max(
+        0,
+        Math.min(
+          document.documentElement.scrollHeight - window.innerHeight,
+          target + e.deltaY,
+        ),
+      )
+      if (!active) {
+        active = true
+        const step = () => {
+          const diff = target - current
+          if (Math.abs(diff) < 0.5) {
+            current = target
+            window.scrollTo(0, current)
+            active = false
+            return
+          }
+          current += diff * 0.14
+          window.scrollTo(0, current)
+          rafId = requestAnimationFrame(step)
+        }
+        rafId = requestAnimationFrame(step)
+      }
+    }
+
+    window.addEventListener("wheel", onWheel, { passive: false })
+    return () => {
+      window.removeEventListener("wheel", onWheel)
+      cancelAnimationFrame(rafId)
+    }
+  }, [])
+
+  return null
+}
+
 export function Layout() {
   const { pathname } = useLocation()
+
+  // Assign increasing z-indices so sections stack like paper layers
+  useEffect(() => {
+    const sections = Array.from(
+      document.querySelectorAll("main > div > section"),
+    ) as HTMLElement[]
+    sections.forEach((section, i) => {
+      section.style.zIndex = String(i + 1)
+    })
+  }, [pathname])
+
   return (
     <div id="top" className="relative bg-paper text-ink">
       <ScrollProgress />
+      <SmoothScroll />
       <Nav />
       <main key={pathname} className="page-enter">
         <Outlet />
