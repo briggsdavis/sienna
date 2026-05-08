@@ -208,17 +208,6 @@ body {
   background-size: 100% 1px;
 }
 
-section {
-  position: sticky;
-  top: 0;
-}
-
-/* Paper-layer stacking: incoming sections slide over the pinned current section */
-main > div > section + section {
-  box-shadow: 0 -16px 48px -8px rgba(26, 18, 11, 0.22);
-  clip-path: inset(0 0 0 0 round 10px 10px 0 0);
-}
-
 /* Page fade-in on route change */
 @keyframes page-enter {
   from {

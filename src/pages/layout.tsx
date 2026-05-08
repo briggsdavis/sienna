@@ -81,16 +81,6 @@ function SmoothScroll() {
 export function Layout() {
   const { pathname } = useLocation()
 
-  // Assign increasing z-indices so sections stack like paper layers
-  useEffect(() => {
-    const sections = Array.from(
-      document.querySelectorAll("main > div > section"),
-    ) as HTMLElement[]
-    sections.forEach((section, i) => {
-      section.style.zIndex = String(i + 1)
-    })
-  }, [pathname])
-
   return (
     <div id="top" className="relative bg-paper text-ink">
       <ScrollProgress />
