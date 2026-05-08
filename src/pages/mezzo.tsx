@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
+import { FadeIn, useParallax } from "../components/animations"
 
 const ANTIPASTO = [
   {
