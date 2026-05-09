@@ -223,7 +223,6 @@ export function Catering() {
             className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80"
             style={{ animationDelay: "0.05s" }}
           >
-            <span className="swash swash-white" />
             <span>catering · delivery & pickup</span>
           </div>
           <h1
