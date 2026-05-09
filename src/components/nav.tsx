@@ -45,7 +45,6 @@ export function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [reserveOpen, setReserveOpen] = useState(false)
   const { pathname } = useLocation()
-  const onHome = pathname === "/"
   const dropdownRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
 
@@ -86,7 +85,7 @@ export function Nav() {
     return () => document.removeEventListener("mousedown", handleClick)
   }, [reserveOpen])
 
-  const transparent = onHome && !scrolled
+  const transparent = !scrolled
 
   return (
     <>

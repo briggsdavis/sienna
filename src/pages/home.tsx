@@ -169,7 +169,7 @@ export function Home() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero w-full overflow-hidden">
+      <section className="relative h-hero w-full overflow-hidden bg-ink">
         <div className="absolute inset-0">
           <div ref={heroParallax} className="parallax-hero-wrap">
             <img
@@ -183,8 +183,8 @@ export function Home() {
         </div>
 
         {/* top meta strip */}
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-end sm:justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
-          <span className="hidden sm:flex items-center gap-2">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
+          <span className="hidden flex-1 sm:flex items-center gap-2">
             <span className="inline-block h-px w-8 bg-cream/40" />
             Established 2013
           </span>
@@ -192,7 +192,7 @@ export function Home() {
             <i className="ph ph-map-pin text-sm" />
             942 Penn Avenue · Pittsburgh
           </span>
-          <span className="flex items-center gap-2">
+          <span className="flex flex-1 justify-end items-center gap-2">
             Three floors · One roof
             <span className="inline-block h-px w-8 bg-cream/40" />
           </span>
