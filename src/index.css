@@ -30,6 +30,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 /* Full-viewport hero height.
@@ -48,6 +49,7 @@ body {
   font-family: var(--font-body);
   font-size: 18px;
   font-weight: 400;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -189,20 +191,6 @@ body {
   display: none;
 }
 
-/* subtle weighted scrollbar */
-::-webkit-scrollbar {
-  width: 3px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(26, 18, 11, 0.10);
-  border-radius: 2px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(26, 18, 11, 0.20);
-}
 
 /* link underline on hover */
 .under {
