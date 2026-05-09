@@ -5,14 +5,11 @@ export function Footer() {
     <footer className="relative bg-ink text-paper">
       <div className="mx-auto grid max-w-[1600px] gap-12 px-6 py-20 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:px-12">
         <div>
-          <div className="flex items-baseline gap-2">
-            <span className="font-display text-3xl tracking-[0.18em]">
-              SIENNA
-            </span>
-            <span className="font-italic text-sienna-bright italic">
-              mercato
-            </span>
-          </div>
+          <img
+            src="/siennalogo.png"
+            alt="Sienna Mercato"
+            className="h-10 w-auto brightness-0 invert"
+          />
           <p className="mt-4 max-w-sm font-italic leading-relaxed text-paper/70 italic">
             Three floors. Three rooms. One Italian house in the Cultural
             District, open since 2013.

@@ -12,7 +12,9 @@ function ScrollProgress() {
     const update = () => {
       const scrolled = window.scrollY
       const total = document.documentElement.scrollHeight - window.innerHeight
-      bar.style.transform = `scaleX(${total > 0 ? scrolled / total : 0})`
+      const progress = total > 0 ? scrolled / total : 0
+      bar.style.transform = `scaleX(${progress})`
+      bar.style.opacity = scrolled > 0 ? "1" : "0"
     }
     update()
     window.addEventListener("scroll", update, { passive: true })
@@ -22,8 +24,8 @@ function ScrollProgress() {
   return (
     <div
       ref={barRef}
-      className="fixed top-0 left-0 z-[100] h-[2px] w-full origin-left bg-sienna/60"
-      style={{ transform: "scaleX(0)" }}
+      className="fixed top-0 left-0 z-[100] h-[2px] w-full origin-left bg-sienna/60 transition-opacity duration-300"
+      style={{ transform: "scaleX(0)", opacity: 0 }}
     />
   )
 }

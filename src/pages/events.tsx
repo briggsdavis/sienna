@@ -8,6 +8,7 @@ const SPACES = [
     roman: "I",
     name: "Emporio",
     sub: "A Meatball Joint",
+    logo: "/emporio.avif",
     capacity: "105",
     vibe: "Energetic · industrial · loud",
     perfect: [
@@ -33,6 +34,7 @@ const SPACES = [
     roman: "II",
     name: "Mezzo",
     sub: "Pizza & Charcuterie",
+    logo: "/mezzo.avif",
     capacity: "90",
     vibe: "Intimate · refined · candlelit",
     perfect: [
@@ -58,6 +60,7 @@ const SPACES = [
     roman: "III",
     name: "Il Tetto",
     sub: "Rooftop Beer Garden",
+    logo: "/iltetto.avif",
     capacity: "200",
     vibe: "Open-air · skyline · all-season",
     perfect: [
@@ -161,7 +164,7 @@ export function Events() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero min-h-[720px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2400&q=80"
@@ -629,7 +632,7 @@ function VenueAccordion({
               style={{
                 display: "grid",
                 gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition: "grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1)",
+                transition: "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div className="overflow-hidden">
@@ -647,6 +650,13 @@ function VenueAccordion({
                     </div>
                   </div>
                   <div className="flex flex-col justify-center px-8 py-6">
+                    <img
+                      src={s.logo}
+                      alt=""
+                      aria-hidden="true"
+                      className="mb-5 h-7 w-auto brightness-0 opacity-30 object-left"
+                      style={{ objectFit: "contain", objectPosition: "left" }}
+                    />
                     <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
                     <ul className="mt-5 space-y-2">
                       {s.highlights.map((h) => (

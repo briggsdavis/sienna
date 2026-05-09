@@ -452,7 +452,7 @@ export function Mezzo() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero min-h-[720px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2400&q=80"
@@ -481,6 +481,12 @@ export function Mezzo() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
+          <img
+            src="/mezzo.avif"
+            alt="Mezzo logo"
+            className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
+            style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
+          />
           <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">II</span>
             <span className="swash swash-white" />

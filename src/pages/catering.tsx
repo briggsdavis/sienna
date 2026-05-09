@@ -69,6 +69,7 @@ const TIERS = [
     id: "t1",
     label: "Tier 1",
     kitchen: "Emporio kitchen",
+    logo: "/emporio.avif",
     headline: "Casual, family-style.",
     headlineItalic: "family-style.",
     headlinePlain: "Casual,",
@@ -80,6 +81,7 @@ const TIERS = [
     id: "t2",
     label: "Tier 2",
     kitchen: "Mezzo kitchen",
+    logo: "/mezzo.avif",
     headlinePlain: "Refined,",
     headlineItalic: "plated-ready.",
     accent: "text-sienna-deep",
@@ -103,7 +105,7 @@ function TierPanel({ isOpen, children }: { isOpen: boolean; children: ReactNode 
       style={{
         height,
         overflow: "hidden",
-        transition: "height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+        transition: "height 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       <div ref={innerRef}>{children}</div>
@@ -152,6 +154,13 @@ function TierAccordion() {
 
             <TierPanel isOpen={isOpen}>
               <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
+                  <img
+                    src={tier.logo}
+                    alt=""
+                    aria-hidden="true"
+                    className="mb-4 h-7 w-auto brightness-0 opacity-30"
+                    style={{ objectFit: "contain", objectPosition: "left" }}
+                  />
                   <h4 className="font-display text-4xl leading-[0.95] text-ink">
                     {tier.headlinePlain}
                     <br />
@@ -185,7 +194,7 @@ export function Catering() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero min-h-[680px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
