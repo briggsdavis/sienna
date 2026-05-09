@@ -484,7 +484,7 @@ export function Events() {
               <button
                 type="submit"
                 disabled={submitted}
-                className="group mt-2 inline-flex w-fit items-center gap-3 bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper disabled:opacity-70"
+                className="group mt-2 inline-flex w-fit items-center gap-3 rounded-full bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper disabled:opacity-70"
               >
                 {submitted ? (
                   <>

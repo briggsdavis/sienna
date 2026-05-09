@@ -408,7 +408,7 @@ function WineRow({
           )}
         </div>
       </div>
-      <span className="font-serif text-base text-sienna-bright tabular-nums">
+      <span className="font-serif text-base text-paper tabular-nums">
         ${price}
       </span>
     </li>
