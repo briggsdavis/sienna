@@ -9,6 +9,7 @@ const FLOORS = [
     name: "Emporio",
     sub: "A Meatball Joint",
     italian: "meatball joint",
+    logo: "/emporio.avif",
     color: "from-[#7a2218] via-[#a4341f] to-[#c9412a]",
     desc: "Ground floor. Twelve sauces, six meats, one rule: the meatball is sacred.",
     image:
@@ -26,6 +27,7 @@ const FLOORS = [
     name: "Mezzo",
     sub: "Pizza & Charcuterie",
     italian: "trattoria",
+    logo: "/mezzo.avif",
     color: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
     desc: "Linen, candlelight, an eight-hundred-degree oven. The only OpenTable reservation in the building.",
     image:
@@ -43,6 +45,7 @@ const FLOORS = [
     name: "Il Tetto",
     sub: "Rooftop Beer Garden",
     italian: "rooftop garden",
+    logo: "/iltetto.avif",
     color: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
     desc: "Open sky. Thirty drafts on the chalkboard. No reservations. Climb the stairs.",
     image:
@@ -108,6 +111,12 @@ function FloorText({
   const staggerRef = useStaggerObserver<HTMLDivElement>(0.1)
   return (
     <div ref={staggerRef} className="relative flex flex-col justify-center px-6 py-20 lg:px-20">
+      <img
+        src={floor.logo}
+        alt={`${floor.name} logo`}
+        className="mb-6 h-16 w-auto brightness-0 opacity-70 object-left"
+        style={{ objectFit: "contain", objectPosition: "left" }}
+      />
       <div className="mb-1 font-italic text-base tracking-wide text-sienna italic">
         {floor.italian}
       </div>
@@ -157,7 +166,7 @@ export function Home() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero min-h-[720px] w-full overflow-hidden">
+      <section className="relative h-hero w-full overflow-hidden">
         <div className="absolute inset-0">
           <div ref={heroParallax} className="parallax-hero-wrap">
             <img

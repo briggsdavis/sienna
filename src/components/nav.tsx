@@ -113,20 +113,15 @@ export function Nav() {
           {/* Center: Brand */}
           <Link
             to="/"
-            className={`absolute left-1/2 -translate-x-1/2 flex items-baseline gap-2 transition-colors ${
-              transparent ? "text-cream" : "text-ink"
-            }`}
+            className="absolute left-1/2 -translate-x-1/2 flex items-center"
           >
-            <span className="font-display text-2xl leading-none tracking-[0.18em]">
-              SIENNA
-            </span>
-            <span
-              className={`font-italic text-base leading-none italic ${
-                transparent ? "text-sienna-bright" : "text-sienna"
+            <img
+              src="/siennalogo.png"
+              alt="Sienna Mercato"
+              className={`h-9 w-auto transition-all duration-500 ${
+                transparent ? "brightness-0 invert" : "brightness-0"
               }`}
-            >
-              mercato
-            </span>
+            />
           </Link>
 
           {/* Right: Reserve dropdown */}
@@ -216,14 +211,13 @@ export function Nav() {
           <Link
             to="/"
             onClick={() => setMenuOpen(false)}
-            className="absolute left-1/2 -translate-x-1/2 flex items-baseline gap-2 text-ink"
+            className="absolute left-1/2 -translate-x-1/2 flex items-center"
           >
-            <span className="font-display text-2xl leading-none tracking-[0.18em]">
-              SIENNA
-            </span>
-            <span className="font-italic text-base leading-none italic text-sienna">
-              mercato
-            </span>
+            <img
+              src="/siennalogo.png"
+              alt="Sienna Mercato"
+              className="h-9 w-auto brightness-0"
+            />
           </Link>
           <div className="w-6" />
         </div>

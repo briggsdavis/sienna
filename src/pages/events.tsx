@@ -161,7 +161,7 @@ export function Events() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero min-h-[720px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2400&q=80"
@@ -629,7 +629,7 @@ function VenueAccordion({
               style={{
                 display: "grid",
                 gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition: "grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1)",
+                transition: "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div className="overflow-hidden">

@@ -36,6 +36,7 @@ html {
    --vh is set to window.innerHeight by layout.tsx (exact pixels, no rounding).
    dvh is the fallback before JS runs. */
 .h-hero {
+  min-height: 100svh;
   height: 100dvh;
   height: var(--vh, 100dvh);
 }

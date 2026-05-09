@@ -103,7 +103,7 @@ function TierPanel({ isOpen, children }: { isOpen: boolean; children: ReactNode 
       style={{
         height,
         overflow: "hidden",
-        transition: "height 0.4s cubic-bezier(0.2, 0.8, 0.2, 1)",
+        transition: "height 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
     >
       <div ref={innerRef}>{children}</div>
@@ -185,7 +185,7 @@ export function Catering() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero min-h-[680px] w-full overflow-hidden bg-ink">
+      <section className="relative h-hero w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=2400&q=80"
