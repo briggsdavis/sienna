@@ -260,23 +260,6 @@ export function Tetto() {
             the sky agrees. The skyline of a triangular city, lit from below,
             over your last pint of the night.
           </p>
-          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.7s" }}>
-            <a
-              href="#chalkboard"
-              className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-            >
-              <i className="ph ph-beer-stein text-sm" />
-              Tonight on tap
-              <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
-            </a>
-            <a
-              href="#menu"
-              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-            >
-              <i className="ph ph-pizza text-sm" />
-              Eat on the roof
-            </a>
-          </div>
           <div className="rise mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase" style={{ animationDelay: "0.82s" }}>
             <i className="ph ph-stairs text-sm text-cream/50" />
             No reservations · climb the stairs
@@ -292,6 +275,33 @@ export function Tetto() {
           </div>
         </div>
       </section>
+
+      {/* PAGE SHORTCUTS */}
+      <nav className="border-b border-ink/10 bg-paper">
+        <div className="mx-auto flex max-w-[1600px] flex-wrap gap-3 px-6 py-5 lg:px-12">
+          <a
+            href="#menu"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-pizza text-sm" />
+            Food Menu
+          </a>
+          <a
+            href="#chalkboard"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-beer-stein text-sm" />
+            Drinks Menu
+          </a>
+          <a
+            href="#happy-hour"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-clock text-sm" />
+            Happy Hour
+          </a>
+        </div>
+      </nav>
 
       {/* PHILOSOPHY */}
       <section className="relative overflow-hidden bg-paper py-24">
@@ -478,7 +488,7 @@ export function Tetto() {
       </section>
 
       {/* HAPPY HOUR */}
-      <section className="relative overflow-hidden bg-ink py-24 text-paper">
+      <section id="happy-hour" className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>

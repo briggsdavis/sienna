@@ -305,13 +305,6 @@ export function Emporio() {
               Order pickup
               <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <a
-              href="#menu"
-              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-            >
-              <i className="ph ph-list-magnifying-glass text-sm" />
-              View the menu
-            </a>
           </div>
         </div>
 
@@ -324,6 +317,40 @@ export function Emporio() {
           </div>
         </div>
       </section>
+
+      {/* PAGE SHORTCUTS */}
+      <nav className="border-b border-ink/10 bg-paper">
+        <div className="mx-auto flex max-w-[1600px] flex-wrap gap-3 px-6 py-5 lg:px-12">
+          <a
+            href="#happy-hour"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-clock text-sm" />
+            Happy Hour
+          </a>
+          <a
+            href="#menu"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-list-magnifying-glass text-sm" />
+            Menu
+          </a>
+          <a
+            href="#kids-menu"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-smiley text-sm" />
+            Kids Menu
+          </a>
+          <Link
+            to="/catering"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-bag text-sm" />
+            Catering Menu
+          </Link>
+        </div>
+      </nav>
 
       {/* PHILOSOPHY + LOCATION */}
       <section className="relative overflow-hidden bg-paper py-24">
@@ -694,7 +721,7 @@ export function Emporio() {
             <MenuColumn title="Desserts" italian="dolci" rows={DESSERTS} />
 
             <FadeIn>
-              <div>
+              <div id="kids-menu">
                 <div className="mb-6">
                   <div className="mb-1 font-italic text-base text-sienna italic">
                     for the kids
@@ -719,7 +746,7 @@ export function Emporio() {
       </section>
 
       {/* HAPPY HOUR */}
-      <section className="relative overflow-hidden bg-ink py-24 text-paper">
+      <section id="happy-hour" className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>

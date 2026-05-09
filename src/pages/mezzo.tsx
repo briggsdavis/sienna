@@ -507,13 +507,6 @@ export function Mezzo() {
               Reserve a table
               <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
-            <a
-              href="#menu"
-              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-            >
-              <i className="ph ph-list-magnifying-glass text-sm" />
-              View the menu
-            </a>
           </div>
 
           {/* Roman numeral */}
@@ -526,6 +519,26 @@ export function Mezzo() {
           </div>
         </div>
       </section>
+
+      {/* PAGE SHORTCUTS */}
+      <nav className="border-b border-ink/10 bg-paper">
+        <div className="mx-auto flex max-w-[1600px] flex-wrap gap-3 px-6 py-5 lg:px-12">
+          <a
+            href="#menu"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-list-magnifying-glass text-sm" />
+            View Menu
+          </a>
+          <Link
+            to="/catering"
+            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
+          >
+            <i className="ph ph-bag text-sm" />
+            View Catering Menu
+          </Link>
+        </div>
+      </nav>
 
       {/* PHILOSOPHY */}
       <section className="relative overflow-hidden bg-paper py-24">
