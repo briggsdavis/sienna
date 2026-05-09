@@ -408,7 +408,7 @@ function WineRow({
           )}
         </div>
       </div>
-      <span className="font-serif text-base text-sienna-bright tabular-nums">
+      <span className="font-serif text-base text-paper tabular-nums">
         ${price}
       </span>
     </li>
@@ -463,7 +463,7 @@ export function Mezzo() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/40 to-ink/95" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(110,31,18,0.35),transparent_60%)]" />
 
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden sm:flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
           <Link
             to="/"
             className="under flex items-center gap-2 hover:text-cream"

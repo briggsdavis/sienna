@@ -229,7 +229,7 @@ export function Tetto() {
         </div>
         <div className="absolute inset-0 bg-black/72" />
 
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase lg:px-12">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden sm:flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase lg:px-12">
           <span className="flex items-center gap-2">
             <span className="inline-block h-px w-6 bg-cream/30" />
             Floor III · Il Tetto

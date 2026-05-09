@@ -131,13 +131,13 @@ export function Nav() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setReserveOpen((o) => !o)}
-              className={`btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase ${
+              className={`btn-lift group inline-flex items-center gap-1.5 bg-sienna px-3 py-2 sm:gap-2 sm:px-5 sm:py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase ${
                 reserveOpen ? "bg-sienna-deep" : ""
               }`}
             >
               <span>Reserve</span>
               <i
-                className={`ph ph-caret-${reserveOpen ? "up" : "down"} text-xs transition-transform duration-200`}
+                className={`hidden sm:inline ph ph-caret-${reserveOpen ? "up" : "down"} text-xs transition-transform duration-200`}
               />
             </button>
 
