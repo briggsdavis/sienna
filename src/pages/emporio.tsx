@@ -287,7 +287,6 @@ export function Emporio() {
           />
           <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">I</span>
-            <span className="swash swash-white" />
             <span>meatball joint</span>
           </div>
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
@@ -400,9 +399,6 @@ export function Emporio() {
                 </span>
                 is a delivery system, bun, bowl, hoagie, fork.
               </p>
-              <div className="mt-8 flex">
-                <span className="swash" />
-              </div>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 We grind the meat in-house. We roll by hand at noon. The sauce
                 list runs ten deep so the same ball can be a different dinner ten
@@ -697,12 +693,6 @@ export function Emporio() {
               </h2>
             </div>
           </FadeIn>
-          <FadeIn delay={0.1}>
-            <div className="mb-12 mt-6 flex justify-center">
-              <span className="swash" />
-            </div>
-          </FadeIn>
-
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
             <MenuColumn title="Starters" italian="antipasti" rows={STARTERS} />
             <MenuColumn

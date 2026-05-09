@@ -489,7 +489,6 @@ export function Mezzo() {
           />
           <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">II</span>
-            <span className="swash swash-white" />
             <span>trattoria</span>
           </div>
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
@@ -586,9 +585,6 @@ export function Mezzo() {
                 </span>
                 Candlelight, four courses, a bottle that lingers past the candle.
               </p>
-              <div className="mt-8 flex">
-                <span className="swash" />
-              </div>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 The kitchen rolls pasta at noon and lights the wood-fired oven before dinner. The cellar is Italian-led but not Italian-only, bottles chosen for the table you're sitting at, not the spreadsheet.
               </p>
@@ -635,7 +631,6 @@ export function Mezzo() {
           <FadeIn delay={0.12}>
             <div>
               <div className="mb-3 flex items-center gap-3 font-serif text-lg text-sienna-bright">
-                <span className="swash" />
                 the oven
               </div>
               <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.85]">
@@ -668,9 +663,6 @@ export function Mezzo() {
                   pan, and cellar.
                 </span>
               </h2>
-              <div className="mt-6 flex justify-center">
-                <span className="swash" />
-              </div>
             </div>
           </FadeIn>
 

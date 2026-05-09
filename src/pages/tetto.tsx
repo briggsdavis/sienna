@@ -252,7 +252,6 @@ export function Tetto() {
           />
           <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">III</span>
-            <span className="swash swash-white" />
             <span>rooftop beer garden</span>
           </div>
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
@@ -349,9 +348,6 @@ export function Tetto() {
                 </span>
                 is cold pints and good company.
               </p>
-              <div className="mt-8 flex">
-                <span className="swash" />
-              </div>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest.
               </p>

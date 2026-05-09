@@ -205,9 +205,7 @@ export function Home() {
               className="rise mb-5 flex items-center justify-center gap-3 font-serif text-base tracking-wide text-cream/65"
               style={{ animationDelay: "0.1s" }}
             >
-              <span className="swash" />
               <span>Trattoria · Pizzeria · Rooftop</span>
-              <span className="swash" />
             </div>
             <h1
               className="rise text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
