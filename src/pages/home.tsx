@@ -103,6 +103,12 @@ const SIGNATURE_DISHES = [
   },
 ] as const
 
+const FLOOR_LOGO: Record<string, string> = {
+  Mezzo: "/mezzo.avif",
+  Emporio: "/emporio.avif",
+  "Il Tetto": "/iltetto.avif",
+}
+
 function FloorText({
   floor,
 }: {
@@ -117,9 +123,6 @@ function FloorText({
         className="mb-6 h-16 w-auto brightness-0 opacity-70 object-left"
         style={{ objectFit: "contain", objectPosition: "left" }}
       />
-      <div className="mb-1 font-italic text-base tracking-wide text-sienna italic">
-        {floor.italian}
-      </div>
       <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.9] text-ink">
         {floor.name}
       </h2>
@@ -133,7 +136,7 @@ function FloorText({
         {floor.items.map((it) => (
           <li key={it.name} className="flex items-baseline gap-4 py-4">
             <span className="font-serif text-base tracking-wide text-ink">{it.name}</span>
-            <span className="hidden font-italic text-sm text-ink-soft italic sm:inline">{it.note}</span>
+            <span className="hidden font-body text-sm text-ink-soft sm:inline">{it.note}</span>
             <span className="font-serif text-base text-sienna tabular-nums">
               {it.price ? `$${it.price}` : ""}
             </span>
@@ -150,7 +153,7 @@ function FloorText({
         </Link>
         <a
           href="#visit"
-          className="under inline-flex items-center gap-2 font-italic text-sienna italic hover:text-sienna-bright"
+          className="under inline-flex items-center gap-2 font-serif text-sienna hover:text-sienna-bright"
         >
           <i className="ph ph-clock text-lg" />
           Hours
@@ -199,7 +202,7 @@ export function Home() {
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-end px-6 pb-40 text-center lg:px-12">
           <div className="mx-auto max-w-3xl">
             <div
-              className="rise mb-5 flex items-center justify-center gap-3 font-italic text-base tracking-wide text-cream/65 italic"
+              className="rise mb-5 flex items-center justify-center gap-3 font-serif text-base tracking-wide text-cream/65"
               style={{ animationDelay: "0.1s" }}
             >
               <span className="swash" />
@@ -212,12 +215,6 @@ export function Home() {
             >
               Sienna <span className="font-italic font-light text-cream/90 italic">Mercato</span>
             </h1>
-            <div
-              className="rise mt-4 font-serif text-2xs tracking-[0.4em] text-cream/55 uppercase"
-              style={{ animationDelay: "0.5s" }}
-            >
-              942 Penn Avenue · Pittsburgh
-            </div>
             <div
               className="rise mt-8 flex flex-wrap items-center justify-center gap-3"
               style={{ animationDelay: "0.65s" }}
@@ -274,7 +271,7 @@ export function Home() {
               One Italian house on Penn Avenue.
             </p>
             <p className="mx-auto mt-10 max-w-2xl font-body text-lg leading-relaxed text-ink-soft">
-              A Cultural District landmark since 2013. Three floors, three concepts. One address at 942 Penn Avenue. 230 indoor seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating drafts.
+              A Cultural District landmark since 2013. One address at 942 Penn Avenue — 230 indoor seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating drafts.
             </p>
           </FadeIn>
         </div>
@@ -337,16 +334,12 @@ export function Home() {
           <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
             <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="mb-3 font-italic text-lg text-sienna italic">the kitchen</div>
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
                   Featured
                   <br />
                   <span className="font-italic text-sienna italic">Dishes.</span>
                 </h2>
               </div>
-              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
-                Signatures from all three floors.
-              </p>
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -361,16 +354,19 @@ export function Home() {
                     className="dish-img absolute inset-0 h-full w-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
-                  <div className="absolute top-4 left-4 flex items-center gap-2 bg-paper/90 px-3 py-1 font-serif text-2xs tracking-[0.3em] text-ink uppercase">
-                    <i className="ph ph-house-line text-xs text-sienna" />
-                    {dish.floor}
+                  <div className="absolute top-4 left-4 bg-paper/90 px-3 py-2">
+                    <img
+                      src={FLOOR_LOGO[dish.floor]}
+                      alt={dish.floor}
+                      className="h-4 w-auto brightness-0 opacity-70"
+                    />
                   </div>
                   <div className="absolute right-0 bottom-0 left-0 p-6">
                     <div className="flex items-baseline justify-between gap-4">
                       <h3 className="font-display text-3xl leading-tight text-cream">{dish.name}</h3>
                       <span className="font-serif text-lg text-cream tabular-nums">${dish.price}</span>
                     </div>
-                    <p className="mt-2 font-italic text-sm leading-snug text-cream/75 italic">{dish.en}</p>
+                    <p className="mt-2 font-body text-sm leading-snug text-cream/75">{dish.en}</p>
                   </div>
                 </article>
               ))}
@@ -385,10 +381,6 @@ export function Home() {
           <FadeIn>
             <div className="mb-14 flex flex-wrap items-end justify-between gap-4">
               <div>
-                <div className="mb-2 flex items-center gap-3 font-italic text-lg text-cream/70 italic">
-                  <i className="ph-fill ph-flame text-xl" />
-                  tonight
-                </div>
                 <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
                   Tonight at <span className="font-italic italic">Sienna</span>
                 </h2>
@@ -441,7 +433,7 @@ export function Home() {
                     {card.tag}
                   </div>
                   <h3 className="mt-2 font-display text-3xl leading-tight text-cream">{card.title}</h3>
-                  <p className="mt-3 font-italic text-sm leading-relaxed text-cream/80 italic">{card.desc}</p>
+                  <p className="mt-3 font-body text-sm leading-relaxed text-cream/80">{card.desc}</p>
                   <div className="mt-6 font-serif text-xs tracking-[0.25em] text-cream/60 uppercase">
                     {card.meta}
                   </div>
@@ -467,7 +459,7 @@ export function Home() {
                     <br />
                     <span className="font-italic text-sienna italic">Make it yours.</span>
                   </h2>
-                  <p className="mt-6 max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                  <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
                     Three floors available for private hire. Up to 400 guests. The events team handles the rest.
                   </p>
                 </div>
@@ -492,7 +484,7 @@ export function Home() {
                     <br />
                     <span className="font-italic text-sienna italic">Delivered to you.</span>
                   </h2>
-                  <p className="mt-6 max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+                  <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
                     Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice.
                   </p>
                 </div>
@@ -516,7 +508,6 @@ export function Home() {
         <FadeIn>
           <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
             <div>
-              <div className="mb-4 font-italic text-lg text-cream/80 italic">come hungry</div>
               <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.85]">
                 Reserve
                 <br />
@@ -530,7 +521,7 @@ export function Home() {
                   href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
                   target="_blank"
                   rel="noreferrer"
-                  className="group inline-flex items-center gap-3 bg-cream px-8 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
+                  className="btn-lift group inline-flex items-center gap-3 bg-cream px-8 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
                 >
                   <i className="ph ph-calendar-dots text-lg" />
                   Reserve Mezzo
@@ -538,7 +529,7 @@ export function Home() {
                 </a>
                 <a
                   href="tel:14122812810"
-                  className="inline-flex items-center gap-3 border border-cream/60 px-8 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
+                  className="btn-lift inline-flex items-center gap-3 border border-cream/60 px-8 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
                 >
                   <i className="ph ph-phone text-lg" />
                   412.281.2810
@@ -552,18 +543,17 @@ export function Home() {
               </div>
               <ul className="divide-y divide-cream/20 border-y border-cream/20">
                 {[
-                  { roman: "I", name: "Emporio", hours: "Tue–Sun · 4:30 PM → 11 PM" },
-                  { roman: "II", name: "Mezzo", hours: "Wed–Sun · 5 PM → 10 PM" },
-                  { roman: "III", name: "Il Tetto", hours: "Thu–Sat · 4 PM → late, weather-permitting" },
+                  { name: "Emporio", logo: "/emporio.avif", hours: "Tue–Sun · 4:30 PM → 11 PM" },
+                  { name: "Mezzo", logo: "/mezzo.avif", hours: "Wed–Sun · 5 PM → 10 PM" },
+                  { name: "Il Tetto", logo: "/iltetto.avif", hours: "Thu–Sat · 4 PM → late, weather-permitting" },
                 ].map((row) => (
-                  <li key={row.name} className="flex items-baseline gap-5 py-5">
-                    <span className="w-8 font-display text-3xl text-cream/70">{row.roman}</span>
-                    <span className="font-display text-2xl">{row.name}</span>
-                    <span className="font-italic text-sm text-cream/85 italic tabular-nums">{row.hours}</span>
+                  <li key={row.name} className="flex items-center gap-5 py-5">
+                    <img src={row.logo} alt={row.name} className="h-5 w-auto brightness-0 invert opacity-70" />
+                    <span className="font-body text-sm text-cream/85 tabular-nums">{row.hours}</span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 font-italic text-sm leading-relaxed text-cream/70 italic">
+              <p className="mt-6 font-body text-sm leading-relaxed text-cream/70">
                 The rooftop closes when the sky says so.
               </p>
             </div>

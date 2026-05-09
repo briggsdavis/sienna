@@ -192,7 +192,7 @@ export function Events() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic" style={{ animationDelay: "0.05s" }}>
+          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80" style={{ animationDelay: "0.05s" }}>
             <span className="swash swash-white" />
             <span>private events</span>
           </div>
@@ -231,14 +231,14 @@ export function Events() {
           <FadeIn>
             <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="mb-2 font-italic text-lg text-sienna-bright italic">
+                <div className="mb-2 font-serif text-lg text-sienna-bright">
                   on the calendar
                 </div>
                 <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
                   Three nights coming up.
                 </h2>
               </div>
-              <p className="max-w-sm font-italic text-base leading-relaxed text-paper/65 italic">
+              <p className="max-w-sm font-body text-base leading-relaxed text-paper/65">
                 Walk-ins welcome unless noted. Check back for new dates.
               </p>
             </div>
@@ -260,7 +260,7 @@ export function Events() {
                     <i className={`ph-duotone ${e.icon} text-4xl text-sienna-bright/70`} />
                   </div>
                   <h3 className="mt-5 font-display text-4xl leading-tight">{e.title}</h3>
-                  <p className="mt-2 font-italic text-base text-paper/70 italic">{e.sub}</p>
+                  <p className="mt-2 font-body text-base text-paper/70">{e.sub}</p>
                   <div className="mt-auto pt-6 flex flex-col gap-2">
                     <div className="flex items-center gap-2 font-serif text-2xs tracking-[0.3em] text-paper/55 uppercase">
                       <i className="ph ph-house-line text-sm" />
@@ -284,7 +284,7 @@ export function Events() {
           <FadeIn>
             <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="mb-3 font-italic text-lg text-sienna italic">
+                <div className="mb-3 font-serif text-lg text-sienna">
                   private event venues
                 </div>
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
@@ -295,7 +295,7 @@ export function Events() {
                   </span>
                 </h2>
               </div>
-              <p className="font-italic text-lg leading-relaxed text-ink-soft italic md:text-right">
+              <p className="font-body text-lg leading-relaxed text-ink-soft md:text-right">
                 Each floor stands alone or stacks with the others, the whole
                 building seats nearly four hundred.
               </p>
@@ -309,7 +309,7 @@ export function Events() {
           <FadeIn delay={0.1}>
             <div className="mt-14 grid gap-px bg-ink/10 sm:grid-cols-[1fr_auto]">
               <div className="bg-paper px-8 py-8">
-                <div className="mb-2 font-italic text-lg text-sienna italic">
+                <div className="mb-2 font-serif text-lg text-sienna">
                   ready to book a floor?
                 </div>
                 <h3 className="font-display text-3xl leading-tight text-ink">
@@ -317,7 +317,7 @@ export function Events() {
                   <br />
                   <span className="font-italic text-sienna italic">and we'll handle the rest.</span>
                 </h3>
-                <p className="mt-3 max-w-lg font-italic text-base text-ink-soft italic">
+                <p className="mt-3 max-w-lg font-body text-base text-ink-soft">
                   The events team replies within one business day with a floor recommendation, a draft menu, and a price range. No commitment required.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -359,7 +359,7 @@ export function Events() {
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 text-center">
-              <div className="mb-3 font-italic text-lg text-sienna italic">
+              <div className="mb-3 font-serif text-lg text-sienna">
                 from the guestbook
               </div>
               <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
@@ -385,7 +385,7 @@ export function Events() {
                 <blockquote className="mt-4 font-display text-2xl leading-snug text-ink lg:text-3xl">
                   {r.quote}
                 </blockquote>
-                <figcaption className="mt-6 font-italic text-sm text-ink-soft italic">
+                <figcaption className="mt-6 font-body text-sm text-ink-soft">
                   , {r.by} · five-star review
                 </figcaption>
               </figure>
@@ -403,7 +403,7 @@ export function Events() {
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
           <div>
-            <div className="mb-4 font-italic text-lg text-cream/85 italic">
+            <div className="mb-4 font-serif text-lg text-cream/85">
               inquire now
             </div>
             <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.85]">
@@ -477,7 +477,7 @@ export function Events() {
                   name="notes"
                   rows={4}
                   placeholder="Tone, courses, any must-haves, music, dietary notes, the budget if you have one in mind."
-                  className="mt-2 w-full border-b border-cream/40 bg-transparent py-3 font-italic text-cream placeholder:font-italic placeholder:text-cream/50 placeholder:italic focus:border-cream focus:outline-none"
+                  className="mt-2 w-full border-b border-cream/40 bg-transparent py-3 font-body text-cream placeholder:text-cream/50 focus:border-cream focus:outline-none"
                 />
               </label>
 
@@ -510,7 +510,7 @@ export function Events() {
               {CONTACTS.map((c) => (
                 <li key={c.email} className="py-6">
                   <div className="font-display text-2xl">{c.name}</div>
-                  <div className="mt-1 font-italic text-sm text-cream/75 italic">
+                  <div className="mt-1 font-body text-sm text-cream/75">
                     {c.role}
                   </div>
                   <div className="mt-3 flex flex-col gap-1.5">
@@ -539,8 +539,8 @@ export function Events() {
               <div className="font-serif text-2xs tracking-[0.3em] text-cream/70 uppercase">
                 Reservations · 1 → 8 guests
               </div>
-              <p className="mt-2 font-italic text-cream/85 italic">
-                Mezzo (Floor II) takes regular reservations through OpenTable ,
+              <p className="mt-2 font-body text-cream/85">
+                Mezzo (Floor II) takes regular reservations through OpenTable,
                 no inquiry form needed.
               </p>
               <a
@@ -561,7 +561,7 @@ export function Events() {
       <section className="relative bg-ink text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-sienna-bright italic">
+            <div className="mb-2 font-serif text-base text-sienna-bright">
               need catering instead?
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
@@ -617,7 +617,7 @@ function VenueAccordion({
                   <h3 className="font-display text-3xl text-ink transition-colors group-hover:text-sienna">
                     {s.name}
                   </h3>
-                  <div className="font-italic text-sm text-ink-soft italic">{s.sub}</div>
+                  <div className="font-body text-sm text-ink-soft">{s.sub}</div>
                 </div>
               </div>
               <div className="flex items-center gap-6 shrink-0">
@@ -645,7 +645,7 @@ function VenueAccordion({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
                     <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
-                      <span className="font-italic text-sm text-cream/80 italic">{s.vibe}</span>
+                      <span className="font-body text-sm text-cream/80">{s.vibe}</span>
                       <span className={`font-display text-2xl ${s.accent}`}>{s.capacity}</span>
                     </div>
                   </div>
@@ -660,7 +660,7 @@ function VenueAccordion({
                     <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
                     <ul className="mt-5 space-y-2">
                       {s.highlights.map((h) => (
-                        <li key={h} className="flex items-start gap-2 font-italic text-sm text-ink-soft italic">
+                        <li key={h} className="flex items-start gap-2 font-body text-sm text-ink-soft">
                           <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
                           {h}
                         </li>
@@ -668,7 +668,7 @@ function VenueAccordion({
                     </ul>
                     <div className="mt-5">
                       <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">Perfect for</div>
-                      <div className="mt-1.5 font-italic text-sm text-ink italic">
+                      <div className="mt-1.5 font-body text-sm text-ink">
                         {s.perfect.join(" · ")}
                       </div>
                     </div>

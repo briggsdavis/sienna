@@ -52,7 +52,7 @@ function CateringRow({
       <div className="flex-1">
         <div className="font-serif text-lg text-ink">{name}</div>
         {note && (
-          <div className="mt-0.5 font-italic text-sm text-ink-soft italic">
+          <div className="mt-0.5 font-body text-sm text-ink-soft">
             {note}
           </div>
         )}
@@ -142,7 +142,7 @@ function TierAccordion() {
                   <h3 className="font-display text-3xl text-ink transition-colors group-hover:text-sienna">
                     {tier.label}
                   </h3>
-                  <div className="font-italic text-sm text-ink-soft italic">
+                  <div className="font-body text-sm text-ink-soft">
                     {tier.kitchen}
                   </div>
                 </div>
@@ -168,7 +168,7 @@ function TierAccordion() {
                       {tier.headlineItalic}
                     </span>
                   </h4>
-                  <p className="mt-3 max-w-xl font-italic text-base text-ink-soft italic">
+                  <p className="mt-3 max-w-xl font-body text-base text-ink-soft">
                     {tier.desc}
                   </p>
                   <ul className="mt-5 divide-y divide-ink/10 border-t border-b border-ink/10">
@@ -176,7 +176,7 @@ function TierAccordion() {
                       <CateringRow key={r.name} {...r} />
                     ))}
                   </ul>
-                  <div className="mt-4 font-italic text-xs text-ink-soft italic">
+                  <div className="mt-4 font-body text-xs text-ink-soft">
                     Half pan / full pan, unless noted.
                   </div>
                 </div>
@@ -220,7 +220,7 @@ export function Catering() {
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
           <div
-            className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic"
+            className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80"
             style={{ animationDelay: "0.05s" }}
           >
             <span className="swash swash-white" />
@@ -273,7 +273,7 @@ export function Catering() {
           <FadeIn>
             <div className="mb-14 grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-end">
               <div>
-                <div className="mb-3 font-italic text-lg text-sienna italic">
+                <div className="mb-3 font-serif text-lg text-sienna">
                   catering · delivery & pickup
                 </div>
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
@@ -285,7 +285,7 @@ export function Catering() {
                 </h2>
               </div>
               <div>
-                <p className="font-italic text-lg leading-relaxed text-ink-soft italic">
+                <p className="font-body text-lg leading-relaxed text-ink-soft">
                   Everything comes out of our own kitchens, cooked to order. Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival.
                 </p>
                 <div className="mt-6 grid max-w-[460px] grid-cols-2 gap-3">
@@ -310,7 +310,7 @@ export function Catering() {
                     <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </a>
                 </div>
-                <p className="mt-3 font-italic text-xs text-ink-soft italic">
+                <p className="mt-3 font-body text-xs text-ink-soft">
                   Online ordering available from Floor I · Emporio only. For Mezzo catering, contact the events team.
                 </p>
               </div>
@@ -336,7 +336,7 @@ export function Catering() {
                     <div className="font-display text-2xl leading-none text-ink">
                       {f.k}
                     </div>
-                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                    <div className="mt-1 font-body text-sm text-ink-soft">
                       {f.v}
                     </div>
                   </div>
@@ -345,7 +345,7 @@ export function Catering() {
             </div>
           </FadeIn>
 
-          <div className="mt-8 flex flex-wrap items-center gap-6 font-italic text-sm text-ink-soft italic">
+          <div className="mt-8 flex flex-wrap items-center gap-6 font-body text-sm text-ink-soft">
             <span className="flex items-center gap-2">
               <i className="ph ph-clock text-sienna" />
               Forty-eight hours notice for all catering requests.
@@ -362,7 +362,7 @@ export function Catering() {
       <section className="relative bg-ink text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-sienna-bright italic">
+            <div className="mb-2 font-serif text-base text-sienna-bright">
               need a private venue too?
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
