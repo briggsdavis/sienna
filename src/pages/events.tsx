@@ -8,6 +8,7 @@ const SPACES = [
     roman: "I",
     name: "Emporio",
     sub: "A Meatball Joint",
+    logo: "/emporio.avif",
     capacity: "105",
     vibe: "Energetic · industrial · loud",
     perfect: [
@@ -33,6 +34,7 @@ const SPACES = [
     roman: "II",
     name: "Mezzo",
     sub: "Pizza & Charcuterie",
+    logo: "/mezzo.avif",
     capacity: "90",
     vibe: "Intimate · refined · candlelit",
     perfect: [
@@ -58,6 +60,7 @@ const SPACES = [
     roman: "III",
     name: "Il Tetto",
     sub: "Rooftop Beer Garden",
+    logo: "/iltetto.avif",
     capacity: "200",
     vibe: "Open-air · skyline · all-season",
     perfect: [
@@ -647,6 +650,13 @@ function VenueAccordion({
                     </div>
                   </div>
                   <div className="flex flex-col justify-center px-8 py-6">
+                    <img
+                      src={s.logo}
+                      alt=""
+                      aria-hidden="true"
+                      className="mb-5 h-7 w-auto brightness-0 opacity-30 object-left"
+                      style={{ objectFit: "contain", objectPosition: "left" }}
+                    />
                     <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
                     <ul className="mt-5 space-y-2">
                       {s.highlights.map((h) => (

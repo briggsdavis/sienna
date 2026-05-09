@@ -69,6 +69,7 @@ const TIERS = [
     id: "t1",
     label: "Tier 1",
     kitchen: "Emporio kitchen",
+    logo: "/emporio.avif",
     headline: "Casual, family-style.",
     headlineItalic: "family-style.",
     headlinePlain: "Casual,",
@@ -80,6 +81,7 @@ const TIERS = [
     id: "t2",
     label: "Tier 2",
     kitchen: "Mezzo kitchen",
+    logo: "/mezzo.avif",
     headlinePlain: "Refined,",
     headlineItalic: "plated-ready.",
     accent: "text-sienna-deep",
@@ -152,6 +154,13 @@ function TierAccordion() {
 
             <TierPanel isOpen={isOpen}>
               <div className="border-t border-ink/8 bg-cream/40 px-2 pb-8 pt-6">
+                  <img
+                    src={tier.logo}
+                    alt=""
+                    aria-hidden="true"
+                    className="mb-4 h-7 w-auto brightness-0 opacity-30"
+                    style={{ objectFit: "contain", objectPosition: "left" }}
+                  />
                   <h4 className="font-display text-4xl leading-[0.95] text-ink">
                     {tier.headlinePlain}
                     <br />

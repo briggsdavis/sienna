@@ -18,6 +18,7 @@ const RESERVE_OPTIONS = [
     sub: "Ground floor · walk-in only",
     href: "/emporio",
     roman: "I",
+    logo: "/emporio.avif",
     external: false,
   },
   {
@@ -25,6 +26,7 @@ const RESERVE_OPTIONS = [
     sub: "Reserve via OpenTable",
     href: "https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh",
     roman: "II",
+    logo: "/mezzo.avif",
     external: true,
   },
   {
@@ -32,6 +34,7 @@ const RESERVE_OPTIONS = [
     sub: "Rooftop · climb the stairs",
     href: "/tetto",
     roman: "III",
+    logo: "/iltetto.avif",
     external: false,
   },
 ] as const
@@ -161,6 +164,12 @@ export function Nav() {
                           {opt.sub}
                         </div>
                       </div>
+                      <img
+                        src={opt.logo}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-5 w-auto brightness-0 opacity-30 transition-opacity group-hover:opacity-50"
+                      />
                       <i className="ph ph-arrow-up-right text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100" />
                     </a>
                   ) : (
@@ -181,6 +190,12 @@ export function Nav() {
                           {opt.sub}
                         </div>
                       </div>
+                      <img
+                        src={opt.logo}
+                        alt=""
+                        aria-hidden="true"
+                        className="h-5 w-auto brightness-0 opacity-30 transition-opacity group-hover:opacity-50"
+                      />
                       <i className="ph ph-arrow-right text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100" />
                     </Link>
                   ),
