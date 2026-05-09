@@ -168,12 +168,12 @@ function DraftCard({
           <div className="flex flex-wrap items-baseline gap-3">
             <h3 className="font-display text-2xl text-cream">{name}</h3>
             {flag && (
-              <span className="bg-sienna-bright px-2 py-0.5 font-italic text-2xs tracking-[0.3em] text-cream uppercase italic">
+              <span className="bg-sienna-bright px-2 py-0.5 font-serif text-2xs tracking-[0.3em] text-cream uppercase">
                 {flag}
               </span>
             )}
           </div>
-          <div className="mt-1 font-italic text-sm text-paper/55 italic">
+          <div className="mt-1 font-body text-sm text-paper/55">
             {brewery} · <span>{origin}</span>
             <span className="text-paper/30"> · </span>
             {style}
@@ -200,7 +200,7 @@ function FoodRow({
     <li className="flex items-baseline gap-3 py-4">
       <div className="flex-1">
         <div className="font-serif text-xl text-ink">{name}</div>
-        <div className="mt-0.5 font-italic text-base text-ink-soft italic">
+        <div className="mt-0.5 font-body text-base text-ink-soft">
           {desc}
         </div>
       </div>
@@ -250,7 +250,7 @@ export function Tetto() {
             className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
             style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
           />
-          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream italic" style={{ animationDelay: "0.05s" }}>
+          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">III</span>
             <span className="swash swash-white" />
             <span>rooftop beer garden</span>
@@ -258,7 +258,7 @@ export function Tetto() {
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Il Tetto
           </h1>
-          <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
+          <p className="rise mt-3 font-body text-lg text-cream/80" style={{ animationDelay: "0.4s" }}>
             Rooftop Beer Garden.
           </p>
           <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
@@ -327,7 +327,7 @@ export function Tetto() {
                 <div className="font-display text-3xl leading-tight text-cream">
                   942 Penn Avenue
                 </div>
-                <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                <div className="mt-1 font-body text-sm text-cream/70">
                   Pittsburgh, PA · Thu–Sun from 4 PM
                 </div>
               </div>
@@ -352,7 +352,7 @@ export function Tetto() {
               <div className="mt-8 flex">
                 <span className="swash" />
               </div>
-              <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest.
               </p>
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
@@ -365,7 +365,7 @@ export function Tetto() {
                     <div className="font-display text-4xl leading-none text-sienna">
                       {s.k}
                     </div>
-                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                    <div className="mt-1 font-body text-sm text-ink-soft">
                       {s.v}
                     </div>
                   </div>
@@ -382,7 +382,7 @@ export function Tetto() {
           <FadeIn>
             <div className="mb-14 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
               <div>
-                <div className="mb-3 flex items-center gap-3 font-italic text-lg text-sienna italic">
+                <div className="mb-3 flex items-center gap-3 font-serif text-lg text-sienna">
                   <i className="ph ph-chalkboard-simple text-2xl" />
                   tonight on tap
                 </div>
@@ -390,7 +390,7 @@ export function Tetto() {
                   The chalkboard.
                 </h2>
               </div>
-              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+              <p className="max-w-md font-body text-lg leading-relaxed text-ink-soft">
                 Thirty rotating lines. Local first, then everywhere else. We
                 update Untappd every morning, but the bartender's the source of
                 truth.
@@ -409,7 +409,7 @@ export function Tetto() {
                 />
               ))}
               <li className="px-6 py-6 text-center sm:px-8">
-                <span className="font-italic text-paper/55 italic">
+                <span className="font-body text-paper/55">
                   + 17 more on rotation · ask the bartender
                 </span>
               </li>
@@ -439,7 +439,7 @@ export function Tetto() {
                 />
               </div>
               <div className="flex flex-col justify-center bg-paper/[0.04] p-8 lg:p-12">
-                <div className="mb-2 font-italic text-base text-sienna-bright italic">
+                <div className="mb-2 font-serif text-base text-sienna-bright">
                   beer of the month · may
                 </div>
                 <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[0.9]">
@@ -466,7 +466,7 @@ export function Tetto() {
           <FadeIn>
             <div className="mb-14 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
               <div>
-                <div className="mb-3 font-italic text-lg text-sienna italic">
+                <div className="mb-3 font-serif text-lg text-sienna">
                   eat on the roof
                 </div>
                 <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
@@ -477,7 +477,7 @@ export function Tetto() {
                   </span>
                 </h2>
               </div>
-              <p className="max-w-md font-italic text-lg leading-relaxed text-ink-soft italic">
+              <p className="max-w-md font-body text-lg leading-relaxed text-ink-soft">
                 The rooftop kitchen runs a tight bar menu, whole pies from the
                 wood oven below, the meatball hoagie, fries that have business
                 being on a roof.
@@ -499,7 +499,7 @@ export function Tetto() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
               <div>
-                <div className="mb-3 font-italic text-lg text-sienna-bright italic">
+                <div className="mb-3 font-serif text-lg text-sienna-bright">
                   aperitivo · happy hour
                 </div>
                 <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
@@ -527,7 +527,7 @@ export function Tetto() {
                     <i className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`} />
                     <div>
                       <div className="font-display text-3xl">{row.k}</div>
-                      <div className="font-italic text-paper/75 italic">
+                      <div className="font-body text-paper/75">
                         {row.v}
                       </div>
                     </div>
@@ -544,7 +544,7 @@ export function Tetto() {
         <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
           <FadeIn>
             <div>
-              <div className="mb-3 font-italic text-lg text-sienna italic">
+              <div className="mb-3 font-serif text-lg text-sienna">
                 il tempo · the weather
               </div>
               <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
@@ -580,13 +580,13 @@ export function Tetto() {
                     <span className="w-24 font-serif text-sm tracking-[0.2em] text-ink uppercase">
                       {row.d}
                     </span>
-                    <span className="font-italic text-sm text-ink-soft italic tabular-nums">
+                    <span className="font-body text-sm text-ink-soft tabular-nums">
                       {row.h}
                     </span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 font-italic text-sm leading-relaxed text-ink-soft italic">
+              <p className="mt-6 font-body text-sm leading-relaxed text-ink-soft">
                 "Late" is weather, crowd, and bartender's discretion. The
                 chalkboard tells you when last call is.
               </p>
@@ -600,7 +600,7 @@ export function Tetto() {
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
             <FadeIn>
-              <div className="mb-2 font-italic text-base text-cream/60 italic">
+              <div className="mb-2 font-serif text-base text-cream/60">
                 third floor · III
               </div>
             </FadeIn>

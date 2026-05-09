@@ -225,13 +225,13 @@ function MenuRow({
         <div className="flex flex-wrap items-baseline gap-3">
           <span className="font-serif text-xl text-ink">{name}</span>
           {flag && (
-            <span className="font-italic text-2xs tracking-[0.25em] text-sienna uppercase italic">
+            <span className="font-serif text-2xs tracking-[0.25em] text-sienna uppercase">
               {flag}
             </span>
           )}
         </div>
         {desc && (
-          <div className="mt-0.5 font-italic text-base text-ink-soft italic">
+          <div className="mt-0.5 font-body text-base text-ink-soft">
             {desc}
           </div>
         )}
@@ -285,7 +285,7 @@ export function Emporio() {
             className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
             style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
           />
-          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream italic" style={{ animationDelay: "0.05s" }}>
+          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">I</span>
             <span className="swash swash-white" />
             <span>meatball joint</span>
@@ -293,7 +293,7 @@ export function Emporio() {
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Emporio
           </h1>
-          <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
+          <p className="rise mt-3 font-body text-lg text-cream/80" style={{ animationDelay: "0.4s" }}>
             A Meatball Joint.
           </p>
           <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
@@ -377,7 +377,7 @@ export function Emporio() {
                 <div className="font-display text-3xl leading-tight text-cream">
                   942 Penn Avenue
                 </div>
-                <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                <div className="mt-1 font-body text-sm text-cream/70">
                   Pittsburgh, PA · Open Tue–Sun from 4:30 PM
                 </div>
               </div>
@@ -403,7 +403,7 @@ export function Emporio() {
               <div className="mt-8 flex">
                 <span className="swash" />
               </div>
-              <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 We grind the meat in-house. We roll by hand at noon. The sauce
                 list runs ten deep so the same ball can be a different dinner ten
                 nights running.
@@ -418,7 +418,7 @@ export function Emporio() {
                     <div className="font-display text-4xl leading-none text-sienna">
                       {s.k}
                     </div>
-                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                    <div className="mt-1 font-body text-sm text-ink-soft">
                       {s.v}
                     </div>
                   </div>
@@ -438,7 +438,7 @@ export function Emporio() {
           <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
             <FadeIn>
               <div>
-                <div className="mb-2 font-italic text-lg text-sienna-bright italic">
+                <div className="mb-2 font-serif text-lg text-sienna-bright">
                   five kinds
                 </div>
                 <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
@@ -447,7 +447,7 @@ export function Emporio() {
               </div>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <p className="max-w-md font-italic text-lg text-paper/70 italic">
+              <p className="max-w-md font-body text-lg text-paper/70">
                 Pick any combination. Three to a hoagie, three to a bowl, six on a
                 plate of six over polenta.
               </p>
@@ -477,7 +477,7 @@ export function Emporio() {
                   />
                   <div className="mt-5 font-display text-2xl">{b.name}</div>
                   <div
-                    className={`mt-1 font-italic text-sm italic ${
+                    className={`mt-1 font-body text-sm ${
                       b.featured
                         ? "text-cream/80"
                         : "text-paper/60 group-hover:text-cream/80"
@@ -498,7 +498,7 @@ export function Emporio() {
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
             <FadeIn>
               <div>
-                <div className="mb-2 font-italic text-lg text-sienna italic">
+                <div className="mb-2 font-serif text-lg text-sienna">
                   ten sauces
                 </div>
                 <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
@@ -511,7 +511,7 @@ export function Emporio() {
               </div>
             </FadeIn>
             <FadeIn delay={0.1}>
-              <p className="max-w-md font-italic text-lg text-ink-soft italic">
+              <p className="max-w-md font-body text-lg text-ink-soft">
                 From the polite (marinara, pesto) to the unrepentant (Government
                 Cheese). Heat dots aren't a dare, they're a warning.
               </p>
@@ -536,7 +536,7 @@ export function Emporio() {
                 <div className="mt-3 font-display text-3xl text-ink">
                   {s.name}
                 </div>
-                <div className="mt-2 font-italic text-ink-soft italic">
+                <div className="mt-2 font-body text-ink-soft">
                   {s.note}
                 </div>
               </li>
@@ -551,13 +551,13 @@ export function Emporio() {
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 text-center">
-              <div className="mb-3 font-italic text-lg text-cream/80 italic">
+              <div className="mb-3 font-serif text-lg text-cream/80">
                 build your bowl
               </div>
               <h2 className="font-display text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.9]">
                 Build a bowl.
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl font-italic text-xl text-cream/85 italic">
+              <p className="mx-auto mt-6 max-w-2xl font-body text-xl text-cream/85">
                 Three steps. Eighteen dollars. Hundreds of combinations.
               </p>
             </div>
@@ -604,7 +604,7 @@ export function Emporio() {
               <FadeIn key={step.num} delay={step.delay} className="h-full">
                 <div className="relative h-full border border-cream/20 p-8 backdrop-blur-sm">
                   <div className="flex items-baseline justify-between">
-                    <span className="font-italic text-cream/70 italic">
+                    <span className="font-body text-cream/70">
                       {step.step}
                     </span>
                     <span className="font-display text-5xl text-cream/40">
@@ -613,7 +613,7 @@ export function Emporio() {
                   </div>
                   <i className={`ph-duotone ${step.icon} mt-6 block text-5xl`} />
                   <h3 className="mt-6 font-display text-3xl">{step.title}</h3>
-                  <ul className="mt-4 space-y-2 font-italic text-cream/85 italic">
+                  <ul className="mt-4 space-y-2 font-body text-cream/85">
                     {step.items.map((it) => (
                       <li key={it} className="flex items-start gap-2">
                         <i className="ph ph-dot-outline mt-1 text-sienna-bright" />
@@ -643,14 +643,14 @@ export function Emporio() {
                 <div className="absolute top-6 left-6 bg-sienna px-3 py-1.5 font-serif text-2xs tracking-[0.4em] text-cream/80 uppercase">
                   ball of the month · may
                 </div>
-                <div className="absolute right-6 bottom-6 flex items-center gap-2 font-italic text-sm text-cream italic">
+                <div className="absolute right-6 bottom-6 flex items-center gap-2 font-body text-sm text-cream">
                   <i className="ph-fill ph-flame text-sienna-bright" />
                   <i className="ph-fill ph-flame text-sienna-bright" />
                   medium heat
                 </div>
               </div>
               <div className="flex flex-col justify-center p-10 lg:p-16">
-                <div className="mb-3 font-italic text-lg text-sienna-bright italic">
+                <div className="mb-3 font-serif text-lg text-sienna-bright">
                   ball of the month
                 </div>
                 <h2 className="font-display text-6xl leading-[0.9]">
@@ -665,7 +665,7 @@ export function Emporio() {
                   <span className="font-display text-5xl text-sienna-bright">
                     $14
                   </span>
-                  <span className="font-italic text-cream/60 italic">
+                  <span className="font-body text-cream/60">
                     six balls · house-made glaze · sesame, scallion
                   </span>
                 </div>
@@ -689,7 +689,7 @@ export function Emporio() {
         <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-4 text-center">
-              <div className="mb-3 font-italic text-lg text-sienna italic">
+              <div className="mb-3 font-serif text-lg text-sienna">
                 the whole menu
               </div>
               <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
@@ -729,11 +729,11 @@ export function Emporio() {
             <FadeIn>
               <div id="kids-menu">
                 <div className="mb-6">
-                  <div className="mb-1 font-italic text-base text-sienna italic">
+                  <div className="mb-1 font-serif text-base text-sienna">
                     for the kids
                   </div>
                   <h3 className="font-display text-4xl text-ink">Kid's Menu</h3>
-                  <p className="mt-2 font-italic text-ink-soft italic">
+                  <p className="mt-2 font-body text-ink-soft">
                     Pick any two, $7 each.
                   </p>
                 </div>
@@ -757,7 +757,7 @@ export function Emporio() {
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
               <div>
-                <div className="mb-3 font-italic text-lg text-sienna-bright italic">
+                <div className="mb-3 font-serif text-lg text-sienna-bright">
                   aperitivo · happy hour
                 </div>
                 <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.9]">
@@ -795,7 +795,7 @@ export function Emporio() {
                     />
                     <div>
                       <div className="font-display text-3xl">{row.k}</div>
-                      <div className="font-italic text-paper/75 italic">
+                      <div className="font-body text-paper/75">
                         {row.v}
                       </div>
                     </div>
@@ -811,7 +811,7 @@ export function Emporio() {
       <section className="relative bg-sienna text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-italic text-base text-cream/80 italic">
+            <div className="mb-2 font-serif text-base text-cream/80">
               ground floor · I
             </div>
             <h3 className="font-display text-5xl leading-[0.9]">
@@ -890,7 +890,7 @@ function MenuColumn({
   return (
     <div ref={ref}>
       <div className="mb-2">
-        <div className="mb-1 font-italic text-base text-sienna italic">
+        <div className="mb-1 font-serif text-base text-sienna">
           {italian}
         </div>
         <h3 className="font-display text-4xl text-ink">{title}</h3>

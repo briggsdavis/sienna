@@ -290,13 +290,13 @@ function Row({
         <div className="flex flex-wrap items-baseline gap-3">
           <span className="font-serif text-xl text-ink">{name}</span>
           {flag && (
-            <span className="font-italic text-2xs tracking-[0.3em] text-sienna uppercase italic">
+            <span className="font-serif text-2xs tracking-[0.3em] text-sienna uppercase">
               {flag}
             </span>
           )}
         </div>
         {desc && (
-          <div className="mt-0.5 font-italic text-base leading-snug text-ink-soft italic">
+          <div className="mt-0.5 font-body text-base leading-snug text-ink-soft">
             {desc}
           </div>
         )}
@@ -354,7 +354,7 @@ function Column({
   return (
     <div ref={ref}>
       <div className="mb-2">
-        <div className="mb-1 font-italic text-sm tracking-wide text-sienna italic">
+        <div className="mb-1 font-serif text-sm tracking-wide text-sienna">
           {italian}
         </div>
         <h3 className="font-display text-4xl text-ink">{english}</h3>
@@ -393,12 +393,12 @@ function WineRow({
         <div className="flex flex-wrap items-baseline gap-3">
           <span className="font-serif text-lg text-paper/95">{name}</span>
           {flag && (
-            <span className="bg-sienna-bright px-2 py-0.5 font-italic text-2xs tracking-[0.3em] text-cream uppercase italic">
+            <span className="bg-sienna-bright px-2 py-0.5 font-serif text-2xs tracking-[0.3em] text-cream uppercase">
               {flag}
             </span>
           )}
         </div>
-        <div className="mt-0.5 flex items-baseline gap-2 font-italic text-sm text-paper/50 italic">
+        <div className="mt-0.5 flex items-baseline gap-2 font-body text-sm text-paper/50">
           <span>{region}</span>
           {note && (
             <>
@@ -487,7 +487,7 @@ export function Mezzo() {
             className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
             style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
           />
-          <div className="rise mb-4 flex items-center gap-3 font-italic text-base text-cream/80 italic" style={{ animationDelay: "0.05s" }}>
+          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80" style={{ animationDelay: "0.05s" }}>
             <span className="mr-1 font-display text-2xl text-cream/60">II</span>
             <span className="swash swash-white" />
             <span>trattoria</span>
@@ -495,7 +495,7 @@ export function Mezzo() {
           <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
             Mezzo
           </h1>
-          <p className="rise mt-3 font-italic text-lg text-cream/80 italic" style={{ animationDelay: "0.4s" }}>
+          <p className="rise mt-3 font-body text-lg text-cream/80" style={{ animationDelay: "0.4s" }}>
             Pizza & Charcuterie.
           </p>
           <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
@@ -564,7 +564,7 @@ export function Mezzo() {
                 <div className="font-display text-3xl leading-tight text-cream">
                   942 Penn Avenue
                 </div>
-                <div className="mt-1 font-italic text-sm text-cream/70 italic">
+                <div className="mt-1 font-body text-sm text-cream/70">
                   Pittsburgh, PA · Wed–Sun from 5 PM
                 </div>
               </div>
@@ -589,7 +589,7 @@ export function Mezzo() {
               <div className="mt-8 flex">
                 <span className="swash" />
               </div>
-              <p className="mt-8 max-w-xl font-italic text-xl leading-relaxed text-ink-soft italic">
+              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 The kitchen rolls pasta at noon and lights the wood-fired oven before dinner. The cellar is Italian-led but not Italian-only, bottles chosen for the table you're sitting at, not the spreadsheet.
               </p>
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
@@ -602,7 +602,7 @@ export function Mezzo() {
                     <div className="font-display text-4xl leading-none text-sienna">
                       {s.k}
                     </div>
-                    <div className="mt-1 font-italic text-sm text-ink-soft italic">
+                    <div className="mt-1 font-body text-sm text-ink-soft">
                       {s.v}
                     </div>
                   </div>
@@ -634,7 +634,7 @@ export function Mezzo() {
           </FadeIn>
           <FadeIn delay={0.12}>
             <div>
-              <div className="mb-3 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
+              <div className="mb-3 flex items-center gap-3 font-serif text-lg text-sienna-bright">
                 <span className="swash" />
                 the oven
               </div>
@@ -658,7 +658,7 @@ export function Mezzo() {
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-16 text-center">
-              <div className="mb-3 font-italic text-lg text-sienna italic">
+              <div className="mb-3 font-serif text-lg text-sienna">
                 the menu
               </div>
               <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
@@ -683,7 +683,7 @@ export function Mezzo() {
             <FadeIn>
               <div>
                 <div className="mb-2">
-                  <div className="mb-1 font-italic text-sm tracking-wide text-sienna italic">
+                  <div className="mb-1 font-serif text-sm tracking-wide text-sienna">
                     cocktails
                   </div>
                   <h3 className="font-display text-4xl text-ink">House Bar</h3>
@@ -694,7 +694,7 @@ export function Mezzo() {
                   ))}
                 </ul>
                 <div className="mt-10">
-                  <div className="mb-1 font-italic text-sm tracking-wide text-sienna italic">
+                  <div className="mb-1 font-serif text-sm tracking-wide text-sienna">
                     seasonal
                   </div>
                   <h4 className="font-display text-2xl text-ink">
@@ -718,7 +718,7 @@ export function Mezzo() {
           <FadeIn>
             <div className="mb-16 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
               <div>
-                <div className="mb-3 flex items-center gap-3 font-italic text-lg text-sienna-bright italic">
+                <div className="mb-3 flex items-center gap-3 font-serif text-lg text-sienna-bright">
                   <i className="ph-duotone ph-wine text-2xl" />
                   la cantina · the cellar
                 </div>
@@ -729,7 +729,7 @@ export function Mezzo() {
                   </span>
                 </h2>
               </div>
-              <p className="max-w-md font-italic text-lg leading-relaxed text-paper/75 italic">
+              <p className="max-w-md font-body text-lg leading-relaxed text-paper/75">
                 Ninety bottles, four Barolos, three Brunellos, and a Hungarian
                 Tokaji that the sommelier won't shut up about. By the glass
                 changes weekly, ask.
@@ -741,7 +741,7 @@ export function Mezzo() {
             <div ref={wineLeftRef}>
               <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
-                    <div className="font-italic text-sm text-sienna-bright italic">
+                    <div className="font-serif text-sm text-sienna-bright">
                       featured imports
                     </div>
                     <h3 className="font-display text-3xl">Barolo & Barbaresco</h3>
@@ -758,7 +758,7 @@ export function Mezzo() {
 
                 <div className="mt-12 mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
-                    <div className="font-italic text-sm text-sienna-bright italic">
+                    <div className="font-serif text-sm text-sienna-bright">
                       varietal showcase
                     </div>
                     <h3 className="font-display text-3xl">
@@ -777,7 +777,7 @@ export function Mezzo() {
 
                 <div className="mt-12 mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
-                    <div className="font-italic text-sm text-sienna-bright italic">
+                    <div className="font-serif text-sm text-sienna-bright">
                       bianchi
                     </div>
                     <h3 className="font-display text-3xl">Whites & Rosé</h3>
@@ -793,7 +793,7 @@ export function Mezzo() {
             <div ref={wineRightRef}>
                 <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
                   <div>
-                    <div className="font-italic text-sm text-sienna-bright italic">
+                    <div className="font-serif text-sm text-sienna-bright">
                       rossi
                     </div>
                     <h3 className="font-display text-3xl">The Long Red List</h3>
@@ -809,7 +809,7 @@ export function Mezzo() {
                 </ul>
 
                 <div className="mt-12 rounded-none border border-paper/15 bg-paper/[0.03] p-6">
-                  <div className="font-italic text-sm text-sienna-bright italic">
+                  <div className="font-serif text-sm text-sienna-bright">
                     on tap · sparkling
                   </div>
                   <div className="mt-2 flex items-baseline justify-between gap-4">
@@ -820,7 +820,7 @@ export function Mezzo() {
                       $60
                     </span>
                   </div>
-                  <p className="mt-2 font-italic text-sm text-paper/70 italic">
+                  <p className="mt-2 font-body text-sm text-paper/70">
                     Lambrusco-style, on bottle. Goes with everything that came out
                     of the wood oven.
                   </p>
@@ -888,13 +888,13 @@ export function Mezzo() {
                     <span className="w-20 font-serif text-xs tracking-[0.2em] text-cream/70 uppercase">
                       {row.d}
                     </span>
-                    <span className="font-italic text-sm text-cream/85 italic tabular-nums">
+                    <span className="font-body text-sm text-cream/85 tabular-nums">
                       {row.h}
                     </span>
                   </li>
                 ))}
               </ul>
-              <p className="mt-5 font-italic text-xs leading-relaxed text-cream/55 italic">
+              <p className="mt-5 font-body text-xs leading-relaxed text-cream/55">
                 Last seating 30 min before close. Bar pours later.
               </p>
             </div>
@@ -907,7 +907,7 @@ export function Mezzo() {
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
             <FadeIn>
-              <div className="mb-2 font-italic text-base text-sienna italic">
+              <div className="mb-2 font-serif text-base text-sienna">
                 second floor · II
               </div>
             </FadeIn>
