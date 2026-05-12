@@ -1,6 +1,11 @@
 import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import { FadeIn, ParallaxImage, useParallax, useStaggerObserver } from "../components/animations"
+import {
+  FadeIn,
+  ParallaxImage,
+  useParallax,
+  useStaggerObserver,
+} from "../components/animations"
 
 const SAUCES = [
   { name: "Marinara", note: "the classic, slow-cooked San Marzano", heat: 0 },
@@ -231,9 +236,7 @@ function MenuRow({
           )}
         </div>
         {desc && (
-          <div className="mt-0.5 font-body text-base text-ink-soft">
-            {desc}
-          </div>
+          <div className="mt-0.5 font-body text-base text-ink-soft">{desc}</div>
         )}
       </div>
       <span className="font-serif text-lg text-sienna tabular-nums">
@@ -250,7 +253,7 @@ export function Emporio() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero w-full overflow-hidden bg-ink">
+      <section className="h-hero relative w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=2400&q=80"
@@ -261,7 +264,7 @@ export function Emporio() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/60 via-ink/35 to-ink/92" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(201,65,42,0.35),transparent_60%)]" />
 
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden sm:flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
           <Link
             to="/"
             className="under flex items-center gap-2 hover:text-cream"
@@ -282,24 +285,43 @@ export function Emporio() {
           <img
             src="/emporio.avif"
             alt="Emporio logo"
-            className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
-            style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
+            className="rise mb-6 h-16 w-auto opacity-80 brightness-0 invert"
+            style={{
+              animationDelay: "0s",
+              objectFit: "contain",
+              objectPosition: "left",
+            }}
           />
-          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream" style={{ animationDelay: "0.05s" }}>
+          <div
+            className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream"
+            style={{ animationDelay: "0.05s" }}
+          >
             <span className="mr-1 font-display text-2xl text-cream/60">I</span>
             <span>meatball joint</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1
+            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
+            style={{ animationDelay: "0.25s" }}
+          >
             Emporio
           </h1>
-          <p className="rise mt-3 font-body text-lg text-cream/80" style={{ animationDelay: "0.4s" }}>
+          <p
+            className="rise mt-3 font-body text-lg text-cream/80"
+            style={{ animationDelay: "0.4s" }}
+          >
             A Meatball Joint.
           </p>
-          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
+          <p
+            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
+            style={{ animationDelay: "0.55s" }}
+          >
             Five meats, ten sauces, one ground floor that runs loud. Pull up a
             stool, build a bowl, ask the bartender what's on the chalkboard.
           </p>
-          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.7s" }}>
+          <div
+            className="rise mt-8 flex flex-wrap items-center gap-3"
+            style={{ animationDelay: "0.7s" }}
+          >
             <a
               href="https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
               target="_blank"
@@ -369,7 +391,7 @@ export function Emporio() {
                 speed={0.12}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute right-0 bottom-0 left-0 p-8">
                 <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
                   Floor I · Ground Floor
                 </div>
@@ -401,8 +423,8 @@ export function Emporio() {
               </p>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
                 We grind the meat in-house. We roll by hand at noon. The sauce
-                list runs ten deep so the same ball can be a different dinner ten
-                nights running.
+                list runs ten deep so the same ball can be a different dinner
+                ten nights running.
               </p>
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
                 {[
@@ -444,8 +466,8 @@ export function Emporio() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <p className="max-w-md font-body text-lg text-paper/70">
-                Pick any combination. Three to a hoagie, three to a bowl, six on a
-                plate of six over polenta.
+                Pick any combination. Three to a hoagie, three to a bowl, six on
+                a plate of six over polenta.
               </p>
             </FadeIn>
           </div>
@@ -532,9 +554,7 @@ export function Emporio() {
                 <div className="mt-3 font-display text-3xl text-ink">
                   {s.name}
                 </div>
-                <div className="mt-2 font-body text-ink-soft">
-                  {s.note}
-                </div>
+                <div className="mt-2 font-body text-ink-soft">{s.note}</div>
               </li>
             ))}
           </ul>
@@ -600,14 +620,14 @@ export function Emporio() {
               <FadeIn key={step.num} delay={step.delay} className="h-full">
                 <div className="relative h-full border border-cream/20 p-8 backdrop-blur-sm">
                   <div className="flex items-baseline justify-between">
-                    <span className="font-body text-cream/70">
-                      {step.step}
-                    </span>
+                    <span className="font-body text-cream/70">{step.step}</span>
                     <span className="font-display text-5xl text-cream/40">
                       {step.num}
                     </span>
                   </div>
-                  <i className={`ph-duotone ${step.icon} mt-6 block text-5xl`} />
+                  <i
+                    className={`ph-duotone ${step.icon} mt-6 block text-5xl`}
+                  />
                   <h3 className="mt-6 font-display text-3xl">{step.title}</h3>
                   <ul className="mt-4 space-y-2 font-body text-cream/85">
                     {step.items.map((it) => (
@@ -653,9 +673,9 @@ export function Emporio() {
                   Dragon Ball
                 </h2>
                 <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-cream/85">
-                  Housemade meatballs fried golden, glazed in a glossy sweet-chili
-                  sauce with a touch of heat. Available May only, through the
-                  month, then she sleeps.
+                  Housemade meatballs fried golden, glazed in a glossy
+                  sweet-chili sauce with a touch of heat. Available May only,
+                  through the month, then she sleeps.
                 </p>
                 <div className="mt-10 flex items-baseline gap-6">
                   <span className="font-display text-5xl text-sienna-bright">
@@ -742,7 +762,10 @@ export function Emporio() {
       </section>
 
       {/* HAPPY HOUR */}
-      <section id="happy-hour" className="relative overflow-hidden bg-ink py-24 text-paper">
+      <section
+        id="happy-hour"
+        className="relative overflow-hidden bg-ink py-24 text-paper"
+      >
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
@@ -755,7 +778,8 @@ export function Emporio() {
                 </h2>
                 <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
                   Tuesday through Friday, 4:30 to 6:30. Half off the things that
-                  matter, full price on the espresso martinis, except they're $5.
+                  matter, full price on the espresso martinis, except they're
+                  $5.
                 </p>
                 <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
                   <i className="ph ph-clock text-base text-sienna-bright" />
@@ -779,15 +803,16 @@ export function Emporio() {
                     icon: "ph-bowl-food",
                   },
                 ].map((row) => (
-                  <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
+                  <li
+                    key={row.v}
+                    className="flex items-center gap-5 bg-ink p-6"
+                  >
                     <i
                       className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`}
                     />
                     <div>
                       <div className="font-display text-3xl">{row.k}</div>
-                      <div className="font-body text-paper/75">
-                        {row.v}
-                      </div>
+                      <div className="font-body text-paper/75">{row.v}</div>
                     </div>
                   </li>
                 ))}
@@ -880,9 +905,7 @@ function MenuColumn({
   return (
     <div ref={ref}>
       <div className="mb-2">
-        <div className="mb-1 font-serif text-base text-sienna">
-          {italian}
-        </div>
+        <div className="mb-1 font-serif text-base text-sienna">{italian}</div>
         <h3 className="font-display text-4xl text-ink">{title}</h3>
       </div>
       <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">

@@ -77,7 +77,10 @@ export function Nav() {
   useEffect(() => {
     if (!reserveOpen) return
     const handleClick = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
         setReserveOpen(false)
       }
     }
@@ -115,7 +118,7 @@ export function Nav() {
           {/* Center: Brand */}
           <Link
             to="/"
-            className="absolute left-1/2 -translate-x-1/2 flex items-center"
+            className="absolute left-1/2 flex -translate-x-1/2 items-center"
           >
             <img
               src="/siennalogo.png"
@@ -130,18 +133,18 @@ export function Nav() {
           <div className="relative" ref={dropdownRef}>
             <button
               onClick={() => setReserveOpen((o) => !o)}
-              className={`btn-lift group inline-flex items-center gap-1.5 bg-sienna px-3 py-2 sm:gap-2 sm:px-5 sm:py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase ${
+              className={`btn-lift group inline-flex items-center gap-1.5 bg-sienna px-3 py-2 font-serif text-xs tracking-[0.22em] text-cream uppercase sm:gap-2 sm:px-5 sm:py-2.5 ${
                 reserveOpen ? "bg-sienna-deep" : ""
               }`}
             >
               <span>Reserve</span>
               <i
-                className={`hidden sm:inline ph ph-caret-${reserveOpen ? "up" : "down"} text-xs transition-transform duration-200`}
+                className={`ph hidden sm:inline ph-caret-${reserveOpen ? "up" : "down"} text-xs transition-transform duration-200`}
               />
             </button>
 
             {reserveOpen && (
-              <div className="absolute right-0 top-full z-50 mt-1 w-72 border border-ink/10 bg-paper shadow-2xl">
+              <div className="absolute top-full right-0 z-50 mt-1 w-72 border border-ink/10 bg-paper shadow-2xl">
                 {RESERVE_OPTIONS.map((opt) =>
                   opt.external ? (
                     <a
@@ -167,7 +170,7 @@ export function Nav() {
                         src={opt.logo}
                         alt=""
                         aria-hidden="true"
-                        className="h-5 w-auto brightness-0 opacity-30 transition-opacity group-hover:opacity-50"
+                        className="h-5 w-auto opacity-30 brightness-0 transition-opacity group-hover:opacity-50"
                       />
                       <i className="ph ph-arrow-up-right text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100" />
                     </a>
@@ -193,7 +196,7 @@ export function Nav() {
                         src={opt.logo}
                         alt=""
                         aria-hidden="true"
-                        className="h-5 w-auto brightness-0 opacity-30 transition-opacity group-hover:opacity-50"
+                        className="h-5 w-auto opacity-30 brightness-0 transition-opacity group-hover:opacity-50"
                       />
                       <i className="ph ph-arrow-right text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100" />
                     </Link>
@@ -225,7 +228,7 @@ export function Nav() {
           <Link
             to="/"
             onClick={() => setMenuOpen(false)}
-            className="absolute left-1/2 -translate-x-1/2 flex items-center"
+            className="absolute left-1/2 flex -translate-x-1/2 items-center"
           >
             <img
               src="/siennalogo.png"

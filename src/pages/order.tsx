@@ -32,7 +32,7 @@ export function Order() {
           </a>
           <Link
             to="/"
-            className="font-italic text-sm text-ink-soft underline-offset-2 hover:underline italic"
+            className="font-italic text-sm text-ink-soft italic underline-offset-2 hover:underline"
           >
             Back to Sienna Mercato
           </Link>

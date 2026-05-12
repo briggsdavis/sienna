@@ -116,7 +116,6 @@ const UPCOMING = [
   },
 ] as const
 
-
 const REVIEWS = [
   {
     quote:
@@ -164,7 +163,7 @@ export function Events() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero w-full overflow-hidden bg-ink">
+      <section className="h-hero relative w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=2400&q=80"
@@ -174,7 +173,7 @@ export function Events() {
         </div>
         <div className="absolute inset-0 bg-black/58" />
 
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden sm:flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
           <Link
             to="/"
             className="under flex items-center gap-2 hover:text-cream"
@@ -183,7 +182,8 @@ export function Events() {
             all of sienna
           </Link>
           <span className="hidden items-center gap-2 md:inline-flex">
-            <i className="ph ph-house-line text-sm" /> Three floors · 942 Penn Ave
+            <i className="ph ph-house-line text-sm" /> Three floors · 942 Penn
+            Ave
           </span>
           <span className="flex items-center gap-2">
             up to 200 guests
@@ -192,16 +192,30 @@ export function Events() {
         </div>
 
         <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-20 lg:px-12">
-          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80" style={{ animationDelay: "0.05s" }}>
+          <div
+            className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80"
+            style={{ animationDelay: "0.05s" }}
+          >
             <span>private events</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1
+            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
+            style={{ animationDelay: "0.25s" }}
+          >
             Private Events.
           </h1>
-          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.45s" }}>
-            Three floors available for private hire: a meatball joint, a trattoria, and a rooftop with the Pittsburgh skyline. Up to 400 guests.
+          <p
+            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
+            style={{ animationDelay: "0.45s" }}
+          >
+            Three floors available for private hire: a meatball joint, a
+            trattoria, and a rooftop with the Pittsburgh skyline. Up to 400
+            guests.
           </p>
-          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.62s" }}>
+          <div
+            className="rise mt-8 flex flex-wrap items-center gap-3"
+            style={{ animationDelay: "0.62s" }}
+          >
             <a
               href="#inquire"
               className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
@@ -256,11 +270,17 @@ export function Events() {
                         {e.tag}
                       </div>
                     </div>
-                    <i className={`ph-duotone ${e.icon} text-4xl text-sienna-bright/70`} />
+                    <i
+                      className={`ph-duotone ${e.icon} text-4xl text-sienna-bright/70`}
+                    />
                   </div>
-                  <h3 className="mt-5 font-display text-4xl leading-tight">{e.title}</h3>
-                  <p className="mt-2 font-body text-base text-paper/70">{e.sub}</p>
-                  <div className="mt-auto pt-6 flex flex-col gap-2">
+                  <h3 className="mt-5 font-display text-4xl leading-tight">
+                    {e.title}
+                  </h3>
+                  <p className="mt-2 font-body text-base text-paper/70">
+                    {e.sub}
+                  </p>
+                  <div className="mt-auto flex flex-col gap-2 pt-6">
                     <div className="flex items-center gap-2 font-serif text-2xs tracking-[0.3em] text-paper/55 uppercase">
                       <i className="ph ph-house-line text-sm" />
                       {e.floor}
@@ -314,10 +334,14 @@ export function Events() {
                 <h3 className="font-display text-3xl leading-tight text-ink">
                   Tell us the date, the headcount,
                   <br />
-                  <span className="font-italic text-sienna italic">and we'll handle the rest.</span>
+                  <span className="font-italic text-sienna italic">
+                    and we'll handle the rest.
+                  </span>
                 </h3>
                 <p className="mt-3 max-w-lg font-body text-base text-ink-soft">
-                  The events team replies within one business day with a floor recommendation, a draft menu, and a price range. No commitment required.
+                  The events team replies within one business day with a floor
+                  recommendation, a draft menu, and a price range. No commitment
+                  required.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <a
@@ -340,7 +364,10 @@ export function Events() {
                   </a>
                 </div>
               </div>
-              <div className="relative hidden overflow-hidden sm:block" style={{ minWidth: "420px" }}>
+              <div
+                className="relative hidden overflow-hidden sm:block"
+                style={{ minWidth: "420px" }}
+              >
                 <img
                   src="https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80"
                   alt="Private event at Sienna Mercato"
@@ -374,20 +401,18 @@ export function Events() {
           <div className="grid gap-10 md:grid-cols-2">
             {REVIEWS.map((r, i) => (
               <FadeIn key={r.by} delay={i * 0.12}>
-              <figure
-                className="relative border-l-2 border-sienna bg-cream/60 p-8 lg:p-10"
-              >
-                <div className="absolute -top-3 left-8 bg-paper px-3 font-display text-5xl leading-none text-sienna">
-                  &ldquo;
-                </div>
-                <StarRow n={r.stars} />
-                <blockquote className="mt-4 font-display text-2xl leading-snug text-ink lg:text-3xl">
-                  {r.quote}
-                </blockquote>
-                <figcaption className="mt-6 font-body text-sm text-ink-soft">
-                  , {r.by} · five-star review
-                </figcaption>
-              </figure>
+                <figure className="relative border-l-2 border-sienna bg-cream/60 p-8 lg:p-10">
+                  <div className="absolute -top-3 left-8 bg-paper px-3 font-display text-5xl leading-none text-sienna">
+                    &ldquo;
+                  </div>
+                  <StarRow n={r.stars} />
+                  <blockquote className="mt-4 font-display text-2xl leading-snug text-ink lg:text-3xl">
+                    {r.quote}
+                  </blockquote>
+                  <figcaption className="mt-6 font-body text-sm text-ink-soft">
+                    , {r.by} · five-star review
+                  </figcaption>
+                </figure>
               </FadeIn>
             ))}
           </div>
@@ -591,11 +616,7 @@ export function Events() {
   )
 }
 
-function VenueAccordion({
-  spaces,
-}: {
-  spaces: typeof SPACES
-}) {
+function VenueAccordion({ spaces }: { spaces: typeof SPACES }) {
   const [openId, setOpenId] = useState<string | null>(null)
 
   return (
@@ -619,11 +640,13 @@ function VenueAccordion({
                   <div className="font-body text-sm text-ink-soft">{s.sub}</div>
                 </div>
               </div>
-              <div className="flex items-center gap-6 shrink-0">
+              <div className="flex shrink-0 items-center gap-6">
                 <span className="hidden font-serif text-xs tracking-[0.3em] text-ink-soft uppercase sm:block">
                   up to {s.capacity} guests
                 </span>
-                <i className={`ph ph-caret-${isOpen ? "up" : "down"} text-xl text-ink/40 transition-transform`} />
+                <i
+                  className={`ph ph-caret-${isOpen ? "up" : "down"} text-xl text-ink/40 transition-transform`}
+                />
               </div>
             </button>
 
@@ -631,7 +654,8 @@ function VenueAccordion({
               style={{
                 display: "grid",
                 gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition: "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition:
+                  "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div className="overflow-hidden">
@@ -644,8 +668,12 @@ function VenueAccordion({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
                     <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
-                      <span className="font-body text-sm text-cream/80">{s.vibe}</span>
-                      <span className={`font-display text-2xl ${s.accent}`}>{s.capacity}</span>
+                      <span className="font-body text-sm text-cream/80">
+                        {s.vibe}
+                      </span>
+                      <span className={`font-display text-2xl ${s.accent}`}>
+                        {s.capacity}
+                      </span>
                     </div>
                   </div>
                   <div className="flex flex-col justify-center px-8 py-6">
@@ -653,20 +681,27 @@ function VenueAccordion({
                       src={s.logo}
                       alt=""
                       aria-hidden="true"
-                      className="mb-5 h-7 w-auto brightness-0 opacity-30 object-left"
+                      className="mb-5 h-7 w-auto object-left opacity-30 brightness-0"
                       style={{ objectFit: "contain", objectPosition: "left" }}
                     />
-                    <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
+                    <p className="font-body text-base leading-relaxed text-ink-soft">
+                      {s.desc}
+                    </p>
                     <ul className="mt-5 space-y-2">
                       {s.highlights.map((h) => (
-                        <li key={h} className="flex items-start gap-2 font-body text-sm text-ink-soft">
+                        <li
+                          key={h}
+                          className="flex items-start gap-2 font-body text-sm text-ink-soft"
+                        >
                           <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
                           {h}
                         </li>
                       ))}
                     </ul>
                     <div className="mt-5">
-                      <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">Perfect for</div>
+                      <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+                        Perfect for
+                      </div>
                       <div className="mt-1.5 font-body text-sm text-ink">
                         {s.perfect.join(" · ")}
                       </div>

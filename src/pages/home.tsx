@@ -1,5 +1,10 @@
 import { Link } from "react-router"
-import { FadeIn, ParallaxImage, useParallax, useStaggerObserver } from "../components/animations"
+import {
+  FadeIn,
+  ParallaxImage,
+  useParallax,
+  useStaggerObserver,
+} from "../components/animations"
 
 const FLOORS = [
   {
@@ -15,8 +20,16 @@ const FLOORS = [
     image:
       "https://images.unsplash.com/photo-1529042410759-befb1204b468?auto=format&fit=crop&w=1600&q=70",
     items: [
-      { name: "Meatball Hoagie", price: "18", note: "choice of three meatballs" },
-      { name: "Buffalo Chicken Balls", price: "12", note: "bleu cheese, celery" },
+      {
+        name: "Meatball Hoagie",
+        price: "18",
+        note: "choice of three meatballs",
+      },
+      {
+        name: "Buffalo Chicken Balls",
+        price: "12",
+        note: "bleu cheese, celery",
+      },
       { name: "Jacked Mac Bowl", price: "18", note: "house cheese sauce" },
     ],
   },
@@ -33,8 +46,16 @@ const FLOORS = [
     image:
       "https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=1600&q=70",
     items: [
-      { name: "Soppressata & Hot Honey", price: "25", note: "marinara, mozzarella" },
-      { name: "Crab-Stuffed Ravioli", price: "29", note: "white truffle cream" },
+      {
+        name: "Soppressata & Hot Honey",
+        price: "25",
+        note: "marinara, mozzarella",
+      },
+      {
+        name: "Crab-Stuffed Ravioli",
+        price: "29",
+        note: "white truffle cream",
+      },
       { name: "Braised Short Rib", price: "32", note: "demi, broccolini" },
     ],
   },
@@ -52,8 +73,16 @@ const FLOORS = [
       "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1600&q=70",
     items: [
       { name: "Whole Pepperoni Pie", price: "25", note: "8 slices, baked hot" },
-      { name: "Big Wave · Kona", price: "", note: "blonde · 4.4% · beer of the month" },
-      { name: "Negley's Nectar Peach Cider", price: "", note: "Arsenal · Pittsburgh, 8.4%" },
+      {
+        name: "Big Wave · Kona",
+        price: "",
+        note: "blonde · 4.4% · beer of the month",
+      },
+      {
+        name: "Negley's Nectar Peach Cider",
+        price: "",
+        note: "Arsenal · Pittsburgh, 8.4%",
+      },
     ],
   },
 ] as const
@@ -109,18 +138,17 @@ const FLOOR_LOGO: Record<string, string> = {
   "Il Tetto": "/iltetto.avif",
 }
 
-function FloorText({
-  floor,
-}: {
-  floor: (typeof FLOORS)[number]
-}) {
+function FloorText({ floor }: { floor: (typeof FLOORS)[number] }) {
   const staggerRef = useStaggerObserver<HTMLDivElement>(0.1)
   return (
-    <div ref={staggerRef} className="relative flex flex-col justify-center px-6 py-20 lg:px-20">
+    <div
+      ref={staggerRef}
+      className="relative flex flex-col justify-center px-6 py-20 lg:px-20"
+    >
       <img
         src={floor.logo}
         alt={`${floor.name} logo`}
-        className="mb-6 h-16 w-auto brightness-0 opacity-70 object-left"
+        className="mb-6 h-16 w-auto object-left opacity-70 brightness-0"
         style={{ objectFit: "contain", objectPosition: "left" }}
       />
       <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.9] text-ink">
@@ -135,8 +163,12 @@ function FloorText({
       <ul className="mt-5 max-w-xl divide-y divide-ink/10 border-y border-ink/10">
         {floor.items.map((it) => (
           <li key={it.name} className="flex items-baseline gap-4 py-4">
-            <span className="font-serif text-base tracking-wide text-ink">{it.name}</span>
-            <span className="hidden font-body text-sm text-ink-soft sm:inline">{it.note}</span>
+            <span className="font-serif text-base tracking-wide text-ink">
+              {it.name}
+            </span>
+            <span className="hidden font-body text-sm text-ink-soft sm:inline">
+              {it.note}
+            </span>
             <span className="font-serif text-base text-sienna tabular-nums">
               {it.price ? `$${it.price}` : ""}
             </span>
@@ -169,7 +201,7 @@ export function Home() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero w-full overflow-hidden bg-ink">
+      <section className="h-hero relative w-full overflow-hidden bg-ink">
         <div className="absolute inset-0">
           <div ref={heroParallax} className="parallax-hero-wrap">
             <img
@@ -184,7 +216,7 @@ export function Home() {
 
         {/* top meta strip */}
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
-          <span className="hidden flex-1 sm:flex items-center gap-2">
+          <span className="hidden flex-1 items-center gap-2 sm:flex">
             <span className="inline-block h-px w-8 bg-cream/40" />
             Established 2013
           </span>
@@ -192,7 +224,7 @@ export function Home() {
             <i className="ph ph-map-pin text-sm" />
             942 Penn Avenue · Pittsburgh
           </span>
-          <span className="flex flex-1 justify-end items-center gap-2">
+          <span className="flex flex-1 items-center justify-end gap-2">
             Three floors · One roof
             <span className="inline-block h-px w-8 bg-cream/40" />
           </span>
@@ -211,10 +243,13 @@ export function Home() {
               className="rise text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
               style={{ animationDelay: "0.35s" }}
             >
-              Sienna <span className="font-italic font-light text-cream/90 italic">Mercato</span>
+              Sienna{" "}
+              <span className="font-italic font-light text-cream/90 italic">
+                Mercato
+              </span>
             </h1>
             <div
-              className="rise mt-8 flex flex-col sm:flex-row items-center justify-center gap-3"
+              className="rise mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
               style={{ animationDelay: "0.65s" }}
             >
               <a
@@ -243,7 +278,9 @@ export function Home() {
         {/* scroll cue */}
         <div className="absolute right-0 bottom-8 left-0 z-10 flex justify-center">
           <div className="flex flex-col items-center gap-3 text-cream/60">
-            <span className="font-serif text-2xs tracking-[0.4em] uppercase">scroll</span>
+            <span className="font-serif text-2xs tracking-[0.4em] uppercase">
+              scroll
+            </span>
             <i className="ph ph-caret-down animate-bounce text-xl" />
           </div>
         </div>
@@ -265,11 +302,16 @@ export function Home() {
             </div>
             <p className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[1.1] text-ink">
               Three floors.
-              <span className="font-italic text-sienna italic"> Three rooms. </span>
+              <span className="font-italic text-sienna italic">
+                {" "}
+                Three rooms.{" "}
+              </span>
               One Italian house on Penn Avenue.
             </p>
             <p className="mx-auto mt-10 max-w-2xl font-body text-lg leading-relaxed text-ink-soft">
-              A Cultural District landmark since 2013. One address at 942 Penn Avenue — 230 indoor seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating drafts.
+              A Cultural District landmark since 2013. One address at 942 Penn
+              Avenue — 230 indoor seats, 120 on the rooftop, an Italian-led wine
+              list of 90+ bottles, and 30 rotating drafts.
             </p>
           </FadeIn>
         </div>
@@ -284,11 +326,15 @@ export function Home() {
               <div
                 id={floor.id}
                 className="relative overflow-hidden"
-                style={{ background: idx === 1 ? "var(--color-cream)" : undefined }}
+                style={{
+                  background: idx === 1 ? "var(--color-cream)" : undefined,
+                }}
               >
                 <div
                   className={`mx-auto grid max-w-[1600px] gap-0 lg:min-h-[720px] ${
-                    flipped ? "lg:grid-cols-[1.1fr_1fr]" : "lg:grid-cols-[1fr_1.1fr]"
+                    flipped
+                      ? "lg:grid-cols-[1.1fr_1fr]"
+                      : "lg:grid-cols-[1fr_1.1fr]"
                   }`}
                 >
                   {/* image side */}
@@ -335,7 +381,9 @@ export function Home() {
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
                   Featured
                   <br />
-                  <span className="font-italic text-sienna italic">Dishes.</span>
+                  <span className="font-italic text-sienna italic">
+                    Dishes.
+                  </span>
                 </h2>
               </div>
             </div>
@@ -356,15 +404,21 @@ export function Home() {
                     <img
                       src={FLOOR_LOGO[dish.floor]}
                       alt={dish.floor}
-                      className="h-4 w-auto brightness-0 opacity-70"
+                      className="h-4 w-auto opacity-70 brightness-0"
                     />
                   </div>
                   <div className="absolute right-0 bottom-0 left-0 p-6">
                     <div className="flex items-baseline justify-between gap-4">
-                      <h3 className="font-display text-3xl leading-tight text-cream">{dish.name}</h3>
-                      <span className="font-serif text-lg text-cream tabular-nums">${dish.price}</span>
+                      <h3 className="font-display text-3xl leading-tight text-cream">
+                        {dish.name}
+                      </h3>
+                      <span className="font-serif text-lg text-cream tabular-nums">
+                        ${dish.price}
+                      </span>
                     </div>
-                    <p className="mt-2 font-body text-sm leading-snug text-cream/75">{dish.en}</p>
+                    <p className="mt-2 font-body text-sm leading-snug text-cream/75">
+                      {dish.en}
+                    </p>
                   </div>
                 </article>
               ))}
@@ -426,12 +480,18 @@ export function Home() {
             ].map((card) => (
               <FadeIn key={card.title} delay={card.delay} className="h-full">
                 <div className="group h-full bg-sienna p-8 transition-colors hover:bg-sienna-deep">
-                  <i className={`ph-duotone ${card.icon} text-4xl text-cream/60`} />
+                  <i
+                    className={`ph-duotone ${card.icon} text-4xl text-cream/60`}
+                  />
                   <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
                     {card.tag}
                   </div>
-                  <h3 className="mt-2 font-display text-3xl leading-tight text-cream">{card.title}</h3>
-                  <p className="mt-3 font-body text-sm leading-relaxed text-cream/80">{card.desc}</p>
+                  <h3 className="mt-2 font-display text-3xl leading-tight text-cream">
+                    {card.title}
+                  </h3>
+                  <p className="mt-3 font-body text-sm leading-relaxed text-cream/80">
+                    {card.desc}
+                  </p>
                   <div className="mt-6 font-serif text-xs tracking-[0.25em] text-cream/60 uppercase">
                     {card.meta}
                   </div>
@@ -455,10 +515,13 @@ export function Home() {
                   <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
                     Book a floor.
                     <br />
-                    <span className="font-italic text-sienna italic">Make it yours.</span>
+                    <span className="font-italic text-sienna italic">
+                      Make it yours.
+                    </span>
                   </h2>
                   <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                    Three floors available for private hire. Up to 400 guests. The events team handles the rest.
+                    Three floors available for private hire. Up to 400 guests.
+                    The events team handles the rest.
                   </p>
                 </div>
                 <Link
@@ -480,10 +543,13 @@ export function Home() {
                   <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
                     Two kitchens.
                     <br />
-                    <span className="font-italic text-sienna italic">Delivered to you.</span>
+                    <span className="font-italic text-sienna italic">
+                      Delivered to you.
+                    </span>
                   </h2>
                   <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                    Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice.
+                    Casual family-style or plated-ready charcuterie. Citywide
+                    delivery, 48-hour notice.
                   </p>
                 </div>
                 <Link
@@ -501,7 +567,10 @@ export function Home() {
       </section>
 
       {/* RESERVE / VISIT BAND */}
-      <section id="visit" className="relative overflow-hidden bg-sienna text-cream">
+      <section
+        id="visit"
+        className="relative overflow-hidden bg-sienna text-cream"
+      >
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <FadeIn>
           <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
@@ -512,7 +581,8 @@ export function Home() {
                 <span className="font-italic italic">a table.</span>
               </h2>
               <p className="mt-8 max-w-xl font-body text-lg leading-relaxed text-cream/85">
-                Mezzo takes reservations via OpenTable. Emporio and Il Tetto are walk-in.
+                Mezzo takes reservations via OpenTable. Emporio and Il Tetto are
+                walk-in.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
                 <a
@@ -541,13 +611,31 @@ export function Home() {
               </div>
               <ul className="divide-y divide-cream/20 border-y border-cream/20">
                 {[
-                  { name: "Emporio", logo: "/emporio.avif", hours: "Tue–Sun · 4:30 PM → 11 PM" },
-                  { name: "Mezzo", logo: "/mezzo.avif", hours: "Wed–Sun · 5 PM → 10 PM" },
-                  { name: "Il Tetto", logo: "/iltetto.avif", hours: "Thu–Sat · 4 PM → late, weather-permitting" },
+                  {
+                    name: "Emporio",
+                    logo: "/emporio.avif",
+                    hours: "Tue–Sun · 4:30 PM → 11 PM",
+                  },
+                  {
+                    name: "Mezzo",
+                    logo: "/mezzo.avif",
+                    hours: "Wed–Sun · 5 PM → 10 PM",
+                  },
+                  {
+                    name: "Il Tetto",
+                    logo: "/iltetto.avif",
+                    hours: "Thu–Sat · 4 PM → late, weather-permitting",
+                  },
                 ].map((row) => (
                   <li key={row.name} className="flex items-center gap-5 py-5">
-                    <img src={row.logo} alt={row.name} className="h-5 w-auto brightness-0 invert opacity-70" />
-                    <span className="font-body text-sm text-cream/85 tabular-nums">{row.hours}</span>
+                    <img
+                      src={row.logo}
+                      alt={row.name}
+                      className="h-5 w-auto opacity-70 brightness-0 invert"
+                    />
+                    <span className="font-body text-sm text-cream/85 tabular-nums">
+                      {row.hours}
+                    </span>
                   </li>
                 ))}
               </ul>

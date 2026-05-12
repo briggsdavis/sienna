@@ -1,5 +1,9 @@
 import { Link } from "react-router"
-import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
+import {
+  FadeIn,
+  useParallax,
+  useStaggerObserver,
+} from "../components/animations"
 
 const FEATURED_DRAFT = {
   name: "Big Wave",
@@ -200,9 +204,7 @@ function FoodRow({
     <li className="flex items-baseline gap-3 py-4">
       <div className="flex-1">
         <div className="font-serif text-xl text-ink">{name}</div>
-        <div className="mt-0.5 font-body text-base text-ink-soft">
-          {desc}
-        </div>
+        <div className="mt-0.5 font-body text-base text-ink-soft">{desc}</div>
       </div>
       <span className="font-serif text-lg text-sienna tabular-nums">
         ${price}
@@ -219,7 +221,7 @@ export function Tetto() {
   return (
     <div className="relative">
       {/* HERO, sunset rooftop */}
-      <section className="relative h-hero w-full overflow-hidden bg-ink">
+      <section className="h-hero relative w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=80"
@@ -229,7 +231,7 @@ export function Tetto() {
         </div>
         <div className="absolute inset-0 bg-black/72" />
 
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden sm:flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase lg:px-12">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase sm:flex lg:px-12">
           <span className="flex items-center gap-2">
             <span className="inline-block h-px w-6 bg-cream/30" />
             Floor III · Il Tetto
@@ -247,25 +249,46 @@ export function Tetto() {
           <img
             src="/iltetto.avif"
             alt="Il Tetto logo"
-            className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
-            style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
+            className="rise mb-6 h-16 w-auto opacity-80 brightness-0 invert"
+            style={{
+              animationDelay: "0s",
+              objectFit: "contain",
+              objectPosition: "left",
+            }}
           />
-          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream" style={{ animationDelay: "0.05s" }}>
-            <span className="mr-1 font-display text-2xl text-cream/60">III</span>
+          <div
+            className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream"
+            style={{ animationDelay: "0.05s" }}
+          >
+            <span className="mr-1 font-display text-2xl text-cream/60">
+              III
+            </span>
             <span>rooftop beer garden</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1
+            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
+            style={{ animationDelay: "0.25s" }}
+          >
             Il Tetto
           </h1>
-          <p className="rise mt-3 font-body text-lg text-cream/80" style={{ animationDelay: "0.4s" }}>
+          <p
+            className="rise mt-3 font-body text-lg text-cream/80"
+            style={{ animationDelay: "0.4s" }}
+          >
             Rooftop Beer Garden.
           </p>
-          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
+          <p
+            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
+            style={{ animationDelay: "0.55s" }}
+          >
             Thirty drafts on a chalkboard. A retractable roof that opens when
             the sky agrees. The skyline of a triangular city, lit from below,
             over your last pint of the night.
           </p>
-          <div className="rise mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase" style={{ animationDelay: "0.82s" }}>
+          <div
+            className="rise mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase"
+            style={{ animationDelay: "0.82s" }}
+          >
             <i className="ph ph-stairs text-sm text-cream/50" />
             No reservations · climb the stairs
           </div>
@@ -319,7 +342,7 @@ export function Tetto() {
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute right-0 bottom-0 left-0 p-8">
                 <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
                   Floor III · Rooftop
                 </div>
@@ -344,12 +367,16 @@ export function Tetto() {
               <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
                 The view is the menu.
                 <span className="font-italic text-sienna italic">
-                  {" "}Everything else{" "}
+                  {" "}
+                  Everything else{" "}
                 </span>
                 is cold pints and good company.
               </p>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-                No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest.
+                No reservations, no dress code, no ceremony. The retractable
+                roof opens when the forecast agrees. Thirty drafts on the
+                chalkboard, whole pies riding the dumbwaiter up from below, the
+                Pittsburgh skyline doing the rest.
               </p>
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
                 {[
@@ -481,7 +508,10 @@ export function Tetto() {
             </div>
           </FadeIn>
 
-          <ul ref={foodRef} className="divide-y divide-ink/10 border-t border-b border-ink/10">
+          <ul
+            ref={foodRef}
+            className="divide-y divide-ink/10 border-t border-b border-ink/10"
+          >
             {FOOD.map((f) => (
               <FoodRow key={f.name} {...f} />
             ))}
@@ -490,7 +520,10 @@ export function Tetto() {
       </section>
 
       {/* HAPPY HOUR */}
-      <section id="happy-hour" className="relative overflow-hidden bg-ink py-24 text-paper">
+      <section
+        id="happy-hour"
+        className="relative overflow-hidden bg-ink py-24 text-paper"
+      >
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
@@ -519,13 +552,16 @@ export function Tetto() {
                   { k: "$5", v: "espresso martinis", icon: "ph-coffee" },
                   { k: "½ off", v: "small plates", icon: "ph-bowl-food" },
                 ].map((row) => (
-                  <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
-                    <i className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`} />
+                  <li
+                    key={row.v}
+                    className="flex items-center gap-5 bg-ink p-6"
+                  >
+                    <i
+                      className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`}
+                    />
                     <div>
                       <div className="font-display text-3xl">{row.k}</div>
-                      <div className="font-body text-paper/75">
-                        {row.v}
-                      </div>
+                      <div className="font-body text-paper/75">{row.v}</div>
                     </div>
                   </li>
                 ))}
@@ -551,10 +587,10 @@ export function Tetto() {
                 </span>
               </h2>
               <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                The retractable roof closes for rain, high wind, or surprise snow.
-                When it's closed we keep the heaters on, but the view goes away.
-                Call the host stand before climbing if you're chasing a specific
-                view.
+                The retractable roof closes for rain, high wind, or surprise
+                snow. When it's closed we keep the heaters on, but the view goes
+                away. Call the host stand before climbing if you're chasing a
+                specific view.
               </p>
             </div>
           </FadeIn>

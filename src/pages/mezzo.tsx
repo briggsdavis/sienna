@@ -452,7 +452,7 @@ export function Mezzo() {
   return (
     <div className="relative">
       {/* HERO */}
-      <section className="relative h-hero w-full overflow-hidden bg-ink">
+      <section className="h-hero relative w-full overflow-hidden bg-ink">
         <div ref={heroParallax} className="parallax-hero-wrap">
           <img
             src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2f?auto=format&fit=crop&w=2400&q=80"
@@ -463,7 +463,7 @@ export function Mezzo() {
         <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/40 to-ink/95" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(110,31,18,0.35),transparent_60%)]" />
 
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden sm:flex max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase lg:px-12">
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
           <Link
             to="/"
             className="under flex items-center gap-2 hover:text-cream"
@@ -484,24 +484,43 @@ export function Mezzo() {
           <img
             src="/mezzo.avif"
             alt="Mezzo logo"
-            className="rise mb-6 h-16 w-auto brightness-0 invert opacity-80"
-            style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
+            className="rise mb-6 h-16 w-auto opacity-80 brightness-0 invert"
+            style={{
+              animationDelay: "0s",
+              objectFit: "contain",
+              objectPosition: "left",
+            }}
           />
-          <div className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80" style={{ animationDelay: "0.05s" }}>
+          <div
+            className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80"
+            style={{ animationDelay: "0.05s" }}
+          >
             <span className="mr-1 font-display text-2xl text-cream/60">II</span>
             <span>trattoria</span>
           </div>
-          <h1 className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream" style={{ animationDelay: "0.25s" }}>
+          <h1
+            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
+            style={{ animationDelay: "0.25s" }}
+          >
             Mezzo
           </h1>
-          <p className="rise mt-3 font-body text-lg text-cream/80" style={{ animationDelay: "0.4s" }}>
+          <p
+            className="rise mt-3 font-body text-lg text-cream/80"
+            style={{ animationDelay: "0.4s" }}
+          >
             Pizza & Charcuterie.
           </p>
-          <p className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75" style={{ animationDelay: "0.55s" }}>
-            Linen, candlelight, and an oven at eight hundred degrees.
-            Pasta hand-rolled at noon, a wine list that speaks Piemontese.
+          <p
+            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
+            style={{ animationDelay: "0.55s" }}
+          >
+            Linen, candlelight, and an oven at eight hundred degrees. Pasta
+            hand-rolled at noon, a wine list that speaks Piemontese.
           </p>
-          <div className="rise mt-8 flex flex-wrap items-center gap-3" style={{ animationDelay: "0.7s" }}>
+          <div
+            className="rise mt-8 flex flex-wrap items-center gap-3"
+            style={{ animationDelay: "0.7s" }}
+          >
             <a
               href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
               target="_blank"
@@ -556,7 +575,7 @@ export function Mezzo() {
                 className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute right-0 bottom-0 left-0 p-8">
                 <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
                   Floor II · Second Floor
                 </div>
@@ -581,12 +600,17 @@ export function Mezzo() {
               <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
                 A second floor is for
                 <span className="font-italic text-sienna italic">
-                  {" "}slowing down.{" "}
+                  {" "}
+                  slowing down.{" "}
                 </span>
-                Candlelight, four courses, a bottle that lingers past the candle.
+                Candlelight, four courses, a bottle that lingers past the
+                candle.
               </p>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-                The kitchen rolls pasta at noon and lights the wood-fired oven before dinner. The cellar is Italian-led but not Italian-only, bottles chosen for the table you're sitting at, not the spreadsheet.
+                The kitchen rolls pasta at noon and lights the wood-fired oven
+                before dinner. The cellar is Italian-led but not Italian-only,
+                bottles chosen for the table you're sitting at, not the
+                spreadsheet.
               </p>
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
                 {[
@@ -641,7 +665,10 @@ export function Mezzo() {
                 </span>
               </h2>
               <p className="mt-8 max-w-md font-body text-xl leading-relaxed text-paper/85">
-                A wood-fired oven from Naples, lit at four, holding eight-hundred before service. Each pizza takes ninety seconds, leopard-spotted crust, blistered edge, mozzarella that pulls in long strings.
+                A wood-fired oven from Naples, lit at four, holding
+                eight-hundred before service. Each pizza takes ninety seconds,
+                leopard-spotted crust, blistered edge, mozzarella that pulls in
+                long strings.
               </p>
             </div>
           </FadeIn>
@@ -668,8 +695,16 @@ export function Mezzo() {
 
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
             <Column english="Antipasti" italian="to begin" rows={ANTIPASTO} />
-            <Column english="Wood-Fired Pizza" italian="dal forno" rows={PIZZA} />
-            <Column english="Pasta" italian="hand-rolled at noon" rows={PASTA} />
+            <Column
+              english="Wood-Fired Pizza"
+              italian="dal forno"
+              rows={PIZZA}
+            />
+            <Column
+              english="Pasta"
+              italian="hand-rolled at noon"
+              rows={PASTA}
+            />
             <Column english="Mains" italian="secondi" rows={MAINS} />
             <Column english="Dessert" italian="dolci" rows={DESSERT} />
             <FadeIn>
@@ -732,91 +767,91 @@ export function Mezzo() {
           <div className="grid gap-12 lg:grid-cols-2">
             <div ref={wineLeftRef}>
               <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
-                  <div>
-                    <div className="font-serif text-sm text-sienna-bright">
-                      featured imports
-                    </div>
-                    <h3 className="font-display text-3xl">Barolo & Barbaresco</h3>
+                <div>
+                  <div className="font-serif text-sm text-sienna-bright">
+                    featured imports
                   </div>
-                  <span className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
-                    Piemonte
-                  </span>
+                  <h3 className="font-display text-3xl">Barolo & Barbaresco</h3>
                 </div>
-                <ul className="divide-y divide-paper/10">
-                  {WINE_FEATURED.map((w) => (
-                    <WineRow key={w.name} {...w} />
-                  ))}
-                </ul>
+                <span className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
+                  Piemonte
+                </span>
+              </div>
+              <ul className="divide-y divide-paper/10">
+                {WINE_FEATURED.map((w) => (
+                  <WineRow key={w.name} {...w} />
+                ))}
+              </ul>
 
-                <div className="mt-12 mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
-                  <div>
-                    <div className="font-serif text-sm text-sienna-bright">
-                      varietal showcase
-                    </div>
-                    <h3 className="font-display text-3xl">
-                      Sangiovese & Brunello
-                    </h3>
+              <div className="mt-12 mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
+                <div>
+                  <div className="font-serif text-sm text-sienna-bright">
+                    varietal showcase
                   </div>
-                  <span className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
-                    Tuscany · CA
-                  </span>
+                  <h3 className="font-display text-3xl">
+                    Sangiovese & Brunello
+                  </h3>
                 </div>
-                <ul className="divide-y divide-paper/10">
-                  {WINE_VARIETAL.map((w) => (
-                    <WineRow key={w.name} {...w} />
-                  ))}
-                </ul>
+                <span className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
+                  Tuscany · CA
+                </span>
+              </div>
+              <ul className="divide-y divide-paper/10">
+                {WINE_VARIETAL.map((w) => (
+                  <WineRow key={w.name} {...w} />
+                ))}
+              </ul>
 
-                <div className="mt-12 mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
-                  <div>
-                    <div className="font-serif text-sm text-sienna-bright">
-                      bianchi
-                    </div>
-                    <h3 className="font-display text-3xl">Whites & Rosé</h3>
+              <div className="mt-12 mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
+                <div>
+                  <div className="font-serif text-sm text-sienna-bright">
+                    bianchi
                   </div>
+                  <h3 className="font-display text-3xl">Whites & Rosé</h3>
                 </div>
-                <ul className="divide-y divide-paper/10">
-                  {WINE_WHITES.map((w) => (
-                    <WineRow key={w.name} {...w} />
-                  ))}
-                </ul>
+              </div>
+              <ul className="divide-y divide-paper/10">
+                {WINE_WHITES.map((w) => (
+                  <WineRow key={w.name} {...w} />
+                ))}
+              </ul>
             </div>
 
             <div ref={wineRightRef}>
-                <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
-                  <div>
-                    <div className="font-serif text-sm text-sienna-bright">
-                      rossi
-                    </div>
-                    <h3 className="font-display text-3xl">The Long Red List</h3>
+              <div className="mb-4 flex items-baseline justify-between border-b border-paper/20 pb-3">
+                <div>
+                  <div className="font-serif text-sm text-sienna-bright">
+                    rossi
                   </div>
-                  <span className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
-                    IT · FR · CA
+                  <h3 className="font-display text-3xl">The Long Red List</h3>
+                </div>
+                <span className="font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase">
+                  IT · FR · CA
+                </span>
+              </div>
+              <ul className="divide-y divide-paper/10">
+                {WINE_REDS.map((w) => (
+                  <WineRow key={w.name} {...w} />
+                ))}
+              </ul>
+
+              <div className="mt-12 rounded-none border border-paper/15 bg-paper/[0.03] p-6">
+                <div className="font-serif text-sm text-sienna-bright">
+                  on tap · sparkling
+                </div>
+                <div className="mt-2 flex items-baseline justify-between gap-4">
+                  <span className="font-display text-2xl">
+                    Italian Sparkling Red
+                  </span>
+                  <span className="font-serif text-base text-cream tabular-nums">
+                    $60
                   </span>
                 </div>
-                <ul className="divide-y divide-paper/10">
-                  {WINE_REDS.map((w) => (
-                    <WineRow key={w.name} {...w} />
-                  ))}
-                </ul>
-
-                <div className="mt-12 rounded-none border border-paper/15 bg-paper/[0.03] p-6">
-                  <div className="font-serif text-sm text-sienna-bright">
-                    on tap · sparkling
-                  </div>
-                  <div className="mt-2 flex items-baseline justify-between gap-4">
-                    <span className="font-display text-2xl">
-                      Italian Sparkling Red
-                    </span>
-                    <span className="font-serif text-base text-cream tabular-nums">
-                      $60
-                    </span>
-                  </div>
-                  <p className="mt-2 font-body text-sm text-paper/70">
-                    Lambrusco-style, on bottle. Goes with everything that came out
-                    of the wood oven.
-                  </p>
-                </div>
+                <p className="mt-2 font-body text-sm text-paper/70">
+                  Lambrusco-style, on bottle. Goes with everything that came out
+                  of the wood oven.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -837,7 +872,8 @@ export function Mezzo() {
               </h2>
               <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-cream/80">
                 Mezzo takes reservations through OpenTable, seven days out. Bar
-                seats are walk-in. Larger parties of six or more, call us directly.
+                seats are walk-in. Larger parties of six or more, call us
+                directly.
               </p>
               <div className="mt-8 flex flex-wrap gap-3">
                 <a
@@ -863,7 +899,7 @@ export function Mezzo() {
 
           {/* Right: Hours */}
           <FadeIn delay={0.12}>
-            <div className="border-t border-cream/20 pt-12 lg:border-t-0 lg:border-l lg:border-l-cream/20 lg:pl-12 lg:pt-2">
+            <div className="border-t border-cream/20 pt-12 lg:border-t-0 lg:border-l lg:border-l-cream/20 lg:pt-2 lg:pl-12">
               <div className="mb-5 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
                 Hours · Floor II
               </div>
@@ -907,7 +943,9 @@ export function Mezzo() {
               <h3 className="font-display text-5xl leading-[0.9] text-ink">
                 Two more flights to
                 <br />
-                <span className="font-italic text-sienna italic">the roof.</span>
+                <span className="font-italic text-sienna italic">
+                  the roof.
+                </span>
               </h3>
             </FadeIn>
           </div>

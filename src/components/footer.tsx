@@ -8,7 +8,7 @@ export function Footer() {
           <img
             src="/siennalogo.png"
             alt="Sienna Mercato"
-            className="h-10 w-auto brightness-0 invert mb-4"
+            className="mb-4 h-10 w-auto brightness-0 invert"
           />
           <p className="mt-4 max-w-sm font-body leading-relaxed text-paper">
             Three floors. Three rooms. One Italian house in the Cultural
@@ -156,21 +156,21 @@ export function Footer() {
             <img
               src="/emporio.avif"
               alt="Emporio"
-              className="h-6 w-auto brightness-0 invert opacity-40 transition-opacity hover:opacity-80"
+              className="h-6 w-auto opacity-40 brightness-0 invert transition-opacity hover:opacity-80"
             />
           </Link>
           <Link to="/mezzo" aria-label="Mezzo">
             <img
               src="/mezzo.avif"
               alt="Mezzo"
-              className="h-6 w-auto brightness-0 invert opacity-40 transition-opacity hover:opacity-80"
+              className="h-6 w-auto opacity-40 brightness-0 invert transition-opacity hover:opacity-80"
             />
           </Link>
           <Link to="/tetto" aria-label="Il Tetto">
             <img
               src="/iltetto.avif"
               alt="Il Tetto"
-              className="h-6 w-auto brightness-0 invert opacity-40 transition-opacity hover:opacity-80"
+              className="h-6 w-auto opacity-40 brightness-0 invert transition-opacity hover:opacity-80"
             />
           </Link>
         </div>
