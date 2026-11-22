@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import { Link } from "react-router"
-
-const ORDER_URL = "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+import { ORDER_URL } from "@/lib/site"
 
 export function Order() {
   useEffect(() => {

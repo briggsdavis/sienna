@@ -7,6 +7,7 @@
     "dev:convex": "convex dev --start vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
+    "check": "tsc -b && oxlint && oxfmt --check",
     "lint": "oxlint",
     "format": "oxfmt"
   },

@@ -1,147 +1,157 @@
 import { Link } from "react-router"
-import { FadeIn, useParallax, useStaggerObserver } from "../components/animations"
+import { FadeIn } from "@/components/fade-in"
+import { FloorIntro } from "@/components/floor-intro"
+import { HappyHour } from "@/components/happy-hour"
+import { FloorHeroIntro, PageHero } from "@/components/hero"
+import { PageShortcuts } from "@/components/page-shortcuts"
+import { DRAFTS, FEATURED_DRAFT, FOOD, HAPPY_HOUR_DEALS, HOURS, STATS } from "@/content/tetto"
+import type { MenuItem } from "@/content/types"
+import { useStaggerReveal } from "@/hooks/use-reveal"
+import { FLOORS, unsplash } from "@/lib/site"
 
-const FEATURED_DRAFT = {
-  name: "Big Wave",
-  brewery: "Kona Brewing",
-  origin: "Kailua-Kona, HI",
-  style: "Blonde Ale",
-  abv: "4.4%",
-  ibu: "21",
-  notes:
-    "Light golden ale with subtle fruitiness, delicate hop aroma, lightly roasted honey malt. Smooth, easy-drinking, beach-ready.",
+const SHORTCUTS = [
+  { label: "Food Menu", icon: "ph-pizza", href: "#menu" },
+  { label: "Drinks Menu", icon: "ph-beer-stein", href: "#chalkboard" },
+  { label: "Happy Hour", icon: "ph-clock", href: "#happy-hour" },
+]
+
+export function Tetto() {
+  return (
+    <div className="relative">
+      <Hero />
+      <PageShortcuts shortcuts={SHORTCUTS} />
+      <FloorIntro
+        image={
+          <img
+            src={unsplash("1414235077428-338989a2e8c0", 1200, 80)}
+            alt="Il Tetto rooftop"
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+        }
+        floorLabel="Floor III · Rooftop"
+        hours="Pittsburgh, PA · Thu–Sun from 4 PM"
+        badge="Walk-in only · no reservations"
+        badgeClassName="bg-ink"
+        statement={
+          <>
+            The view is the menu.
+            <span className="font-italic text-sienna italic"> Everything else </span>
+            is cold pints and good company.
+          </>
+        }
+        body="No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest."
+        stats={STATS}
+      />
+      <Chalkboard />
+      <BeerOfTheMonth />
+      <FoodMenu />
+      <HappyHour
+        title="Sunset hour."
+        titleSize="text-[clamp(2.2rem,5.5vw,5rem)]"
+        body="Tuesday through Friday, 4:30 → 6:30, golden hour, half-price everything that matters. Best seats on the roof go fast."
+        schedule="Tue → Fri · 4:30 → 6:30 PM"
+        deals={HAPPY_HOUR_DEALS}
+        dealsDelay={0.12}
+      />
+      <WeatherAndHours />
+      <ClosingStrip />
+    </div>
+  )
 }
 
-const DRAFTS = [
-  {
-    name: "Peroni Original",
-    brewery: "Birra Peroni",
-    origin: "Roma, IT",
-    style: "Pale Lager",
-    abv: "4.7%",
-  },
-  {
-    name: "Yinzer Lager",
-    brewery: "Fat Head's Brewery",
-    origin: "Middleburg Heights, OH",
-    style: "American Lager",
-    abv: "4.8%",
-    flag: "local",
-  },
-  {
-    name: "Mango Cart",
-    brewery: "Golden Road",
-    origin: "Los Angeles, CA",
-    style: "Fruited Wheat",
-    abv: "4.0%",
-  },
-  {
-    name: "Michelob Ultra",
-    brewery: "Anheuser-Busch",
-    origin: "St. Louis, MO",
-    style: "Light Lager",
-    abv: "4.2%",
-  },
-  {
-    name: "Bud Light",
-    brewery: "Anheuser-Busch",
-    origin: "St. Louis, MO",
-    style: "Light Lager",
-    abv: "4.2%",
-  },
-  {
-    name: "Miller Lite",
-    brewery: "Miller Brewing",
-    origin: "Milwaukee, WI",
-    style: "Light Lager",
-    abv: "4.2%",
-  },
-  {
-    name: "Lil Guy",
-    brewery: "Hamburg Brewing",
-    origin: "Hamburg, NY",
-    style: "Session IPA",
-    abv: "3.9%",
-  },
-  {
-    name: "Mexican Coffee",
-    brewery: "Brew Gentlemen",
-    origin: "Braddock, PA",
-    style: "Coffee Oatmeal Stout",
-    abv: "6.5%",
-    flag: "local",
-  },
-  {
-    name: "Negley's Nectar",
-    brewery: "Arsenal Cider House",
-    origin: "Pittsburgh, PA",
-    style: "Semi-Sweet Peach Cider",
-    abv: "8.4%",
-    flag: "local",
-  },
-  {
-    name: "Murray's Mead",
-    brewery: "Arsenal Cider House",
-    origin: "Pittsburgh, PA",
-    style: "Traditional Mead",
-    abv: "9.0%",
-    flag: "local",
-  },
-  {
-    name: "Crisp Apple",
-    brewery: "Angry Orchard",
-    origin: "Walden, NY",
-    style: "Hard Cider",
-    abv: "5.0%",
-  },
-  {
-    name: "Autumn Blaze",
-    brewery: "Captain Lawrence",
-    origin: "Elmsford, NY",
-    style: "Pumpkin Ale",
-    abv: "5.0%",
-    flag: "seasonal",
-  },
-] as const
+function Hero() {
+  return (
+    <PageHero
+      image={{
+        src: unsplash("1414235077428-338989a2e8c0", 2400, 80),
+        alt: "The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind",
+      }}
+      overlay={<div className="absolute inset-0 bg-black/72" />}
+      meta={
+        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase sm:flex lg:px-12">
+          <span className="flex items-center gap-2">
+            <span className="inline-block h-px w-6 bg-cream/30" />
+            Floor III · Il Tetto
+          </span>
+          <span className="hidden items-center gap-2 md:inline-flex">
+            <i className="ph ph-house-line text-sm" /> 942 Penn Ave · Pittsburgh
+          </span>
+          <span className="flex items-center gap-2">
+            Rooftop · third floor
+            <span className="inline-block h-px w-6 bg-cream/30" />
+          </span>
+        </div>
+      }
+      numeral="III"
+      bottomPadding="pb-24"
+    >
+      <FloorHeroIntro
+        floor={FLOORS.tetto}
+        tagline="rooftop beer garden"
+        subtitle="Rooftop Beer Garden."
+        blurb="Thirty drafts on a chalkboard. A retractable roof that opens when the sky agrees. The skyline of a triangular city, lit from below, over your last pint of the night."
+      />
+      <div
+        className="rise mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase"
+        style={{ animationDelay: "0.82s" }}
+      >
+        <i className="ph ph-stairs text-sm text-cream/50" />
+        No reservations · climb the stairs
+      </div>
+    </PageHero>
+  )
+}
 
-const FOOD = [
-  {
-    name: "Whole Pepperoni Pie",
-    desc: "8 slices, baked hot from below",
-    price: "25",
-  },
-  { name: "Whole Cheese Pie", desc: "four cheeses, marinara", price: "24" },
-  {
-    name: "Meatball Hoagie",
-    desc: "three classic balls, sauce of choice",
-    price: "18",
-  },
-  {
-    name: "Buffalo Chicken Balls",
-    desc: "seven balls, bleu cheese, celery",
-    price: "12",
-  },
-  { name: "Fried Mozzarella", desc: "fresh mozzarella, marinara", price: "12" },
-  {
-    name: "Cheesy Bread",
-    desc: "provolone, parmesan, garlic butter",
-    price: "12",
-  },
-  {
-    name: "Parmesan-Herb Fries",
-    desc: "parm, parsley, garlic aioli",
-    price: "12",
-  },
-  {
-    name: "Crack Fries",
-    desc: "smothered in crack sauce, buffalo & ranch",
-    price: "12",
-  },
-  { name: "Chicken Tenders", desc: "three tenders, fries", price: "14" },
-  { name: "Caesar", desc: "romaine, parm shavings, croutons", price: "12" },
-] as const
+function Chalkboard() {
+  const listRef = useStaggerReveal<HTMLUListElement>()
 
-function DraftCard({
+  return (
+    <section id="chalkboard" className="relative bg-paper py-28">
+      <div className="relative mx-auto max-w-[1100px] px-6 lg:px-12">
+        <FadeIn>
+          <div className="mb-14 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
+            <div>
+              <div className="mb-3 flex items-center gap-3 font-serif text-lg text-sienna">
+                <i className="ph ph-chalkboard-simple text-2xl" />
+                tonight on tap
+              </div>
+              <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
+                The chalkboard.
+              </h2>
+            </div>
+            <p className="max-w-md font-body text-lg leading-relaxed text-ink-soft">
+              Thirty rotating lines. Local first, then everywhere else. We update Untappd every
+              morning, but the bartender's the source of truth.
+            </p>
+          </div>
+        </FadeIn>
+
+        <div className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
+          <ul ref={listRef}>
+            {DRAFTS.map((draft, i) => (
+              <DraftRow key={draft.name} number={String(i + 1).padStart(2, "0")} {...draft} />
+            ))}
+            <li className="px-6 py-6 text-center sm:px-8">
+              <span className="font-body text-paper/55">
+                + 17 more on rotation · ask the bartender
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <div className="mt-10 flex flex-wrap items-center justify-between gap-4 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+          <span>Powered by Untappd · ratings on request</span>
+          <span className="flex items-center gap-2">
+            <i className="ph ph-flag text-base text-sienna" />
+            local · brewed within 50 miles of Penn Ave
+          </span>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function DraftRow({
   number,
   name,
   brewery,
@@ -183,7 +193,77 @@ function DraftCard({
   )
 }
 
-function FoodRow({ name, desc, price }: { name: string; desc: string; price: string }) {
+function BeerOfTheMonth() {
+  return (
+    <section className="relative bg-ink py-16 text-paper">
+      <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+        <FadeIn>
+          <div className="grid overflow-hidden lg:grid-cols-[1fr_2fr]">
+            <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto">
+              <img
+                src={unsplash("1535958636474-b021ee887b13", 1400, 80)}
+                alt="A pint of Big Wave blonde ale"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </div>
+            <div className="flex flex-col justify-center bg-paper/[0.04] p-8 lg:p-12">
+              <div className="mb-2 font-serif text-base text-sienna-bright">
+                beer of the month · may
+              </div>
+              <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[0.9]">
+                {FEATURED_DRAFT.name}
+              </h2>
+              <p className="mt-4 max-w-lg font-body text-lg leading-relaxed text-paper/80">
+                {FEATURED_DRAFT.notes}
+              </p>
+              <div className="mt-6 flex flex-wrap gap-6 font-serif text-xs tracking-[0.3em] text-paper/55 uppercase">
+                <span>{FEATURED_DRAFT.brewery}</span>
+                <span>{FEATURED_DRAFT.style}</span>
+                <span>{FEATURED_DRAFT.abv} ABV</span>
+                <span>{FEATURED_DRAFT.ibu} IBU</span>
+              </div>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+function FoodMenu() {
+  const listRef = useStaggerReveal<HTMLUListElement>()
+
+  return (
+    <section id="menu" className="relative bg-cream py-28">
+      <div className="mx-auto max-w-[1100px] px-6 lg:px-12">
+        <FadeIn>
+          <div className="mb-14 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
+            <div>
+              <div className="mb-3 font-serif text-lg text-sienna">eat on the roof</div>
+              <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
+                Whole pies,
+                <br />
+                <span className="font-italic text-sienna italic">pulled hot.</span>
+              </h2>
+            </div>
+            <p className="max-w-md font-body text-lg leading-relaxed text-ink-soft">
+              The rooftop kitchen runs a tight bar menu, whole pies from the wood oven below, the
+              meatball hoagie, fries that have business being on a roof.
+            </p>
+          </div>
+        </FadeIn>
+
+        <ul ref={listRef} className="divide-y divide-ink/10 border-t border-b border-ink/10">
+          {FOOD.map((item) => (
+            <FoodRow key={item.name} {...item} />
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}
+
+function FoodRow({ name, desc, price }: MenuItem) {
   return (
     <li className="flex items-baseline gap-3 py-4">
       <div className="flex-1">
@@ -195,416 +275,87 @@ function FoodRow({ name, desc, price }: { name: string; desc: string; price: str
   )
 }
 
-export function Tetto() {
-  const heroParallax = useParallax(0.22)
-  const chalkboardRef = useStaggerObserver<HTMLUListElement>(0.08)
-  const foodRef = useStaggerObserver<HTMLUListElement>()
-
+function WeatherAndHours() {
   return (
-    <div className="relative">
-      {/* HERO, sunset rooftop */}
-      <section className="h-hero relative w-full overflow-hidden bg-ink">
-        <div ref={heroParallax} className="parallax-hero-wrap">
-          <img
-            src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2400&q=80"
-            alt="The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind"
-            className="slow-zoom h-full w-full object-cover"
-          />
-        </div>
-        <div className="absolute inset-0 bg-black/72" />
-
-        <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase sm:flex lg:px-12">
-          <span className="flex items-center gap-2">
-            <span className="inline-block h-px w-6 bg-cream/30" />
-            Floor III · Il Tetto
-          </span>
-          <span className="hidden items-center gap-2 md:inline-flex">
-            <i className="ph ph-house-line text-sm" /> 942 Penn Ave · Pittsburgh
-          </span>
-          <span className="flex items-center gap-2">
-            Rooftop · third floor
-            <span className="inline-block h-px w-6 bg-cream/30" />
-          </span>
-        </div>
-
-        <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col justify-end px-6 pb-24 lg:px-12">
-          <img
-            src="/iltetto.avif"
-            alt="Il Tetto logo"
-            className="rise mb-6 h-16 w-auto opacity-80 brightness-0 invert"
-            style={{
-              animationDelay: "0s",
-              objectFit: "contain",
-              objectPosition: "left",
-            }}
-          />
-          <div
-            className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream"
-            style={{ animationDelay: "0.05s" }}
-          >
-            <span className="mr-1 font-display text-2xl text-cream/60">III</span>
-            <span>rooftop beer garden</span>
-          </div>
-          <h1
-            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
-            style={{ animationDelay: "0.25s" }}
-          >
-            Il Tetto
-          </h1>
-          <p
-            className="rise mt-3 font-body text-lg text-cream/80"
-            style={{ animationDelay: "0.4s" }}
-          >
-            Rooftop Beer Garden.
-          </p>
-          <p
-            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
-            style={{ animationDelay: "0.55s" }}
-          >
-            Thirty drafts on a chalkboard. A retractable roof that opens when the sky agrees. The
-            skyline of a triangular city, lit from below, over your last pint of the night.
-          </p>
-          <div
-            className="rise mt-10 flex items-center gap-4 font-serif text-xs tracking-[0.3em] text-cream/55 uppercase"
-            style={{ animationDelay: "0.82s" }}
-          >
-            <i className="ph ph-stairs text-sm text-cream/50" />
-            No reservations · climb the stairs
-          </div>
-
-          {/* Roman numeral */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-            <div className="mx-auto flex max-w-[1600px] justify-end px-6 pb-24 lg:px-12">
-              <span className="hidden font-display text-[22vw] leading-none text-cream/8 select-none lg:block">
-                III
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* PAGE SHORTCUTS */}
-      <nav className="border-b border-ink/10 bg-paper">
-        <div className="mx-auto flex max-w-[1600px] flex-wrap gap-3 px-6 py-5 lg:px-12">
-          <a
-            href="#menu"
-            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
-          >
-            <i className="ph ph-pizza text-sm" />
-            Food Menu
-          </a>
-          <a
-            href="#chalkboard"
-            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
-          >
-            <i className="ph ph-beer-stein text-sm" />
-            Drinks Menu
-          </a>
-          <a
-            href="#happy-hour"
-            className="btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
-          >
-            <i className="ph ph-clock text-sm" />
-            Happy Hour
-          </a>
-        </div>
-      </nav>
-
-      {/* PHILOSOPHY */}
-      <section className="relative overflow-hidden bg-paper py-24">
-        <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
-          <FadeIn>
-            <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
-              <img
-                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80"
-                alt="Il Tetto rooftop"
-                className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
-              <div className="absolute right-0 bottom-0 left-0 p-8">
-                <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
-                  Floor III · Rooftop
-                </div>
-                <div className="font-display text-3xl leading-tight text-cream">
-                  942 Penn Avenue
-                </div>
-                <div className="mt-1 font-body text-sm text-cream/70">
-                  Pittsburgh, PA · Thu–Sun from 4 PM
-                </div>
-              </div>
-              <div className="absolute top-6 left-6 bg-ink px-3 py-1.5 font-serif text-2xs tracking-[0.35em] text-cream uppercase">
-                Walk-in only · no reservations
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.15}>
-            <div className="flex flex-col justify-center">
-              <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-                philosophy
-              </div>
-              <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
-                The view is the menu.
-                <span className="font-italic text-sienna italic"> Everything else </span>
-                is cold pints and good company.
-              </p>
-              <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-                No reservations, no dress code, no ceremony. The retractable roof opens when the
-                forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter
-                up from below, the Pittsburgh skyline doing the rest.
-              </p>
-              <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
-                {[
-                  { k: "30", v: "rotating drafts" },
-                  { k: "120", v: "rooftop seats" },
-                  { k: "0", v: "reservations needed" },
-                ].map((s) => (
-                  <div key={s.v}>
-                    <div className="font-display text-4xl leading-none text-sienna">{s.k}</div>
-                    <div className="mt-1 font-body text-sm text-ink-soft">{s.v}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* THE CHALKBOARD */}
-      <section id="chalkboard" className="relative bg-paper py-28">
-        <div className="relative mx-auto max-w-[1100px] px-6 lg:px-12">
-          <FadeIn>
-            <div className="mb-14 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
-              <div>
-                <div className="mb-3 flex items-center gap-3 font-serif text-lg text-sienna">
-                  <i className="ph ph-chalkboard-simple text-2xl" />
-                  tonight on tap
-                </div>
-                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
-                  The chalkboard.
-                </h2>
-              </div>
-              <p className="max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                Thirty rotating lines. Local first, then everywhere else. We update Untappd every
-                morning, but the bartender's the source of truth.
-              </p>
-            </div>
-          </FadeIn>
-
-          {/* the chalkboard "hangs" on the wall, wood frame, dark inset */}
-          <div className="border-[10px] border-[#3a2a1a] bg-ink shadow-[0_30px_60px_-20px_rgba(26,18,11,0.5)]">
-            <ul ref={chalkboardRef}>
-              {DRAFTS.map((d, i) => (
-                <DraftCard key={d.name} number={String(i + 1).padStart(2, "0")} {...d} />
-              ))}
-              <li className="px-6 py-6 text-center sm:px-8">
-                <span className="font-body text-paper/55">
-                  + 17 more on rotation · ask the bartender
-                </span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="mt-10 flex flex-wrap items-center justify-between gap-4 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-            <span>Powered by Untappd · ratings on request</span>
-            <span className="flex items-center gap-2">
-              <i className="ph ph-flag text-base text-sienna" />
-              local · brewed within 50 miles of Penn Ave
-            </span>
-          </div>
-        </div>
-      </section>
-
-      {/* BEER OF THE MONTH FEATURE */}
-      <section className="relative bg-ink py-16 text-paper">
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <FadeIn>
-            <div className="grid overflow-hidden lg:grid-cols-[1fr_2fr]">
-              <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto">
-                <img
-                  src="https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=1400&q=80"
-                  alt="A pint of Big Wave blonde ale"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              </div>
-              <div className="flex flex-col justify-center bg-paper/[0.04] p-8 lg:p-12">
-                <div className="mb-2 font-serif text-base text-sienna-bright">
-                  beer of the month · may
-                </div>
-                <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[0.9]">
-                  {FEATURED_DRAFT.name}
-                </h2>
-                <p className="mt-4 max-w-lg font-body text-lg leading-relaxed text-paper/80">
-                  {FEATURED_DRAFT.notes}
-                </p>
-                <div className="mt-6 flex flex-wrap gap-6 font-serif text-xs tracking-[0.3em] text-paper/55 uppercase">
-                  <span>{FEATURED_DRAFT.brewery}</span>
-                  <span>{FEATURED_DRAFT.style}</span>
-                  <span>{FEATURED_DRAFT.abv} ABV</span>
-                  <span>{FEATURED_DRAFT.ibu} IBU</span>
-                </div>
-              </div>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* FOOD MENU */}
-      <section id="menu" className="relative bg-cream py-28">
-        <div className="mx-auto max-w-[1100px] px-6 lg:px-12">
-          <FadeIn>
-            <div className="mb-14 grid gap-8 md:grid-cols-[1.1fr_1fr] md:items-end">
-              <div>
-                <div className="mb-3 font-serif text-lg text-sienna">eat on the roof</div>
-                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.85] text-ink">
-                  Whole pies,
-                  <br />
-                  <span className="font-italic text-sienna italic">pulled hot.</span>
-                </h2>
-              </div>
-              <p className="max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                The rooftop kitchen runs a tight bar menu, whole pies from the wood oven below, the
-                meatball hoagie, fries that have business being on a roof.
-              </p>
-            </div>
-          </FadeIn>
-
-          <ul ref={foodRef} className="divide-y divide-ink/10 border-t border-b border-ink/10">
-            {FOOD.map((f) => (
-              <FoodRow key={f.name} {...f} />
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* HAPPY HOUR */}
-      <section id="happy-hour" className="relative overflow-hidden bg-ink py-24 text-paper">
-        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
-            <FadeIn>
-              <div>
-                <div className="mb-3 font-serif text-lg text-sienna-bright">
-                  aperitivo · happy hour
-                </div>
-                <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
-                  Sunset hour.
-                </h2>
-                <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
-                  Tuesday through Friday, 4:30 → 6:30, golden hour, half-price everything that
-                  matters. Best seats on the roof go fast.
-                </p>
-                <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
-                  <i className="ph ph-clock text-base text-sienna-bright" />
-                  Tue → Fri · 4:30 → 6:30 PM
-                </div>
-              </div>
-            </FadeIn>
-            <FadeIn delay={0.12}>
-              <ul className="grid gap-px bg-paper/10 sm:grid-cols-2">
-                {[
-                  { k: "½ off", v: "drafts", icon: "ph-beer-stein" },
-                  { k: "½ off", v: "well & call mixed", icon: "ph-martini" },
-                  { k: "$5", v: "espresso martinis", icon: "ph-coffee" },
-                  { k: "½ off", v: "small plates", icon: "ph-bowl-food" },
-                ].map((row) => (
-                  <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
-                    <i className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`} />
-                    <div>
-                      <div className="font-display text-3xl">{row.k}</div>
-                      <div className="font-body text-paper/75">{row.v}</div>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </FadeIn>
-          </div>
-        </div>
-      </section>
-
-      {/* WEATHER & HOURS */}
-      <section className="relative bg-paper py-24">
-        <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
-          <FadeIn>
-            <div>
-              <div className="mb-3 font-serif text-lg text-sienna">il tempo · the weather</div>
-              <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
-                We open the roof
-                <br />
-                <span className="font-italic text-sienna italic">when the sky lets us.</span>
-              </h2>
-              <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                The retractable roof closes for rain, high wind, or surprise snow. When it's closed
-                we keep the heaters on, but the view goes away. Call the host stand before climbing
-                if you're chasing a specific view.
-              </p>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.12}>
-            <div>
-              <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
-                Hours · Floor III
-              </div>
-              <ul className="divide-y divide-ink/10 border-t border-b border-ink/10">
-                {[
-                  { d: "Thu", h: "4:00 PM, late" },
-                  { d: "Fri", h: "4:00 PM, late" },
-                  { d: "Sat", h: "2:00 PM, late" },
-                  { d: "Sun", h: "2:00 → 9:00 PM" },
-                  { d: "Mon to Wed", h: "Closed" },
-                ].map((row) => (
-                  <li key={row.d} className="flex items-baseline gap-5 py-4">
-                    <span className="w-24 font-serif text-sm tracking-[0.2em] text-ink uppercase">
-                      {row.d}
-                    </span>
-                    <span className="font-body text-sm text-ink-soft tabular-nums">{row.h}</span>
-                  </li>
-                ))}
-              </ul>
-              <p className="mt-6 font-body text-sm leading-relaxed text-ink-soft">
-                "Late" is weather, crowd, and bartender's discretion. The chalkboard tells you when
-                last call is.
-              </p>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
-
-      {/* CTA STRIP, descend */}
-      <section className="relative bg-ink text-cream">
-        <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
+    <section className="relative bg-paper py-24">
+      <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
+        <FadeIn>
           <div>
-            <FadeIn>
-              <div className="mb-2 font-serif text-base text-cream/60">third floor · III</div>
-            </FadeIn>
-            <FadeIn delay={0.12}>
-              <h3 className="font-display text-5xl leading-[0.9]">
-                You've reached
-                <br />
-                <span className="font-italic italic">the top.</span>
-              </h3>
-            </FadeIn>
+            <div className="mb-3 font-serif text-lg text-sienna">il tempo · the weather</div>
+            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
+              We open the roof
+              <br />
+              <span className="font-italic text-sienna italic">when the sky lets us.</span>
+            </h2>
+            <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
+              The retractable roof closes for rain, high wind, or surprise snow. When it's closed we
+              keep the heaters on, but the view goes away. Call the host stand before climbing if
+              you're chasing a specific view.
+            </p>
           </div>
-          <FadeIn delay={0.24}>
-            <div className="flex flex-wrap gap-4">
-              <Link
-                to="/mezzo"
-                className="btn-lift group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
-              >
-                <i className="ph ph-arrow-down text-lg" />
-                Down to Mezzo
-              </Link>
-              <Link
-                to="/"
-                className="btn-lift group inline-flex items-center gap-3 bg-sienna-bright px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
-              >
-                All of Sienna
-                <i className="ph ph-arrow-up-right text-lg" />
-              </Link>
+        </FadeIn>
+
+        <FadeIn delay={0.12}>
+          <div>
+            <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
+              Hours · Floor III
             </div>
+            <ul className="divide-y divide-ink/10 border-t border-b border-ink/10">
+              {HOURS.map((row) => (
+                <li key={row.day} className="flex items-baseline gap-5 py-4">
+                  <span className="w-24 font-serif text-sm tracking-[0.2em] text-ink uppercase">
+                    {row.day}
+                  </span>
+                  <span className="font-body text-sm text-ink-soft tabular-nums">{row.hours}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 font-body text-sm leading-relaxed text-ink-soft">
+              "Late" is weather, crowd, and bartender's discretion. The chalkboard tells you when
+              last call is.
+            </p>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+function ClosingStrip() {
+  return (
+    <section className="relative bg-ink text-cream">
+      <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
+        <div>
+          <FadeIn>
+            <div className="mb-2 font-serif text-base text-cream/60">third floor · III</div>
+          </FadeIn>
+          <FadeIn delay={0.12}>
+            <h3 className="font-display text-5xl leading-[0.9]">
+              You've reached
+              <br />
+              <span className="font-italic italic">the top.</span>
+            </h3>
           </FadeIn>
         </div>
-      </section>
-    </div>
+        <FadeIn delay={0.24}>
+          <div className="flex flex-wrap gap-4">
+            <Link
+              to="/mezzo"
+              className="btn-lift group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
+            >
+              <i className="ph ph-arrow-down text-lg" />
+              Down to Mezzo
+            </Link>
+            <Link
+              to="/"
+              className="btn-lift group inline-flex items-center gap-3 bg-sienna-bright px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
+            >
+              All of Sienna
+              <i className="ph ph-arrow-up-right text-lg" />
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    </section>
   )
 }

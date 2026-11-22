@@ -1,50 +1,59 @@
 import { useEffect, useRef, useState } from "react"
 import { Link, NavLink, useLocation } from "react-router"
+import { ExternalLink } from "@/components/external-link"
+import { FLOORS, ORDER_URL, PHONE, RESERVE_URL } from "@/lib/site"
 
 const LINKS = [
-  { to: "/emporio", label: "Emporio", roman: "I" },
-  { to: "/mezzo", label: "Mezzo", roman: "II" },
-  { to: "/tetto", label: "Il Tetto", roman: "III" },
+  { to: FLOORS.emporio.href, label: FLOORS.emporio.name, roman: FLOORS.emporio.roman },
+  { to: FLOORS.mezzo.href, label: FLOORS.mezzo.name, roman: FLOORS.mezzo.roman },
+  { to: FLOORS.tetto.href, label: FLOORS.tetto.name, roman: FLOORS.tetto.roman },
   { to: "/events", label: "Events", roman: "" },
   { to: "/catering", label: "Catering", roman: "" },
-] as const
-
-const ORDER_URL = "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+]
 
 const RESERVE_OPTIONS = [
-  {
-    label: "Emporio",
-    sub: "Ground floor · walk-in only",
-    href: "/emporio",
-    roman: "I",
-    logo: "/emporio.avif",
-    external: false,
-  },
-  {
-    label: "Mezzo",
-    sub: "Reserve via OpenTable",
-    href: "https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh",
-    roman: "II",
-    logo: "/mezzo.avif",
-    external: true,
-  },
-  {
-    label: "Il Tetto",
-    sub: "Rooftop · climb the stairs",
-    href: "/tetto",
-    roman: "III",
-    logo: "/iltetto.avif",
-    external: false,
-  },
-] as const
+  { floor: FLOORS.emporio, sub: "Ground floor · walk-in only", href: FLOORS.emporio.href },
+  { floor: FLOORS.mezzo, sub: "Reserve via OpenTable", href: RESERVE_URL },
+  { floor: FLOORS.tetto, sub: "Rooftop · climb the stairs", href: FLOORS.tetto.href },
+]
 
-export function Nav() {
+const RESERVE_OPTION_CLASS =
+  "group flex items-center gap-4 border-b border-ink/8 px-5 py-4 transition-colors last:border-b-0 hover:bg-cream"
+
+function ReserveOptionContent({
+  floor,
+  sub,
+  external,
+}: {
+  floor: (typeof RESERVE_OPTIONS)[number]["floor"]
+  sub: string
+  external: boolean
+}) {
+  return (
+    <>
+      <span className="w-8 font-display text-2xl text-ink/25">{floor.roman}</span>
+      <div className="flex-1">
+        <div className="font-serif text-sm tracking-wide text-ink transition-colors group-hover:text-sienna">
+          {floor.name}
+        </div>
+        <div className="font-italic text-2xs text-ink-soft italic">{sub}</div>
+      </div>
+      <img
+        src={floor.logo}
+        alt=""
+        aria-hidden="true"
+        className="h-5 w-auto opacity-30 brightness-0 transition-opacity group-hover:opacity-50"
+      />
+      <i
+        className={`ph ${external ? "ph-arrow-up-right" : "ph-arrow-right"} text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100`}
+      />
+    </>
+  )
+}
+
+function useHideOnScroll() {
   const [scrolled, setScrolled] = useState(false)
   const [hidden, setHidden] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [reserveOpen, setReserveOpen] = useState(false)
-  const { pathname } = useLocation()
-  const dropdownRef = useRef<HTMLDivElement>(null)
   const lastScrollY = useRef(0)
 
   useEffect(() => {
@@ -60,6 +69,16 @@ export function Nav() {
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
+
+  return { scrolled, hidden }
+}
+
+export function Nav() {
+  const { scrolled, hidden } = useHideOnScroll()
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [reserveOpen, setReserveOpen] = useState(false)
+  const { pathname } = useLocation()
+  const dropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     setMenuOpen(false)
@@ -85,6 +104,8 @@ export function Nav() {
   }, [reserveOpen])
 
   const transparent = !scrolled
+  const closeMenu = () => setMenuOpen(false)
+  const closeReserve = () => setReserveOpen(false)
 
   return (
     <>
@@ -96,9 +117,8 @@ export function Nav() {
         }`}
       >
         <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-4 lg:px-12">
-          {/* Left: Hamburger */}
           <button
-            onClick={() => setMenuOpen((o) => !o)}
+            onClick={() => setMenuOpen((open) => !open)}
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             className={`z-10 flex items-center gap-2 transition-colors ${
               transparent ? "text-cream hover:text-sienna-bright" : "text-ink hover:text-sienna"
@@ -107,7 +127,6 @@ export function Nav() {
             <i className={`ph ph-${menuOpen ? "x" : "list"} text-2xl`} />
           </button>
 
-          {/* Center: Brand */}
           <Link to="/" className="absolute left-1/2 flex -translate-x-1/2 items-center">
             <img
               src="/siennalogo.png"
@@ -118,10 +137,9 @@ export function Nav() {
             />
           </Link>
 
-          {/* Right: Reserve dropdown */}
           <div className="relative" ref={dropdownRef}>
             <button
-              onClick={() => setReserveOpen((o) => !o)}
+              onClick={() => setReserveOpen((open) => !open)}
               className={`btn-lift group inline-flex items-center gap-1.5 bg-sienna px-3 py-2 font-serif text-xs tracking-[0.22em] text-cream uppercase sm:gap-2 sm:px-5 sm:py-2.5 ${
                 reserveOpen ? "bg-sienna-deep" : ""
               }`}
@@ -134,53 +152,25 @@ export function Nav() {
 
             {reserveOpen && (
               <div className="absolute top-full right-0 z-50 mt-1 w-72 border border-ink/10 bg-paper shadow-2xl">
-                {RESERVE_OPTIONS.map((opt) =>
-                  opt.external ? (
-                    <a
-                      key={opt.label}
-                      href={opt.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={() => setReserveOpen(false)}
-                      className="group flex items-center gap-4 border-b border-ink/8 px-5 py-4 transition-colors last:border-b-0 hover:bg-cream"
-                    >
-                      <span className="w-8 font-display text-2xl text-ink/25">{opt.roman}</span>
-                      <div className="flex-1">
-                        <div className="font-serif text-sm tracking-wide text-ink transition-colors group-hover:text-sienna">
-                          {opt.label}
-                        </div>
-                        <div className="font-italic text-2xs text-ink-soft italic">{opt.sub}</div>
-                      </div>
-                      <img
-                        src={opt.logo}
-                        alt=""
-                        aria-hidden="true"
-                        className="h-5 w-auto opacity-30 brightness-0 transition-opacity group-hover:opacity-50"
-                      />
-                      <i className="ph ph-arrow-up-right text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100" />
-                    </a>
-                  ) : (
+                {RESERVE_OPTIONS.map(({ floor, sub, href }) =>
+                  href.startsWith("/") ? (
                     <Link
-                      key={opt.label}
-                      to={opt.href}
-                      onClick={() => setReserveOpen(false)}
-                      className="group flex items-center gap-4 border-b border-ink/8 px-5 py-4 transition-colors last:border-b-0 hover:bg-cream"
+                      key={floor.name}
+                      to={href}
+                      onClick={closeReserve}
+                      className={RESERVE_OPTION_CLASS}
                     >
-                      <span className="w-8 font-display text-2xl text-ink/25">{opt.roman}</span>
-                      <div className="flex-1">
-                        <div className="font-serif text-sm tracking-wide text-ink transition-colors group-hover:text-sienna">
-                          {opt.label}
-                        </div>
-                        <div className="font-italic text-2xs text-ink-soft italic">{opt.sub}</div>
-                      </div>
-                      <img
-                        src={opt.logo}
-                        alt=""
-                        aria-hidden="true"
-                        className="h-5 w-auto opacity-30 brightness-0 transition-opacity group-hover:opacity-50"
-                      />
-                      <i className="ph ph-arrow-right text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100" />
+                      <ReserveOptionContent floor={floor} sub={sub} external={false} />
                     </Link>
+                  ) : (
+                    <ExternalLink
+                      key={floor.name}
+                      href={href}
+                      onClick={closeReserve}
+                      className={RESERVE_OPTION_CLASS}
+                    >
+                      <ReserveOptionContent floor={floor} sub={sub} external />
+                    </ExternalLink>
                   ),
                 )}
               </div>
@@ -189,16 +179,14 @@ export function Nav() {
         </div>
       </header>
 
-      {/* Full-screen menu overlay */}
       <div
         className={`fixed inset-0 z-[60] flex flex-col bg-paper transition-all duration-500 ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        {/* mirror nav header */}
         <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-4 lg:px-12">
           <button
-            onClick={() => setMenuOpen(false)}
+            onClick={closeMenu}
             aria-label="Close navigation"
             className="text-ink transition-colors hover:text-sienna"
           >
@@ -206,7 +194,7 @@ export function Nav() {
           </button>
           <Link
             to="/"
-            onClick={() => setMenuOpen(false)}
+            onClick={closeMenu}
             className="absolute left-1/2 flex -translate-x-1/2 items-center"
           >
             <img src="/siennalogo.png" alt="Sienna Mercato" className="h-9 w-auto brightness-0" />
@@ -214,13 +202,12 @@ export function Nav() {
           <div className="w-6" />
         </div>
 
-        {/* Nav links */}
         <nav className="flex flex-1 flex-col items-center justify-center gap-1">
           {LINKS.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
-              onClick={() => setMenuOpen(false)}
+              onClick={closeMenu}
               className={({ isActive }) =>
                 `group flex items-baseline gap-5 px-8 py-4 transition-colors ${
                   isActive ? "text-sienna" : "text-ink hover:text-sienna"
@@ -239,26 +226,24 @@ export function Nav() {
           ))}
 
           <div className="mt-8">
-            <a
+            <ExternalLink
               href={ORDER_URL}
-              target="_blank"
-              rel="noreferrer"
-              onClick={() => setMenuOpen(false)}
+              onClick={closeMenu}
               className="btn-lift inline-flex items-center gap-3 bg-sienna px-8 py-3 font-serif text-sm tracking-[0.25em] text-cream uppercase"
             >
               <i className="ph ph-bag text-base" />
               Order Online
               <i className="ph ph-arrow-up-right text-xs" />
-            </a>
+            </ExternalLink>
           </div>
 
           <div className="mt-8 flex flex-col items-center gap-4">
             <a
-              href="tel:14122812810"
+              href={PHONE.href}
               className="flex items-center gap-2 font-serif text-sm tracking-wider text-ink-soft transition-colors hover:text-sienna"
             >
               <i className="ph ph-phone text-base" />
-              412.281.2810
+              {PHONE.label}
             </a>
             <span className="font-italic text-sm text-ink/40 italic">
               942 Penn Avenue · Pittsburgh
