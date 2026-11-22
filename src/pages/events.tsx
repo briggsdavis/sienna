@@ -11,12 +11,7 @@ const SPACES = [
     logo: "/emporio.avif",
     capacity: "105",
     vibe: "Energetic · industrial · loud",
-    perfect: [
-      "Corporate happy hours",
-      "Rehearsal dinners",
-      "Family celebrations",
-      "Birthdays",
-    ],
+    perfect: ["Corporate happy hours", "Rehearsal dinners", "Family celebrations", "Birthdays"],
     desc: "Ground floor. Modern-industrial brick and steel, the open kitchen running through service, the bar long enough to seat your whole guest list. Customizable food stations, cocktail packages, no dress code.",
     highlights: [
       "Up to 105 guests, full buyout available",
@@ -37,12 +32,7 @@ const SPACES = [
     logo: "/mezzo.avif",
     capacity: "90",
     vibe: "Intimate · refined · candlelit",
-    perfect: [
-      "Cocktail hours",
-      "Seated dinners",
-      "Rehearsal dinners",
-      "Corporate entertaining",
-    ],
+    perfect: ["Cocktail hours", "Seated dinners", "Rehearsal dinners", "Corporate entertaining"],
     desc: "Second floor. Hardwood floors, exposed brick, a wood-beamed ceiling and open-air garage windows that look out over Penn Avenue. Custom menus, custom beverage pairings, wine list included.",
     highlights: [
       "Up to 90 guests, intimate candlelit setting",
@@ -63,12 +53,7 @@ const SPACES = [
     logo: "/iltetto.avif",
     capacity: "200",
     vibe: "Open-air · skyline · all-season",
-    perfect: [
-      "Weddings",
-      "Rehearsal dinners",
-      "Corporate parties",
-      "Award-night socials",
-    ],
+    perfect: ["Weddings", "Rehearsal dinners", "Corporate parties", "Award-night socials"],
     desc: "Third floor. Award-winning rooftop with a retractable glass roof, bistro lights overhead, the Pittsburgh skyline behind every photograph. Chef-crafted catering, curated beverages, a dedicated event team.",
     highlights: [
       "Up to 200 guests, Pittsburgh skyline backdrop",
@@ -174,16 +159,12 @@ export function Events() {
         <div className="absolute inset-0 bg-black/58" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
-          <Link
-            to="/"
-            className="under flex items-center gap-2 hover:text-cream"
-          >
+          <Link to="/" className="under flex items-center gap-2 hover:text-cream">
             <i className="ph ph-arrow-left text-sm" />
             all of sienna
           </Link>
           <span className="hidden items-center gap-2 md:inline-flex">
-            <i className="ph ph-house-line text-sm" /> Three floors · 942 Penn
-            Ave
+            <i className="ph ph-house-line text-sm" /> Three floors · 942 Penn Ave
           </span>
           <span className="flex items-center gap-2">
             up to 200 guests
@@ -208,9 +189,8 @@ export function Events() {
             className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
             style={{ animationDelay: "0.45s" }}
           >
-            Three floors available for private hire: a meatball joint, a
-            trattoria, and a rooftop with the Pittsburgh skyline. Up to 400
-            guests.
+            Three floors available for private hire: a meatball joint, a trattoria, and a rooftop
+            with the Pittsburgh skyline. Up to 400 guests.
           </p>
           <div
             className="rise mt-8 flex flex-wrap items-center gap-3"
@@ -244,9 +224,7 @@ export function Events() {
           <FadeIn>
             <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="mb-2 font-serif text-lg text-sienna-bright">
-                  on the calendar
-                </div>
+                <div className="mb-2 font-serif text-lg text-sienna-bright">on the calendar</div>
                 <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
                   Three nights coming up.
                 </h2>
@@ -270,16 +248,10 @@ export function Events() {
                         {e.tag}
                       </div>
                     </div>
-                    <i
-                      className={`ph-duotone ${e.icon} text-4xl text-sienna-bright/70`}
-                    />
+                    <i className={`ph-duotone ${e.icon} text-4xl text-sienna-bright/70`} />
                   </div>
-                  <h3 className="mt-5 font-display text-4xl leading-tight">
-                    {e.title}
-                  </h3>
-                  <p className="mt-2 font-body text-base text-paper/70">
-                    {e.sub}
-                  </p>
+                  <h3 className="mt-5 font-display text-4xl leading-tight">{e.title}</h3>
+                  <p className="mt-2 font-body text-base text-paper/70">{e.sub}</p>
                   <div className="mt-auto flex flex-col gap-2 pt-6">
                     <div className="flex items-center gap-2 font-serif text-2xs tracking-[0.3em] text-paper/55 uppercase">
                       <i className="ph ph-house-line text-sm" />
@@ -303,20 +275,16 @@ export function Events() {
           <FadeIn>
             <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
-                <div className="mb-3 font-serif text-lg text-sienna">
-                  private event venues
-                </div>
+                <div className="mb-3 font-serif text-lg text-sienna">private event venues</div>
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
                   Three rooms
                   <br />
-                  <span className="font-italic text-sienna italic">
-                    for private hire.
-                  </span>
+                  <span className="font-italic text-sienna italic">for private hire.</span>
                 </h2>
               </div>
               <p className="font-body text-lg leading-relaxed text-ink-soft md:text-right">
-                Each floor stands alone or stacks with the others, the whole
-                building seats nearly four hundred.
+                Each floor stands alone or stacks with the others, the whole building seats nearly
+                four hundred.
               </p>
             </div>
           </FadeIn>
@@ -328,20 +296,15 @@ export function Events() {
           <FadeIn delay={0.1}>
             <div className="mt-14 grid gap-px bg-ink/10 sm:grid-cols-[1fr_auto]">
               <div className="bg-paper px-8 py-8">
-                <div className="mb-2 font-serif text-lg text-sienna">
-                  ready to book a floor?
-                </div>
+                <div className="mb-2 font-serif text-lg text-sienna">ready to book a floor?</div>
                 <h3 className="font-display text-3xl leading-tight text-ink">
                   Tell us the date, the headcount,
                   <br />
-                  <span className="font-italic text-sienna italic">
-                    and we'll handle the rest.
-                  </span>
+                  <span className="font-italic text-sienna italic">and we'll handle the rest.</span>
                 </h3>
                 <p className="mt-3 max-w-lg font-body text-base text-ink-soft">
-                  The events team replies within one business day with a floor
-                  recommendation, a draft menu, and a price range. No commitment
-                  required.
+                  The events team replies within one business day with a floor recommendation, a
+                  draft menu, and a price range. No commitment required.
                 </p>
                 <div className="mt-6 flex flex-wrap gap-3">
                   <a
@@ -385,15 +348,11 @@ export function Events() {
         <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 text-center">
-              <div className="mb-3 font-serif text-lg text-sienna">
-                from the guestbook
-              </div>
+              <div className="mb-3 font-serif text-lg text-sienna">from the guestbook</div>
               <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
                 The guests
                 <br />
-                <span className="font-italic text-sienna italic">
-                  say it best.
-                </span>
+                <span className="font-italic text-sienna italic">say it best.</span>
               </h2>
             </div>
           </FadeIn>
@@ -420,25 +379,19 @@ export function Events() {
       </section>
 
       {/* INQUIRY FORM + CONTACTS */}
-      <section
-        id="inquire"
-        className="relative overflow-hidden bg-sienna py-28 text-cream"
-      >
+      <section id="inquire" className="relative overflow-hidden bg-sienna py-28 text-cream">
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
           <div>
-            <div className="mb-4 font-serif text-lg text-cream/85">
-              inquire now
-            </div>
+            <div className="mb-4 font-serif text-lg text-cream/85">inquire now</div>
             <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.85]">
               Tell us about
               <br />
               <span className="font-italic italic">your night.</span>
             </h2>
             <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-cream/85">
-              The events team replies within one business day. Send us the date,
-              the headcount, and a sentence about the vibe, we'll send back a
-              floor and a draft menu.
+              The events team replies within one business day. Send us the date, the headcount, and
+              a sentence about the vibe, we'll send back a floor and a draft menu.
             </p>
 
             <form
@@ -471,13 +424,7 @@ export function Events() {
                 <SelectField
                   label="Headcount"
                   name="headcount"
-                  options={[
-                    "Under 25",
-                    "25 – 50",
-                    "50 – 100",
-                    "100 – 150",
-                    "150 – 200+",
-                  ]}
+                  options={["Under 25", "25 – 50", "50 – 100", "100 – 150", "150 – 200+"]}
                 />
               </div>
               <SelectField
@@ -534,9 +481,7 @@ export function Events() {
               {CONTACTS.map((c) => (
                 <li key={c.email} className="py-6">
                   <div className="font-display text-2xl">{c.name}</div>
-                  <div className="mt-1 font-body text-sm text-cream/75">
-                    {c.role}
-                  </div>
+                  <div className="mt-1 font-body text-sm text-cream/75">{c.role}</div>
                   <div className="mt-3 flex flex-col gap-1.5">
                     <a
                       href={`mailto:${c.email}`}
@@ -564,8 +509,8 @@ export function Events() {
                 Reservations · 1 → 8 guests
               </div>
               <p className="mt-2 font-body text-cream/85">
-                Mezzo (Floor II) takes regular reservations through OpenTable,
-                no inquiry form needed.
+                Mezzo (Floor II) takes regular reservations through OpenTable, no inquiry form
+                needed.
               </p>
               <a
                 href="https://www.opentable.com/r/mezzo-at-sienna-mercato-second-floor-only-reservations-pittsburgh"
@@ -654,8 +599,7 @@ function VenueAccordion({ spaces }: { spaces: typeof SPACES }) {
               style={{
                 display: "grid",
                 gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition:
-                  "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
+                transition: "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
               }}
             >
               <div className="overflow-hidden">
@@ -668,12 +612,8 @@ function VenueAccordion({ spaces }: { spaces: typeof SPACES }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
                     <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
-                      <span className="font-body text-sm text-cream/80">
-                        {s.vibe}
-                      </span>
-                      <span className={`font-display text-2xl ${s.accent}`}>
-                        {s.capacity}
-                      </span>
+                      <span className="font-body text-sm text-cream/80">{s.vibe}</span>
+                      <span className={`font-display text-2xl ${s.accent}`}>{s.capacity}</span>
                     </div>
                   </div>
                   <div className="flex flex-col justify-center px-8 py-6">
@@ -684,9 +624,7 @@ function VenueAccordion({ spaces }: { spaces: typeof SPACES }) {
                       className="mb-5 h-7 w-auto object-left opacity-30 brightness-0"
                       style={{ objectFit: "contain", objectPosition: "left" }}
                     />
-                    <p className="font-body text-base leading-relaxed text-ink-soft">
-                      {s.desc}
-                    </p>
+                    <p className="font-body text-base leading-relaxed text-ink-soft">{s.desc}</p>
                     <ul className="mt-5 space-y-2">
                       {s.highlights.map((h) => (
                         <li
@@ -762,9 +700,7 @@ function SelectField({
 }) {
   return (
     <label className="block">
-      <span className="font-serif text-2xs tracking-[0.3em] text-cream/70 uppercase">
-        {label}
-      </span>
+      <span className="font-serif text-2xs tracking-[0.3em] text-cream/70 uppercase">{label}</span>
       <select
         name={name}
         defaultValue=""

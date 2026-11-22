@@ -11,8 +11,7 @@ export function Footer() {
             className="mb-4 h-10 w-auto brightness-0 invert"
           />
           <p className="mt-4 max-w-sm font-body leading-relaxed text-paper">
-            Three floors. Three rooms. One Italian house in the Cultural
-            District, open since 2013.
+            Three floors. Three rooms. One Italian house in the Cultural District, open since 2013.
           </p>
           <div className="mt-8 flex gap-4 text-paper">
             <a
@@ -63,10 +62,7 @@ export function Footer() {
             <br />
             Pittsburgh, PA 15222
             <br />
-            <a
-              href="tel:14122812810"
-              className="under hover:text-sienna-bright"
-            >
+            <a href="tel:14122812810" className="under hover:text-sienna-bright">
               412.281.2810
             </a>
           </address>

@@ -9,8 +9,7 @@ const LINKS = [
   { to: "/catering", label: "Catering", roman: "" },
 ] as const
 
-const ORDER_URL =
-  "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+const ORDER_URL = "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
 
 const RESERVE_OPTIONS = [
   {
@@ -77,10 +76,7 @@ export function Nav() {
   useEffect(() => {
     if (!reserveOpen) return
     const handleClick = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setReserveOpen(false)
       }
     }
@@ -96,9 +92,7 @@ export function Nav() {
         className={`fixed top-0 right-0 left-0 z-50 transition-all duration-500 ${
           hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"
         } ${
-          transparent
-            ? "bg-transparent"
-            : "border-b border-ink/10 bg-paper/92 backdrop-blur-md"
+          transparent ? "bg-transparent" : "border-b border-ink/10 bg-paper/92 backdrop-blur-md"
         }`}
       >
         <div className="mx-auto flex max-w-[1600px] items-center justify-between px-6 py-4 lg:px-12">
@@ -107,19 +101,14 @@ export function Nav() {
             onClick={() => setMenuOpen((o) => !o)}
             aria-label={menuOpen ? "Close navigation" : "Open navigation"}
             className={`z-10 flex items-center gap-2 transition-colors ${
-              transparent
-                ? "text-cream hover:text-sienna-bright"
-                : "text-ink hover:text-sienna"
+              transparent ? "text-cream hover:text-sienna-bright" : "text-ink hover:text-sienna"
             }`}
           >
             <i className={`ph ph-${menuOpen ? "x" : "list"} text-2xl`} />
           </button>
 
           {/* Center: Brand */}
-          <Link
-            to="/"
-            className="absolute left-1/2 flex -translate-x-1/2 items-center"
-          >
+          <Link to="/" className="absolute left-1/2 flex -translate-x-1/2 items-center">
             <img
               src="/siennalogo.png"
               alt="Sienna Mercato"
@@ -155,16 +144,12 @@ export function Nav() {
                       onClick={() => setReserveOpen(false)}
                       className="group flex items-center gap-4 border-b border-ink/8 px-5 py-4 transition-colors last:border-b-0 hover:bg-cream"
                     >
-                      <span className="w-8 font-display text-2xl text-ink/25">
-                        {opt.roman}
-                      </span>
+                      <span className="w-8 font-display text-2xl text-ink/25">{opt.roman}</span>
                       <div className="flex-1">
                         <div className="font-serif text-sm tracking-wide text-ink transition-colors group-hover:text-sienna">
                           {opt.label}
                         </div>
-                        <div className="font-italic text-2xs text-ink-soft italic">
-                          {opt.sub}
-                        </div>
+                        <div className="font-italic text-2xs text-ink-soft italic">{opt.sub}</div>
                       </div>
                       <img
                         src={opt.logo}
@@ -181,16 +166,12 @@ export function Nav() {
                       onClick={() => setReserveOpen(false)}
                       className="group flex items-center gap-4 border-b border-ink/8 px-5 py-4 transition-colors last:border-b-0 hover:bg-cream"
                     >
-                      <span className="w-8 font-display text-2xl text-ink/25">
-                        {opt.roman}
-                      </span>
+                      <span className="w-8 font-display text-2xl text-ink/25">{opt.roman}</span>
                       <div className="flex-1">
                         <div className="font-serif text-sm tracking-wide text-ink transition-colors group-hover:text-sienna">
                           {opt.label}
                         </div>
-                        <div className="font-italic text-2xs text-ink-soft italic">
-                          {opt.sub}
-                        </div>
+                        <div className="font-italic text-2xs text-ink-soft italic">{opt.sub}</div>
                       </div>
                       <img
                         src={opt.logo}
@@ -211,9 +192,7 @@ export function Nav() {
       {/* Full-screen menu overlay */}
       <div
         className={`fixed inset-0 z-[60] flex flex-col bg-paper transition-all duration-500 ${
-          menuOpen
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
+          menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
         {/* mirror nav header */}
@@ -230,11 +209,7 @@ export function Nav() {
             onClick={() => setMenuOpen(false)}
             className="absolute left-1/2 flex -translate-x-1/2 items-center"
           >
-            <img
-              src="/siennalogo.png"
-              alt="Sienna Mercato"
-              className="h-9 w-auto brightness-0"
-            />
+            <img src="/siennalogo.png" alt="Sienna Mercato" className="h-9 w-auto brightness-0" />
           </Link>
           <div className="w-6" />
         </div>

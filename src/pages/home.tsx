@@ -1,10 +1,5 @@
 import { Link } from "react-router"
-import {
-  FadeIn,
-  ParallaxImage,
-  useParallax,
-  useStaggerObserver,
-} from "../components/animations"
+import { FadeIn, ParallaxImage, useParallax, useStaggerObserver } from "../components/animations"
 
 const FLOORS = [
   {
@@ -141,10 +136,7 @@ const FLOOR_LOGO: Record<string, string> = {
 function FloorText({ floor }: { floor: (typeof FLOORS)[number] }) {
   const staggerRef = useStaggerObserver<HTMLDivElement>(0.1)
   return (
-    <div
-      ref={staggerRef}
-      className="relative flex flex-col justify-center px-6 py-20 lg:px-20"
-    >
+    <div ref={staggerRef} className="relative flex flex-col justify-center px-6 py-20 lg:px-20">
       <img
         src={floor.logo}
         alt={`${floor.name} logo`}
@@ -157,18 +149,12 @@ function FloorText({ floor }: { floor: (typeof FLOORS)[number] }) {
       <div className="mt-4 font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
         {floor.sub}
       </div>
-      <p className="mt-3 max-w-xl font-body text-lg leading-relaxed text-ink-soft">
-        {floor.desc}
-      </p>
+      <p className="mt-3 max-w-xl font-body text-lg leading-relaxed text-ink-soft">{floor.desc}</p>
       <ul className="mt-5 max-w-xl divide-y divide-ink/10 border-y border-ink/10">
         {floor.items.map((it) => (
           <li key={it.name} className="flex items-baseline gap-4 py-4">
-            <span className="font-serif text-base tracking-wide text-ink">
-              {it.name}
-            </span>
-            <span className="hidden font-body text-sm text-ink-soft sm:inline">
-              {it.note}
-            </span>
+            <span className="font-serif text-base tracking-wide text-ink">{it.name}</span>
+            <span className="hidden font-body text-sm text-ink-soft sm:inline">{it.note}</span>
             <span className="font-serif text-base text-sienna tabular-nums">
               {it.price ? `$${it.price}` : ""}
             </span>
@@ -243,10 +229,7 @@ export function Home() {
               className="rise text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
               style={{ animationDelay: "0.35s" }}
             >
-              Sienna{" "}
-              <span className="font-italic font-light text-cream/90 italic">
-                Mercato
-              </span>
+              Sienna <span className="font-italic font-light text-cream/90 italic">Mercato</span>
             </h1>
             <div
               className="rise mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
@@ -278,9 +261,7 @@ export function Home() {
         {/* scroll cue */}
         <div className="absolute right-0 bottom-8 left-0 z-10 flex justify-center">
           <div className="flex flex-col items-center gap-3 text-cream/60">
-            <span className="font-serif text-2xs tracking-[0.4em] uppercase">
-              scroll
-            </span>
+            <span className="font-serif text-2xs tracking-[0.4em] uppercase">scroll</span>
             <i className="ph ph-caret-down animate-bounce text-xl" />
           </div>
         </div>
@@ -302,16 +283,13 @@ export function Home() {
             </div>
             <p className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[1.1] text-ink">
               Three floors.
-              <span className="font-italic text-sienna italic">
-                {" "}
-                Three rooms.{" "}
-              </span>
+              <span className="font-italic text-sienna italic"> Three rooms. </span>
               One Italian house on Penn Avenue.
             </p>
             <p className="mx-auto mt-10 max-w-2xl font-body text-lg leading-relaxed text-ink-soft">
-              A Cultural District landmark since 2013. One address at 942 Penn
-              Avenue — 230 indoor seats, 120 on the rooftop, an Italian-led wine
-              list of 90+ bottles, and 30 rotating drafts.
+              A Cultural District landmark since 2013. One address at 942 Penn Avenue — 230 indoor
+              seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating
+              drafts.
             </p>
           </FadeIn>
         </div>
@@ -332,9 +310,7 @@ export function Home() {
               >
                 <div
                   className={`mx-auto grid max-w-[1600px] gap-0 lg:min-h-[720px] ${
-                    flipped
-                      ? "lg:grid-cols-[1.1fr_1fr]"
-                      : "lg:grid-cols-[1fr_1.1fr]"
+                    flipped ? "lg:grid-cols-[1.1fr_1fr]" : "lg:grid-cols-[1fr_1.1fr]"
                   }`}
                 >
                   {/* image side */}
@@ -381,9 +357,7 @@ export function Home() {
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
                   Featured
                   <br />
-                  <span className="font-italic text-sienna italic">
-                    Dishes.
-                  </span>
+                  <span className="font-italic text-sienna italic">Dishes.</span>
                 </h2>
               </div>
             </div>
@@ -416,9 +390,7 @@ export function Home() {
                         ${dish.price}
                       </span>
                     </div>
-                    <p className="mt-2 font-body text-sm leading-snug text-cream/75">
-                      {dish.en}
-                    </p>
+                    <p className="mt-2 font-body text-sm leading-snug text-cream/75">{dish.en}</p>
                   </div>
                 </article>
               ))}
@@ -480,9 +452,7 @@ export function Home() {
             ].map((card) => (
               <FadeIn key={card.title} delay={card.delay} className="h-full">
                 <div className="group h-full bg-sienna p-8 transition-colors hover:bg-sienna-deep">
-                  <i
-                    className={`ph-duotone ${card.icon} text-4xl text-cream/60`}
-                  />
+                  <i className={`ph-duotone ${card.icon} text-4xl text-cream/60`} />
                   <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
                     {card.tag}
                   </div>
@@ -515,13 +485,11 @@ export function Home() {
                   <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
                     Book a floor.
                     <br />
-                    <span className="font-italic text-sienna italic">
-                      Make it yours.
-                    </span>
+                    <span className="font-italic text-sienna italic">Make it yours.</span>
                   </h2>
                   <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                    Three floors available for private hire. Up to 400 guests.
-                    The events team handles the rest.
+                    Three floors available for private hire. Up to 400 guests. The events team
+                    handles the rest.
                   </p>
                 </div>
                 <Link
@@ -543,13 +511,11 @@ export function Home() {
                   <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
                     Two kitchens.
                     <br />
-                    <span className="font-italic text-sienna italic">
-                      Delivered to you.
-                    </span>
+                    <span className="font-italic text-sienna italic">Delivered to you.</span>
                   </h2>
                   <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                    Casual family-style or plated-ready charcuterie. Citywide
-                    delivery, 48-hour notice.
+                    Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour
+                    notice.
                   </p>
                 </div>
                 <Link
@@ -567,10 +533,7 @@ export function Home() {
       </section>
 
       {/* RESERVE / VISIT BAND */}
-      <section
-        id="visit"
-        className="relative overflow-hidden bg-sienna text-cream"
-      >
+      <section id="visit" className="relative overflow-hidden bg-sienna text-cream">
         <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
         <FadeIn>
           <div className="mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
@@ -581,8 +544,7 @@ export function Home() {
                 <span className="font-italic italic">a table.</span>
               </h2>
               <p className="mt-8 max-w-xl font-body text-lg leading-relaxed text-cream/85">
-                Mezzo takes reservations via OpenTable. Emporio and Il Tetto are
-                walk-in.
+                Mezzo takes reservations via OpenTable. Emporio and Il Tetto are walk-in.
               </p>
               <div className="mt-10 flex flex-wrap gap-4">
                 <a

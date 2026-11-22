@@ -5,8 +5,7 @@ export function NotFound() {
 
   let code = "404"
   let title = "Off the menu"
-  let blurb =
-    "The page you're after isn't being served tonight. Let's get you back home."
+  let blurb = "The page you're after isn't being served tonight. Let's get you back home."
 
   if (isRouteErrorResponse(error)) {
     code = String(error.status)
@@ -32,9 +31,7 @@ export function NotFound() {
         <h1 className="mt-6 font-display text-[clamp(4rem,12vw,9rem)] leading-[0.9] tracking-tight text-ink">
           {title}.
         </h1>
-        <p className="mt-6 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-          {blurb}
-        </p>
+        <p className="mt-6 max-w-xl font-body text-xl leading-relaxed text-ink-soft">{blurb}</p>
         <Link
           to="/"
           className="group mt-10 inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-deep"

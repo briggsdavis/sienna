@@ -33,10 +33,7 @@ function ScrollProgress() {
 function useViewportHeight() {
   useEffect(() => {
     const set = () => {
-      document.documentElement.style.setProperty(
-        "--vh",
-        `${window.innerHeight}px`,
-      )
+      document.documentElement.style.setProperty("--vh", `${window.innerHeight}px`)
     }
     set()
     window.addEventListener("resize", set)

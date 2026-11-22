@@ -13,8 +13,7 @@ export function useStaggerObserver<T extends HTMLElement>(_stagger = 0.09) {
     children.forEach((child) => {
       child.style.opacity = "0"
       child.style.transform = "translateY(20px)"
-      child.style.transition =
-        "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+      child.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
 
       const obs = new IntersectionObserver(
         ([entry]) => {
@@ -75,8 +74,7 @@ export function ParallaxImage({
       const parent = el.parentElement
       if (!parent) return
       const rect = parent.getBoundingClientRect()
-      const offset =
-        (window.innerHeight / 2 - (rect.top + rect.height / 2)) * speed
+      const offset = (window.innerHeight / 2 - (rect.top + rect.height / 2)) * speed
       el.style.transform = `translateY(${offset}px)`
     }
     onScroll()
@@ -86,11 +84,7 @@ export function ParallaxImage({
 
   return (
     <div ref={ref} className="absolute" style={{ inset: "-22% 0" }}>
-      <img
-        src={src}
-        alt={alt}
-        className={`h-full w-full object-cover ${className}`}
-      />
+      <img src={src} alt={alt} className={`h-full w-full object-cover ${className}`} />
     </div>
   )
 }

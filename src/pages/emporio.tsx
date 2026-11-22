@@ -1,11 +1,6 @@
 import { useEffect, useRef } from "react"
 import { Link } from "react-router"
-import {
-  FadeIn,
-  ParallaxImage,
-  useParallax,
-  useStaggerObserver,
-} from "../components/animations"
+import { FadeIn, ParallaxImage, useParallax, useStaggerObserver } from "../components/animations"
 
 const SAUCES = [
   { name: "Marinara", note: "the classic, slow-cooked San Marzano", heat: 0 },
@@ -204,9 +199,7 @@ function HeatDots({ n }: { n: number }) {
       {[0, 1, 2].map((i) => (
         <i
           key={i}
-          className={`ph-fill ph-flame text-xs ${
-            i < n ? "text-sienna" : "text-ink/15"
-          }`}
+          className={`ph-fill ph-flame text-xs ${i < n ? "text-sienna" : "text-ink/15"}`}
         />
       ))}
     </span>
@@ -235,13 +228,9 @@ function MenuRow({
             </span>
           )}
         </div>
-        {desc && (
-          <div className="mt-0.5 font-body text-base text-ink-soft">{desc}</div>
-        )}
+        {desc && <div className="mt-0.5 font-body text-base text-ink-soft">{desc}</div>}
       </div>
-      <span className="font-serif text-lg text-sienna tabular-nums">
-        ${price}
-      </span>
+      <span className="font-serif text-lg text-sienna tabular-nums">${price}</span>
     </li>
   )
 }
@@ -265,10 +254,7 @@ export function Emporio() {
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(201,65,42,0.35),transparent_60%)]" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
-          <Link
-            to="/"
-            className="under flex items-center gap-2 hover:text-cream"
-          >
+          <Link to="/" className="under flex items-center gap-2 hover:text-cream">
             <i className="ph ph-arrow-left text-sm" />
             all of sienna
           </Link>
@@ -315,8 +301,8 @@ export function Emporio() {
             className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
             style={{ animationDelay: "0.55s" }}
           >
-            Five meats, ten sauces, one ground floor that runs loud. Pull up a
-            stool, build a bowl, ask the bartender what's on the chalkboard.
+            Five meats, ten sauces, one ground floor that runs loud. Pull up a stool, build a bowl,
+            ask the bartender what's on the chalkboard.
           </p>
           <div
             className="rise mt-8 flex flex-wrap items-center gap-3"
@@ -415,16 +401,12 @@ export function Emporio() {
               </div>
               <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">
                 The meatball is sacred.
-                <span className="font-italic text-sienna italic">
-                  {" "}
-                  Everything else{" "}
-                </span>
+                <span className="font-italic text-sienna italic"> Everything else </span>
                 is a delivery system, bun, bowl, hoagie, fork.
               </p>
               <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">
-                We grind the meat in-house. We roll by hand at noon. The sauce
-                list runs ten deep so the same ball can be a different dinner
-                ten nights running.
+                We grind the meat in-house. We roll by hand at noon. The sauce list runs ten deep so
+                the same ball can be a different dinner ten nights running.
               </p>
               <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
                 {[
@@ -433,12 +415,8 @@ export function Emporio() {
                   { k: "$18", v: "build-your-own bowl" },
                 ].map((s) => (
                   <div key={s.v}>
-                    <div className="font-display text-4xl leading-none text-sienna">
-                      {s.k}
-                    </div>
-                    <div className="mt-1 font-body text-sm text-ink-soft">
-                      {s.v}
-                    </div>
+                    <div className="font-display text-4xl leading-none text-sienna">{s.k}</div>
+                    <div className="mt-1 font-body text-sm text-ink-soft">{s.v}</div>
                   </div>
                 ))}
               </div>
@@ -456,9 +434,7 @@ export function Emporio() {
           <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
             <FadeIn>
               <div>
-                <div className="mb-2 font-serif text-lg text-sienna-bright">
-                  five kinds
-                </div>
+                <div className="mb-2 font-serif text-lg text-sienna-bright">five kinds</div>
                 <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
                   Five balls.
                 </h2>
@@ -466,8 +442,8 @@ export function Emporio() {
             </FadeIn>
             <FadeIn delay={0.1}>
               <p className="max-w-md font-body text-lg text-paper/70">
-                Pick any combination. Three to a hoagie, three to a bowl, six on
-                a plate of six over polenta.
+                Pick any combination. Three to a hoagie, three to a bowl, six on a plate of six over
+                polenta.
               </p>
             </FadeIn>
           </div>
@@ -488,17 +464,13 @@ export function Emporio() {
                   )}
                   <i
                     className={`ph-duotone ${b.icon} text-5xl ${
-                      b.featured
-                        ? "text-cream"
-                        : "text-sienna-bright group-hover:text-cream"
+                      b.featured ? "text-cream" : "text-sienna-bright group-hover:text-cream"
                     } transition-colors`}
                   />
                   <div className="mt-5 font-display text-2xl">{b.name}</div>
                   <div
                     className={`mt-1 font-body text-sm ${
-                      b.featured
-                        ? "text-cream/80"
-                        : "text-paper/60 group-hover:text-cream/80"
+                      b.featured ? "text-cream/80" : "text-paper/60 group-hover:text-cream/80"
                     }`}
                   >
                     {b.sub}
@@ -516,30 +488,23 @@ export function Emporio() {
           <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
             <FadeIn>
               <div>
-                <div className="mb-2 font-serif text-lg text-sienna">
-                  ten sauces
-                </div>
+                <div className="mb-2 font-serif text-lg text-sienna">ten sauces</div>
                 <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
                   Ten sauces.
                   <br />
-                  <span className="font-italic text-sienna italic">
-                    Pick a mood.
-                  </span>
+                  <span className="font-italic text-sienna italic">Pick a mood.</span>
                 </h2>
               </div>
             </FadeIn>
             <FadeIn delay={0.1}>
               <p className="max-w-md font-body text-lg text-ink-soft">
-                From the polite (marinara, pesto) to the unrepentant (Government
-                Cheese). Heat dots aren't a dare, they're a warning.
+                From the polite (marinara, pesto) to the unrepentant (Government Cheese). Heat dots
+                aren't a dare, they're a warning.
               </p>
             </FadeIn>
           </div>
 
-          <ul
-            ref={sauceListRef}
-            className="grid grid-cols-1 gap-px bg-ink/10 sm:grid-cols-2"
-          >
+          <ul ref={sauceListRef} className="grid grid-cols-1 gap-px bg-ink/10 sm:grid-cols-2">
             {SAUCES.map((s, i) => (
               <li
                 key={s.name}
@@ -551,9 +516,7 @@ export function Emporio() {
                   </span>
                   <HeatDots n={s.heat} />
                 </div>
-                <div className="mt-3 font-display text-3xl text-ink">
-                  {s.name}
-                </div>
+                <div className="mt-3 font-display text-3xl text-ink">{s.name}</div>
                 <div className="mt-2 font-body text-ink-soft">{s.note}</div>
               </li>
             ))}
@@ -567,9 +530,7 @@ export function Emporio() {
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-14 text-center">
-              <div className="mb-3 font-serif text-lg text-cream/80">
-                build your bowl
-              </div>
+              <div className="mb-3 font-serif text-lg text-cream/80">build your bowl</div>
               <h2 className="font-display text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.9]">
                 Build a bowl.
               </h2>
@@ -608,11 +569,7 @@ export function Emporio() {
                 step: "three",
                 num: "03",
                 title: "Sauce it",
-                items: [
-                  "Any of the ten sauces",
-                  "Add bread for $2",
-                  "Add parm for $1",
-                ],
+                items: ["Any of the ten sauces", "Add bread for $2", "Add parm for $1"],
                 icon: "ph-drop",
                 delay: 0.24,
               },
@@ -621,13 +578,9 @@ export function Emporio() {
                 <div className="relative h-full border border-cream/20 p-8 backdrop-blur-sm">
                   <div className="flex items-baseline justify-between">
                     <span className="font-body text-cream/70">{step.step}</span>
-                    <span className="font-display text-5xl text-cream/40">
-                      {step.num}
-                    </span>
+                    <span className="font-display text-5xl text-cream/40">{step.num}</span>
                   </div>
-                  <i
-                    className={`ph-duotone ${step.icon} mt-6 block text-5xl`}
-                  />
+                  <i className={`ph-duotone ${step.icon} mt-6 block text-5xl`} />
                   <h3 className="mt-6 font-display text-3xl">{step.title}</h3>
                   <ul className="mt-4 space-y-2 font-body text-cream/85">
                     {step.items.map((it) => (
@@ -666,21 +619,14 @@ export function Emporio() {
                 </div>
               </div>
               <div className="flex flex-col justify-center p-10 lg:p-16">
-                <div className="mb-3 font-serif text-lg text-sienna-bright">
-                  ball of the month
-                </div>
-                <h2 className="font-display text-6xl leading-[0.9]">
-                  Dragon Ball
-                </h2>
+                <div className="mb-3 font-serif text-lg text-sienna-bright">ball of the month</div>
+                <h2 className="font-display text-6xl leading-[0.9]">Dragon Ball</h2>
                 <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-cream/85">
-                  Housemade meatballs fried golden, glazed in a glossy
-                  sweet-chili sauce with a touch of heat. Available May only,
-                  through the month, then she sleeps.
+                  Housemade meatballs fried golden, glazed in a glossy sweet-chili sauce with a
+                  touch of heat. Available May only, through the month, then she sleeps.
                 </p>
                 <div className="mt-10 flex items-baseline gap-6">
-                  <span className="font-display text-5xl text-sienna-bright">
-                    $14
-                  </span>
+                  <span className="font-display text-5xl text-sienna-bright">$14</span>
                   <span className="font-body text-cream/60">
                     six balls · house-made glaze · sesame, scallion
                   </span>
@@ -705,9 +651,7 @@ export function Emporio() {
         <div className="mx-auto max-w-[1200px] px-6 lg:px-12">
           <FadeIn>
             <div className="mb-4 text-center">
-              <div className="mb-3 font-serif text-lg text-sienna">
-                the whole menu
-              </div>
+              <div className="mb-3 font-serif text-lg text-sienna">the whole menu</div>
               <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
                 The whole menu.
               </h2>
@@ -715,23 +659,13 @@ export function Emporio() {
           </FadeIn>
           <div className="grid gap-x-16 gap-y-14 md:grid-cols-2">
             <MenuColumn title="Starters" italian="antipasti" rows={STARTERS} />
-            <MenuColumn
-              title="Soups & Salads"
-              italian="zuppe & insalate"
-              rows={SOUPS}
-            />
+            <MenuColumn title="Soups & Salads" italian="zuppe & insalate" rows={SOUPS} />
             <MenuColumn title="Entrées" italian="secondi" rows={ENTREES} />
-            <MenuColumn
-              title="On the Bun"
-              italian="al panino"
-              rows={ON_THE_BUN}
-            />
+            <MenuColumn title="On the Bun" italian="al panino" rows={ON_THE_BUN} />
             <MenuColumn
               title="Bowls"
               italian="le ciotole"
-              rows={BOWLS.map((b) =>
-                b.build ? { ...b, flag: "build-your-own" } : b,
-              )}
+              rows={BOWLS.map((b) => (b.build ? { ...b, flag: "build-your-own" } : b))}
             />
             <MenuColumn title="Sides" italian="contorni" rows={SIDES} />
             <MenuColumn title="Desserts" italian="dolci" rows={DESSERTS} />
@@ -739,13 +673,9 @@ export function Emporio() {
             <FadeIn>
               <div id="kids-menu">
                 <div className="mb-6">
-                  <div className="mb-1 font-serif text-base text-sienna">
-                    for the kids
-                  </div>
+                  <div className="mb-1 font-serif text-base text-sienna">for the kids</div>
                   <h3 className="font-display text-4xl text-ink">Kid's Menu</h3>
-                  <p className="mt-2 font-body text-ink-soft">
-                    Pick any two, $7 each.
-                  </p>
+                  <p className="mt-2 font-body text-ink-soft">Pick any two, $7 each.</p>
                 </div>
                 <ul className="grid grid-cols-2 gap-2 font-serif text-ink/85">
                   {KIDS.map((k) => (
@@ -762,10 +692,7 @@ export function Emporio() {
       </section>
 
       {/* HAPPY HOUR */}
-      <section
-        id="happy-hour"
-        className="relative overflow-hidden bg-ink py-24 text-paper"
-      >
+      <section id="happy-hour" className="relative overflow-hidden bg-ink py-24 text-paper">
         <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
           <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
             <FadeIn>
@@ -777,9 +704,8 @@ export function Emporio() {
                   Happy Hour.
                 </h2>
                 <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
-                  Tuesday through Friday, 4:30 to 6:30. Half off the things that
-                  matter, full price on the espresso martinis, except they're
-                  $5.
+                  Tuesday through Friday, 4:30 to 6:30. Half off the things that matter, full price
+                  on the espresso martinis, except they're $5.
                 </p>
                 <div className="mt-8 inline-flex items-center gap-3 border border-paper/30 px-5 py-2.5 font-serif text-xs tracking-[0.3em] uppercase">
                   <i className="ph ph-clock text-base text-sienna-bright" />
@@ -803,13 +729,8 @@ export function Emporio() {
                     icon: "ph-bowl-food",
                   },
                 ].map((row) => (
-                  <li
-                    key={row.v}
-                    className="flex items-center gap-5 bg-ink p-6"
-                  >
-                    <i
-                      className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`}
-                    />
+                  <li key={row.v} className="flex items-center gap-5 bg-ink p-6">
+                    <i className={`ph-duotone ${row.icon} text-4xl text-sienna-bright`} />
                     <div>
                       <div className="font-display text-3xl">{row.k}</div>
                       <div className="font-body text-paper/75">{row.v}</div>
@@ -826,9 +747,7 @@ export function Emporio() {
       <section className="relative bg-sienna text-cream">
         <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <div>
-            <div className="mb-2 font-serif text-base text-cream/80">
-              ground floor · I
-            </div>
+            <div className="mb-2 font-serif text-base text-cream/80">ground floor · I</div>
             <h3 className="font-display text-5xl leading-[0.9]">
               Show up hungry.
               <br />
@@ -882,8 +801,7 @@ function MenuColumn({
     all.forEach((node) => {
       node.style.opacity = "0"
       node.style.transform = "translateY(20px)"
-      node.style.transition =
-        "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
+      node.style.transition = "opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)"
 
       const obs = new IntersectionObserver(
         ([entry]) => {
@@ -910,13 +828,7 @@ function MenuColumn({
       </div>
       <ul className="mt-6 divide-y divide-ink/10 border-t border-b border-ink/10">
         {rows.map((r) => (
-          <MenuRow
-            key={r.name}
-            name={r.name}
-            desc={r.desc}
-            price={r.price}
-            flag={r.flag}
-          />
+          <MenuRow key={r.name} name={r.name} desc={r.desc} price={r.price} flag={r.flag} />
         ))}
       </ul>
     </div>

@@ -2,13 +2,7 @@ import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import { FadeIn, useParallax } from "../components/animations"
 
-type Category =
-  | "all"
-  | "family-style"
-  | "plated"
-  | "boards"
-  | "pasta"
-  | "sweets"
+type Category = "all" | "family-style" | "plated" | "boards" | "pasta" | "sweets"
 
 type Kitchen = "emporio" | "mezzo"
 
@@ -226,8 +220,7 @@ const CATEGORIES: { id: Category; label: string }[] = [
   { id: "sweets", label: "Sweets" },
 ]
 
-const ORDER_LINK =
-  "https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
+const ORDER_LINK = "https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
 
 function priceLabel(item: CateringItem) {
   if (item.unit === "half pan") return `$${item.half} half pan`
@@ -271,9 +264,7 @@ function ProductCard({ item }: { item: CateringItem }) {
         <div className="mt-2 min-h-[2.75rem] font-body text-sm text-ink-soft">
           {item.note && <p>{item.note}</p>}
           {item.serves && (
-            <p className="text-xs tracking-wide text-ink-soft/80 uppercase">
-              {item.serves}
-            </p>
+            <p className="text-xs tracking-wide text-ink-soft/80 uppercase">{item.serves}</p>
           )}
         </div>
         <div className="mt-auto pt-3 font-serif text-base text-sienna tabular-nums">
@@ -337,11 +328,7 @@ function Sidebar({
                         : ITEMS.filter((i) => i.category === c.id).length,
                     ).padStart(2, "0")}
                   </span>
-                  <span
-                    className={active ? "underline underline-offset-4" : ""}
-                  >
-                    {c.label}
-                  </span>
+                  <span className={active ? "underline underline-offset-4" : ""}>{c.label}</span>
                 </button>
               </li>
             )
@@ -410,9 +397,7 @@ export function Catering() {
   const [category, setCategory] = useState<Category>("all")
   const [kitchen, setKitchen] = useState<Kitchen | "all">("all")
   const [priceMax, setPriceMax] = useState(250)
-  const [sort, setSort] = useState<"recommended" | "price-asc" | "price-desc">(
-    "recommended",
-  )
+  const [sort, setSort] = useState<"recommended" | "price-asc" | "price-desc">("recommended")
 
   const filtered = useMemo(() => {
     const out = ITEMS.filter(
@@ -440,16 +425,12 @@ export function Catering() {
         <div className="absolute inset-0 bg-black/62" />
 
         <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
-          <Link
-            to="/"
-            className="under flex items-center gap-2 hover:text-cream"
-          >
+          <Link to="/" className="under flex items-center gap-2 hover:text-cream">
             <i className="ph ph-arrow-left text-sm" />
             all of sienna
           </Link>
           <span className="hidden items-center gap-2 md:inline-flex">
-            <i className="ph ph-house-line text-sm" /> Two kitchens · 942 Penn
-            Ave
+            <i className="ph ph-house-line text-sm" /> Two kitchens · 942 Penn Ave
           </span>
           <span className="flex items-center gap-2">
             delivery & pickup
@@ -474,14 +455,10 @@ export function Catering() {
             className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
             style={{ animationDelay: "0.45s" }}
           >
-            Two kitchens. Corporate lunches, rehearsal dinners, family
-            celebrations. Browse the catalog below — half pan / full pan, plus
-            charcuterie and pasta for the plated affairs.
+            Two kitchens. Corporate lunches, rehearsal dinners, family celebrations. Browse the
+            catalog below — half pan / full pan, plus charcuterie and pasta for the plated affairs.
           </p>
-          <div
-            className="rise mt-8 flex flex-wrap gap-3"
-            style={{ animationDelay: "0.62s" }}
-          >
+          <div className="rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: "0.62s" }}>
             <a
               href="#shop"
               className="btn-lift group inline-flex items-center justify-center gap-2 bg-sienna px-6 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
@@ -514,15 +491,12 @@ export function Catering() {
                 <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
                   Pick the dishes.
                   <br />
-                  <span className="font-italic text-sienna italic">
-                    We'll cook the rest.
-                  </span>
+                  <span className="font-italic text-sienna italic">We'll cook the rest.</span>
                 </h2>
               </div>
               <p className="font-body text-lg leading-relaxed text-ink-soft">
-                Meatballs rolled same-day, sauces made fresh, charcuterie
-                assembled on arrival. Half pan feeds ten to twelve; full pan,
-                twenty to twenty-five. Forty-eight hours notice.
+                Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival. Half
+                pan feeds ten to twelve; full pan, twenty to twenty-five. Forty-eight hours notice.
               </p>
             </div>
           </FadeIn>
@@ -541,8 +515,7 @@ export function Catering() {
             <div>
               <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-ink/15 pb-5">
                 <div className="font-body text-base text-ink-soft">
-                  <span className="font-serif text-ink">{filtered.length}</span>{" "}
-                  dishes
+                  <span className="font-serif text-ink">{filtered.length}</span> dishes
                   {category !== "all" && (
                     <>
                       {" "}
@@ -554,9 +527,7 @@ export function Catering() {
                   )}
                 </div>
                 <label className="flex items-center gap-3 font-body text-sm text-ink-soft">
-                  <span className="font-serif text-xs tracking-[0.3em] uppercase">
-                    Sort
-                  </span>
+                  <span className="font-serif text-xs tracking-[0.3em] uppercase">Sort</span>
                   <select
                     value={sort}
                     onChange={(e) => setSort(e.target.value as typeof sort)}
@@ -571,12 +542,8 @@ export function Catering() {
 
               {filtered.length === 0 ? (
                 <div className="border border-dashed border-ink/20 px-6 py-20 text-center">
-                  <div className="font-display text-3xl text-ink">
-                    Nothing matches.
-                  </div>
-                  <p className="mt-2 font-body text-ink-soft">
-                    Loosen the filters and try again.
-                  </p>
+                  <div className="font-display text-3xl text-ink">Nothing matches.</div>
+                  <p className="mt-2 font-body text-ink-soft">Loosen the filters and try again.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -587,9 +554,8 @@ export function Catering() {
               )}
 
               <p className="mt-12 font-body text-sm text-ink-soft">
-                Half pan / full pan, unless noted. Online ordering is available
-                from Floor I · Emporio. For Mezzo catering, contact our events
-                team.
+                Half pan / full pan, unless noted. Online ordering is available from Floor I ·
+                Emporio. For Mezzo catering, contact our events team.
               </p>
             </div>
           </div>
@@ -626,12 +592,8 @@ export function Catering() {
                 <div key={f.v} className="flex items-center gap-5 bg-paper p-6">
                   <i className={`ph-duotone ${f.icon} text-3xl text-sienna`} />
                   <div>
-                    <div className="font-display text-2xl leading-none text-ink">
-                      {f.k}
-                    </div>
-                    <div className="mt-1 font-body text-sm text-ink-soft">
-                      {f.v}
-                    </div>
+                    <div className="font-display text-2xl leading-none text-ink">{f.k}</div>
+                    <div className="mt-1 font-body text-sm text-ink-soft">{f.v}</div>
                   </div>
                 </div>
               ))}

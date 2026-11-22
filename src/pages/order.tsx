@@ -1,8 +1,7 @@
 import { useEffect } from "react"
 import { Link } from "react-router"
 
-const ORDER_URL =
-  "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
+const ORDER_URL = "https://order.toasttab.com/online/sienna-mercato-downtown-942-penn-avenue"
 
 export function Order() {
   useEffect(() => {
@@ -15,9 +14,7 @@ export function Order() {
         <div className="mb-5 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
           order online
         </div>
-        <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-none text-ink">
-          Emporio
-        </h1>
+        <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-none text-ink">Emporio</h1>
         <p className="mt-4 font-italic text-xl text-ink-soft italic">
           Taking you to our online ordering system…
         </p>
