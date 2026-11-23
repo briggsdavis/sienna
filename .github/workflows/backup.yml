@@ -1,0 +1,23 @@
+name: Backup Convex data
+
+on:
+  schedule:
+    - cron: "30 7 * * *"
+  workflow_dispatch:
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - name: Export production data
+        env:
+          CONVEX_DEPLOY_KEY: ${{ secrets.CONVEX_DEPLOY_KEY }}
+        run: bun x convex export --include-file-storage --path "backup-$(date -u +%Y-%m-%d).zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: convex-backup-${{ github.run_id }}
+          path: backup-*.zip
+          retention-days: 30

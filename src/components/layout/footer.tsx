@@ -1,18 +1,18 @@
 import { Link } from "react-router"
 import { ExternalLink } from "@/components/external-link"
-import { FLOORS, ORDER_URL, PHONE, SOCIAL_LINKS } from "@/lib/site"
+import { useSettings } from "@/components/reserve"
+import { SignupForm } from "@/components/signup-form"
+import { useTrackClick } from "@/lib/analytics"
+import { ADDRESS, FLOORS, PHONE, SOCIAL_LINKS } from "@/lib/site"
 
 const EXPLORE_LINKS = [
-  { label: "Emporio · I", to: FLOORS.emporio.href },
-  { label: "Mezzo · II", to: FLOORS.mezzo.href },
-  { label: "Il Tetto · III", to: FLOORS.tetto.href },
-  { label: "Private Events", to: "/events" },
+  { label: "Il Tetto", to: FLOORS.tetto.href },
+  { label: "Mezzo", to: FLOORS.mezzo.href },
+  { label: "Emporio", to: FLOORS.emporio.href },
+  { label: "Menus", to: FLOORS.mezzo.menuHref },
+  { label: "Events & Private Dining", to: "/events" },
   { label: "Catering", to: "/catering" },
-]
-
-const EXTERNAL_LINKS = [
-  { label: "Order Online", href: ORDER_URL },
-  { label: "Gift Cards", href: ORDER_URL },
+  { label: "Contact", to: "/contact" },
 ]
 
 function Heading({ children }: { children: string }) {
@@ -24,6 +24,9 @@ function Heading({ children }: { children: string }) {
 }
 
 export function Footer() {
+  const settings = useSettings()
+  const track = useTrackClick()
+
   return (
     <footer className="relative bg-ink text-paper">
       <div className="mx-auto grid max-w-[1600px] gap-12 px-6 py-28 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:px-12">
@@ -53,9 +56,11 @@ export function Footer() {
         <div>
           <Heading>Address</Heading>
           <address className="mt-4 font-serif leading-relaxed text-paper not-italic">
-            942 Penn Avenue
-            <br />
-            Pittsburgh, PA 15222
+            <ExternalLink href={ADDRESS.mapsUrl} className="under hover:text-sienna-bright">
+              {ADDRESS.street}
+              <br />
+              {ADDRESS.city}, {ADDRESS.region} {ADDRESS.zip}
+            </ExternalLink>
             <br />
             <a href={PHONE.href} className="under hover:text-sienna-bright">
               {PHONE.label}
@@ -73,13 +78,24 @@ export function Footer() {
                 </Link>
               </li>
             ))}
-            {EXTERNAL_LINKS.map((link) => (
-              <li key={link.label}>
-                <ExternalLink className="under hover:text-sienna-bright" href={link.href}>
-                  {link.label}
-                </ExternalLink>
-              </li>
-            ))}
+            {settings && (
+              <>
+                <li>
+                  <ExternalLink className="under hover:text-sienna-bright" href={settings.orderUrl}>
+                    Order Online
+                  </ExternalLink>
+                </li>
+                <li>
+                  <ExternalLink
+                    className="under hover:text-sienna-bright"
+                    href={settings.giftCardUrl}
+                    onClick={() => track("giftCardClick")}
+                  >
+                    Gift Cards
+                  </ExternalLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
@@ -88,20 +104,7 @@ export function Footer() {
           <p className="mt-4 font-body leading-relaxed text-paper">
             Pre-release menus, ball of the month, secret cocktails.
           </p>
-          <form className="mt-5 flex border-b border-paper/30 transition-colors focus-within:border-sienna-bright">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="flex-1 bg-transparent py-3 font-body text-paper placeholder:text-paper/50 focus:outline-none"
-            />
-            <button
-              type="submit"
-              className="px-3 text-sienna-bright transition-colors hover:text-cream"
-              aria-label="Subscribe"
-            >
-              <i className="ph ph-arrow-right text-2xl" />
-            </button>
-          </form>
+          <SignupForm source="footer" />
         </div>
       </div>
 
@@ -120,11 +123,15 @@ export function Footer() {
       </div>
 
       <div className="border-t border-paper/15">
-        <div className="mx-auto flex max-w-[1600px] flex-col gap-3 px-6 py-6 font-serif text-xs tracking-wider text-paper sm:flex-row sm:items-center sm:justify-between lg:px-12">
-          <span>© 2026 Sienna Mercato Restaurant Group · Pittsburgh, PA</span>
-          <span className="flex items-center gap-2">
-            <i className="ph ph-heart-straight-fill text-sm text-sienna-bright" />
-            Made with love in Pennsylvania
+        <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-4 px-6 py-6 font-serif text-xs tracking-wider text-paper lg:px-12">
+          <span>© {new Date().getFullYear()} Sienna Mercato Restaurant Group</span>
+          <span className="flex gap-6">
+            <Link to="/privacy" className="under hover:text-sienna-bright">
+              Privacy
+            </Link>
+            <Link to="/admin" className="under text-paper/50 hover:text-sienna-bright">
+              Staff
+            </Link>
           </span>
         </div>
       </div>

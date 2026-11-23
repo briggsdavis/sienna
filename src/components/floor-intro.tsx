@@ -1,11 +1,11 @@
 import type { ReactNode } from "react"
+import { EText } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 
 export type Stat = { value: string; label: string }
 
 export function FloorIntro({
   image,
-  floorLabel,
   hours,
   badge,
   badgeClassName,
@@ -14,12 +14,11 @@ export function FloorIntro({
   stats,
 }: {
   image: ReactNode
-  floorLabel: string
-  hours: string
-  badge: string
+  hours: ReactNode
+  badge: ReactNode
   badgeClassName: string
   statement: ReactNode
-  body: string
+  body: ReactNode
   stats: readonly Stat[]
 }) {
   return (
@@ -30,9 +29,6 @@ export function FloorIntro({
             {image}
             <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent" />
             <div className="absolute right-0 bottom-0 left-0 p-8">
-              <div className="mb-1 font-serif text-2xs tracking-[0.4em] text-cream uppercase">
-                {floorLabel}
-              </div>
               <div className="font-display text-3xl leading-tight text-cream">942 Penn Avenue</div>
               <div className="mt-1 font-body text-sm text-cream/70">{hours}</div>
             </div>
@@ -46,16 +42,17 @@ export function FloorIntro({
 
         <FadeIn delay={0.15}>
           <div className="flex flex-col justify-center">
-            <div className="mb-5 font-serif text-xs tracking-[0.5em] text-sienna uppercase">
-              philosophy
-            </div>
             <p className="font-display text-3xl leading-[1.15] text-ink md:text-4xl">{statement}</p>
             <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-ink-soft">{body}</p>
             <div className="mt-10 grid grid-cols-3 gap-6 border-t border-ink/10 pt-10">
-              {stats.map((stat) => (
+              {stats.map((stat, i) => (
                 <div key={stat.label}>
-                  <div className="font-display text-4xl leading-none text-sienna">{stat.value}</div>
-                  <div className="mt-1 font-body text-sm text-ink-soft">{stat.label}</div>
+                  <div className="font-display text-4xl leading-none text-sienna">
+                    <EText k={`intro.stat${i}.value`} d={stat.value} />
+                  </div>
+                  <div className="mt-1 font-body text-sm text-ink-soft">
+                    <EText k={`intro.stat${i}.label`} d={stat.label} />
+                  </div>
                 </div>
               ))}
             </div>

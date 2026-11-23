@@ -1,3 +1,5 @@
+import type { ReactNode } from "react"
+import { EText } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 
 export type Deal = { value: string; label: string; icon: string }
@@ -10,10 +12,10 @@ export function HappyHour({
   deals,
   dealsDelay,
 }: {
-  title: string
+  title: ReactNode
   titleSize: string
-  body: string
-  schedule: string
+  body: ReactNode
+  schedule: ReactNode
   deals: readonly Deal[]
   dealsDelay: number
 }) {
@@ -23,9 +25,6 @@ export function HappyHour({
         <div className="grid gap-12 lg:grid-cols-[1fr_1.2fr]">
           <FadeIn>
             <div>
-              <div className="mb-3 font-serif text-lg text-sienna-bright">
-                aperitivo · happy hour
-              </div>
               <h2 className={`font-display ${titleSize} leading-[0.9]`}>{title}</h2>
               <p className="mt-6 max-w-md font-body text-xl leading-relaxed text-paper/85">
                 {body}
@@ -38,12 +37,16 @@ export function HappyHour({
           </FadeIn>
           <FadeIn delay={dealsDelay}>
             <ul className="grid gap-px bg-paper/10 sm:grid-cols-2">
-              {deals.map((deal) => (
+              {deals.map((deal, i) => (
                 <li key={deal.label} className="flex items-center gap-5 bg-ink p-6">
                   <i className={`ph-duotone ${deal.icon} text-4xl text-sienna-bright`} />
                   <div>
-                    <div className="font-display text-3xl">{deal.value}</div>
-                    <div className="font-body text-paper/75">{deal.label}</div>
+                    <div className="font-display text-3xl">
+                      <EText k={`happy.deal${i}.value`} d={deal.value} />
+                    </div>
+                    <div className="font-body text-paper/75">
+                      <EText k={`happy.deal${i}.label`} d={deal.label} />
+                    </div>
                   </div>
                 </li>
               ))}

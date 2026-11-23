@@ -20,20 +20,13 @@ export function HeroImage({
   )
 }
 
-export function HeroMeta({ location, note }: { location: string; note: string }) {
+export function HeroMeta() {
   return (
-    <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center justify-between px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
+    <div className="absolute top-24 right-0 left-0 z-10 mx-auto hidden max-w-[1600px] items-center px-6 font-serif text-2xs tracking-[0.4em] text-cream/70 uppercase sm:flex lg:px-12">
       <Link to="/" className="under flex items-center gap-2 hover:text-cream">
         <i className="ph ph-arrow-left text-sm" />
         all of sienna
       </Link>
-      <span className="hidden items-center gap-2 md:inline-flex">
-        <i className="ph ph-house-line text-sm" /> {location}
-      </span>
-      <span className="flex items-center gap-2">
-        {note}
-        <span className="inline-block h-px w-8 bg-cream/40" />
-      </span>
     </div>
   )
 }
@@ -78,16 +71,12 @@ export function PageHero({
 
 export function FloorHeroIntro({
   floor,
-  tagline,
-  taglineClassName = "text-cream",
   subtitle,
   blurb,
 }: {
   floor: Floor
-  tagline: string
-  taglineClassName?: string
-  subtitle: string
-  blurb: string
+  subtitle: ReactNode
+  blurb: ReactNode
 }) {
   return (
     <>
@@ -97,13 +86,6 @@ export function FloorHeroIntro({
         className="rise mb-6 h-16 w-auto opacity-80 brightness-0 invert"
         style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
       />
-      <div
-        className={`rise mb-4 flex items-center gap-3 font-serif text-base ${taglineClassName}`}
-        style={{ animationDelay: "0.05s" }}
-      >
-        <span className="mr-1 font-display text-2xl text-cream/60">{floor.roman}</span>
-        <span>{tagline}</span>
-      </div>
       <h1
         className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
         style={{ animationDelay: "0.25s" }}
@@ -123,23 +105,9 @@ export function FloorHeroIntro({
   )
 }
 
-export function HeroIntro({
-  eyebrow,
-  title,
-  blurb,
-}: {
-  eyebrow: string
-  title: string
-  blurb: string
-}) {
+export function HeroIntro({ title, blurb }: { title: ReactNode; blurb: ReactNode }) {
   return (
     <>
-      <div
-        className="rise mb-4 flex items-center gap-3 font-serif text-base text-cream/80"
-        style={{ animationDelay: "0.05s" }}
-      >
-        <span>{eyebrow}</span>
-      </div>
       <h1
         className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
         style={{ animationDelay: "0.25s" }}

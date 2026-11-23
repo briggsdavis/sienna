@@ -2,7 +2,6 @@ import { FLOORS, unsplash } from "@/lib/site"
 
 export const HOME_FLOORS = [
   {
-    id: "emporio",
     ...FLOORS.emporio,
     sub: "A Meatball Joint",
     tint: "from-[#7a2218] via-[#a4341f] to-[#c9412a]",
@@ -15,7 +14,6 @@ export const HOME_FLOORS = [
     ],
   },
   {
-    id: "mezzo",
     ...FLOORS.mezzo,
     sub: "Pizza & Charcuterie",
     tint: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
@@ -28,7 +26,6 @@ export const HOME_FLOORS = [
     ],
   },
   {
-    id: "tetto",
     ...FLOORS.tetto,
     sub: "Rooftop Beer Garden",
     tint: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
@@ -36,8 +33,8 @@ export const HOME_FLOORS = [
     image: unsplash("1414235077428-338989a2e8c0", 1600, 70),
     items: [
       { name: "Whole Pepperoni Pie", price: "25", note: "8 slices, baked hot" },
-      { name: "Big Wave · Kona", price: "", note: "blonde · 4.4% · beer of the month" },
-      { name: "Negley's Nectar Peach Cider", price: "", note: "Arsenal · Pittsburgh, 8.4%" },
+      { name: "Big Wave • Kona", price: "", note: "blonde • 4.4% • beer of the month" },
+      { name: "Negley's Nectar Peach Cider", price: "", note: "Arsenal • Pittsburgh, 8.4%" },
     ],
   },
 ] as const
@@ -94,34 +91,35 @@ export const TONIGHT = [
     tag: "Ball of the Month",
     title: "Dragon Ball",
     desc: "Fried golden, glazed in sweet chili.",
-    meta: "$14 · Emporio",
+    meta: "$14 • Emporio",
     icon: "ph-bowl-food",
   },
   {
     tag: "Beer of the Month",
     title: "Big Wave",
-    desc: "Kona Brewing · Hawaiian blonde ale, light and easy.",
-    meta: "4.4% ABV · Il Tetto",
+    desc: "Kona Brewing • Hawaiian blonde ale, light and easy.",
+    meta: "4.4% ABV • Il Tetto",
     icon: "ph-beer-stein",
   },
   {
     tag: "Happy Hour",
-    title: "4:30 → 6:30",
+    title: "4:30",
+    until: "6:30",
     desc: "½-off drafts, well drinks, and small plates. $5 espresso martini.",
-    meta: "Tue–Fri · floors I & III",
+    meta: "Tue-Fri • floors I & III",
     icon: "ph-clock-countdown",
   },
   {
     tag: "Seasonal",
     title: "Spiced Kentucky Mule",
     desc: "Big Springs whiskey, ginger beer, fresh lime.",
-    meta: "$13 · all floors",
+    meta: "$13 • all floors",
     icon: "ph-wine",
   },
 ] as const
 
 export const FLOOR_HOURS = [
-  { floor: FLOORS.emporio, hours: "Tue–Sun · 4:30 PM → 11 PM" },
-  { floor: FLOORS.mezzo, hours: "Wed–Sun · 5 PM → 10 PM" },
-  { floor: FLOORS.tetto, hours: "Thu–Sat · 4 PM → late, weather-permitting" },
+  { floor: FLOORS.emporio, days: "Tue-Sun", open: "4:30 PM", close: "11 PM" },
+  { floor: FLOORS.mezzo, days: "Wed-Sun", open: "5 PM", close: "10 PM" },
+  { floor: FLOORS.tetto, days: "Thu-Sat", open: "4 PM", close: "late" },
 ] as const

@@ -1,0 +1,51 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "bun x convex deploy --cmd 'bun run build'",
+  "installCommand": "bun install",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/location/emporio", "destination": "/emporio", "permanent": true },
+    { "source": "/location/mezzo", "destination": "/mezzo", "permanent": true },
+    { "source": "/location/il-tetto", "destination": "/tetto", "permanent": true },
+    { "source": "/il-tetto", "destination": "/tetto", "permanent": true },
+    { "source": "/mezzo-menu", "destination": "/menus/mezzo", "permanent": true },
+    { "source": "/II-tetto-menu", "destination": "/menus/tetto", "permanent": true },
+    { "source": "/ii-tetto-menu", "destination": "/menus/tetto", "permanent": true },
+    { "source": "/menu/ii-tetto-food-menu", "destination": "/menus/tetto", "permanent": true },
+    { "source": "/menu/ii-tetto-food-menu-1", "destination": "/menus/tetto", "permanent": true },
+    { "source": "/menu/catering-menu", "destination": "/catering", "permanent": true },
+    { "source": "/food-truck", "destination": "/catering", "permanent": true },
+    { "source": "/private-events", "destination": "/events", "permanent": true },
+    { "source": "/event-gallery", "destination": "/events", "permanent": true },
+    { "source": "/current-specials", "destination": "/", "permanent": true },
+    { "source": "/about", "destination": "/", "permanent": true },
+    { "source": "/press", "destination": "/", "permanent": true },
+    { "source": "/faq", "destination": "/contact", "permanent": true },
+    { "source": "/hiringform", "destination": "/contact", "permanent": true },
+    {
+      "source": "/gift-cards",
+      "destination": "https://www.toasttab.com/sienna-mercato-downtown-942-penn-avenue/giftcards",
+      "permanent": false
+    }
+  ],
+  "rewrites": [{ "source": "/((?!assets/|.*\\..*).*)", "destination": "/index.html" }],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/admin(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" }
+      ]
+    }
+  ]
+}

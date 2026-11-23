@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /catering/checkout
+
+Sitemap: https://www.siennamercato.com/sitemap.xml

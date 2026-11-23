@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:convex": "convex dev --start vite",
+    "dev": "bun --parallel dev:vite dev:convex",
+    "dev:vite": "vite",
+    "dev:convex": "convex dev",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "check": "tsc -b && oxlint && oxfmt --check",
     "lint": "oxlint",
-    "format": "oxfmt"
+    "format": "oxfmt",
+    "check": "tsc -b && oxlint && oxfmt --check"
   },
   "dependencies": {
-    "@convex-dev/auth": "2.1.0",
+    "@auth/core": "0.41.3",
+    "@convex-dev/auth": "0.0.98",
+    "@convex-dev/rate-limiter": "^0.4.3",
+    "@convex-dev/resend": "^0.2.10",
     "@fontsource-variable/bodoni-moda": "5.3.0",
     "@fontsource-variable/cormorant": "5.3.0",
     "@fontsource-variable/fraunces": "5.3.0",

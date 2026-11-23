@@ -27,10 +27,44 @@ export const SOCIAL_LINKS = [
 ] as const
 
 export const FLOORS = {
-  emporio: { name: "Emporio", roman: "I", href: "/emporio", logo: "/emporio.avif" },
-  mezzo: { name: "Mezzo", roman: "II", href: "/mezzo", logo: "/mezzo.avif" },
-  tetto: { name: "Il Tetto", roman: "III", href: "/tetto", logo: "/iltetto.avif" },
+  emporio: {
+    id: "emporio",
+    name: "Emporio",
+    roman: "I",
+    href: "/emporio",
+    menuHref: "/menus/emporio",
+    logo: "/emporio.avif",
+  },
+  mezzo: {
+    id: "mezzo",
+    name: "Mezzo",
+    roman: "II",
+    href: "/mezzo",
+    menuHref: "/menus/mezzo",
+    logo: "/mezzo.avif",
+  },
+  tetto: {
+    id: "tetto",
+    name: "Il Tetto",
+    roman: "III",
+    href: "/tetto",
+    menuHref: "/menus/tetto",
+    logo: "/iltetto.avif",
+  },
 } as const
+
+export const SITE_URL = (
+  (import.meta.env.VITE_SITE_URL as string | undefined) ?? "https://www.siennamercato.com"
+).replace(/\/$/, "")
+
+export const ADDRESS = {
+  street: "942 Penn Avenue",
+  city: "Pittsburgh",
+  region: "PA",
+  zip: "15222",
+  mapsUrl: "https://maps.google.com/?q=942+Penn+Avenue+Pittsburgh+PA+15222",
+  embedUrl: "https://www.google.com/maps?q=942+Penn+Avenue,+Pittsburgh,+PA+15222&output=embed",
+}
 
 export type FloorId = keyof typeof FLOORS
 

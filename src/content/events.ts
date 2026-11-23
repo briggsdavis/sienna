@@ -2,11 +2,10 @@ import { FLOORS, unsplash } from "@/lib/site"
 
 export const SPACES = [
   {
-    id: "emporio",
     ...FLOORS.emporio,
     sub: "A Meatball Joint",
     capacity: "105",
-    vibe: "Energetic · industrial · loud",
+    vibe: "Energetic • industrial • loud",
     perfect: ["Corporate happy hours", "Rehearsal dinners", "Family celebrations", "Birthdays"],
     desc: "Ground floor. Modern-industrial brick and steel, the open kitchen running through service, the bar long enough to seat your whole guest list. Customizable food stations, cocktail packages, no dress code.",
     highlights: [
@@ -19,11 +18,10 @@ export const SPACES = [
     accent: "text-sienna",
   },
   {
-    id: "mezzo",
     ...FLOORS.mezzo,
     sub: "Pizza & Charcuterie",
     capacity: "90",
-    vibe: "Intimate · refined · candlelit",
+    vibe: "Intimate • refined • candlelit",
     perfect: ["Cocktail hours", "Seated dinners", "Rehearsal dinners", "Corporate entertaining"],
     desc: "Second floor. Hardwood floors, exposed brick, a wood-beamed ceiling and open-air garage windows that look out over Penn Avenue. Custom menus, custom beverage pairings, wine list included.",
     highlights: [
@@ -36,11 +34,10 @@ export const SPACES = [
     accent: "text-sienna",
   },
   {
-    id: "tetto",
     ...FLOORS.tetto,
     sub: "Rooftop Beer Garden",
     capacity: "200",
-    vibe: "Open-air · skyline · all-season",
+    vibe: "Open-air • skyline • all-season",
     perfect: ["Weddings", "Rehearsal dinners", "Corporate parties", "Award-night socials"],
     desc: "Third floor. Award-winning rooftop with a retractable glass roof, bistro lights overhead, the Pittsburgh skyline behind every photograph. Chef-crafted catering, curated beverages, a dedicated event team.",
     highlights: [
@@ -51,39 +48,6 @@ export const SPACES = [
     ],
     image: unsplash("1414235077428-338989a2e8c0", 1600, 70),
     accent: "text-sienna-bright",
-  },
-] as const
-
-export const UPCOMING = [
-  {
-    date: "May 17",
-    day: "Sun",
-    title: "Jazz Night on the Roof",
-    sub: "Live trio · no cover",
-    floor: "Il Tetto · Floor III",
-    when: "7 PM → close",
-    icon: "ph-music-notes",
-    tag: "this week",
-  },
-  {
-    date: "May 24",
-    day: "Sat",
-    title: "Summer Kickoff",
-    sub: "Rooftop buyout · open to all",
-    floor: "Il Tetto · Floor III",
-    when: "5 PM → late",
-    icon: "ph-sun-horizon",
-    tag: "next week",
-  },
-  {
-    date: "Jun 7",
-    day: "Sat",
-    title: "Barolo Night",
-    sub: "Chef's wine dinner · four courses",
-    floor: "Mezzo · Floor II",
-    when: "6:30 PM · ticketed",
-    icon: "ph-wine",
-    tag: "upcoming",
   },
 ] as const
 
@@ -119,13 +83,11 @@ export const CONTACTS = [
 
 export const FLOOR_OPTIONS = [
   "No preference",
-  "Floor I · Emporio",
-  "Floor II · Mezzo",
-  "Floor III · Il Tetto",
+  "Il Tetto • Floor III",
+  "Mezzo • Floor II",
+  "Emporio • Floor I",
   "Whole building",
 ]
-
-export const HEADCOUNT_OPTIONS = ["Under 25", "25 – 50", "50 – 100", "100 – 150", "150 – 200+"]
 
 export const EVENT_TYPE_OPTIONS = [
   "Wedding",
@@ -133,6 +95,6 @@ export const EVENT_TYPE_OPTIONS = [
   "Corporate / company",
   "Birthday / anniversary",
   "Holiday party",
-  "Catering · delivery only",
+  "Catering • delivery only",
   "Something else",
 ]
