@@ -47,7 +47,7 @@ export function Layout() {
           <Tracker />
           <ScrollProgress />
           {!contactPage && <Nav />}
-          <main key={pathname} className="page-enter">
+          <main key={pathname} className="page-enter relative z-[1] bg-paper">
             <Outlet />
           </main>
           <Footer />

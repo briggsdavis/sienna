@@ -16,7 +16,7 @@ export function SignupForm({
   askName?: boolean
   buttonLabel?: string
   successMessage?: string
-  tone?: "dark" | "light"
+  tone?: "dark" | "light" | "sienna"
   onDone?: () => void
 }) {
   const subscribe = useMutation(api.inquiries.subscribe)
@@ -27,7 +27,9 @@ export function SignupForm({
   const [honeypot, setHoneypot] = useState("")
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle")
   const [error, setError] = useState("")
-  const dark = tone === "dark"
+  const dark = tone !== "light"
+  const contrast = tone === "sienna"
+  const accent = contrast ? "text-cream" : dark ? "text-sienna-bright" : "text-sienna"
 
   if (status === "done") {
     return (
@@ -35,20 +37,22 @@ export function SignupForm({
         className={`mt-5 flex items-center gap-2 font-body ${dark ? "text-cream" : "text-ink"}`}
         role="status"
       >
-        <i
-          className={`ph ph-check-circle text-xl ${dark ? "text-sienna-bright" : "text-sienna"}`}
-        />
+        <i className={`ph ph-check-circle text-xl ${accent}`} />
         {successMessage}
       </p>
     )
   }
 
-  const line = dark
-    ? "border-paper/30 focus-within:border-sienna-bright"
-    : "border-ink/25 focus-within:border-sienna"
-  const input = dark
-    ? "text-paper placeholder:text-paper/50"
-    : "text-ink placeholder:text-ink-soft/60"
+  const line = contrast
+    ? "border-cream/60 focus-within:border-cream"
+    : dark
+      ? "border-paper/30 focus-within:border-sienna-bright"
+      : "border-ink/25 focus-within:border-sienna"
+  const input = contrast
+    ? "text-cream placeholder:text-cream/80"
+    : dark
+      ? "text-paper placeholder:text-paper/50"
+      : "text-ink placeholder:text-ink-soft/60"
 
   return (
     <form
@@ -99,13 +103,13 @@ export function SignupForm({
           aria-label="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className={`flex-1 bg-transparent py-3 font-body focus:outline-none ${input}`}
+          className={`min-w-0 flex-1 bg-transparent py-3 font-body focus:outline-none ${input}`}
         />
         <button
           type="submit"
           disabled={status === "sending"}
-          className={`px-3 font-serif text-xs tracking-[0.2em] uppercase transition-colors disabled:opacity-50 ${
-            dark ? "text-sienna-bright hover:text-cream" : "text-sienna hover:text-sienna-deep"
+          className={`px-3 font-serif text-xs tracking-[0.2em] uppercase transition-colors disabled:opacity-50 ${accent} ${
+            dark ? "hover:text-cream" : "hover:text-sienna-deep"
           }`}
           aria-label="Subscribe"
         >
@@ -121,7 +125,7 @@ export function SignupForm({
           type="checkbox"
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
-          className="mt-0.5 accent-sienna"
+          className={`mt-0.5 ${contrast ? "accent-cream" : "accent-sienna"}`}
         />
         <span>
           {settings?.marketingConsentText ?? "Yes, send me Sienna Mercato news and offers."}{" "}
@@ -131,10 +135,7 @@ export function SignupForm({
         </span>
       </label>
       {error && (
-        <p
-          role="alert"
-          className={`mt-2 font-body text-xs ${dark ? "text-sienna-bright" : "text-sienna"}`}
-        >
+        <p role="alert" className={`mt-2 font-body text-xs ${accent}`}>
           {error}
         </p>
       )}

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react"
 import { FadeIn } from "@/components/fade-in"
 import { getMenuSectionPhoto } from "@/content/menu-photos"
 import { FLOORS, type FloorId } from "@/lib/site"
+import { formatPrice } from "@/lib/util"
 import type { Doc } from "../../convex/_generated/dataModel"
 
 export type MenuSection = Doc<"menuSections"> & {
@@ -38,11 +39,6 @@ export const MENU_THEMES = {
     chip: "border-ink/20 text-ink hover:border-sienna hover:text-sienna",
   },
 } as const
-
-export function formatPrice(price?: string) {
-  if (!price) return ""
-  return /^\d/.test(price) ? `$${price}` : price
-}
 
 function slug(title: string) {
   return title

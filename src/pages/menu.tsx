@@ -50,7 +50,7 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
         <div className="relative z-10 mx-auto max-w-[1400px]">
           <div className="relative flex min-h-36 items-center justify-center sm:min-h-48">
             <img
-              src={floor.logo}
+              src={restaurant === "mezzo" ? "/siennalogo.png" : floor.logo}
               alt=""
               className="pointer-events-none absolute inset-0 mx-auto h-full w-4/5 max-w-xl object-contain opacity-[0.12] brightness-0 invert"
             />

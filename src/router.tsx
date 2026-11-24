@@ -5,6 +5,7 @@ import { Catering } from "@/pages/catering"
 import { CateringCheckout } from "@/pages/checkout"
 import { Contact } from "@/pages/contact"
 import { Emporio } from "@/pages/emporio"
+import { EventDetails } from "@/pages/event-details"
 import { Events } from "@/pages/events"
 import { Home } from "@/pages/home"
 import { MenuPage } from "@/pages/menu"
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
       { path: "/menus", element: <Navigate to="/menus/mezzo" replace /> },
       { path: "/menus/:restaurant", element: <MenuPage /> },
       { path: "/events", element: <Events /> },
+      { path: "/events/:eventId/:occurrence", element: <EventDetails /> },
       { path: "/catering", element: <Catering /> },
       { path: "/catering/checkout", element: <CateringCheckout /> },
       { path: "/contact", element: <Contact /> },

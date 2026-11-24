@@ -54,6 +54,10 @@ export function PageContent({ page, children }: { page: string; children: ReactN
   return <PageContext.Provider value={{ page, content }}>{children}</PageContext.Provider>
 }
 
+export function useEditablePageContent() {
+  return useContext(PageContext).content
+}
+
 function useEntry(k: string) {
   const { page, content } = useContext(PageContext)
   return { page, loading: content === undefined, entry: content?.[k] }

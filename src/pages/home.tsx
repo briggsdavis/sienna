@@ -1,4 +1,4 @@
-import { useQuery } from "convex/react"
+import { useEffect, useRef } from "react"
 import { Link } from "react-router"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
@@ -6,12 +6,11 @@ import { HeroImage } from "@/components/hero"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReserveLink, reserveSummary, useSettings } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
-import { FEATURED_DISHES, FLOOR_HOURS, HOME_FLOORS, TONIGHT, type HomeFloor } from "@/content/home"
+import { UpcomingEvents } from "@/components/upcoming-events"
+import { FEATURED_DISHES, FLOOR_HOURS, HOME_FLOORS, type HomeFloor } from "@/content/home"
 import { useStaggerReveal } from "@/hooks/use-reveal"
 import { PAGE_SEO } from "@/lib/pages"
-import { FLOORS, PHONE, unsplash, type FloorId } from "@/lib/site"
-import { weekdayToday } from "@/lib/util"
-import { api } from "../../convex/_generated/api"
+import { FLOORS, PHONE, unsplash } from "@/lib/site"
 
 const JSON_LD = {
   ...restaurantJsonLd({ name: "Sienna Mercato", path: "/", reservations: true }),
@@ -38,7 +37,7 @@ export function Home() {
           ))}
         </section>
         <FeaturedDishes />
-        <Tonight />
+        <UpcomingEvents />
         <EventsAndCatering />
         <Visit />
       </div>
@@ -266,10 +265,51 @@ function FloorText({ floor }: { floor: HomeFloor }) {
 }
 
 function FeaturedDishes() {
+  const gridRef = useRef<HTMLDivElement>(null)
+  const firstPhotoRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const grid = gridRef.current
+    const firstPhoto = firstPhotoRef.current
+    if (!grid || !firstPhoto) return
+
+    const motion = window.matchMedia(
+      "(min-width: 48rem) and (prefers-reduced-motion: no-preference)",
+    )
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      if (!motion.matches) return
+
+      const { top, height } = firstPhoto.getBoundingClientRect()
+      const viewport = window.innerHeight
+      const distance = top + height / 2 - viewport / 2
+      const progress = Math.min(1, Math.max(0, distance / (viewport / 2)))
+      const stagger = Math.min(52, height * 0.12)
+      grid.style.setProperty("--featured-dish-offset", `${progress * stagger}px`)
+    }
+
+    const schedule = () => {
+      if (motion.matches && !frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    motion.addEventListener("change", update)
+    return () => {
+      window.removeEventListener("scroll", schedule)
+      window.removeEventListener("resize", schedule)
+      motion.removeEventListener("change", update)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+
   return (
     <section aria-labelledby="featured-dishes" className="relative bg-cream py-24 lg:py-32">
-      <FadeIn>
-        <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
+      <div className="site-container">
+        <FadeIn>
           <h2
             id="featured-dishes"
             className="mb-12 font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink"
@@ -279,155 +319,61 @@ function FeaturedDishes() {
               <EText k="dishes.titleAccent" d="Dishes." />
             </span>
           </h2>
-
-          <div className="grid gap-x-8 gap-y-10 md:grid-cols-3">
-            {FEATURED_DISHES.map((dish) => {
-              const floor = FLOORS[dish.floor]
-              return (
-                <article key={floor.id} className="dish-card flex flex-col">
-                  <div className="relative aspect-square overflow-hidden bg-paper-deep">
-                    <EImage k={`${dish.contentKey}.image`} d={dish.image}>
-                      {(src) => (
-                        <img
-                          src={src}
-                          alt={dish.name}
-                          loading="lazy"
-                          className="dish-img h-full w-full object-cover"
-                        />
-                      )}
-                    </EImage>
-                  </div>
-                  <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <h3 className="font-display text-2xl leading-tight text-ink lg:text-3xl">
-                      <EText k={`${dish.contentKey}.name`} d={dish.name} />
-                    </h3>
-                    <span className="font-serif text-lg text-sienna tabular-nums">
-                      <EText k={`${dish.contentKey}.price`} d={`$${dish.price}`} />
-                    </span>
-                  </div>
-                  <div className="mt-3 flex items-center gap-3 text-ink-soft">
-                    <img
-                      src={floor.logo}
-                      alt=""
-                      className="h-5 w-auto max-w-20 object-contain brightness-0"
-                    />
-                    <span className="font-serif text-sm">{floor.name}</span>
-                  </div>
-                  <div className="mt-auto pt-5">
-                    <Link
-                      to={floor.menuHref}
-                      aria-label={`Find more dishes at ${floor.name}`}
-                      className="btn-lift group border border-ink text-ink hover:bg-ink hover:text-cream"
-                    >
-                      Find more
-                      <i
-                        aria-hidden="true"
-                        className="ph ph-arrow-right text-sm transition-transform group-hover:translate-x-0.5"
-                      />
-                    </Link>
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-        </div>
-      </FadeIn>
-    </section>
-  )
-}
-
-function useTodaysSpecials() {
-  const emporio = useQuery(api.specials.list, { restaurant: "emporio" })
-  const mezzo = useQuery(api.specials.list, { restaurant: "mezzo" })
-  const tetto = useQuery(api.specials.list, { restaurant: "tetto" })
-  if (!emporio || !mezzo || !tetto) return undefined
-  const day = weekdayToday()
-  return (
-    [
-      ["emporio", emporio],
-      ["mezzo", mezzo],
-      ["tetto", tetto],
-    ] as [FloorId, typeof emporio][]
-  ).flatMap(([id, rows]) =>
-    rows.filter((row) => row.days.includes(day)).map((row) => ({ ...row, floor: FLOORS[id] })),
-  )
-}
-
-function Tonight() {
-  const specials = useTodaysSpecials()
-
-  return (
-    <section id="tonight" className="scroll-mt-20 bg-sienna py-28 text-cream">
-      <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-        <FadeIn>
-          <div className="mb-14">
-            <h2 className="font-display text-[clamp(3rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9]">
-              <EText k="tonight.title" d="Tonight at" />{" "}
-              <span className="font-italic italic">
-                <EText k="tonight.titleAccent" d="Sienna" />
-              </span>
-            </h2>
-          </div>
         </FadeIn>
 
-        {specials === undefined ? (
-          <div className="h-64" />
-        ) : specials.length > 0 ? (
-          <div className="grid gap-px bg-cream/20 sm:grid-cols-2 lg:grid-cols-4">
-            {specials.slice(0, 8).map((special, index) => (
-              <FadeIn key={special._id} delay={(index % 4) * 0.1} className="h-full">
-                <Link
-                  to={`${special.floor.href}#specials`}
-                  className="group block h-full bg-sienna p-8 transition-colors hover:bg-sienna-deep"
+        <div ref={gridRef} className="featured-dishes-grid grid gap-x-8 gap-y-10 md:grid-cols-3">
+          {FEATURED_DISHES.map((dish, index) => {
+            const floor = FLOORS[dish.floor]
+            return (
+              <article key={floor.id} className="dish-card flex flex-col">
+                <div
+                  ref={index === 0 ? firstPhotoRef : undefined}
+                  className="relative aspect-square overflow-hidden bg-paper-deep"
                 >
-                  <img
-                    src={special.floor.logo}
-                    alt={special.floor.name}
-                    className="h-6 w-auto opacity-60 brightness-0 invert"
-                  />
-                  <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
-                    Today's special
-                  </div>
-                  <h3 className="mt-2 font-display text-3xl leading-tight text-cream">
-                    {special.name}
-                  </h3>
-                  {special.desc && (
-                    <p className="mt-3 font-body text-sm leading-relaxed text-cream/80">
-                      {special.desc}
-                    </p>
-                  )}
-                  <div className="mt-6 font-serif text-xs tracking-[0.25em] text-cream/60 uppercase">
-                    {special.price && `${/^\d/.test(special.price) ? "$" : ""}${special.price} • `}
-                    {special.floor.name}
-                  </div>
-                </Link>
-              </FadeIn>
-            ))}
-          </div>
-        ) : (
-          <div className="grid gap-px bg-cream/20 sm:grid-cols-2 lg:grid-cols-4">
-            {TONIGHT.map((card, index) => (
-              <FadeIn key={card.title} delay={index * 0.1} className="h-full">
-                <div className="group h-full bg-sienna p-8 transition-colors hover:bg-sienna-deep">
-                  <i className={`ph-duotone ${card.icon} text-4xl text-cream/60`} />
-                  <div className="mt-8 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
-                    {card.tag}
-                  </div>
-                  <h3 className="mt-2 font-display text-3xl leading-tight text-cream">
-                    {card.title}
-                    {"until" in card && ` to ${card.until}`}
-                  </h3>
-                  <p className="mt-3 font-body text-sm leading-relaxed text-cream/80">
-                    {card.desc}
-                  </p>
-                  <div className="mt-6 font-serif text-xs tracking-[0.25em] text-cream/60 uppercase">
-                    {card.meta}
-                  </div>
+                  <EImage k={`${dish.contentKey}.image`} d={dish.image}>
+                    {(src) => (
+                      <img
+                        src={src}
+                        alt={dish.name}
+                        loading="lazy"
+                        className="dish-img h-full w-full object-cover"
+                      />
+                    )}
+                  </EImage>
                 </div>
-              </FadeIn>
-            ))}
-          </div>
-        )}
+                <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <h3 className="font-display text-2xl leading-tight text-ink lg:text-3xl">
+                    <EText k={`${dish.contentKey}.name`} d={dish.name} />
+                  </h3>
+                  <span className="font-serif text-lg text-sienna tabular-nums">
+                    <EText k={`${dish.contentKey}.price`} d={`$${dish.price}`} />
+                  </span>
+                </div>
+                <div className="mt-3 flex items-center gap-3 text-ink-soft">
+                  <img
+                    src={floor.logo}
+                    alt=""
+                    className="h-5 w-auto max-w-20 object-contain brightness-0"
+                  />
+                  <span className="font-serif text-sm">{floor.name}</span>
+                </div>
+                <div className="mt-auto pt-5">
+                  <Link
+                    to={floor.menuHref}
+                    aria-label={`Find more dishes at ${floor.name}`}
+                    className="btn-lift group border border-ink text-ink hover:bg-ink hover:text-cream"
+                  >
+                    Find more
+                    <i
+                      aria-hidden="true"
+                      className="ph ph-arrow-right text-sm transition-transform group-hover:translate-x-0.5"
+                    />
+                  </Link>
+                </div>
+              </article>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
@@ -435,75 +381,87 @@ function Tonight() {
 
 function EventsAndCatering() {
   return (
-    <section className="relative bg-paper py-28">
-      <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-        <div className="grid gap-px bg-ink/10 lg:grid-cols-2">
-          <FadeIn>
-            <div className="flex flex-col justify-between gap-10 bg-paper p-10 lg:p-14">
-              <div>
-                <h2 className="font-display text-[clamp(2.2rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
-                  <EText k="events.title" d="Book a floor." />
-                  <br />
-                  <span className="font-italic text-sienna italic">
-                    <EText k="events.titleAccent" d="Make it yours." />
-                  </span>
-                </h2>
-                <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                  <EText
-                    k="events.body"
-                    d="Three floors available for private hire. Up to 400 guests. The events team handles the rest."
-                  />
-                </p>
-              </div>
-              <ELink
-                k="events.link"
-                label="Events & private dining"
-                href="/events"
-                className="btn-lift group w-fit border border-ink text-ink hover:bg-ink hover:text-cream"
-              >
-                {(label) => (
-                  <>
-                    <i className="ph ph-calendar-dots text-base" />
-                    {label}
-                    <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
-                  </>
-                )}
-              </ELink>
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <div className="flex flex-col justify-between gap-10 bg-cream p-10 lg:p-14">
-              <div>
-                <h2 className="font-display text-[clamp(2.2rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
-                  <EText k="catering.title" d="Two kitchens." />
-                  <br />
-                  <span className="font-italic text-sienna italic">
-                    <EText k="catering.titleAccent" d="Delivered to you." />
-                  </span>
-                </h2>
-                <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
-                  <EText
-                    k="catering.body"
-                    d="Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice."
-                  />
-                </p>
-              </div>
-              <ELink
-                k="catering.link"
-                label="Catering menu"
-                href="/catering"
-                className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-bright"
-              >
-                {(label) => (
-                  <>
-                    <i className="ph ph-bag text-base" />
-                    {label}
-                    <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
-                  </>
-                )}
-              </ELink>
-            </div>
-          </FadeIn>
+    <section
+      aria-label="Private events and catering"
+      className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-ink px-6 py-16"
+    >
+      <EImage k="eventsCatering.image" d={unsplash("1519671482749-fd09be7ccebf", 2400, 80)}>
+        {(src) => (
+          <ParallaxImage
+            src={src}
+            alt="A candlelit dining table set for a private event"
+            speed={0.18}
+            loading="lazy"
+          />
+        )}
+      </EImage>
+      <div className="pointer-events-none absolute inset-0 bg-ink/15" />
+      <div className="relative grid w-full max-w-4xl bg-white shadow-2xl sm:grid-cols-2">
+        <div className="flex flex-col justify-between gap-6 p-6 sm:gap-8 sm:p-10 lg:p-12">
+          <div>
+            <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
+              <EText k="events.title" d="Book a floor." />
+              <br />
+              <span className="font-italic text-sienna italic">
+                <EText k="events.titleAccent" d="Make it yours." />
+              </span>
+            </h2>
+            <p className="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
+              <EText
+                k="events.body"
+                d="Three floors available for private hire. Up to 400 guests. The events team handles the rest."
+              />
+            </p>
+          </div>
+          <ELink
+            k="events.link"
+            label="Events & private dining"
+            href="/events"
+            className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-deep"
+          >
+            {(label) => (
+              <>
+                <i className="ph ph-calendar-dots text-base" />
+                {label}
+                <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+              </>
+            )}
+          </ELink>
+        </div>
+        <div className="relative flex flex-col justify-between gap-6 p-6 sm:gap-8 sm:p-10 lg:p-12">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-6 top-0 h-px bg-ink/10 sm:inset-y-10 sm:right-auto sm:left-0 sm:h-auto sm:w-px lg:inset-y-12"
+          />
+          <div>
+            <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
+              <EText k="catering.title" d="Two kitchens." />
+              <br />
+              <span className="font-italic text-sienna italic">
+                <EText k="catering.titleAccent" d="Delivered to you." />
+              </span>
+            </h2>
+            <p className="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
+              <EText
+                k="catering.body"
+                d="Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice."
+              />
+            </p>
+          </div>
+          <ELink
+            k="catering.link"
+            label="Catering menu"
+            href="/catering"
+            className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-deep"
+          >
+            {(label) => (
+              <>
+                <i className="ph ph-bag text-base" />
+                {label}
+                <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+              </>
+            )}
+          </ELink>
         </div>
       </div>
     </section>
@@ -514,7 +472,6 @@ function Visit() {
   const settings = useSettings()
   return (
     <section id="visit" className="relative scroll-mt-20 overflow-hidden bg-sienna text-cream">
-      <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
       <FadeIn>
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
           <div>

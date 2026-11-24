@@ -1,8 +1,9 @@
 import { useQuery } from "convex/react"
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router"
-import { ExternalLink } from "@/components/external-link"
-import { WEEKDAYS, addDays, formatDay, formatTime, isInternal, todayKey } from "@/lib/util"
+import { EventButton } from "@/components/event-info"
+import { eventPath } from "@/lib/events"
+import { WEEKDAYS, addDays, formatDay, formatTime, todayKey } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 
 function monthStart(day: string) {
@@ -181,7 +182,11 @@ export function EventsCalendar() {
                   />
                 )}
                 <div className="p-6">
-                  <h4 className="font-display text-3xl leading-tight">{event.title}</h4>
+                  <h4 className="font-display text-3xl leading-tight">
+                    <Link to={eventPath(event)} className="under">
+                      {event.title}
+                    </Link>
+                  </h4>
                   <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-serif text-2xs tracking-[0.3em] text-paper/60 uppercase">
                     {!selected && (
                       <span>{formatDay(event.occurrence, { month: "short", day: "numeric" })}</span>
@@ -219,23 +224,5 @@ export function EventsCalendar() {
         )}
       </div>
     </div>
-  )
-}
-
-function EventButton({ href, label }: { href: string; label: string }) {
-  const className = "btn-lift mt-5 bg-sienna-bright text-cream hover:bg-cream hover:text-sienna"
-  if (isInternal(href)) {
-    return (
-      <Link to={href} className={className}>
-        {label}
-        <i className="ph ph-arrow-right text-xs" />
-      </Link>
-    )
-  }
-  return (
-    <ExternalLink href={href} className={className}>
-      {label}
-      <i className="ph ph-arrow-up-right text-xs" />
-    </ExternalLink>
   )
 }

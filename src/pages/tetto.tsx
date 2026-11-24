@@ -3,7 +3,7 @@ import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { FloorIntro } from "@/components/floor-intro"
 import { HappyHour } from "@/components/happy-hour"
-import { FloorHeroIntro, PageHero } from "@/components/hero"
+import { RestaurantHero } from "@/components/hero"
 import { PageShortcuts } from "@/components/page-shortcuts"
 import { ReservationPanel } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
@@ -44,9 +44,11 @@ export function Tetto() {
               )}
             </EImage>
           }
-          hours={<EText k="intro.hours" d="Thu-Sun from 4 PM" />}
-          badge={<EText k="intro.badge" d="Walk-in only" />}
-          badgeClassName="bg-ink"
+          photoDetails={{
+            hours: <EText k="intro.hours" d="Thu-Sun from 4 PM" />,
+            badge: <EText k="intro.badge" d="Walk-in only" />,
+            badgeClassName: "bg-ink",
+          }}
           statement={
             <>
               <EText k="intro.statement1" d="The view is the menu." />
@@ -91,40 +93,27 @@ function Hero() {
   return (
     <EImage k="hero.image" d={unsplash("1414235077428-338989a2e8c0", 2400, 80)}>
       {(src) => (
-        <PageHero
+        <RestaurantHero
+          floor={FLOORS.tetto}
           image={{
             src,
             alt: "The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind",
           }}
-          overlay={<div className="absolute inset-0 bg-black/72" />}
-          numeral="III"
-          bottomPadding="pb-24"
         >
-          <FloorHeroIntro
-            floor={FLOORS.tetto}
-            blurb={
-              <EText
-                k="hero.blurb"
-                d="Thirty drafts on a chalkboard. A retractable roof that opens when the sky agrees. The skyline of a triangular city, lit from below, over your last pint of the night."
-              />
-            }
-          />
-          <div className="rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: "0.7s" }}>
-            <ELink
-              k="hero.menuLink"
-              label="Food & drafts"
-              href={FLOORS.tetto.menuHref}
-              className="btn-lift bg-paper text-ink hover:bg-cream"
-            >
-              {(label) => (
-                <>
-                  <i className="ph ph-beer-stein text-sm" />
-                  {label}
-                </>
-              )}
-            </ELink>
-          </div>
-        </PageHero>
+          <ELink
+            k="hero.menuLink"
+            label="Food & drafts"
+            href={FLOORS.tetto.menuHref}
+            className="btn-lift bg-paper text-ink hover:bg-cream"
+          >
+            {(label) => (
+              <>
+                <i className="ph ph-beer-stein text-sm" />
+                {label}
+              </>
+            )}
+          </ELink>
+        </RestaurantHero>
       )}
     </EImage>
   )
@@ -223,7 +212,7 @@ function WeatherAndHours() {
 
 function ClosingStrip() {
   return (
-    <section className="relative bg-ink text-cream">
+    <section className="relative bg-sienna text-cream">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <FadeIn delay={0.12}>
           <h3 className="font-display text-5xl leading-[0.9]">
@@ -253,7 +242,7 @@ function ClosingStrip() {
               k="closing.home"
               label="All of Sienna"
               href="/"
-              className="btn-lift group bg-sienna-bright text-cream hover:bg-cream hover:text-sienna"
+              className="btn-lift group bg-cream text-sienna hover:bg-paper"
             >
               {(label) => (
                 <>

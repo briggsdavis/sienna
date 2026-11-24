@@ -64,6 +64,11 @@ export function money(value: number) {
   return value % 1 === 0 ? `$${value}` : `$${value.toFixed(2)}`
 }
 
+export function formatPrice(price?: string) {
+  if (!price) return ""
+  return /^\d/.test(price) ? `$${price}` : price
+}
+
 export function isInternal(href: string) {
   return href.startsWith("/") || href.startsWith("#")
 }

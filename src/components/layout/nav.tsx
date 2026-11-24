@@ -5,17 +5,21 @@ import { AnnouncementBar } from "@/components/marketing"
 import { reserveSummary, useSettings } from "@/components/reserve"
 import { useTrackClick } from "@/lib/analytics"
 import { useCart } from "@/lib/cart"
-import { FLOORS, PHONE, type FloorId } from "@/lib/site"
+import { FLOORS, type FloorId } from "@/lib/site"
 
 const FLOOR_IDS: FloorId[] = ["tetto", "mezzo", "emporio"]
 const RESTAURANT_IDS: FloorId[] = ["emporio", "mezzo", "tetto"]
 
 const LINKS = [
-  { to: "/events", label: "Events" },
+  { to: "/", label: "Home" },
   { to: "/catering", label: "Catering" },
+  { to: "/events", label: "Events" },
   { to: "/contact", label: "Contact" },
 ]
-const MENU_LINK_TYPE = "font-display text-[2.35rem] leading-none"
+const MENU_COLUMNS =
+  "grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-x-4 sm:grid-cols-2 sm:gap-x-8"
+const MENU_LINK = "w-fit underline-offset-[0.15em] hover:underline aria-[current=page]:underline"
+const MENU_PRIMARY_LINK = `${MENU_LINK} text-[clamp(1rem,calc(4.2vw*var(--site-type-scale)),2.4rem)] leading-tight`
 
 function useHideOnScroll() {
   const [scrolled, setScrolled] = useState(false)
@@ -155,25 +159,15 @@ function ReserveOptions({ onPick }: { onPick: () => void }) {
 
 function RestaurantLinks({ onPick }: { onPick: () => void }) {
   return (
-    <ul className="grid w-fit max-w-full grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-5 px-3 py-3 sm:gap-x-8 sm:px-6">
+    <ul className={MENU_COLUMNS}>
       {RESTAURANT_IDS.map((id) => {
         const floor = FLOORS[id]
         return (
           <li key={id} className="col-span-2 grid grid-cols-subgrid items-baseline">
-            <NavLink
-              to={floor.href}
-              end
-              onClick={onPick}
-              className={`${MENU_LINK_TYPE} justify-self-end text-right text-ink hover:text-sienna aria-[current=page]:text-sienna`}
-            >
+            <NavLink to={floor.href} end onClick={onPick} className={MENU_PRIMARY_LINK}>
               {floor.name}
             </NavLink>
-            <NavLink
-              to={floor.menuHref}
-              end
-              onClick={onPick}
-              className="justify-self-start font-serif text-[1.1rem] leading-tight text-ink-soft hover:text-sienna aria-[current=page]:text-sienna"
-            >
+            <NavLink to={floor.menuHref} end onClick={onPick} className={MENU_PRIMARY_LINK}>
               {floor.name} Menu
             </NavLink>
           </li>
@@ -191,9 +185,7 @@ export function Nav() {
   const menuClose = useRef<HTMLButtonElement>(null)
   const { pathname } = useLocation()
   const { count, setOpen: setCartOpen } = useCart()
-  const settings = useSettings()
   const currentPath = pathname.toLowerCase().replace(/\/$/, "")
-  const menuFloor = RESTAURANT_IDS.find((id) => FLOORS[id].menuHref === currentPath)
 
   useEffect(() => {
     setMenuOpen(false)
@@ -219,7 +211,7 @@ export function Nav() {
 
   const transparent = !scrolled && !reserveOpen
   const tone = transparent ? "text-cream hover:text-sienna-bright" : "text-ink hover:text-sienna"
-  const mezzoPage = currentPath === FLOORS.mezzo.href || menuFloor === "mezzo"
+  const mezzoPage = currentPath === FLOORS.mezzo.href || currentPath === FLOORS.mezzo.menuHref
   const reserveHover = mezzoPage
     ? `btn-fill ${transparent ? "btn-fill-cream" : "[--button-fill-color:var(--color-sienna-deep)]"}`
     : "hover:bg-sienna-bright"
@@ -257,23 +249,15 @@ export function Nav() {
             </button>
 
             <div className="absolute left-1/2 max-w-[22%] -translate-x-1/2 min-[400px]:max-w-[36%]">
-              {menuFloor ? (
-                <span
-                  className={`block text-center font-display text-sm leading-none sm:text-lg ${transparent ? "text-cream" : "text-ink"}`}
-                >
-                  {FLOORS[menuFloor].name} Menu
-                </span>
-              ) : (
-                <Link to="/" className="flex items-center">
-                  <img
-                    src="/siennalogo.png"
-                    alt="Sienna Mercato"
-                    className={`h-9 w-auto object-contain transition-all duration-500 ${
-                      transparent ? "brightness-0 invert" : "brightness-0"
-                    }`}
-                  />
-                </Link>
-              )}
+              <Link to="/" className="flex items-center">
+                <img
+                  src="/siennalogo.png"
+                  alt="Sienna Mercato"
+                  className={`h-9 w-auto object-contain transition-all duration-500 ${
+                    transparent ? "brightness-0 invert" : "brightness-0"
+                  }`}
+                />
+              </Link>
             </div>
 
             <div className="flex items-center gap-3">
@@ -307,13 +291,13 @@ export function Nav() {
 
       <div
         id="site-navigation"
-        className={`fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-paper transition-all duration-500 ${
+        className={`fixed inset-0 z-[145] flex flex-col overflow-y-auto bg-sienna text-cream transition-opacity duration-500 ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden={!menuOpen}
         inert={!menuOpen}
       >
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-4 lg:px-12">
+        <div className="relative site-container flex items-center py-4">
           <button
             ref={menuClose}
             type="button"
@@ -322,7 +306,7 @@ export function Nav() {
               menuTrigger.current?.focus()
             }}
             aria-label="Close navigation"
-            className="relative grid h-9 w-9 cursor-pointer place-items-center text-ink transition-colors hover:bg-transparent hover:text-sienna"
+            className="relative grid h-9 w-9 cursor-pointer place-items-center transition-opacity hover:bg-transparent hover:opacity-75"
           >
             <span aria-hidden="true" className="absolute h-px w-5 rotate-45 bg-current" />
             <span aria-hidden="true" className="absolute h-px w-5 -rotate-45 bg-current" />
@@ -332,64 +316,44 @@ export function Nav() {
             onClick={closeMenu}
             className="absolute left-1/2 flex -translate-x-1/2 items-center"
           >
-            <img src="/siennalogo.png" alt="Sienna Mercato" className="h-9 w-auto brightness-0" />
+            <img
+              src="/siennalogo.png"
+              alt="Sienna Mercato"
+              className="h-9 w-auto brightness-0 invert"
+            />
           </Link>
-          <div className="w-6" />
         </div>
 
         <nav
           aria-label="Site navigation"
-          className="flex flex-1 flex-col items-center justify-center gap-1 py-8"
+          className="grid flex-1 items-center px-6 pt-8 pb-16 font-sans"
         >
-          <RestaurantLinks onPick={closeMenu} />
-          {LINKS.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              onClick={closeMenu}
-              className={({ isActive }) =>
-                `${MENU_LINK_TYPE} px-8 py-2 text-center transition-colors ${
-                  isActive ? "text-sienna" : "text-ink hover:text-sienna"
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+          <div className="mx-auto w-full max-w-[38rem] lg:translate-x-16">
+            <h2 className="mb-3 flex items-center gap-3 text-base sm:text-xl">
+              <span aria-hidden="true" className="size-2 rounded-full bg-current" />
+              Restaurants
+            </h2>
+            <RestaurantLinks onPick={closeMenu} />
 
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            {settings && (
-              <ExternalLink
-                href={settings.orderUrl}
+            <div className={`${MENU_COLUMNS} mt-14 items-end md:mt-20`}>
+              <ul className="grid gap-2">
+                {LINKS.map(({ to, label }) => (
+                  <li key={to}>
+                    <NavLink to={to} end onClick={closeMenu} className={MENU_PRIMARY_LINK}>
+                      {label}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
+              <NavLink
+                to="/privacy"
                 onClick={closeMenu}
-                className="btn-lift bg-sienna text-cream [--button-text-size:1.1rem] hover:bg-sienna-bright"
+                className={`${MENU_LINK} text-base sm:text-xl`}
               >
-                <i className="ph ph-bag text-base" />
-                Order Online
-              </ExternalLink>
-            )}
-            {count > 0 && (
-              <button
-                type="button"
-                onClick={() => {
-                  closeMenu()
-                  setCartOpen(true)
-                }}
-                className="btn-lift border border-ink/30 text-ink [--button-text-size:1.1rem] hover:bg-ink/5"
-              >
-                <i className="ph ph-shopping-bag text-base" />
-                Cart ({count})
-              </button>
-            )}
+                Privacy
+              </NavLink>
+            </div>
           </div>
-
-          <a
-            href={PHONE.href}
-            className="mt-8 flex items-center gap-2 font-serif text-[1.1rem] tracking-wider text-ink-soft transition-colors hover:text-sienna"
-          >
-            <i className="ph ph-phone text-base" />
-            {PHONE.label}
-          </a>
         </nav>
       </div>
     </>

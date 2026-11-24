@@ -232,14 +232,17 @@ function Reservations() {
 
 function ClosingStrip() {
   return (
-    <section aria-label="Explore the other floors" className="bg-paper px-6 py-12 md:py-16">
+    <section
+      aria-label="Explore the other floors"
+      className="bg-sienna px-6 py-12 text-cream md:py-16"
+    >
       <FadeIn className="flex justify-center">
         <div className="btn-pair">
           <ELink
             k="closing.up"
             label="Climb to Il Tetto"
             href={FLOORS.tetto.href}
-            className="btn-lift btn-fill bg-ink whitespace-nowrap text-cream"
+            className="btn-lift btn-fill bg-cream whitespace-nowrap text-sienna [--button-fill-color:var(--color-sienna-deep)]"
           >
             {(label) => (
               <>
@@ -252,7 +255,7 @@ function ClosingStrip() {
             k="closing.down"
             label="Down to Emporio"
             href={FLOORS.emporio.href}
-            className="btn-lift btn-fill border border-ink/30 whitespace-nowrap text-ink"
+            className="btn-lift btn-fill btn-fill-cream border border-cream/60 whitespace-nowrap text-cream"
           >
             {(label) => (
               <>

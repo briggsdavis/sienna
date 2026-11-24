@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { FLOORS } from "@/lib/site"
 
-const EASING_MS = 65
+const EASING_MS = 115
 
 function usesNativeScroll(target: EventTarget | null) {
   if (!(target instanceof Element)) return false
@@ -60,9 +60,8 @@ export function useSmoothWheelScroll(pathname: string) {
 
     const onWheel = (event: WheelEvent) => {
       const { deltaMode, deltaX, deltaY } = event
+      if (!deltaY || Math.abs(deltaX) > Math.abs(deltaY)) return
       if (
-        !deltaY ||
-        Math.abs(deltaX) > Math.abs(deltaY) ||
         event.ctrlKey ||
         event.metaKey ||
         event.altKey ||

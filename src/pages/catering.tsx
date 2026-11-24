@@ -362,7 +362,7 @@ function Fees() {
 
 function ClosingStrip() {
   return (
-    <section className="relative bg-ink text-cream">
+    <section className="relative bg-sienna text-cream">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <div>
           <h3 className="font-display text-5xl leading-[0.9]">
@@ -372,7 +372,7 @@ function ClosingStrip() {
           </h3>
         </div>
         <div className="btn-pair">
-          <Link to="/events" className="btn-lift bg-sienna text-cream hover:bg-sienna-bright">
+          <Link to="/events" className="btn-lift bg-cream text-sienna hover:bg-paper">
             <i className="ph ph-calendar-dots text-lg" />
             Private events
           </Link>

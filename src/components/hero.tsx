@@ -24,14 +24,12 @@ export function HeroImage({
 export function PageHero({
   image,
   overlay,
-  numeral,
   viewportHeight,
   bottomPadding = viewportHeight ? "pb-10" : "pb-20",
   children,
 }: {
   image: { src: string; alt: string; className?: string }
   overlay: ReactNode
-  numeral?: string
   viewportHeight?: keyof typeof HERO_HEIGHTS
   bottomPadding?: string
   children: ReactNode
@@ -48,41 +46,43 @@ export function PageHero({
       >
         {children}
       </div>
-      {numeral && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-          <div className={`mx-auto flex max-w-[1600px] justify-end px-6 ${bottomPadding} lg:px-12`}>
-            <span className="hidden font-display text-[calc(22vw*var(--site-type-scale))] leading-none text-cream/8 select-none lg:block">
-              {numeral}
-            </span>
-          </div>
-        </div>
-      )}
     </section>
   )
 }
 
-export function FloorHeroIntro({ floor, blurb }: { floor: Floor; blurb: ReactNode }) {
+export function RestaurantHero({
+  floor,
+  image,
+  children,
+}: {
+  floor: Floor
+  image: { src: string; alt: string }
+  children: ReactNode
+}) {
   return (
-    <>
-      <img
-        src={floor.logo}
-        alt={`${floor.name} logo`}
-        className="rise mb-6 h-16 w-auto opacity-80 brightness-0 invert"
-        style={{ animationDelay: "0s", objectFit: "contain", objectPosition: "left" }}
-      />
-      <h1
-        className="rise text-hero-shadow font-display text-[clamp(2.5rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream"
-        style={{ animationDelay: "0.25s" }}
-      >
-        {floor.name}
-      </h1>
-      <p
-        className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
-        style={{ animationDelay: "0.55s" }}
-      >
-        {blurb}
-      </p>
-    </>
+    <section className="relative isolate grid min-h-svh items-end overflow-hidden bg-sienna">
+      <HeroImage {...image} />
+      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-ink/35 via-sienna/40 to-sienna" />
+      <div className="relative site-container flex flex-col items-center pt-20 pb-[clamp(2.5rem,11.5svh,7.5rem)] text-center text-cream">
+        <img
+          src={floor.logo}
+          alt=""
+          className="rise mb-[clamp(1.5rem,5svh,3.6rem)] h-[min(49svh,69vw,32rem)] w-auto max-w-[76vw] object-contain brightness-0 invert"
+        />
+        <h1
+          className="rise font-sans text-[clamp(2rem,calc(4.2vw*var(--site-type-scale)),4.3rem)] leading-none font-black tracking-[0.06em] uppercase"
+          style={{ animationDelay: "0.25s" }}
+        >
+          {floor.name}
+        </h1>
+        <div
+          className="rise mt-[clamp(1rem,3.5svh,2.5rem)] flex flex-wrap items-center justify-center gap-3"
+          style={{ animationDelay: "0.45s" }}
+        >
+          {children}
+        </div>
+      </div>
+    </section>
   )
 }
 
