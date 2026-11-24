@@ -43,7 +43,7 @@ export function CartButton() {
     <button
       type="button"
       onClick={() => setOpen(true)}
-      className="btn-lift fixed right-5 bottom-5 z-[90] inline-flex items-center gap-3 bg-ink px-5 py-3.5 font-serif text-xs tracking-[0.25em] text-cream uppercase shadow-2xl hover:bg-sienna"
+      className="btn-lift fixed right-5 bottom-5 z-[90] bg-ink text-cream shadow-2xl hover:bg-sienna"
     >
       <i className="ph ph-shopping-bag text-lg" />
       Catering cart
@@ -163,7 +163,7 @@ export function CartDrawer() {
               <Link
                 to="/catering/checkout"
                 onClick={() => setOpen(false)}
-                className="btn-lift mt-5 flex w-full items-center justify-center gap-2 bg-sienna px-6 py-4 font-serif text-xs tracking-[0.3em] text-cream uppercase hover:bg-sienna-bright"
+                className="btn-lift mt-5 w-full bg-sienna text-cream hover:bg-sienna-bright"
               >
                 Continue to request
                 <i className="ph ph-arrow-right text-sm" />

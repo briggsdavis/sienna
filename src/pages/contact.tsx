@@ -1,78 +1,34 @@
 import { useMutation } from "convex/react"
 import { useState, type FormEvent } from "react"
-import { Link } from "react-router"
 import { ExternalLink } from "@/components/external-link"
 import { FadeIn } from "@/components/fade-in"
-import {
-  FormError,
-  Honeypot,
-  SelectField,
-  TextArea,
-  TextField,
-  useFormGuard,
-} from "@/components/form"
-import { reserveSummary, useSettings } from "@/components/reserve"
+import { FormError, Honeypot, TextArea, TextField, useFormGuard } from "@/components/form"
 import { Seo, restaurantJsonLd } from "@/components/seo"
-import { FLOOR_HOURS } from "@/content/home"
+import { CONTACTS } from "@/content/events"
 import { PAGE_SEO } from "@/lib/pages"
-import { ADDRESS, FLOORS, PHONE, SOCIAL_LINKS } from "@/lib/site"
+import { ADDRESS, PHONE } from "@/lib/site"
 import { errorMessage } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
-
-const SUBJECTS = [
-  "General question",
-  "Reservations",
-  "Feedback",
-  "Gift cards",
-  "Press & partnerships",
-  "Jobs",
-  "Something else",
-]
 
 const JSON_LD = restaurantJsonLd({ name: "Sienna Mercato", path: "/contact", reservations: true })
 
 export function Contact() {
   return (
-    <div className="relative bg-paper">
+    <div className="relative mx-auto max-w-[1300px] px-6 py-12 md:py-16 lg:px-12">
       <Seo path="/contact" {...PAGE_SEO["/contact"]} jsonLd={JSON_LD} />
-      <header className="relative overflow-hidden bg-ink pt-40 pb-20 text-cream">
-        <div className="grain pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay" />
-        <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
-          <h1 className="rise font-display text-[clamp(3rem,8vw,6.5rem)] leading-[0.88]">
-            Say <span className="font-italic italic">ciao.</span>
-          </h1>
-          <p
-            className="rise mt-6 max-w-xl font-body text-lg text-cream/80"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Three floors, one address, one phone number. Send a note and we'll get back within one
-            business day.
-          </p>
-        </div>
-      </header>
-
-      <section className="py-24">
-        <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
-          <ContactForm />
-          <Details />
-        </div>
-      </section>
-
-      <section className="border-t border-ink/10">
-        <iframe
-          title="Map of Sienna Mercato at 942 Penn Avenue"
-          src={ADDRESS.embedUrl}
-          className="h-[420px] w-full grayscale-[40%]"
-          loading="lazy"
-          referrerPolicy="no-referrer-when-downgrade"
-        />
+      <h1 className="mb-10 font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),5rem)] leading-none text-ink">
+        Contact
+      </h1>
+      <section className="grid gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-20">
+        <Details />
+        <ContactForm />
       </section>
     </div>
   )
 }
 
-type Form = { name: string; email: string; phone: string; subject: string; message: string }
-const EMPTY: Form = { name: "", email: "", phone: "", subject: "", message: "" }
+type Form = { name: string; email: string; phone: string; message: string }
+const EMPTY: Form = { name: "", email: "", phone: "", message: "" }
 
 function ContactForm() {
   const submit = useMutation(api.inquiries.submitContact)
@@ -99,7 +55,6 @@ function ContactForm() {
         name: form.name,
         email: form.email,
         phone: form.phone || undefined,
-        subject: form.subject || undefined,
         message: form.message,
       })
       setStatus("done")
@@ -113,20 +68,9 @@ function ContactForm() {
 
   return (
     <FadeIn>
-      <h2 className="font-display text-[clamp(2.2rem,4vw,3.5rem)] leading-[0.95] text-ink">
-        Send a message.
+      <h2 className="font-display text-[clamp(2.2rem,calc(4vw*var(--site-type-scale)),3.5rem)] leading-[0.95] text-ink">
+        Send a message
       </h2>
-      <p className="mt-4 max-w-lg font-body text-lg text-ink-soft">
-        Planning a party? Use the{" "}
-        <Link to="/events#inquire" className="text-sienna underline">
-          private events form
-        </Link>
-        . Feeding a crowd? Start a{" "}
-        <Link to="/catering" className="text-sienna underline">
-          catering request
-        </Link>
-        .
-      </p>
       {status === "done" ? (
         <div className="mt-10 border border-ink/10 bg-cream p-8" role="status">
           <i className="ph ph-check-circle text-4xl text-sienna" />
@@ -162,23 +106,14 @@ function ContactForm() {
               onChange={(e) => update({ email: e.target.value })}
             />
           </div>
-          <div className="grid gap-6 sm:grid-cols-2">
-            <TextField
-              tone="light"
-              label="Phone"
-              type="tel"
-              autoComplete="tel"
-              value={form.phone}
-              onChange={(e) => update({ phone: e.target.value })}
-            />
-            <SelectField
-              tone="light"
-              label="Subject"
-              options={SUBJECTS}
-              value={form.subject}
-              onChange={(e) => update({ subject: e.target.value })}
-            />
-          </div>
+          <TextField
+            tone="light"
+            label="Phone (optional)"
+            type="tel"
+            autoComplete="tel"
+            value={form.phone}
+            onChange={(e) => update({ phone: e.target.value })}
+          />
           <TextArea
             tone="light"
             label="Message"
@@ -191,7 +126,7 @@ function ContactForm() {
           <button
             type="submit"
             disabled={status === "sending"}
-            className="btn-lift inline-flex w-fit items-center gap-3 bg-sienna px-7 py-4 font-serif text-xs tracking-[0.3em] text-cream uppercase hover:bg-sienna-bright disabled:opacity-60"
+            className="btn-lift w-fit bg-sienna text-cream hover:bg-sienna-bright disabled:opacity-60"
           >
             <i className="ph ph-paper-plane-tilt text-base" />
             {status === "sending" ? "Sending..." : "Send message"}
@@ -202,98 +137,44 @@ function ContactForm() {
   )
 }
 
+const GENERAL_EMAIL = "info@siennapgh.com"
+
+const CONTACT_DETAILS = [
+  { label: "Phone", value: PHONE.label, href: PHONE.href },
+  { label: "General inquiries", value: GENERAL_EMAIL, href: `mailto:${GENERAL_EMAIL}` },
+  ...CONTACTS.map(({ role, email }) => ({ label: role, value: email, href: `mailto:${email}` })),
+]
+
 function Details() {
-  const settings = useSettings()
   return (
-    <FadeIn delay={0.12}>
-      <div className="grid gap-10">
-        <div>
-          <div className="mb-4 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
-            Visit
+    <FadeIn>
+      <h2 className="font-display text-3xl text-ink">Get in touch</h2>
+      <dl className="mt-5 grid gap-4">
+        {CONTACT_DETAILS.map(({ label, value, href }) => (
+          <div key={label} className="grid grid-cols-[minmax(7rem,1fr)_1.5fr] gap-3">
+            <dt className="font-body text-sm text-ink-soft">{label}</dt>
+            <dd className="min-w-0 font-body text-sm break-words">
+              <a href={href} className="under text-ink hover:text-sienna">
+                {value}
+              </a>
+            </dd>
           </div>
-          <address className="font-display text-3xl leading-snug text-ink not-italic">
-            {ADDRESS.street}
-            <br />
-            {ADDRESS.city}, {ADDRESS.region} {ADDRESS.zip}
-          </address>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <ExternalLink
-              href={ADDRESS.mapsUrl}
-              className="btn-lift inline-flex items-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase hover:bg-ink/5"
-            >
-              <i className="ph ph-map-pin text-sm" />
-              Directions
-            </ExternalLink>
-            <a
-              href={PHONE.href}
-              className="btn-lift inline-flex items-center gap-2 border border-ink/25 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase hover:bg-ink/5"
-            >
-              <i className="ph ph-phone text-sm" />
-              {PHONE.label}
-            </a>
-          </div>
-        </div>
+        ))}
+      </dl>
 
-        <div>
-          <div className="mb-4 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
-            Hours
-          </div>
-          <ul className="divide-y divide-ink/10 border-y border-ink/10">
-            {FLOOR_HOURS.map(({ floor, days, open, close }) => {
-              const reservation = settings?.reservations[floor.id]
-              return (
-                <li key={floor.name} className="flex items-center justify-between gap-5 py-4">
-                  <div>
-                    <Link
-                      to={floor.href}
-                      className="under font-serif text-lg text-ink hover:text-sienna"
-                    >
-                      {floor.name}
-                    </Link>
-                    <div className="font-body text-xs text-ink-soft">
-                      {reserveSummary(reservation?.mode, reservation?.note)}
-                    </div>
-                  </div>
-                  <span className="font-body text-sm text-ink-soft tabular-nums">
-                    {days}, {open} to {close}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-
-        <div>
-          <div className="mb-4 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
-            Follow
-          </div>
-          <div className="flex gap-4 text-ink">
-            {SOCIAL_LINKS.map((social) => (
-              <ExternalLink
-                key={social.label}
-                href={social.href}
-                aria-label={social.label}
-                className="transition-colors hover:text-sienna"
-              >
-                <i className={`ph ${social.icon} text-3xl`} />
-              </ExternalLink>
-            ))}
-          </div>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-3">
-          {Object.values(FLOORS).map((floor) => (
-            <Link
-              key={floor.id}
-              to={floor.menuHref}
-              className="group flex items-center justify-between border border-ink/10 bg-cream px-4 py-3 font-serif text-xs tracking-[0.2em] text-ink uppercase hover:border-sienna hover:text-sienna"
-            >
-              {floor.name} menu
-              <i className="ph ph-arrow-right" />
-            </Link>
-          ))}
-        </div>
-      </div>
+      <h2 className="mt-9 font-display text-3xl text-ink">Location</h2>
+      <address className="mt-3 font-body text-sm not-italic">
+        <ExternalLink href={ADDRESS.mapsUrl} className="under text-ink hover:text-sienna">
+          {ADDRESS.street}, {ADDRESS.city}, {ADDRESS.region} {ADDRESS.zip}
+        </ExternalLink>
+      </address>
+      <iframe
+        title="Map of Sienna Mercato at 942 Penn Avenue"
+        src={ADDRESS.embedUrl}
+        className="mt-4 h-56 w-full rounded-lg grayscale-[40%]"
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+      />
     </FadeIn>
   )
 }

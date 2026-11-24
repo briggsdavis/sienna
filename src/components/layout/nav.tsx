@@ -8,16 +8,14 @@ import { useCart } from "@/lib/cart"
 import { FLOORS, PHONE, type FloorId } from "@/lib/site"
 
 const FLOOR_IDS: FloorId[] = ["tetto", "mezzo", "emporio"]
+const RESTAURANT_IDS: FloorId[] = ["emporio", "mezzo", "tetto"]
 
 const LINKS = [
-  { to: "/", label: "Home", roman: "" },
-  { to: FLOORS.tetto.href, label: FLOORS.tetto.name, roman: FLOORS.tetto.roman },
-  { to: FLOORS.mezzo.href, label: FLOORS.mezzo.name, roman: FLOORS.mezzo.roman },
-  { to: FLOORS.emporio.href, label: FLOORS.emporio.name, roman: FLOORS.emporio.roman },
-  { to: "/catering", label: "Catering", roman: "" },
-  { to: "/events", label: "Events", roman: "" },
-  { to: "/contact", label: "Contact", roman: "" },
+  { to: "/events", label: "Events" },
+  { to: "/catering", label: "Catering" },
+  { to: "/contact", label: "Contact" },
 ]
+const MENU_LINK_TYPE = "font-display text-[2.35rem] leading-none"
 
 function useHideOnScroll() {
   const [scrolled, setScrolled] = useState(false)
@@ -64,14 +62,12 @@ function Dropdown({
   open,
   setOpen,
   className,
-  align = "right",
   children,
 }: {
   label: ReactNode
   open: boolean
   setOpen: (open: boolean) => void
   className: string
-  align?: "left" | "right"
   children: ReactNode
 }) {
   const ref = useDismiss(open, () => setOpen(false))
@@ -85,14 +81,12 @@ function Dropdown({
         className={className}
       >
         {label}
-        <i className={`ph ph-caret-${open ? "up" : "down"} text-xs`} />
+        <span aria-hidden="true" className="hidden text-2xs sm:inline-flex">
+          <i className={`ph ph-caret-${open ? "up" : "down"}`} />
+        </span>
       </button>
       {open && (
-        <div
-          className={`absolute top-full z-50 mt-2 w-72 border border-ink/10 bg-paper text-ink shadow-2xl ${
-            align === "right" ? "right-0" : "left-0"
-          }`}
-        >
+        <div className="absolute top-full right-0 z-50 mt-2 w-72 border border-ink/10 bg-paper text-ink shadow-2xl">
           {children}
         </div>
       )}
@@ -159,28 +153,33 @@ function ReserveOptions({ onPick }: { onPick: () => void }) {
   )
 }
 
-function MenuOptions({ onPick }: { onPick: () => void }) {
+function RestaurantLinks({ onPick }: { onPick: () => void }) {
   return (
-    <>
-      {FLOOR_IDS.map((id) => (
-        <Link key={id} to={FLOORS[id].menuHref} onClick={onPick} className={OPTION_CLASS}>
-          <FloorOption id={id} sub={`${FLOORS[id].name} menu`} external={false} />
-        </Link>
-      ))}
-      <Link to="/catering" onClick={onPick} className={OPTION_CLASS}>
-        <span className="w-8 text-center">
-          <i className="ph ph-bag text-xl text-ink/30" />
-        </span>
-        <div className="flex-1">
-          <div className="font-serif text-sm tracking-wide text-ink group-hover:text-sienna">
-            Catering
-          </div>
-          <div className="font-italic text-2xs text-ink-soft italic">
-            Half pans, full pans, boards
-          </div>
-        </div>
-      </Link>
-    </>
+    <ul className="grid w-fit max-w-full grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-5 px-3 py-3 sm:gap-x-8 sm:px-6">
+      {RESTAURANT_IDS.map((id) => {
+        const floor = FLOORS[id]
+        return (
+          <li key={id} className="col-span-2 grid grid-cols-subgrid items-baseline">
+            <NavLink
+              to={floor.href}
+              end
+              onClick={onPick}
+              className={`${MENU_LINK_TYPE} justify-self-end text-right text-ink hover:text-sienna aria-[current=page]:text-sienna`}
+            >
+              {floor.name}
+            </NavLink>
+            <NavLink
+              to={floor.menuHref}
+              end
+              onClick={onPick}
+              className="justify-self-start font-serif text-[1.1rem] leading-tight text-ink-soft hover:text-sienna aria-[current=page]:text-sienna"
+            >
+              {floor.name} Menu
+            </NavLink>
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 
@@ -188,26 +187,42 @@ export function Nav() {
   const { scrolled, hidden } = useHideOnScroll()
   const [menuOpen, setMenuOpen] = useState(false)
   const [reserveOpen, setReserveOpen] = useState(false)
-  const [menusOpen, setMenusOpen] = useState(false)
+  const menuTrigger = useRef<HTMLButtonElement>(null)
+  const menuClose = useRef<HTMLButtonElement>(null)
   const { pathname } = useLocation()
   const { count, setOpen: setCartOpen } = useCart()
   const settings = useSettings()
+  const currentPath = pathname.toLowerCase().replace(/\/$/, "")
+  const menuFloor = RESTAURANT_IDS.find((id) => FLOORS[id].menuHref === currentPath)
 
   useEffect(() => {
     setMenuOpen(false)
     setReserveOpen(false)
-    setMenusOpen(false)
   }, [pathname])
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : ""
+    if (!menuOpen) return
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return
+      setMenuOpen(false)
+      menuTrigger.current?.focus()
+    }
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+    menuClose.current?.focus()
+    window.addEventListener("keydown", onKey)
     return () => {
-      document.body.style.overflow = ""
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener("keydown", onKey)
     }
   }, [menuOpen])
 
-  const transparent = !scrolled && !menusOpen && !reserveOpen
+  const transparent = !scrolled && !reserveOpen
   const tone = transparent ? "text-cream hover:text-sienna-bright" : "text-ink hover:text-sienna"
+  const mezzoPage = currentPath === FLOORS.mezzo.href || menuFloor === "mezzo"
+  const reserveHover = mezzoPage
+    ? `btn-fill ${transparent ? "btn-fill-cream" : "[--button-fill-color:var(--color-sienna-deep)]"}`
+    : "hover:bg-sienna-bright"
   const closeMenu = () => setMenuOpen(false)
 
   return (
@@ -223,65 +238,43 @@ export function Nav() {
             transparent ? "bg-transparent" : "border-b border-ink/10 bg-paper/92 backdrop-blur-md"
           }`}
         >
-          <div className="relative mx-auto flex max-w-[1600px] items-center justify-between gap-6 px-6 py-4 lg:px-12">
+          <div className="relative site-container flex items-center justify-between gap-6 py-4">
             <button
-              onClick={() => setMenuOpen((open) => !open)}
+              ref={menuTrigger}
+              type="button"
+              onClick={() => {
+                setReserveOpen(false)
+                setMenuOpen((open) => !open)
+              }}
               aria-label={menuOpen ? "Close navigation" : "Open navigation"}
-              className={`z-10 flex items-center gap-2 transition-colors xl:hidden ${tone}`}
+              aria-expanded={menuOpen}
+              aria-controls="site-navigation"
+              className={`z-10 grid h-9 w-9 shrink-0 cursor-pointer place-content-center gap-1 transition-colors hover:bg-transparent ${tone}`}
             >
-              <i className={`ph ph-${menuOpen ? "x" : "list"} text-2xl`} />
+              <span aria-hidden="true" className="h-px w-5 bg-current" />
+              <span aria-hidden="true" className="h-px w-5 bg-current" />
+              <span aria-hidden="true" className="h-px w-5 bg-current" />
             </button>
 
-            <Link
-              to="/"
-              className="absolute left-1/2 flex -translate-x-1/2 items-center xl:static xl:translate-x-0"
-            >
-              <img
-                src="/siennalogo.png"
-                alt="Sienna Mercato"
-                className={`h-9 w-auto transition-all duration-500 ${
-                  transparent ? "brightness-0 invert" : "brightness-0"
-                }`}
-              />
-            </Link>
-
-            <nav
-              aria-label="Primary"
-              className="hidden flex-1 items-center justify-center gap-1 xl:flex"
-            >
-              {LINKS.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  end={link.to === "/"}
-                  className={({ isActive }) =>
-                    `px-3 py-2 font-serif text-xs tracking-[0.22em] uppercase transition-colors ${
-                      isActive
-                        ? transparent
-                          ? "text-cream underline underline-offset-8"
-                          : "text-sienna"
-                        : tone
-                    }`
-                  }
+            <div className="absolute left-1/2 max-w-[22%] -translate-x-1/2 min-[400px]:max-w-[36%]">
+              {menuFloor ? (
+                <span
+                  className={`block text-center font-display text-sm leading-none sm:text-lg ${transparent ? "text-cream" : "text-ink"}`}
                 >
-                  {link.label}
-                </NavLink>
-              ))}
-              <Dropdown
-                label="Menus"
-                open={menusOpen}
-                setOpen={(open) => {
-                  setMenusOpen(open)
-                  if (open) setReserveOpen(false)
-                }}
-                align="left"
-                className={`inline-flex items-center gap-1.5 px-3 py-2 font-serif text-xs tracking-[0.22em] uppercase transition-colors ${
-                  pathname.startsWith("/menus") ? "text-sienna" : tone
-                }`}
-              >
-                <MenuOptions onPick={() => setMenusOpen(false)} />
-              </Dropdown>
-            </nav>
+                  {FLOORS[menuFloor].name} Menu
+                </span>
+              ) : (
+                <Link to="/" className="flex items-center">
+                  <img
+                    src="/siennalogo.png"
+                    alt="Sienna Mercato"
+                    className={`h-9 w-auto object-contain transition-all duration-500 ${
+                      transparent ? "brightness-0 invert" : "brightness-0"
+                    }`}
+                  />
+                </Link>
+              )}
+            </div>
 
             <div className="flex items-center gap-3">
               {count > 0 && (
@@ -300,11 +293,8 @@ export function Nav() {
               <Dropdown
                 label={<span>Reserve</span>}
                 open={reserveOpen}
-                setOpen={(open) => {
-                  setReserveOpen(open)
-                  if (open) setMenusOpen(false)
-                }}
-                className={`btn-lift inline-flex items-center gap-1.5 bg-sienna px-3 py-2 font-serif text-xs tracking-[0.22em] text-cream uppercase sm:gap-2 sm:px-5 sm:py-2.5 ${
+                setOpen={setReserveOpen}
+                className={`btn-lift nav-reserve bg-sienna text-cream [--button-letter-spacing:0.12em] ${reserveHover} ${
                   reserveOpen ? "bg-sienna-deep" : ""
                 }`}
               >
@@ -316,18 +306,26 @@ export function Nav() {
       </header>
 
       <div
-        className={`fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-paper transition-all duration-500 xl:hidden ${
+        id="site-navigation"
+        className={`fixed inset-0 z-[60] flex flex-col overflow-y-auto bg-paper transition-all duration-500 ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
       >
         <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-6 py-4 lg:px-12">
           <button
-            onClick={closeMenu}
+            ref={menuClose}
+            type="button"
+            onClick={() => {
+              closeMenu()
+              menuTrigger.current?.focus()
+            }}
             aria-label="Close navigation"
-            className="text-ink transition-colors hover:text-sienna"
+            className="relative grid h-9 w-9 cursor-pointer place-items-center text-ink transition-colors hover:bg-transparent hover:text-sienna"
           >
-            <i className="ph ph-x text-2xl" />
+            <span aria-hidden="true" className="absolute h-px w-5 rotate-45 bg-current" />
+            <span aria-hidden="true" className="absolute h-px w-5 -rotate-45 bg-current" />
           </button>
           <Link
             to="/"
@@ -340,54 +338,31 @@ export function Nav() {
         </div>
 
         <nav
-          aria-label="Mobile"
+          aria-label="Site navigation"
           className="flex flex-1 flex-col items-center justify-center gap-1 py-8"
         >
+          <RestaurantLinks onPick={closeMenu} />
           {LINKS.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
-              end={link.to === "/"}
               onClick={closeMenu}
               className={({ isActive }) =>
-                `group flex items-baseline gap-4 px-8 py-2 transition-colors ${
+                `${MENU_LINK_TYPE} px-8 py-2 text-center transition-colors ${
                   isActive ? "text-sienna" : "text-ink hover:text-sienna"
                 }`
               }
             >
-              {link.roman && (
-                <span className="font-display text-xl text-ink/25 group-hover:text-sienna/50">
-                  {link.roman}
-                </span>
-              )}
-              <span className="font-display text-[clamp(2rem,7vw,3.75rem)] leading-none">
-                {link.label}
-              </span>
+              {link.label}
             </NavLink>
           ))}
-
-          <div className="mt-6 font-serif text-2xs tracking-[0.4em] text-ink-soft uppercase">
-            Menus
-          </div>
-          <div className="mt-3 flex flex-wrap justify-center gap-2 px-6">
-            {FLOOR_IDS.map((id) => (
-              <Link
-                key={id}
-                to={FLOORS[id].menuHref}
-                onClick={closeMenu}
-                className="rounded-full border border-ink/20 px-4 py-2 font-serif text-xs tracking-[0.2em] text-ink uppercase hover:border-sienna hover:text-sienna"
-              >
-                {FLOORS[id].name}
-              </Link>
-            ))}
-          </div>
 
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             {settings && (
               <ExternalLink
                 href={settings.orderUrl}
                 onClick={closeMenu}
-                className="btn-lift inline-flex items-center gap-3 bg-sienna px-7 py-3 font-serif text-sm tracking-[0.25em] text-cream uppercase"
+                className="btn-lift bg-sienna text-cream [--button-text-size:1.1rem] hover:bg-sienna-bright"
               >
                 <i className="ph ph-bag text-base" />
                 Order Online
@@ -400,7 +375,7 @@ export function Nav() {
                   closeMenu()
                   setCartOpen(true)
                 }}
-                className="btn-lift inline-flex items-center gap-3 border border-ink/30 px-7 py-3 font-serif text-sm tracking-[0.25em] text-ink uppercase"
+                className="btn-lift border border-ink/30 text-ink [--button-text-size:1.1rem] hover:bg-ink/5"
               >
                 <i className="ph ph-shopping-bag text-base" />
                 Cart ({count})
@@ -410,7 +385,7 @@ export function Nav() {
 
           <a
             href={PHONE.href}
-            className="mt-8 flex items-center gap-2 font-serif text-sm tracking-wider text-ink-soft transition-colors hover:text-sienna"
+            className="mt-8 flex items-center gap-2 font-serif text-[1.1rem] tracking-wider text-ink-soft transition-colors hover:text-sienna"
           >
             <i className="ph ph-phone text-base" />
             {PHONE.label}

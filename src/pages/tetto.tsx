@@ -3,8 +3,7 @@ import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { FloorIntro } from "@/components/floor-intro"
 import { HappyHour } from "@/components/happy-hour"
-import { FloorHeroIntro, HeroMeta, PageHero } from "@/components/hero"
-import { MenuTeaser } from "@/components/menu-view"
+import { FloorHeroIntro, PageHero } from "@/components/hero"
 import { PageShortcuts } from "@/components/page-shortcuts"
 import { ReservationPanel } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
@@ -68,21 +67,9 @@ export function Tetto() {
         />
         <DailySpecials restaurant="tetto" tone="dark" title="On the roof today." />
         <BeerOfTheMonth />
-        <MenuTeaser
-          restaurant="tetto"
-          heading={
-            <>
-              <EText k="menu.title" d="Whole pies," />
-              <br />
-              <span className="font-italic text-sienna italic">
-                <EText k="menu.titleAccent" d="cold drafts." />
-              </span>
-            </>
-          }
-        />
         <HappyHour
           title={<EText k="happy.title" d="Sunset hour." />}
-          titleSize="text-[clamp(2.2rem,5.5vw,5rem)]"
+          titleSize="text-[clamp(2.2rem,calc(5.5vw*var(--site-type-scale)),5rem)]"
           body={
             <EText
               k="happy.body"
@@ -110,13 +97,11 @@ function Hero() {
             alt: "The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind",
           }}
           overlay={<div className="absolute inset-0 bg-black/72" />}
-          meta={<HeroMeta />}
           numeral="III"
           bottomPadding="pb-24"
         >
           <FloorHeroIntro
             floor={FLOORS.tetto}
-            subtitle={<EText k="hero.subtitle" d="Rooftop Beer Garden." />}
             blurb={
               <EText
                 k="hero.blurb"
@@ -129,7 +114,7 @@ function Hero() {
               k="hero.menuLink"
               label="Food & drafts"
               href={FLOORS.tetto.menuHref}
-              className="btn-lift inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase hover:bg-cream"
+              className="btn-lift bg-paper text-ink hover:bg-cream"
             >
               {(label) => (
                 <>
@@ -166,7 +151,7 @@ function BeerOfTheMonth() {
               <div className="mb-2 font-serif text-base text-sienna-bright">
                 <EText k="botm.kicker" d="beer of the month" />
               </div>
-              <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[0.9]">
+              <h2 className="font-display text-[clamp(2rem,calc(5vw*var(--site-type-scale)),3.5rem)] leading-[0.9]">
                 <EText k="botm.title" d={FEATURED_DRAFT.name} />
               </h2>
               <p className="mt-4 max-w-lg font-body text-lg leading-relaxed text-paper/80">
@@ -192,7 +177,7 @@ function WeatherAndHours() {
       <div className="mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-2 lg:px-12">
         <FadeIn>
           <div>
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
+            <h2 className="font-display text-[clamp(2.5rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
               <EText k="weather.title" d="We open the roof" />
               <br />
               <span className="font-italic text-sienna italic">
@@ -249,13 +234,13 @@ function ClosingStrip() {
             </span>
           </h3>
         </FadeIn>
-        <FadeIn delay={0.24}>
-          <div className="flex flex-wrap gap-4">
+        <FadeIn delay={0.24} className="w-full max-w-[26rem]">
+          <div className="btn-pair">
             <ELink
               k="closing.down"
               label="Down to Mezzo"
               href="/mezzo"
-              className="btn-lift group inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
+              className="btn-lift group border border-cream/40 text-cream hover:bg-cream/10"
             >
               {(label) => (
                 <>
@@ -268,7 +253,7 @@ function ClosingStrip() {
               k="closing.home"
               label="All of Sienna"
               href="/"
-              className="btn-lift group inline-flex items-center gap-3 bg-sienna-bright px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream hover:text-sienna"
+              className="btn-lift group bg-sienna-bright text-cream hover:bg-cream hover:text-sienna"
             >
               {(label) => (
                 <>

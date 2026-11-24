@@ -6,9 +6,6 @@ export const RESERVE_URL =
 export const CATERING_ORDER_URL =
   "https://www.siennamercato.com/catering-store-v2/emporio/menu/order-settings"
 
-export const VIRTUAL_TOUR_URL =
-  "https://viewer.threshold360.com/?thresholdId=7761067-1993885746&preset=share"
-
 export const PHONE = { label: "412.281.2810", href: "tel:14122812810" }
 
 export const SOCIAL_LINKS = [

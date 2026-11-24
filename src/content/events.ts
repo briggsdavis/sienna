@@ -51,21 +51,6 @@ export const SPACES = [
   },
 ] as const
 
-export const REVIEWS = [
-  {
-    quote:
-      "I came here for a wedding on the rooftop and it is a beautiful venue. The food was delicious and the staff was professional and helpful.",
-    by: "Jesse V.",
-    stars: 5,
-  },
-  {
-    quote:
-      "When first tasked with planning our 3-day event, I had to find a hotel and entertainment too. Sienna Mercato, I could not have asked for anyone better. The venue was beautiful, the staff amazing, food delicious, drinks perfection, and the price was right. I'd give it 11 out of 10 stars.",
-    by: "Tracy M.",
-    stars: 5,
-  },
-] as const
-
 export const CONTACTS = [
   {
     name: "Susan Certo",

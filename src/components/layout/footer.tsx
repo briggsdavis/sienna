@@ -108,7 +108,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-paper/15 px-6 py-8 lg:px-12">
+      <div className="px-6 py-8 lg:px-12">
         <div className="mx-auto flex max-w-[1600px] items-center justify-center gap-12">
           {Object.values(FLOORS).map((floor) => (
             <Link key={floor.href} to={floor.href} aria-label={floor.name}>
@@ -122,18 +122,22 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-paper/15">
-        <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-4 px-6 py-6 font-serif text-xs tracking-wider text-paper lg:px-12">
-          <span>© {new Date().getFullYear()} Sienna Mercato Restaurant Group</span>
-          <span className="flex gap-6">
-            <Link to="/privacy" className="under hover:text-sienna-bright">
-              Privacy
-            </Link>
-            <Link to="/admin" className="under text-paper/50 hover:text-sienna-bright">
-              Staff
-            </Link>
-          </span>
-        </div>
+      <div className="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-4 px-6 py-6 font-serif text-xs tracking-wider text-paper lg:px-12">
+        <span>© {new Date().getFullYear()} Sienna Mercato Restaurant Group</span>
+        <ExternalLink
+          href="https://socialsatisfaction.agency"
+          className="under hover:text-sienna-bright"
+        >
+          Made by SocialSatisfaction
+        </ExternalLink>
+        <span className="flex gap-6">
+          <Link to="/privacy" className="under hover:text-sienna-bright">
+            Privacy
+          </Link>
+          <Link to="/admin" className="under text-paper/50 hover:text-sienna-bright">
+            Staff
+          </Link>
+        </span>
       </div>
     </footer>
   )

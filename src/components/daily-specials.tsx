@@ -48,7 +48,7 @@ export function DailySpecials({
               <div className={`mb-3 font-serif text-xs tracking-[0.4em] uppercase ${t.accent}`}>
                 {day === today ? "Today" : WEEKDAYS_LONG[day]}
               </div>
-              <h2 className="font-display text-[clamp(2.4rem,5vw,4.5rem)] leading-[0.9]">
+              <h2 className="font-display text-[clamp(2.4rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9]">
                 {title}
               </h2>
             </div>

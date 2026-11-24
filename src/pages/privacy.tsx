@@ -18,7 +18,7 @@ export function Privacy() {
     <section className="min-h-screen bg-paper px-6 pt-40 pb-28 lg:px-12">
       <Seo path="/privacy" {...PAGE_SEO["/privacy"]} />
       <div className="mx-auto max-w-3xl">
-        <h1 className="font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.9] text-ink">
+        <h1 className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
           Privacy policy.
         </h1>
         <div className="mt-10 space-y-5 font-body text-lg leading-relaxed whitespace-pre-line text-ink-soft">

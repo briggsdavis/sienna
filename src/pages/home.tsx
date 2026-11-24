@@ -67,7 +67,7 @@ function Hero() {
       <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-end px-6 pb-40 text-center lg:px-12">
         <div className="mx-auto max-w-3xl">
           <h1
-            className="rise text-hero-shadow font-display text-[clamp(2.8rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
+            className="rise text-hero-shadow font-display text-[clamp(2.8rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream"
             style={{ animationDelay: "0.35s" }}
           >
             <EText k="hero.title" d="Sienna" />{" "}
@@ -76,14 +76,14 @@ function Hero() {
             </span>
           </h1>
           <div
-            className="rise mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            className="rise mt-8 flex flex-col items-center gap-3"
             style={{ animationDelay: "0.65s" }}
           >
             <ELink
               k="hero.reserve"
               label="Reserve a table"
               href="#visit"
-              className="btn-lift group inline-flex items-center gap-2 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase"
+              className="btn-lift group bg-sienna text-cream"
             >
               {(label) => (
                 <>
@@ -114,7 +114,7 @@ function HeroOrder() {
       k="hero.order"
       label="Order pickup"
       href={settings.orderUrl}
-      className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+      className="btn-lift group border border-cream/40 text-cream hover:border-cream hover:bg-cream/10"
     >
       {(label) => (
         <>
@@ -138,7 +138,7 @@ function Manifesto() {
       </div>
       <div className="relative mx-auto max-w-5xl px-6">
         <FadeIn>
-          <p className="font-display text-[clamp(2.4rem,6vw,5rem)] leading-[1.1] text-ink">
+          <p className="font-display text-[clamp(2.4rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[1.1] text-ink">
             <EText k="manifesto.line1" d="Three floors." />
             <span className="font-italic text-sienna italic">
               {" "}
@@ -215,18 +215,15 @@ function FloorText({ floor }: { floor: HomeFloor }) {
         className="mb-6 h-16 w-auto object-left opacity-70 brightness-0"
         style={{ objectFit: "contain", objectPosition: "left" }}
       />
-      <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-[0.9] text-ink">
+      <h2 className="font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),7rem)] leading-[0.9] text-ink">
         {floor.name}
       </h2>
       <div className="mt-4 font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
         <EText k={`floor.${floor.id}.sub`} d={floor.sub} />
       </div>
-      <p className="mt-3 max-w-xl font-body text-lg leading-relaxed text-ink-soft">
-        <EText k={`floor.${floor.id}.desc`} d={floor.desc} />
-      </p>
       <ul className="mt-5 max-w-xl divide-y divide-ink/10 border-y border-ink/10">
         {floor.items.map((item, i) => (
-          <li key={item.name} className="flex items-baseline gap-4 py-4">
+          <li key={item.name} className="menu-row flex items-baseline gap-4 py-4">
             <span className="font-serif text-base tracking-wide text-ink">
               <EText k={`floor.${floor.id}.item${i}.name`} d={item.name} />
             </span>
@@ -247,7 +244,7 @@ function FloorText({ floor }: { floor: HomeFloor }) {
           k={`floor.${floor.id}.link`}
           label="Explore the floor"
           href={floor.href}
-          className="btn-lift group inline-flex items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+          className="btn-lift group border border-ink text-ink hover:bg-ink hover:text-cream"
         >
           {(label) => (
             <>
@@ -270,59 +267,68 @@ function FloorText({ floor }: { floor: HomeFloor }) {
 
 function FeaturedDishes() {
   return (
-    <section className="relative bg-cream py-32">
+    <section aria-labelledby="featured-dishes" className="relative bg-cream py-24 lg:py-32">
       <FadeIn>
         <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-          <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
-                <EText k="dishes.title" d="Featured" />
-                <br />
-                <span className="font-italic text-sienna italic">
-                  <EText k="dishes.titleAccent" d="Dishes." />
-                </span>
-              </h2>
-            </div>
-          </div>
+          <h2
+            id="featured-dishes"
+            className="mb-12 font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink"
+          >
+            <EText k="dishes.title" d="Featured" />{" "}
+            <span className="font-italic text-sienna italic">
+              <EText k="dishes.titleAccent" d="Dishes." />
+            </span>
+          </h2>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURED_DISHES.map((dish, i) => (
-              <article
-                key={dish.name}
-                className="dish-card group relative aspect-[4/3] overflow-hidden bg-ink"
-              >
-                <EImage k={`dishes.${i}.image`} d={dish.image}>
-                  {(src) => (
-                    <img
-                      src={src}
-                      alt={dish.name}
-                      className="dish-img absolute inset-0 h-full w-full object-cover"
-                    />
-                  )}
-                </EImage>
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
-                <div className="absolute top-4 left-4 bg-paper/90 px-3 py-2">
-                  <img
-                    src={FLOORS[dish.floor].logo}
-                    alt={FLOORS[dish.floor].name}
-                    className="h-4 w-auto opacity-70 brightness-0"
-                  />
-                </div>
-                <div className="absolute right-0 bottom-0 left-0 p-6">
-                  <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-3xl leading-tight text-cream">
-                      <EText k={`dishes.${i}.name`} d={dish.name} />
+          <div className="grid gap-x-8 gap-y-10 md:grid-cols-3">
+            {FEATURED_DISHES.map((dish) => {
+              const floor = FLOORS[dish.floor]
+              return (
+                <article key={floor.id} className="dish-card flex flex-col">
+                  <div className="relative aspect-square overflow-hidden bg-paper-deep">
+                    <EImage k={`${dish.contentKey}.image`} d={dish.image}>
+                      {(src) => (
+                        <img
+                          src={src}
+                          alt={dish.name}
+                          loading="lazy"
+                          className="dish-img h-full w-full object-cover"
+                        />
+                      )}
+                    </EImage>
+                  </div>
+                  <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                    <h3 className="font-display text-2xl leading-tight text-ink lg:text-3xl">
+                      <EText k={`${dish.contentKey}.name`} d={dish.name} />
                     </h3>
-                    <span className="font-serif text-lg text-cream tabular-nums">
-                      <EText k={`dishes.${i}.price`} d={`$${dish.price}`} />
+                    <span className="font-serif text-lg text-sienna tabular-nums">
+                      <EText k={`${dish.contentKey}.price`} d={`$${dish.price}`} />
                     </span>
                   </div>
-                  <p className="mt-2 font-body text-sm leading-snug text-cream/75">
-                    <EText k={`dishes.${i}.desc`} d={dish.desc} />
-                  </p>
-                </div>
-              </article>
-            ))}
+                  <div className="mt-3 flex items-center gap-3 text-ink-soft">
+                    <img
+                      src={floor.logo}
+                      alt=""
+                      className="h-5 w-auto max-w-20 object-contain brightness-0"
+                    />
+                    <span className="font-serif text-sm">{floor.name}</span>
+                  </div>
+                  <div className="mt-auto pt-5">
+                    <Link
+                      to={floor.menuHref}
+                      aria-label={`Find more dishes at ${floor.name}`}
+                      className="btn-lift group border border-ink text-ink hover:bg-ink hover:text-cream"
+                    >
+                      Find more
+                      <i
+                        aria-hidden="true"
+                        className="ph ph-arrow-right text-sm transition-transform group-hover:translate-x-0.5"
+                      />
+                    </Link>
+                  </div>
+                </article>
+              )
+            })}
           </div>
         </div>
       </FadeIn>
@@ -355,7 +361,7 @@ function Tonight() {
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         <FadeIn>
           <div className="mb-14">
-            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">
+            <h2 className="font-display text-[clamp(3rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9]">
               <EText k="tonight.title" d="Tonight at" />{" "}
               <span className="font-italic italic">
                 <EText k="tonight.titleAccent" d="Sienna" />
@@ -435,7 +441,7 @@ function EventsAndCatering() {
           <FadeIn>
             <div className="flex flex-col justify-between gap-10 bg-paper p-10 lg:p-14">
               <div>
-                <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
                   <EText k="events.title" d="Book a floor." />
                   <br />
                   <span className="font-italic text-sienna italic">
@@ -453,7 +459,7 @@ function EventsAndCatering() {
                 k="events.link"
                 label="Events & private dining"
                 href="/events"
-                className="btn-lift group inline-flex w-fit items-center gap-3 border border-ink px-6 py-3 font-serif text-xs tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
+                className="btn-lift group w-fit border border-ink text-ink hover:bg-ink hover:text-cream"
               >
                 {(label) => (
                   <>
@@ -468,7 +474,7 @@ function EventsAndCatering() {
           <FadeIn delay={0.1}>
             <div className="flex flex-col justify-between gap-10 bg-cream p-10 lg:p-14">
               <div>
-                <h2 className="font-display text-[clamp(2.2rem,5vw,4.5rem)] leading-[0.9] text-ink">
+                <h2 className="font-display text-[clamp(2.2rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
                   <EText k="catering.title" d="Two kitchens." />
                   <br />
                   <span className="font-italic text-sienna italic">
@@ -486,7 +492,7 @@ function EventsAndCatering() {
                 k="catering.link"
                 label="Catering menu"
                 href="/catering"
-                className="btn-lift group inline-flex w-fit items-center gap-3 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-bright"
               >
                 {(label) => (
                   <>
@@ -512,7 +518,7 @@ function Visit() {
       <FadeIn>
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
           <div>
-            <h2 className="font-display text-[clamp(2.5rem,6vw,5.5rem)] leading-[0.85]">
+            <h2 className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.85]">
               <EText k="visit.title" d="Reserve" />
               <br />
               <span className="font-italic italic">
@@ -532,7 +538,7 @@ function Visit() {
                   <ReserveLink
                     key={id}
                     restaurant={id}
-                    className="btn-lift group inline-flex items-center gap-3 bg-cream px-6 py-3.5 font-serif text-xs tracking-[0.25em] text-sienna uppercase transition-colors hover:bg-paper"
+                    className="btn-lift group bg-cream text-sienna hover:bg-paper"
                   >
                     <i className="ph ph-calendar-dots text-base" />
                     {FLOORS[id].name}
@@ -542,10 +548,7 @@ function Visit() {
                   </ReserveLink>
                 )
               })}
-              <a
-                href={PHONE.href}
-                className="btn-lift inline-flex items-center gap-3 border border-cream/60 px-6 py-3.5 font-serif text-xs tracking-[0.25em] uppercase transition-colors hover:bg-cream/10"
-              >
+              <a href={PHONE.href} className="btn-lift border border-cream/60 hover:bg-cream/10">
                 <i className="ph ph-phone text-base" />
                 {PHONE.label}
               </a>

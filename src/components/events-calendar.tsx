@@ -223,8 +223,7 @@ export function EventsCalendar() {
 }
 
 function EventButton({ href, label }: { href: string; label: string }) {
-  const className =
-    "btn-lift mt-5 inline-flex items-center gap-2 bg-sienna-bright px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase hover:bg-cream hover:text-sienna"
+  const className = "btn-lift mt-5 bg-sienna-bright text-cream hover:bg-cream hover:text-sienna"
   if (isInternal(href)) {
     return (
       <Link to={href} className={className}>

@@ -1,22 +1,13 @@
-import { DailySpecials } from "@/components/daily-specials"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
-import { FloorIntro } from "@/components/floor-intro"
-import { FloorHeroIntro, HeroMeta, PageHero } from "@/components/hero"
-import { MenuTeaser } from "@/components/menu-view"
-import { PageShortcuts } from "@/components/page-shortcuts"
+import { HeroIntro, PageHero } from "@/components/hero"
+import { MezzoSpecials } from "@/components/mezzo-specials"
+import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel, ReserveLink } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
-import { HOURS, STATS } from "@/content/mezzo"
+import { GALLERY_PHOTOS, HIGHLIGHTS, HOURS } from "@/content/mezzo"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, unsplash } from "@/lib/site"
-
-const SHORTCUTS = [
-  { label: "Daily Specials", icon: "ph-star", href: "#specials" },
-  { label: "Menu", icon: "ph-list-magnifying-glass", href: FLOORS.mezzo.menuHref },
-  { label: "Reserve", icon: "ph-calendar-dots", href: "#reserve" },
-  { label: "Catering", icon: "ph-bag", href: "/catering" },
-]
 
 const JSON_LD = restaurantJsonLd({
   name: "Mezzo at Sienna Mercato",
@@ -31,58 +22,10 @@ export function Mezzo() {
       <div className="relative">
         <Seo path="/mezzo" {...PAGE_SEO["/mezzo"]} jsonLd={JSON_LD} />
         <Hero />
-        <PageShortcuts shortcuts={SHORTCUTS} />
-        <FloorIntro
-          image={
-            <EImage k="intro.image" d={unsplash("1571997478779-2adcbbe9ab2f", 1200, 80)}>
-              {(src) => (
-                <img
-                  src={src}
-                  alt="Mezzo wood-fired pizza"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-              )}
-            </EImage>
-          }
-          hours={<EText k="intro.hours" d="Wed-Sun from 5 PM" />}
-          badge={<EText k="intro.badge" d="Reservations via OpenTable" />}
-          badgeClassName="bg-sienna"
-          statement={
-            <>
-              <EText k="intro.statement1" d="A second floor is for" />
-              <span className="font-italic text-sienna italic">
-                {" "}
-                <EText k="intro.statement2" d="slowing down." />{" "}
-              </span>
-              <EText
-                k="intro.statement3"
-                d="Candlelight, four courses, a bottle that lingers past the candle."
-              />
-            </>
-          }
-          body={
-            <EText
-              k="intro.body"
-              d="The kitchen rolls pasta at noon and lights the wood-fired oven before dinner. The cellar is Italian-led but not Italian-only, bottles chosen for the table you're sitting at, not the spreadsheet."
-            />
-          }
-          stats={STATS}
-        />
-        <Oven />
-        <DailySpecials restaurant="mezzo" tone="light" />
-        <MenuTeaser
-          restaurant="mezzo"
-          tone="dark"
-          heading={
-            <>
-              <EText k="menu.title" d="From oven," />
-              <br />
-              <span className="font-italic text-sienna-bright italic">
-                <EText k="menu.titleAccent" d="pan, and cellar." />
-              </span>
-            </>
-          }
-        />
+        <Intro />
+        <Gallery />
+        <Highlights />
+        <MezzoSpecials />
         <Reservations />
         <ClosingStrip />
       </div>
@@ -91,59 +34,26 @@ export function Mezzo() {
 }
 
 function Hero() {
+  const floor = FLOORS.mezzo
+
   return (
     <EImage k="hero.image" d={unsplash("1571997478779-2adcbbe9ab2f", 2400, 80)}>
       {(src) => (
         <PageHero
-          image={{
-            src,
-            alt: "A wood-fired pizza fresh from the oven at Mezzo",
-            className: "opacity-80",
-          }}
+          image={{ src, alt: "Wood-fired pizza", className: "opacity-80" }}
           overlay={
-            <>
-              <div className="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/40 to-ink/95" />
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_40%,rgba(110,31,18,0.35),transparent_60%)]" />
-            </>
+            <div className="absolute inset-0 bg-gradient-to-b from-ink/65 via-ink/50 to-ink/90" />
           }
-          meta={<HeroMeta />}
-          numeral="II"
+          bottomPadding="pb-0"
         >
-          <FloorHeroIntro
-            floor={FLOORS.mezzo}
-            subtitle={<EText k="hero.subtitle" d="Pizza & Charcuterie." />}
-            blurb={
-              <EText
-                k="hero.blurb"
-                d="Linen, candlelight, and an oven at eight hundred degrees. Pasta hand-rolled at noon, a wine list that speaks Piemontese."
-              />
-            }
-          />
-          <div
-            className="rise mt-8 flex flex-wrap items-center gap-3"
-            style={{ animationDelay: "0.7s" }}
-          >
-            <ReserveLink
-              restaurant="mezzo"
-              className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
-            >
-              <i className="ph ph-calendar-dots text-sm" />
-              <EText k="hero.reserveLabel" d="Reserve a table" />
-              <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </ReserveLink>
-            <ELink
-              k="hero.menuLink"
-              label="View the menu"
-              href={FLOORS.mezzo.menuHref}
-              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-            >
-              {(label) => (
-                <>
-                  <i className="ph ph-list-magnifying-glass text-sm" />
-                  {label}
-                </>
-              )}
-            </ELink>
+          <div className="my-auto flex flex-col items-center text-center">
+            <img
+              src={floor.logo}
+              alt=""
+              className="rise mb-5 h-16 w-auto max-w-[55vw] object-contain brightness-0 invert"
+            />
+            <HeroIntro title={floor.name} />
+            <MezzoActions hero />
           </div>
         </PageHero>
       )}
@@ -151,41 +61,119 @@ function Hero() {
   )
 }
 
-function Oven() {
+function MezzoActions({ hero = false }: { hero?: boolean }) {
+  const reserveTone = hero
+    ? "bg-paper text-ink"
+    : "bg-sienna text-cream [--button-fill-color:var(--color-sienna-deep)]"
+  const menuTone = hero ? "btn-fill-cream border-cream/50 text-cream" : "border-ink/30 text-ink"
+
   return (
-    <section className="relative overflow-hidden bg-ink py-14 text-paper">
-      <div className="relative mx-auto grid max-w-[1600px] gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:items-center lg:px-12">
-        <FadeIn>
-          <div className="relative aspect-[3/2] overflow-hidden lg:aspect-[4/3]">
-            <EImage k="oven.image" d={unsplash("1593504049359-74330189a345", 1400, 80)}>
+    <div
+      className={`mt-8 grid w-full max-w-xs grid-cols-2 gap-3 ${hero ? "rise" : ""}`}
+      style={hero ? { animationDelay: "0.45s" } : undefined}
+    >
+      <ReserveLink restaurant="mezzo" className={`btn-lift btn-fill ${reserveTone}`}>
+        Reserve
+      </ReserveLink>
+      <ELink
+        k="hero.menuLink"
+        label="Menu"
+        href={FLOORS.mezzo.menuHref}
+        className={`btn-lift btn-fill border ${menuTone}`}
+      />
+    </div>
+  )
+}
+
+function Intro() {
+  return (
+    <section aria-label="About Mezzo" className="bg-paper py-14 md:py-24">
+      <div className="site-container grid items-center gap-8 md:grid-cols-[1.25fr_1fr] md:gap-12 lg:gap-20">
+        <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
+          <EImage k="intro.image" d={unsplash("1751563820356-a62570b187ea", 1600, 82)}>
+            {(src) => (
+              <ParallaxImage
+                src={src}
+                alt="Warm lighting and wood paneling in an Italian restaurant dining room"
+                speed={0.08}
+              />
+            )}
+          </EImage>
+        </div>
+        <FadeIn delay={0.12} stagger>
+          <h2 className="font-display text-3xl leading-none text-ink md:text-4xl">Mezzo</h2>
+          <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-ink-soft">
+            <EText
+              k="intro.summary"
+              d="Mezzo is for slowing down. On Sienna Mercato’s second floor, settle in for a candlelit dinner of hand-rolled pasta, wood-fired pizza and Italian wine, with time for another course or a second glass."
+            />
+          </p>
+          <MezzoActions />
+        </FadeIn>
+      </div>
+    </section>
+  )
+}
+
+function Gallery() {
+  return (
+    <section aria-label="Mezzo photo gallery" className="bg-cream py-10 md:py-20">
+      <div className="site-container grid grid-cols-3 items-center gap-2 sm:gap-4">
+        {GALLERY_PHOTOS.map((image, index) => (
+          <div
+            key={image.id}
+            className={`relative overflow-hidden bg-paper-deep ${index === 1 ? "aspect-[3/4]" : "aspect-[4/3]"}`}
+          >
+            <EImage k={`gallery.${image.id}.image`} d={unsplash(image.photo, 1200, 80)}>
               {(src) => (
-                <img
+                <ParallaxImage
                   src={src}
-                  alt="Flames in a wood-fired pizza oven"
-                  className="absolute inset-0 h-full w-full object-cover"
+                  alt={image.alt}
+                  loading="lazy"
+                  speed={index === 1 ? 0.09 : 0.05}
                 />
               )}
             </EImage>
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent" />
           </div>
-        </FadeIn>
-        <FadeIn delay={0.12}>
-          <div>
-            <h2 className="font-display text-[clamp(2rem,5vw,4.5rem)] leading-[0.85]">
-              <EText k="oven.title" d="Eight hundred" />
-              <br />
-              <span className="font-italic text-sienna-bright italic">
-                <EText k="oven.titleAccent" d="degrees." />
-              </span>
-            </h2>
-            <p className="mt-8 max-w-md font-body text-xl leading-relaxed text-paper/85">
-              <EText
-                k="oven.body"
-                d="A wood-fired oven from Naples, lit at four, holding eight-hundred before service. Each pizza takes ninety seconds, leopard-spotted crust, blistered edge, mozzarella that pulls in long strings."
-              />
-            </p>
-          </div>
-        </FadeIn>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function Highlights() {
+  return (
+    <section
+      aria-label="What makes Mezzo special"
+      className="overflow-hidden bg-cream py-16 md:py-24"
+    >
+      <div className="@container site-container flex flex-col gap-14 md:gap-0">
+        {HIGHLIGHTS.map((feature, index) => (
+          <article
+            key={feature.id}
+            className="mezzo-highlight grid items-start gap-7 md:grid-cols-2"
+          >
+            <div
+              className={`relative aspect-[25/24] overflow-hidden bg-paper-deep shadow-xl ${
+                index % 2 === 0 ? "md:order-last" : ""
+              }`}
+            >
+              <EImage k={`highlights.${feature.id}.image`} d={unsplash(feature.photo, 1400, 80)}>
+                {(src) => <ParallaxImage src={src} alt={feature.alt} loading="lazy" speed={0.08} />}
+              </EImage>
+            </div>
+            <FadeIn delay={0.12} className="mezzo-highlight-copy" stagger>
+              <h2
+                className={`font-display text-[clamp(1.16rem,calc(2.4vw*var(--site-type-scale)),2.12rem)] leading-none whitespace-nowrap text-ink ${index > 0 ? "pt-3" : ""}`}
+              >
+                <EText k={`highlights.${feature.id}.title`} d={feature.title} />
+              </h2>
+              <p className="mt-4 max-w-sm font-body text-[0.9rem] leading-relaxed text-ink-soft">
+                <EText k={`highlights.${feature.id}.body`} d={feature.body} />
+              </p>
+            </FadeIn>
+          </article>
+        ))}
       </div>
     </section>
   )
@@ -199,19 +187,17 @@ function Reservations() {
     >
       <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
       <div className="relative mx-auto grid max-w-[1600px] gap-12 px-6 py-20 lg:grid-cols-2 lg:items-start lg:px-12">
-        <FadeIn>
-          <div className="pt-0 lg:pt-2">
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] leading-[0.9]">
-              <EText k="reserve.title" d="Book a table on Floor II." />
-            </h2>
-            <p className="mt-6 mb-8 max-w-md font-body text-lg leading-relaxed text-cream/80">
-              <EText
-                k="reserve.body"
-                d="Mezzo takes reservations online, seven days out. Bar seats are walk-in. Larger parties of six or more, call us directly."
-              />
-            </p>
-            <ReservationPanel restaurant="mezzo" tone="dark" />
-          </div>
+        <FadeIn className="pt-0 lg:pt-2" stagger>
+          <h2 className="font-display text-[clamp(2.5rem,calc(5vw*var(--site-type-scale)),4rem)] leading-[0.9]">
+            <EText k="reserve.title" d="Reserve at Mezzo" />
+          </h2>
+          <p className="mt-6 mb-8 max-w-md font-body text-lg leading-relaxed text-cream/80">
+            <EText
+              k="reserve.body"
+              d="Mezzo takes reservations online, seven days out. Bar seats are walk-in. Larger parties of six or more, call us directly."
+            />
+          </p>
+          <ReservationPanel restaurant="mezzo" tone="dark" fillHover />
         </FadeIn>
 
         <FadeIn delay={0.12}>
@@ -246,48 +232,37 @@ function Reservations() {
 
 function ClosingStrip() {
   return (
-    <section className="relative bg-paper">
-      <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
-        <FadeIn delay={0.12}>
-          <h3 className="font-display text-5xl leading-[0.9] text-ink">
-            <EText k="closing.title" d="Two more flights to" />
-            <br />
-            <span className="font-italic text-sienna italic">
-              <EText k="closing.titleAccent" d="the roof." />
-            </span>
-          </h3>
-        </FadeIn>
-        <FadeIn delay={0.24}>
-          <div className="flex flex-wrap gap-4">
-            <ELink
-              k="closing.down"
-              label="Back to Emporio"
-              href="/emporio"
-              className="btn-lift group inline-flex items-center gap-3 border border-ink/30 px-7 py-4 font-serif text-sm tracking-[0.3em] text-ink uppercase transition-colors hover:bg-ink hover:text-cream"
-            >
-              {(label) => (
-                <>
-                  <i className="ph ph-arrow-down text-lg" />
-                  {label}
-                </>
-              )}
-            </ELink>
-            <ELink
-              k="closing.up"
-              label="Climb to Il Tetto"
-              href="/tetto"
-              className="btn-lift group inline-flex items-center gap-3 bg-ink px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-deep"
-            >
-              {(label) => (
-                <>
-                  {label}
-                  <i className="ph ph-arrow-up text-lg" />
-                </>
-              )}
-            </ELink>
-          </div>
-        </FadeIn>
-      </div>
+    <section aria-label="Explore the other floors" className="bg-paper px-6 py-12 md:py-16">
+      <FadeIn className="flex justify-center">
+        <div className="btn-pair">
+          <ELink
+            k="closing.up"
+            label="Climb to Il Tetto"
+            href={FLOORS.tetto.href}
+            className="btn-lift btn-fill bg-ink whitespace-nowrap text-cream"
+          >
+            {(label) => (
+              <>
+                {label}
+                <i aria-hidden="true" className="ph ph-arrow-up" />
+              </>
+            )}
+          </ELink>
+          <ELink
+            k="closing.down"
+            label="Down to Emporio"
+            href={FLOORS.emporio.href}
+            className="btn-lift btn-fill border border-ink/30 whitespace-nowrap text-ink"
+          >
+            {(label) => (
+              <>
+                <i aria-hidden="true" className="ph ph-arrow-down" />
+                {label}
+              </>
+            )}
+          </ELink>
+        </div>
+      </FadeIn>
     </section>
   )
 }

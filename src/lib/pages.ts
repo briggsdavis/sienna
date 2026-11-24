@@ -47,7 +47,7 @@ export const PAGE_SEO: Record<string, PageInfo> = {
     name: "Contact",
     title: "Contact | Sienna Mercato, 942 Penn Avenue, Pittsburgh",
     description:
-      "Hours, directions and how to reach Sienna Mercato at 942 Penn Avenue in Pittsburgh's Cultural District. Send us a message or call 412.281.2810.",
+      "Send Sienna Mercato a message, call 412.281.2810, or get directions to 942 Penn Avenue in Pittsburgh's Cultural District.",
     editable: false,
   },
   "/privacy": {

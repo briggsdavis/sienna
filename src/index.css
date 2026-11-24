@@ -26,8 +26,90 @@
   --font-italic: "Fraunces Variable", "Cormorant Variable", serif;
 }
 
+@utility site-container {
+  @apply mx-auto w-full max-w-[1600px] px-6 lg:px-12;
+}
+
+@media (min-width: 48rem) {
+  .mezzo-highlight {
+    --mezzo-highlight-gap: calc(var(--spacing) * 14);
+    /* Each image is half the available width and has a 25:24 aspect ratio. */
+    --mezzo-highlight-overlap: calc((100cqi - var(--mezzo-highlight-gap)) * 0.144);
+    column-gap: var(--mezzo-highlight-gap);
+  }
+
+  .mezzo-highlight + .mezzo-highlight {
+    margin-top: calc(-1 * var(--mezzo-highlight-overlap));
+  }
+
+  .mezzo-highlight + .mezzo-highlight .mezzo-highlight-copy {
+    padding-top: calc(var(--mezzo-highlight-overlap) + 1.5rem);
+  }
+
+  .mezzo-highlight:first-child .mezzo-highlight-copy {
+    z-index: 1;
+    align-self: end;
+    justify-self: start;
+    margin-bottom: calc(var(--mezzo-highlight-overlap) - 1.5rem);
+    padding: 0 1.25rem 0.75rem 0;
+    background: var(--color-cream);
+  }
+}
+
+@media (min-width: 64rem) {
+  .mezzo-highlight {
+    --mezzo-highlight-gap: calc(var(--spacing) * 20);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .menu-row {
+    transition: padding-inline-start var(--menu-indent-duration, 200ms) ease-out;
+  }
+
+  .menu-row:hover {
+    padding-inline-start: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes menu-row-enter {
+    from {
+      opacity: 0;
+    }
+  }
+
+  :is(.menu-row-entrance, .menu-heading-entrance):not([data-menu-visible]) {
+    opacity: 0;
+  }
+
+  :is(.menu-row-entrance, .menu-heading-entrance)[data-menu-visible] {
+    animation: menu-row-enter 480ms ease var(--menu-entrance-delay, 0ms) backwards;
+  }
+
+  .mezzo-menu-row[data-menu-visible] .menu-item-description {
+    animation: menu-row-enter 480ms ease calc(var(--menu-entrance-delay, 0ms) + 110ms) backwards;
+  }
+
+  .menu-photo-mask {
+    clip-path: inset(0);
+    transition: clip-path 820ms cubic-bezier(0.2, 0.75, 0.25, 1);
+  }
+
+  .menu-photo-entrance:not([data-menu-visible]) .menu-photo-mask {
+    clip-path: inset(100% 0 0);
+  }
+}
+
 html {
-  scroll-behavior: smooth;
+  --site-type-scale: 0.9;
+  font-size: calc(18px * var(--site-type-scale));
 }
 
 html,
@@ -35,11 +117,38 @@ body {
   background: var(--color-paper);
   color: var(--color-ink);
   font-family: var(--font-body);
-  font-size: 18px;
   font-weight: 400;
-  overflow-x: hidden;
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+@layer base {
+  :where(
+    a[href],
+    button:enabled,
+    select:enabled,
+    summary,
+    input:is([type="button"], [type="submit"], [type="reset"]):enabled,
+    [role="button"]
+  ):not([aria-disabled="true"]) {
+    cursor: pointer;
+  }
+
+  :where(button:disabled, select:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+  }
+
+  :where(a[href], button, select, summary, [role="button"]):focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  @media (hover: hover) {
+    :where(button:enabled:not(.btn-lift, .btn-fill, [aria-disabled="true"])):hover {
+      background-color: color-mix(in srgb, currentColor 8%, transparent);
+    }
+  }
 }
 
 ::selection {
@@ -144,9 +253,34 @@ body {
     opacity 0.9s ease,
     transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.fade-in-visible {
+.fade-in-base.fade-in-visible {
   opacity: 1;
   transform: translateY(0);
+  transition-delay: var(--fade-in-delay, 0s);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fade-in-stagger > * {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.65s ease,
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fade-in-stagger.fade-in-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: calc(var(--fade-in-delay, 0s) + var(--fade-in-step, 0ms));
+  }
+
+  .fade-in-stagger > :nth-child(2) {
+    --fade-in-step: 110ms;
+  }
+
+  .fade-in-stagger > :nth-child(n + 3) {
+    --fade-in-step: 220ms;
+  }
 }
 
 .text-hero-shadow {
@@ -212,13 +346,94 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .btn-lift {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-serif);
+  font-size: var(--button-text-size, 0.75rem);
+  line-height: 1.2;
+  letter-spacing: var(--button-letter-spacing, 0.18em);
+  text-align: center;
+  text-transform: uppercase;
   transition:
     background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
     transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.25s ease;
 }
-.btn-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(26, 18, 11, 0.18);
+
+@media (max-width: 399px) {
+  .btn-lift.nav-reserve {
+    padding-inline: 0.65rem;
+  }
+}
+
+.btn-lift > :is(.ph, .ph-duotone, .ph-fill) {
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.btn-pair {
+  display: grid;
+  width: min(100%, 26rem);
+  grid-auto-rows: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 40rem) {
+  .btn-pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (hover: hover) {
+  .btn-lift:is(a[href], button:enabled):not(.btn-fill, [aria-disabled="true"]):hover {
+    box-shadow: 0 6px 20px rgba(26, 18, 11, 0.18);
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .btn-lift:is(a[href], button:enabled):not(.btn-fill, [aria-disabled="true"]):hover {
+    transform: translateY(-2px);
+  }
+
+  .btn-lift:is(a[href], button:enabled):not(.btn-fill, [aria-disabled="true"]):active {
+    transform: translateY(0);
+  }
+}
+
+.btn-fill {
+  --fill-color: var(--button-fill-color, var(--color-sienna));
+  background-image: linear-gradient(var(--fill-color), var(--fill-color));
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: 100% 0;
+  transition:
+    background-size 420ms cubic-bezier(0.48, 0.04, 0.22, 1),
+    color 150ms ease 105ms,
+    border-color 210ms ease;
+}
+
+.btn-fill-cream {
+  --button-fill-color: var(--color-cream);
+  --button-fill-text: var(--color-ink);
+}
+
+@media (hover: hover) {
+  .btn-fill:is(a[href], button:enabled):not([aria-disabled="true"]):hover {
+    background-size: 100% 100%;
+    color: var(--button-fill-text, var(--color-cream));
+    border-color: var(--fill-color);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-fill {
+    transition: none;
+  }
 }

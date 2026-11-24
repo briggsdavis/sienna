@@ -13,15 +13,14 @@ export function Order() {
         <div className="mb-5 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
           order online
         </div>
-        <h1 className="font-display text-[clamp(3rem,8vw,6rem)] leading-none text-ink">Emporio</h1>
+        <h1 className="font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),6rem)] leading-none text-ink">
+          Emporio
+        </h1>
         <p className="mt-4 font-italic text-xl text-ink-soft italic">
           Taking you to our online ordering system…
         </p>
         <div className="mt-10 flex flex-col items-center gap-4">
-          <a
-            href={ORDER_URL}
-            className="btn-lift inline-flex items-center gap-3 bg-sienna px-8 py-4 font-serif text-sm tracking-[0.25em] text-cream uppercase"
-          >
+          <a href={ORDER_URL} className="btn-lift bg-sienna text-cream">
             <i className="ph ph-bag text-lg" />
             Open ordering page
             <i className="ph ph-arrow-up-right text-sm" />

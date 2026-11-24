@@ -1,11 +1,12 @@
 import { useEffect } from "react"
-import { Outlet, useLocation } from "react-router"
+import { Outlet, useLocation, useMatch } from "react-router"
 import { CartButton, CartDrawer } from "@/components/cart"
 import { EditModeProvider, EditToolbar } from "@/components/editable"
 import { Footer } from "@/components/layout/footer"
 import { Nav } from "@/components/layout/nav"
 import { ScrollProgress } from "@/components/layout/scroll-progress"
 import { ConsentBanner, MarketingPopup } from "@/components/marketing"
+import { useSmoothWheelScroll } from "@/hooks/use-smooth-wheel-scroll"
 import { useViewportHeight } from "@/hooks/use-viewport-height"
 import { usePageTracking } from "@/lib/analytics"
 import { CartProvider } from "@/lib/cart"
@@ -15,11 +16,11 @@ function ScrollManager() {
 
   useEffect(() => {
     if (!hash) {
-      window.scrollTo(0, 0)
+      window.scrollTo({ top: 0, behavior: "instant" })
       return
     }
     const timer = window.setTimeout(() => {
-      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: "smooth" })
+      document.getElementById(hash.slice(1))?.scrollIntoView()
     }, 350)
     return () => window.clearTimeout(timer)
   }, [pathname, hash])
@@ -34,7 +35,9 @@ function Tracker() {
 
 export function Layout() {
   const { pathname } = useLocation()
+  const contactPage = useMatch("/contact")
   useViewportHeight()
+  useSmoothWheelScroll(pathname)
 
   return (
     <EditModeProvider>
@@ -43,7 +46,7 @@ export function Layout() {
           <ScrollManager />
           <Tracker />
           <ScrollProgress />
-          <Nav />
+          {!contactPage && <Nav />}
           <main key={pathname} className="page-enter">
             <Outlet />
           </main>

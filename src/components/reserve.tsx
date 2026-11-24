@@ -59,19 +59,21 @@ export function ReserveLink({
 export function ReservationPanel({
   restaurant,
   tone = "dark",
+  fillHover = false,
 }: {
   restaurant: FloorId
   tone?: "dark" | "light"
+  fillHover?: boolean
 }) {
   const reservation = useReservation(restaurant)
   const track = useTrackClick()
   const dark = tone === "dark"
   const button = dark
-    ? "bg-cream text-sienna hover:bg-paper"
-    : "bg-sienna text-cream hover:bg-sienna-bright"
+    ? `bg-cream text-sienna ${fillHover ? "btn-fill" : "hover:bg-paper"}`
+    : `bg-sienna text-cream ${fillHover ? "btn-fill [--button-fill-color:var(--color-sienna-deep)]" : "hover:bg-sienna-bright"}`
   const outline = dark
-    ? "border-cream/50 hover:bg-cream/10"
-    : "border-ink/30 text-ink hover:bg-ink/5"
+    ? `border-cream/50 ${fillHover ? "btn-fill btn-fill-cream" : "hover:bg-cream/10"}`
+    : `border-ink/30 text-ink ${fillHover ? "btn-fill" : "hover:bg-ink/5"}`
 
   if (!reservation) return <div className="h-14" />
 
@@ -94,7 +96,7 @@ export function ReservationPanel({
         <ExternalLink
           href={reservation.url}
           onClick={() => track("reservationClick")}
-          className={`btn-lift group inline-flex items-center gap-2 px-6 py-3 font-serif text-xs tracking-[0.25em] uppercase transition-colors ${button}`}
+          className={`btn-lift group ${button}`}
         >
           <i className="ph ph-calendar-dots text-sm" />
           {reservation.label || "Reserve a table"}
@@ -110,10 +112,7 @@ export function ReservationPanel({
           {reservation.note || "Walk-ins welcome"}
         </span>
       )}
-      <a
-        href={PHONE.href}
-        className={`btn-lift inline-flex items-center gap-2 border px-6 py-3 font-serif text-xs tracking-[0.25em] uppercase transition-colors ${outline}`}
-      >
+      <a href={PHONE.href} className={`btn-lift border ${outline}`}>
         <i className="ph ph-phone text-sm" />
         {PHONE.label}
       </a>

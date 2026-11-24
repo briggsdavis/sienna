@@ -22,7 +22,7 @@ export function NotFound() {
   return (
     <section className="relative flex min-h-screen flex-col items-start justify-center bg-paper px-6 py-32 lg:px-12">
       <div className="mx-auto w-full max-w-3xl">
-        <h1 className="font-display text-[clamp(4rem,12vw,9rem)] leading-[0.9] tracking-tight text-ink">
+        <h1 className="font-display text-[clamp(4rem,calc(12vw*var(--site-type-scale)),9rem)] leading-[0.9] tracking-tight text-ink">
           {title}.
         </h1>
         <p className="mt-6 max-w-xl font-body text-xl leading-relaxed text-ink-soft">{blurb}</p>

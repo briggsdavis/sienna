@@ -2,12 +2,10 @@ import { Link } from "react-router"
 
 export type Shortcut = { label: string; icon: string; href: string }
 
-const SHORTCUT_CLASS =
-  "btn-lift inline-flex items-center gap-2 border border-ink/20 px-5 py-2 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:border-sienna hover:text-sienna"
-
 export function PageShortcuts({ shortcuts }: { shortcuts: readonly Shortcut[] }) {
+  const className = "btn-lift border border-ink/20 text-ink hover:border-sienna hover:text-sienna"
   return (
-    <nav className="border-b border-ink/10 bg-paper">
+    <nav className="bg-paper" aria-label="Page shortcuts">
       <div className="mx-auto flex max-w-[1600px] flex-wrap gap-3 px-6 py-5 lg:px-12">
         {shortcuts.map(({ label, icon, href }) => {
           const content = (
@@ -17,11 +15,11 @@ export function PageShortcuts({ shortcuts }: { shortcuts: readonly Shortcut[] })
             </>
           )
           return href.startsWith("#") ? (
-            <a key={label} href={href} className={SHORTCUT_CLASS}>
+            <a key={label} href={href} className={className}>
               {content}
             </a>
           ) : (
-            <Link key={label} to={href} className={SHORTCUT_CLASS}>
+            <Link key={label} to={href} className={className}>
               {content}
             </Link>
           )

@@ -156,7 +156,7 @@ export function CateringCheckout() {
         />
         <div className="mx-auto max-w-2xl text-center" role="status">
           <i className="ph-duotone ph-check-circle text-6xl text-sienna" />
-          <h1 className="mt-6 font-display text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.9] text-ink">
+          <h1 className="mt-6 font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
             Grazie, {done.name}.
           </h1>
           <p className="mt-6 font-body text-xl leading-relaxed text-ink-soft">
@@ -172,7 +172,7 @@ export function CateringCheckout() {
           </p>
           <Link
             to="/catering"
-            className="btn-lift mt-10 inline-flex items-center gap-2 bg-sienna px-7 py-4 font-serif text-xs tracking-[0.3em] text-cream uppercase hover:bg-sienna-bright"
+            className="btn-lift mt-10 bg-sienna text-cream hover:bg-sienna-bright"
           >
             Back to catering
           </Link>
@@ -197,7 +197,7 @@ export function CateringCheckout() {
           <i className="ph ph-arrow-left text-sm" />
           Keep browsing
         </Link>
-        <h1 className="mt-6 font-display text-[clamp(2.5rem,6vw,5rem)] leading-[0.9] text-ink">
+        <h1 className="mt-6 font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9] text-ink">
           Send a catering request.
         </h1>
         <p className="mt-4 max-w-2xl font-body text-lg text-ink-soft">
@@ -394,7 +394,7 @@ export function CateringCheckout() {
                 <button
                   type="submit"
                   disabled={sending || cart.lines.length === 0}
-                  className="btn-lift flex w-full items-center justify-center gap-2 bg-sienna px-6 py-4 font-serif text-xs tracking-[0.3em] text-cream uppercase hover:bg-sienna-bright disabled:cursor-not-allowed disabled:opacity-60"
+                  className="btn-lift w-full bg-sienna text-cream hover:bg-sienna-bright disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {sending ? "Sending..." : "Send catering request"}
                   {!sending && <i className="ph ph-paper-plane-tilt text-sm" />}

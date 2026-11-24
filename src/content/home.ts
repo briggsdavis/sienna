@@ -5,7 +5,6 @@ export const HOME_FLOORS = [
     ...FLOORS.emporio,
     sub: "A Meatball Joint",
     tint: "from-[#7a2218] via-[#a4341f] to-[#c9412a]",
-    desc: "Ground floor. Twelve sauces, six meats, one rule: the meatball is sacred.",
     image: unsplash("1529042410759-befb1204b468", 1600, 70),
     items: [
       { name: "Meatball Hoagie", price: "18", note: "choice of three meatballs" },
@@ -17,7 +16,6 @@ export const HOME_FLOORS = [
     ...FLOORS.mezzo,
     sub: "Pizza & Charcuterie",
     tint: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
-    desc: "Linen, candlelight, an eight-hundred-degree oven. The only OpenTable reservation in the building.",
     image: unsplash("1571997478779-2adcbbe9ab2f", 1600, 70),
     items: [
       { name: "Soppressata & Hot Honey", price: "25", note: "marinara, mozzarella" },
@@ -29,7 +27,6 @@ export const HOME_FLOORS = [
     ...FLOORS.tetto,
     sub: "Rooftop Beer Garden",
     tint: "from-[#1f2a3a] via-[#a4341f] to-[#e7a04a]",
-    desc: "Open sky. Thirty drafts on the chalkboard. No reservations. Climb the stairs.",
     image: unsplash("1414235077428-338989a2e8c0", 1600, 70),
     items: [
       { name: "Whole Pepperoni Pie", price: "25", note: "8 slices, baked hot" },
@@ -43,46 +40,25 @@ export type HomeFloor = (typeof HOME_FLOORS)[number]
 
 export const FEATURED_DISHES = [
   {
-    name: "Warm Burrata",
-    desc: "Roasted tomatoes, basil, focaccia",
-    floor: "mezzo",
-    price: "14",
-    image: unsplash("1608897013039-887f21d8c804", 1100, 75),
-  },
-  {
+    contentKey: "dishes.1",
     name: "Classic Meatballs",
-    desc: "Beef-pork blend, crack sauce",
     floor: "emporio",
     price: "12",
     image: unsplash("1529042410759-befb1204b468", 1100, 75),
   },
   {
-    name: "Soppressata Pizza",
-    desc: "Hot honey, mozzarella, marinara",
-    floor: "mezzo",
-    price: "25",
-    image: unsplash("1565299624946-b28f40a0ae38", 1100, 75),
-  },
-  {
-    name: "Molten Chocolate",
-    desc: "Lava cake, vanilla gelato",
+    contentKey: "dishes.0",
+    name: "Warm Burrata",
     floor: "mezzo",
     price: "14",
-    image: unsplash("1606313564200-e75d5e30476c", 1100, 75),
+    image: unsplash("1608897013039-887f21d8c804", 1100, 75),
   },
   {
-    name: "Crack Fries",
-    desc: "Smothered in crack sauce, buffalo-ranch",
-    floor: "emporio",
-    price: "12",
-    image: unsplash("1573080496219-bb080dd4f877", 1100, 75),
-  },
-  {
-    name: "Carbonara",
-    desc: "Pancetta, pecorino, egg yolk, pepper",
-    floor: "mezzo",
-    price: "27",
-    image: unsplash("1612874742237-6526221588e3", 1100, 75),
+    contentKey: "dishes.tetto",
+    name: "Whole Pepperoni Pie",
+    floor: "tetto",
+    price: "25",
+    image: unsplash("1565299624946-b28f40a0ae38", 1100, 75),
   },
 ] as const
 

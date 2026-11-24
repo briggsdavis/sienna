@@ -1,9 +1,7 @@
-import { useQuery } from "convex/react"
-import type { ReactNode } from "react"
-import { Link } from "react-router"
+import { useEffect, useRef } from "react"
 import { FadeIn } from "@/components/fade-in"
+import { getMenuSectionPhoto } from "@/content/menu-photos"
 import { FLOORS, type FloorId } from "@/lib/site"
-import { api } from "../../convex/_generated/api"
 import type { Doc } from "../../convex/_generated/dataModel"
 
 export type MenuSection = Doc<"menuSections"> & {
@@ -16,28 +14,28 @@ export const MENU_THEMES = {
     page: "bg-paper text-ink",
     header: "bg-sienna text-cream",
     accent: "text-sienna",
+    price: "text-ink",
     muted: "text-ink-soft",
     rule: "border-ink/10 divide-ink/10",
     chip: "border-ink/20 text-ink hover:border-sienna hover:text-sienna",
-    tagline: "A Meatball Joint",
   },
   mezzo: {
     page: "bg-ink text-paper",
     header: "bg-sienna-deep text-cream",
     accent: "text-sienna-bright",
+    price: "text-white",
     muted: "text-paper/60",
     rule: "border-paper/15 divide-paper/10",
-    chip: "border-paper/25 text-paper hover:border-sienna-bright hover:text-sienna-bright",
-    tagline: "Pizza & Charcuterie",
+    chip: "btn-fill btn-fill-cream border-paper/25 text-paper",
   },
   tetto: {
     page: "bg-cream text-ink",
     header: "bg-ink text-cream",
     accent: "text-sienna",
+    price: "text-ink",
     muted: "text-ink-soft",
     rule: "border-ink/10 divide-ink/10",
     chip: "border-ink/20 text-ink hover:border-sienna hover:text-sienna",
-    tagline: "Rooftop Beer Garden",
   },
 } as const
 
@@ -61,76 +59,142 @@ export function MenuSections({
   sections: MenuSection[]
 }) {
   const t = MENU_THEMES[restaurant]
+  const mezzo = restaurant === "mezzo"
+  const menu = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const targets = menu.current?.querySelectorAll<HTMLElement>(
+      "[data-menu-entrance]:not([data-menu-visible])",
+    )
+    if (!targets?.length) return
+
+    if (!("IntersectionObserver" in window)) {
+      targets.forEach((target) => target.setAttribute("data-menu-visible", ""))
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let delay = 0
+        for (const { isIntersecting, target } of entries) {
+          if (!isIntersecting) continue
+          if (
+            target instanceof HTMLElement &&
+            target.matches(".menu-row-entrance, .menu-heading-entrance")
+          ) {
+            target.style.setProperty("--menu-entrance-delay", `${delay}ms`)
+            delay += target.classList.contains("menu-heading-entrance") ? 110 : 65
+          }
+          target.setAttribute("data-menu-visible", "")
+          observer.unobserve(target)
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -20px 0px" },
+    )
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [sections])
+
   return (
-    <div className="space-y-20">
-      {sections.map((section) => (
-        <section key={section._id} id={slug(section.title)} className="scroll-mt-32">
-          <FadeIn>
+    <div ref={menu} className={`space-y-20 ${mezzo ? "[--menu-indent-duration:360ms]" : ""}`}>
+      {sections.map((section, index) => {
+        const image =
+          section.image ??
+          section.items.find((item) => item.available && item.image)?.image ??
+          getMenuSectionPhoto(restaurant, section.title)
+        const imageRight = index % 2 === 1
+        const photoFrame = `aspect-square overflow-hidden ${imageRight ? "lg:order-last" : ""}`
+        const photoContent = (
+          <div
+            className={`flex h-full w-full items-center justify-center ${t.header} ${mezzo ? "menu-photo-mask" : ""}`}
+          >
+            {image ? (
+              <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
+            ) : (
+              <img
+                src={FLOORS[restaurant].logo}
+                alt=""
+                loading="lazy"
+                className="max-h-24 w-2/5 object-contain brightness-0 invert"
+              />
+            )}
+          </div>
+        )
+        return (
+          <section key={section._id} id={slug(section.title)} className="scroll-mt-32">
             <div
-              className={`grid gap-10 ${section.image ? "lg:grid-cols-[1fr_1.6fr]" : ""} lg:gap-16`}
+              className={`grid items-start gap-8 lg:gap-16 ${
+                imageRight ? "lg:grid-cols-[1.25fr_1fr]" : "lg:grid-cols-[1fr_1.25fr]"
+              }`}
             >
-              <div>
-                <h2 className="font-display text-[clamp(2.2rem,4vw,3.5rem)] leading-[0.95]">
+              {mezzo ? (
+                <div className={`${photoFrame} menu-photo-entrance`} data-menu-entrance>
+                  {photoContent}
+                </div>
+              ) : (
+                <FadeIn className={photoFrame}>{photoContent}</FadeIn>
+              )}
+              <div className="min-w-0 text-[85%]">
+                <h2
+                  data-menu-entrance={mezzo || undefined}
+                  className={`font-display text-[clamp(2.2em,calc(3.4vw*var(--site-type-scale)),3.5em)] leading-[0.95] ${mezzo ? "menu-heading-entrance" : ""}`}
+                >
                   {section.title}
                 </h2>
                 {section.subtitle && (
-                  <p className={`mt-3 font-body text-lg ${t.muted}`}>{section.subtitle}</p>
-                )}
-                {section.image && (
-                  <div className="mt-8 aspect-[4/3] overflow-hidden">
-                    <img
-                      src={section.image}
-                      alt={section.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                )}
-              </div>
-              <ul
-                className={`grid gap-x-12 border-t ${section.image ? "" : "md:grid-cols-2"} ${t.rule}`}
-              >
-                {section.items.map((item) => (
-                  <li
-                    key={item._id}
-                    className={`flex items-baseline gap-4 border-b py-4 ${t.rule} ${
-                      item.available ? "" : "opacity-50"
-                    }`}
+                  <p
+                    data-menu-entrance={mezzo || undefined}
+                    className={`mt-3 font-body text-[1.125em] ${t.muted} ${mezzo ? "menu-heading-entrance" : ""}`}
                   >
-                    <div className="flex-1">
-                      <div className="flex flex-wrap items-baseline gap-3">
-                        <span className="font-serif text-xl">{item.name}</span>
-                        {item.flag && (
-                          <span
-                            className={`font-serif text-2xs tracking-[0.3em] uppercase ${t.accent}`}
+                    {section.subtitle}
+                  </p>
+                )}
+                <ul className={`mt-6 border-t ${t.rule}`}>
+                  {section.items.map((item) => (
+                    <li
+                      key={item._id}
+                      data-menu-entrance
+                      className={`menu-row menu-row-entrance flex items-baseline gap-4 border-b py-4 ${t.rule} ${mezzo ? "mezzo-menu-row" : ""} ${
+                        item.available ? "" : "opacity-50"
+                      }`}
+                    >
+                      <div className="min-w-0 flex-1">
+                        <div className="flex flex-wrap items-baseline gap-3">
+                          <span className="font-serif text-[1.25em]">{item.name}</span>
+                          {item.flag && (
+                            <span
+                              className={`font-serif text-[0.625em] tracking-[0.3em] uppercase ${t.accent}`}
+                            >
+                              {item.flag}
+                            </span>
+                          )}
+                          {!item.available && (
+                            <span className="font-serif text-[0.625em] tracking-[0.3em] uppercase">
+                              unavailable
+                            </span>
+                          )}
+                        </div>
+                        {item.desc && (
+                          <div
+                            className={`menu-item-description mt-0.5 font-body leading-snug ${t.muted}`}
                           >
-                            {item.flag}
-                          </span>
-                        )}
-                        {!item.available && (
-                          <span className="font-serif text-2xs tracking-[0.3em] uppercase">
-                            unavailable
-                          </span>
+                            {item.desc}
+                          </div>
                         )}
                       </div>
-                      {item.desc && (
-                        <div className={`mt-0.5 font-body text-base leading-snug ${t.muted}`}>
-                          {item.desc}
-                        </div>
+                      {item.price && (
+                        <span className={`font-serif text-[1.125em] tabular-nums ${t.price}`}>
+                          {formatPrice(item.price)}
+                        </span>
                       )}
-                    </div>
-                    {item.price && (
-                      <span className={`font-serif text-lg tabular-nums ${t.accent}`}>
-                        {formatPrice(item.price)}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-          </FadeIn>
-        </section>
-      ))}
+          </section>
+        )
+      })}
     </div>
   )
 }
@@ -144,7 +208,7 @@ export function SectionChips({
 }) {
   const t = MENU_THEMES[restaurant]
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center gap-2">
       {sections.map((section) => (
         <a
           key={section._id}
@@ -155,99 +219,5 @@ export function SectionChips({
         </a>
       ))}
     </div>
-  )
-}
-
-export function MenuTeaser({
-  restaurant,
-  tone = "light",
-  heading,
-}: {
-  restaurant: FloorId
-  tone?: "light" | "dark"
-  heading: ReactNode
-}) {
-  const sections = useQuery(api.menus.get, { menu: restaurant })
-  const floor = FLOORS[restaurant]
-  const dark = tone === "dark"
-  const preview = (sections ?? []).filter((s) => s.items.length > 0).slice(0, 4)
-
-  return (
-    <section
-      id="menu"
-      className={`relative py-28 ${dark ? "bg-ink text-paper" : "bg-paper text-ink"}`}
-    >
-      <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
-        <FadeIn>
-          <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
-              {heading}
-            </h2>
-            <Link
-              to={floor.menuHref}
-              className={`btn-lift group inline-flex w-fit items-center gap-3 px-6 py-3 font-serif text-xs tracking-[0.3em] uppercase transition-colors ${
-                dark
-                  ? "bg-sienna-bright text-cream hover:bg-cream hover:text-sienna"
-                  : "bg-ink text-cream hover:bg-sienna"
-              }`}
-            >
-              <i className="ph ph-list-magnifying-glass text-base" />
-              Full {floor.name} menu
-              <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </FadeIn>
-
-        <div className="grid gap-x-16 gap-y-12 md:grid-cols-2">
-          {sections === undefined
-            ? [0, 1].map((i) => <div key={i} className="h-64" />)
-            : preview.map((section) => (
-                <FadeIn key={section._id}>
-                  <div>
-                    <h3 className="font-display text-3xl">{section.title}</h3>
-                    <ul
-                      className={`mt-5 divide-y border-y ${
-                        dark ? "divide-paper/10 border-paper/15" : "divide-ink/10 border-ink/10"
-                      }`}
-                    >
-                      {section.items.slice(0, 4).map((item) => (
-                        <li key={item._id} className="flex items-baseline gap-3 py-3.5">
-                          <div className="flex-1">
-                            <div className="font-serif text-lg">{item.name}</div>
-                            {item.desc && (
-                              <div
-                                className={`mt-0.5 font-body text-sm ${dark ? "text-paper/55" : "text-ink-soft"}`}
-                              >
-                                {item.desc}
-                              </div>
-                            )}
-                          </div>
-                          {item.price && (
-                            <span
-                              className={`font-serif tabular-nums ${dark ? "text-sienna-bright" : "text-sienna"}`}
-                            >
-                              {formatPrice(item.price)}
-                            </span>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                    {section.items.length > 4 && (
-                      <Link
-                        to={`${floor.menuHref}#${slug(section.title)}`}
-                        className={`under mt-3 inline-flex items-center gap-2 font-serif text-xs tracking-[0.25em] uppercase ${
-                          dark ? "text-sienna-bright" : "text-sienna"
-                        }`}
-                      >
-                        {section.items.length - 4} more
-                        <i className="ph ph-arrow-right" />
-                      </Link>
-                    )}
-                  </div>
-                </FadeIn>
-              ))}
-        </div>
-      </div>
-    </section>
   )
 }

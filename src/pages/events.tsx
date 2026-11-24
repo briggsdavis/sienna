@@ -2,7 +2,6 @@ import { useMutation } from "convex/react"
 import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
 import { EventsCalendar } from "@/components/events-calendar"
-import { ExternalLink } from "@/components/external-link"
 import { FadeIn } from "@/components/fade-in"
 import {
   FormError,
@@ -12,12 +11,12 @@ import {
   TextField,
   useFormGuard,
 } from "@/components/form"
-import { HeroIntro, HeroMeta, PageHero } from "@/components/hero"
+import { HeroIntro, PageHero } from "@/components/hero"
 import { ReserveLink } from "@/components/reserve"
 import { Seo } from "@/components/seo"
-import { CONTACTS, EVENT_TYPE_OPTIONS, FLOOR_OPTIONS, REVIEWS, SPACES } from "@/content/events"
+import { CONTACTS, EVENT_TYPE_OPTIONS, FLOOR_OPTIONS, SPACES } from "@/content/events"
 import { PAGE_SEO } from "@/lib/pages"
-import { VIRTUAL_TOUR_URL, unsplash } from "@/lib/site"
+import { unsplash } from "@/lib/site"
 import { addDays, errorMessage, todayKey } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 
@@ -28,7 +27,6 @@ export function Events() {
       <Hero />
       <Calendar />
       <Venues />
-      <Testimonials />
       <Inquiry />
       <ClosingStrip />
     </div>
@@ -44,7 +42,7 @@ function Hero() {
         className: "opacity-85",
       }}
       overlay={<div className="absolute inset-0 bg-black/58" />}
-      meta={<HeroMeta />}
+      viewportHeight={50}
     >
       <HeroIntro
         title="Events."
@@ -54,29 +52,15 @@ function Hero() {
         className="rise mt-8 flex flex-wrap items-center gap-3"
         style={{ animationDelay: "0.62s" }}
       >
-        <a
-          href="#calendar"
-          className="btn-lift group inline-flex items-center gap-2 bg-cream px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-paper"
-        >
+        <a href="#calendar" className="btn-lift group bg-cream text-ink hover:bg-paper">
           <i className="ph ph-calendar-dots text-sm" />
           What's on
         </a>
-        <a
-          href="#inquire"
-          className="btn-lift group inline-flex items-center gap-2 bg-sienna px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
-        >
+        <a href="#inquire" className="btn-lift group bg-sienna text-cream hover:bg-sienna-bright">
           <i className="ph ph-envelope text-sm" />
           Private event inquiry
           <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
         </a>
-        <ExternalLink
-          href={VIRTUAL_TOUR_URL}
-          className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
-        >
-          <i className="ph-duotone ph-cube text-sm" />
-          Virtual tour
-          <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </ExternalLink>
       </div>
     </PageHero>
   )
@@ -88,7 +72,9 @@ function Calendar() {
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <FadeIn>
           <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-display text-[clamp(3rem,6vw,5rem)] leading-[0.9]">What's on.</h2>
+            <h2 className="font-display text-[clamp(3rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9]">
+              What's on.
+            </h2>
             <p className="max-w-sm font-body text-base leading-relaxed text-paper/65">
               Walk-ins welcome unless noted. Pick a day to see details and tickets.
             </p>
@@ -107,7 +93,7 @@ function Venues() {
         <FadeIn>
           <div className="mb-14 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
             <div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.9] text-ink">
+              <h2 className="font-display text-[clamp(3rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.9] text-ink">
                 Three rooms
                 <br />
                 <span className="font-italic text-sienna italic">for private hire.</span>
@@ -139,20 +125,12 @@ function Venues() {
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href="#inquire"
-                  className="btn-lift group inline-flex items-center gap-2 bg-sienna px-6 py-3 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+                  className="btn-lift group bg-sienna text-cream hover:bg-sienna-bright"
                 >
                   <i className="ph ph-envelope text-sm" />
                   Send an inquiry
                   <i className="ph ph-arrow-down text-xs transition-transform group-hover:translate-y-0.5" />
                 </a>
-                <ExternalLink
-                  href={VIRTUAL_TOUR_URL}
-                  className="btn-lift group inline-flex items-center gap-2 border border-ink/25 px-6 py-3 font-serif text-xs tracking-[0.25em] text-ink uppercase transition-colors hover:bg-ink/5"
-                >
-                  <i className="ph-duotone ph-cube text-sm" />
-                  Virtual tour
-                  <i className="ph ph-arrow-up-right text-xs transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </ExternalLink>
               </div>
             </div>
             <div className="relative hidden overflow-hidden sm:block" style={{ minWidth: "420px" }}>
@@ -275,45 +253,6 @@ function VenueAccordion() {
   )
 }
 
-function Testimonials() {
-  return (
-    <section className="relative bg-paper py-28">
-      <div className="mx-auto max-w-[1300px] px-6 lg:px-12">
-        <FadeIn>
-          <div className="mb-14 text-center">
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
-              The guests
-              <br />
-              <span className="font-italic text-sienna italic">say it best.</span>
-            </h2>
-          </div>
-        </FadeIn>
-
-        <div className="grid gap-10 md:grid-cols-2">
-          {REVIEWS.map((review, i) => (
-            <FadeIn key={review.by} delay={i * 0.12}>
-              <figure className="relative border-l-2 border-sienna bg-cream/60 p-8 lg:p-10">
-                <i className="ph-fill ph-quotes absolute -top-4 left-8 bg-paper px-3 text-3xl text-sienna" />
-                <div className="flex gap-0.5 text-sienna">
-                  {Array.from({ length: review.stars }, (_, star) => (
-                    <i key={star} className="ph-fill ph-star text-base" />
-                  ))}
-                </div>
-                <blockquote className="mt-4 font-display text-2xl leading-snug text-ink lg:text-3xl">
-                  {review.quote}
-                </blockquote>
-                <figcaption className="mt-6 font-body text-sm text-ink-soft">
-                  {review.by}
-                </figcaption>
-              </figure>
-            </FadeIn>
-          ))}
-        </div>
-      </div>
-    </section>
-  )
-}
-
 type InquiryForm = {
   name: string
   email: string
@@ -392,7 +331,7 @@ function Inquiry() {
           <div className="mb-4 font-serif text-xs tracking-[0.4em] text-cream/70 uppercase">
             Private dining & group events
           </div>
-          <h2 className="font-display text-[clamp(3rem,7vw,5.5rem)] leading-[0.85]">
+          <h2 className="font-display text-[clamp(3rem,calc(7vw*var(--site-type-scale)),5.5rem)] leading-[0.85]">
             Tell us about
             <br />
             <span className="font-italic italic">your night.</span>
@@ -496,7 +435,7 @@ function Inquiry() {
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="group mt-2 inline-flex w-fit items-center gap-3 rounded-full bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper disabled:opacity-70"
+                className="btn-lift mt-2 w-fit bg-cream text-sienna hover:bg-paper disabled:opacity-70"
               >
                 <i className="ph ph-paper-plane-tilt text-lg" />
                 {status === "sending" ? "Sending..." : "Send the inquiry"}
@@ -568,18 +507,12 @@ function ClosingStrip() {
             <span className="font-italic italic">Delivered to you.</span>
           </h3>
         </div>
-        <div className="flex flex-wrap gap-4">
-          <Link
-            to="/catering"
-            className="btn-lift inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-bright"
-          >
+        <div className="btn-pair">
+          <Link to="/catering" className="btn-lift bg-sienna text-cream hover:bg-sienna-bright">
             <i className="ph ph-bag text-lg" />
             Catering menu
           </Link>
-          <Link
-            to="/"
-            className="btn-lift inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
-          >
+          <Link to="/" className="btn-lift border border-cream/40 text-cream hover:bg-cream/10">
             All of Sienna
             <i className="ph ph-arrow-up-right text-lg" />
           </Link>

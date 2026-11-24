@@ -3,8 +3,7 @@ import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { FloorIntro } from "@/components/floor-intro"
 import { HappyHour } from "@/components/happy-hour"
-import { FloorHeroIntro, HeroMeta, PageHero } from "@/components/hero"
-import { MenuTeaser } from "@/components/menu-view"
+import { FloorHeroIntro, PageHero } from "@/components/hero"
 import { PageShortcuts } from "@/components/page-shortcuts"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel, useSettings } from "@/components/reserve"
@@ -74,10 +73,9 @@ export function Emporio() {
         <Sauces />
         <BuildABowl />
         <BallOfTheMonth />
-        <MenuTeaser restaurant="emporio" heading={<EText k="menu.title" d="The whole menu." />} />
         <HappyHour
           title={<EText k="happy.title" d="Happy Hour." />}
-          titleSize="text-[clamp(3rem,7vw,5.5rem)]"
+          titleSize="text-[clamp(3rem,calc(7vw*var(--site-type-scale)),5.5rem)]"
           body={
             <EText
               k="happy.body"
@@ -108,12 +106,10 @@ function Hero() {
               <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_25%_30%,rgba(201,65,42,0.35),transparent_60%)]" />
             </>
           }
-          meta={<HeroMeta />}
           numeral="I"
         >
           <FloorHeroIntro
             floor={FLOORS.emporio}
-            subtitle={<EText k="hero.subtitle" d="A Meatball Joint." />}
             blurb={
               <EText
                 k="hero.blurb"
@@ -122,7 +118,7 @@ function Hero() {
             }
           />
           <div
-            className="rise mt-8 flex flex-wrap items-center gap-3"
+            className="rise mt-8 flex flex-col items-center gap-3"
             style={{ animationDelay: "0.7s" }}
           >
             {settings && (
@@ -130,7 +126,7 @@ function Hero() {
                 k="hero.orderLink"
                 label="Order pickup"
                 href={settings.orderUrl}
-                className="btn-lift group inline-flex items-center gap-2 bg-paper px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-ink uppercase transition-colors hover:bg-cream"
+                className="btn-lift group bg-paper text-ink hover:bg-cream"
               >
                 {(label) => (
                   <>
@@ -145,7 +141,7 @@ function Hero() {
               k="hero.menuLink"
               label="View the menu"
               href={FLOORS.emporio.menuHref}
-              className="btn-lift group inline-flex items-center gap-2 border border-cream/40 px-5 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:border-cream hover:bg-cream/10"
+              className="btn-lift group border border-cream/40 text-cream hover:border-cream hover:bg-cream/10"
             >
               {(label) => (
                 <>
@@ -167,7 +163,7 @@ function Balls() {
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
           <FadeIn>
-            <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9]">
+            <h2 className="font-display text-[clamp(2.2rem,calc(5.5vw*var(--site-type-scale)),5rem)] leading-[0.9]">
               <EText k="balls.title" d="Five balls." />
             </h2>
           </FadeIn>
@@ -235,7 +231,7 @@ function Sauces() {
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
         <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
           <FadeIn>
-            <h2 className="font-display text-[clamp(2.2rem,5.5vw,5rem)] leading-[0.9] text-ink">
+            <h2 className="font-display text-[clamp(2.2rem,calc(5.5vw*var(--site-type-scale)),5rem)] leading-[0.9] text-ink">
               <EText k="sauces.title" d="Ten sauces." />
               <br />
               <span className="font-italic text-sienna italic">
@@ -283,7 +279,7 @@ function BuildABowl() {
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <FadeIn>
           <div className="mb-14 text-center">
-            <h2 className="font-display text-[clamp(2.2rem,6vw,5.5rem)] leading-[0.9]">
+            <h2 className="font-display text-[clamp(2.2rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.9]">
               <EText k="bowl.title" d="Build a bowl." />
             </h2>
             <p className="mx-auto mt-6 max-w-2xl font-body text-xl text-cream/85">
@@ -362,7 +358,7 @@ function Visit() {
     <section id="reserve" className="relative scroll-mt-20 bg-cream py-24">
       <div className="mx-auto grid max-w-[1600px] gap-12 px-6 lg:grid-cols-2 lg:items-center lg:px-12">
         <FadeIn>
-          <h2 className="font-display text-[clamp(2.5rem,5vw,4.5rem)] leading-[0.9] text-ink">
+          <h2 className="font-display text-[clamp(2.5rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
             <EText k="visit.title" d="Walk right in." />
           </h2>
           <p className="mt-6 max-w-md font-body text-lg leading-relaxed text-ink-soft">
@@ -394,12 +390,12 @@ function ClosingStrip() {
             <EText k="closing.titleAccent" d="Leave slower." />
           </span>
         </h3>
-        <div className="flex flex-wrap justify-end gap-4">
+        <div className="btn-pair">
           <ELink
             k="closing.menu"
             label="See the menu"
             href={FLOORS.emporio.menuHref}
-            className="btn-lift group inline-flex items-center gap-3 bg-cream px-7 py-4 font-serif text-sm tracking-[0.3em] text-sienna uppercase transition-colors hover:bg-paper"
+            className="btn-lift group bg-cream text-sienna hover:bg-paper"
           >
             {(label) => (
               <>
@@ -412,7 +408,7 @@ function ClosingStrip() {
             k="closing.up"
             label="Climb to Mezzo"
             href="/mezzo"
-            className="btn-lift group inline-flex items-center gap-3 border border-cream/60 px-7 py-4 font-serif text-sm tracking-[0.3em] uppercase transition-colors hover:bg-cream/10"
+            className="btn-lift group border border-cream/60 hover:bg-cream/10"
           >
             {(label) => (
               <>

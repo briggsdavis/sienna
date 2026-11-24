@@ -1,10 +1,9 @@
 import { useQuery } from "convex/react"
 import { useMemo, useState } from "react"
 import { Link } from "react-router"
-import { QuantityStepper } from "@/components/cart"
 import { EImage, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
-import { HeroMeta, PageHero } from "@/components/hero"
+import { HeroIntro, PageHero } from "@/components/hero"
 import type { MenuSection } from "@/components/menu-view"
 import { Seo } from "@/components/seo"
 import { FEES } from "@/content/catering"
@@ -23,8 +22,16 @@ type Filters = { category: Id<"menuSections"> | "all"; kitchen: KitchenFilter; p
 const PRICE_MIN = 20
 const PRICE_MAX = 250
 
-function minPrice(item: CateringItem) {
-  return Math.min(...(item.options ?? []).map((o) => o.price), Number.POSITIVE_INFINITY)
+function orderOption(item: CateringItem) {
+  return item.options?.reduce<{ index: number; label: string; price: number } | undefined>(
+    (lowest, option, index) =>
+      !lowest || option.price < lowest.price ? { ...option, index } : lowest,
+    undefined,
+  )
+}
+
+function displayPrice(item: CateringItem) {
+  return orderOption(item)?.price ?? Number.POSITIVE_INFINITY
 }
 
 export function Catering() {
@@ -52,32 +59,9 @@ function Hero() {
             className: "opacity-75",
           }}
           overlay={<div className="absolute inset-0 bg-black/62" />}
-          meta={<HeroMeta />}
+          viewportHeight={60}
         >
-          <h1
-            className="rise text-hero-shadow font-display text-[clamp(2.5rem,7vw,6rem)] leading-[0.88] tracking-tight text-cream"
-            style={{ animationDelay: "0.25s" }}
-          >
-            <EText k="hero.title" d="Catering." />
-          </h1>
-          <p
-            className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
-            style={{ animationDelay: "0.45s" }}
-          >
-            <EText
-              k="hero.blurb"
-              d="Two kitchens. Corporate lunches, rehearsal dinners, family celebrations. Build your order below and send it as a request. Our team confirms every detail."
-            />
-          </p>
-          <div className="rise mt-8 flex flex-wrap gap-3" style={{ animationDelay: "0.62s" }}>
-            <a
-              href="#shop"
-              className="btn-lift group inline-flex items-center justify-center gap-2 bg-sienna px-6 py-2.5 font-serif text-xs tracking-[0.22em] text-cream uppercase transition-colors hover:bg-sienna-bright"
-            >
-              <i className="ph ph-bag text-sm" />
-              Browse catering menu
-            </a>
-          </div>
+          <HeroIntro title={<EText k="hero.title" d="Catering." />} />
         </PageHero>
       )}
     </EImage>
@@ -103,41 +87,23 @@ function Shop() {
       .filter(
         (item) =>
           (kitchen === "all" || item.kitchen === kitchen) &&
-          (priceMax >= PRICE_MAX || minPrice(item) <= priceMax),
+          (priceMax >= PRICE_MAX || displayPrice(item) <= priceMax),
       )
-    if (sort === "price-asc") items.sort((a, b) => minPrice(a) - minPrice(b))
-    if (sort === "price-desc") items.sort((a, b) => minPrice(b) - minPrice(a))
+    if (sort === "price-asc") items.sort((a, b) => displayPrice(a) - displayPrice(b))
+    if (sort === "price-desc") items.sort((a, b) => displayPrice(b) - displayPrice(a))
     return items
   }, [sections, filters, sort])
 
   const updateFilters = (changes: Partial<Filters>) =>
     setFilters((current) => ({ ...current, ...changes }))
 
-  const activeSection = sections?.find((s) => s._id === filters.category)
-
   return (
-    <section id="shop" className="relative scroll-mt-24 bg-paper py-20 lg:py-28">
+    <section
+      id="shop"
+      aria-label="Catering menu"
+      className="relative scroll-mt-24 bg-paper py-12 lg:py-16"
+    >
       <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-        <FadeIn>
-          <div className="mb-12 grid gap-8 md:grid-cols-[1.2fr_1fr] md:items-end">
-            <div>
-              <h2 className="font-display text-[clamp(3rem,7vw,6rem)] leading-[0.85] text-ink">
-                <EText k="shop.title" d="Pick the dishes." />
-                <br />
-                <span className="font-italic text-sienna italic">
-                  <EText k="shop.titleAccent" d="We'll cook the rest." />
-                </span>
-              </h2>
-            </div>
-            <p className="font-body text-lg leading-relaxed text-ink-soft">
-              <EText
-                k="shop.body"
-                d="Meatballs rolled same-day, sauces made fresh, charcuterie assembled on arrival. Half pan feeds ten to twelve; full pan, twenty to twenty-five. Forty-eight hours notice."
-              />
-            </p>
-          </div>
-        </FadeIn>
-
         <div className="grid gap-12 lg:grid-cols-[260px_1fr] lg:gap-16">
           <Sidebar
             sections={sections ?? []}
@@ -147,22 +113,13 @@ function Shop() {
           />
 
           <div>
-            <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-ink/15 pb-5">
-              <div className="font-body text-base text-ink-soft">
-                <span className="font-serif text-ink">{filtered.length}</span> dishes
-                {activeSection && (
-                  <>
-                    {" "}
-                    in <span className="text-sienna italic">{activeSection.title}</span>
-                  </>
-                )}
-              </div>
+            <div className="mb-8 flex justify-end">
               <label className="flex items-center gap-3 font-body text-sm text-ink-soft">
                 <span className="font-serif text-xs tracking-[0.3em] uppercase">Sort</span>
                 <select
                   value={sort}
                   onChange={(e) => setSort(e.target.value as Sort)}
-                  className="border-b border-ink/30 bg-transparent py-1 font-serif text-base text-ink focus:border-sienna focus:outline-none"
+                  className="min-h-10 rounded-full border border-ink/40 bg-cream px-4 py-2 font-serif text-sm text-ink transition-colors hover:border-sienna hover:bg-paper-deep focus-visible:border-sienna"
                 >
                   <option value="recommended">Recommended</option>
                   <option value="price-asc">Price: low to high</option>
@@ -254,15 +211,17 @@ function Sidebar({
           <div className="mb-3 flex items-center justify-between font-serif text-xs tracking-[0.3em] text-ink-soft uppercase">
             <span>Kitchen</span>
           </div>
-          <div className="grid grid-cols-3 gap-1">
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Kitchen">
             {(["all", "emporio", "mezzo"] as const).map((kitchen) => (
               <button
                 key={kitchen}
+                type="button"
+                aria-pressed={filters.kitchen === kitchen}
                 onClick={() => onChange({ kitchen })}
-                className={`px-2 py-2 font-serif text-2xs tracking-[0.25em] uppercase transition-colors ${
+                className={`cursor-pointer rounded-full border px-3 py-2 font-serif text-2xs tracking-[0.12em] uppercase transition-colors ${
                   filters.kitchen === kitchen
-                    ? "bg-ink text-cream"
-                    : "bg-paper-deep/40 text-ink-soft hover:bg-paper-deep/70"
+                    ? "border-sienna bg-sienna text-white"
+                    : "border-ink text-ink hover:bg-ink/5"
                 }`}
               >
                 {kitchen === "all" ? "Both" : kitchen}
@@ -300,32 +259,25 @@ function Sidebar({
 
 function ProductCard({ item }: { item: CateringItem }) {
   const { add, setOpen } = useCart()
-  const options = item.options ?? []
-  const [optionIndex, setOptionIndex] = useState(0)
-  const [quantity, setQuantity] = useState(1)
-  const [added, setAdded] = useState(false)
-  const option = options[optionIndex]
-  const fromEmporio = item.kitchen === "emporio"
+  const option = orderOption(item)
 
   const addToCart = () => {
     if (!option || !item.available) return
     add({
       itemId: item._id,
-      optionIndex,
-      quantity,
+      optionIndex: option.index,
+      quantity: 1,
       name: item.name,
       optionLabel: option.label,
       price: option.price,
       image: item.image,
     })
-    setAdded(true)
-    setQuantity(1)
-    window.setTimeout(() => setAdded(false), 1800)
+    setOpen(true)
   }
 
   return (
     <article
-      className={`group relative flex h-full flex-col ${item.available ? "" : "opacity-60"}`}
+      className={`group relative flex h-full flex-col ${item.available && option ? "" : "opacity-60"}`}
     >
       <div className="relative mx-auto aspect-square w-full overflow-hidden">
         <div
@@ -341,87 +293,35 @@ function ProductCard({ item }: { item: CateringItem }) {
             style={{ padding: "8%" }}
           />
         )}
-        {item.kitchen && (
-          <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 bg-cream/85 px-2.5 py-1 font-serif text-2xs tracking-[0.3em] text-ink uppercase backdrop-blur-sm">
-            <span
-              className={`inline-block h-1.5 w-1.5 rounded-full ${
-                fromEmporio ? "bg-sienna" : "bg-sienna-deep"
-              }`}
-            />
-            {fromEmporio ? "Floor I" : "Floor II"}
-          </span>
-        )}
       </div>
 
       <div className="mt-4 flex flex-1 flex-col px-1 text-center">
-        <h3 className="font-italic text-2xl leading-tight font-bold text-ink italic">
-          {item.name}
-        </h3>
-        <div className="mt-2 min-h-[2.75rem] font-body text-sm text-ink-soft">
-          {item.note && <p>{item.note}</p>}
-          {item.serves && (
-            <p className="text-xs tracking-wide text-ink-soft/80 uppercase">{item.serves}</p>
+        <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
+          <h3 className="font-italic text-2xl leading-tight font-bold text-ink italic">
+            {item.name}
+          </h3>
+          {option && (
+            <span className="font-serif text-base text-ink tabular-nums">
+              {money(option.price)}
+            </span>
           )}
         </div>
-
-        {options.length > 1 ? (
-          <div
-            className="mt-auto flex justify-center gap-1 pt-3"
-            role="radiogroup"
-            aria-label="Size"
-          >
-            {options.map((o, index) => (
-              <button
-                key={o.label}
-                type="button"
-                role="radio"
-                aria-checked={optionIndex === index}
-                onClick={() => setOptionIndex(index)}
-                className={`rounded-full border px-3 py-1.5 font-serif text-2xs tracking-[0.15em] uppercase transition-colors ${
-                  optionIndex === index
-                    ? "border-sienna bg-sienna text-cream"
-                    : "border-ink/20 text-ink-soft hover:border-sienna"
-                }`}
-              >
-                {o.label} • {money(o.price)}
-              </button>
-            ))}
-          </div>
-        ) : (
-          <div className="mt-auto pt-3 font-serif text-base text-sienna tabular-nums">
-            {option ? `${money(option.price)} • ${option.label.toLowerCase()}` : ""}
-          </div>
-        )}
-
-        {item.available ? (
-          <div className="mt-4 flex items-center gap-2">
-            <QuantityStepper
-              value={quantity}
-              onChange={(q) => setQuantity(Math.max(1, Math.min(100, q)))}
-            />
+        <div className="mt-auto pt-4">
+          {item.available && option ? (
             <button
               type="button"
               onClick={addToCart}
-              className="flex flex-1 items-center justify-center gap-2 rounded-full bg-sienna px-4 py-2.5 font-serif text-xs tracking-[0.25em] text-cream uppercase transition-colors hover:bg-sienna-bright"
+              aria-label={`Order ${item.name}`}
+              className="btn-lift w-full bg-sienna text-cream hover:bg-sienna-bright"
             >
-              <i className={`ph ${added ? "ph-check" : "ph-plus"} text-sm`} />
-              {added ? "Added" : "Add"}
+              Order
             </button>
-          </div>
-        ) : (
-          <div className="mt-4 rounded-full border border-ink/20 px-4 py-2.5 font-serif text-xs tracking-[0.25em] text-ink-soft uppercase">
-            Currently unavailable
-          </div>
-        )}
-        {added && (
-          <button
-            type="button"
-            onClick={() => setOpen(true)}
-            className="mt-2 font-body text-sm text-sienna underline"
-          >
-            View cart
-          </button>
-        )}
+          ) : (
+            <div className="btn-lift w-full border border-ink/20 text-ink-soft">
+              Currently unavailable
+            </div>
+          )}
+        </div>
       </div>
     </article>
   )
@@ -471,18 +371,12 @@ function ClosingStrip() {
             <span className="font-italic italic">We'll handle the rest.</span>
           </h3>
         </div>
-        <div className="flex flex-wrap gap-4">
-          <Link
-            to="/events"
-            className="btn-lift inline-flex items-center gap-3 bg-sienna px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-sienna-bright"
-          >
+        <div className="btn-pair">
+          <Link to="/events" className="btn-lift bg-sienna text-cream hover:bg-sienna-bright">
             <i className="ph ph-calendar-dots text-lg" />
             Private events
           </Link>
-          <Link
-            to="/"
-            className="btn-lift inline-flex items-center gap-3 border border-cream/40 px-7 py-4 font-serif text-sm tracking-[0.3em] text-cream uppercase transition-colors hover:bg-cream/10"
-          >
+          <Link to="/" className="btn-lift border border-cream/40 text-cream hover:bg-cream/10">
             All of Sienna
             <i className="ph ph-arrow-up-right text-lg" />
           </Link>
