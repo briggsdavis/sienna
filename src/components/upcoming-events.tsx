@@ -70,11 +70,13 @@ export function UpcomingEvents() {
                   >
                     <FadeIn stagger delay={index * 0.08} className="upcoming-event-reveal min-w-0">
                       {host && (
-                        <img
-                          src={host.logo}
-                          alt={`Hosted by ${host.name}`}
-                          className="mb-3 h-11 w-auto max-w-full object-contain object-left brightness-0 invert md:h-13"
-                        />
+                        <div className="mb-3">
+                          <img
+                            src={host.logo}
+                            alt={`Hosted by ${host.name}`}
+                            className="h-11 w-auto max-w-full object-contain object-left brightness-0 invert md:h-13"
+                          />
+                        </div>
                       )}
                       <h3
                         id={titleId}

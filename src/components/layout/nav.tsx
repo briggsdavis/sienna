@@ -226,8 +226,8 @@ export function Nav() {
       >
         <AnnouncementBar />
         <div
-          className={`transition-colors duration-500 ${
-            transparent ? "bg-transparent" : "border-b border-ink/10 bg-paper/92 backdrop-blur-md"
+          className={`transition-shadow duration-500 ${
+            transparent ? "bg-transparent" : "bg-paper shadow-[0_3px_12px_rgba(26,18,11,0.09)]"
           }`}
         >
           <div className="relative site-container flex items-center justify-between gap-6 py-4">

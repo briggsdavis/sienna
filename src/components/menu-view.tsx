@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react"
 import { FadeIn } from "@/components/fade-in"
+import { ParallaxImage } from "@/components/parallax-image"
 import { getMenuSectionPhoto } from "@/content/menu-photos"
-import { FLOORS, type FloorId } from "@/lib/site"
+import { FLOORS, type FloorId, unsplash } from "@/lib/site"
 import { formatPrice } from "@/lib/util"
 import type { Doc } from "../../convex/_generated/dataModel"
 
@@ -21,11 +22,11 @@ export const MENU_THEMES = {
     chip: "border-ink/20 text-ink hover:border-sienna hover:text-sienna",
   },
   mezzo: {
-    page: "bg-ink text-paper",
+    page: "bg-sienna-deep text-cream",
     header: "bg-sienna-deep text-cream",
-    accent: "text-sienna-bright",
+    accent: "text-cream/85",
     price: "text-white",
-    muted: "text-paper/60",
+    muted: "text-cream/80",
     rule: "border-paper/15 divide-paper/10",
     chip: "btn-fill btn-fill-cream border-paper/25 text-paper",
   },
@@ -39,6 +40,18 @@ export const MENU_THEMES = {
     chip: "border-ink/20 text-ink hover:border-sienna hover:text-sienna",
   },
 } as const
+
+const MEZZO_CREAM_TEXT = {
+  accent: "text-sienna",
+  price: "text-ink",
+  muted: "text-ink-soft",
+  rule: "border-ink/10 divide-ink/10",
+}
+
+const MEZZO_STOCK_PHOTOS = new Set([
+  unsplash("1608897013039-887f21d8c804", 1400, 75),
+  unsplash("1571997478779-2adcbbe9ab2f", 1400, 75),
+])
 
 function slug(title: string) {
   return title
@@ -91,21 +104,65 @@ export function MenuSections({
     return () => observer.disconnect()
   }, [sections])
 
+  useEffect(() => {
+    if (!mezzo) return
+    const panels = menu.current?.querySelectorAll<HTMLElement>("[data-menu-parallax]")
+    if (!panels?.length) return
+
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      if (motion.matches) return
+      const midpoint = window.innerHeight / 2
+      for (const panel of panels) {
+        const { top, height } = panel.getBoundingClientRect()
+        const offset = (midpoint - top - height / 2) * 0.045
+        panel.style.setProperty("--menu-section-offset", `${Math.max(-24, Math.min(24, offset))}px`)
+      }
+    }
+
+    const schedule = () => {
+      if (!motion.matches && !frame) frame = requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    motion.addEventListener("change", schedule)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", schedule)
+      window.removeEventListener("resize", schedule)
+      motion.removeEventListener("change", schedule)
+    }
+  }, [mezzo, sections])
+
   return (
-    <div ref={menu} className={`space-y-20 ${mezzo ? "[--menu-indent-duration:360ms]" : ""}`}>
+    <div ref={menu} className={mezzo ? "[--menu-indent-duration:360ms]" : "space-y-20"}>
       {sections.map((section, index) => {
-        const image =
-          section.image ??
-          section.items.find((item) => item.available && item.image)?.image ??
-          getMenuSectionPhoto(restaurant, section.title)
         const imageRight = index % 2 === 1
+        const light = mezzo && imageRight
+        const tone = light ? MEZZO_CREAM_TEXT : t
+        const sectionPhoto = getMenuSectionPhoto(restaurant, section.title)
+        const customSectionPhoto =
+          mezzo && section.image && MEZZO_STOCK_PHOTOS.has(section.image) ? null : section.image
+        const itemPhoto = section.items.find((item) => item.available && item.image)?.image
+        const image =
+          customSectionPhoto ??
+          (mezzo ? (sectionPhoto ?? itemPhoto ?? "/mezzo/hero.webp") : (itemPhoto ?? sectionPhoto))
         const photoFrame = `aspect-square overflow-hidden ${imageRight ? "lg:order-last" : ""}`
         const photoContent = (
           <div
-            className={`flex h-full w-full items-center justify-center ${t.header} ${mezzo ? "menu-photo-mask" : ""}`}
+            className={`relative flex h-full w-full items-center justify-center ${t.header} ${mezzo ? "menu-photo-mask" : ""}`}
           >
             {image ? (
-              <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
+              mezzo ? (
+                <ParallaxImage src={image} alt="" loading="lazy" speed={0.11} />
+              ) : (
+                <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
+              )
             ) : (
               <img
                 src={FLOORS[restaurant].logo}
@@ -117,11 +174,20 @@ export function MenuSections({
           </div>
         )
         return (
-          <section key={section._id} id={slug(section.title)} className="scroll-mt-32">
+          <section
+            key={section._id}
+            id={slug(section.title)}
+            data-menu-parallax={mezzo || undefined}
+            className={
+              mezzo
+                ? `scroll-mt-16 py-14 md:py-20 ${light ? "bg-cream text-ink" : "bg-sienna-deep text-cream"}`
+                : "scroll-mt-32"
+            }
+          >
             <div
               className={`grid items-start gap-8 lg:gap-16 ${
                 imageRight ? "lg:grid-cols-[1.25fr_1fr]" : "lg:grid-cols-[1fr_1.25fr]"
-              }`}
+              } ${mezzo ? "mx-auto max-w-[1400px] px-6 motion-safe:translate-y-[var(--menu-section-offset,0px)] lg:px-12" : ""}`}
             >
               {mezzo ? (
                 <div className={`${photoFrame} menu-photo-entrance`} data-menu-entrance>
@@ -140,17 +206,17 @@ export function MenuSections({
                 {section.subtitle && (
                   <p
                     data-menu-entrance={mezzo || undefined}
-                    className={`mt-3 font-body text-[1.125em] ${t.muted} ${mezzo ? "menu-heading-entrance" : ""}`}
+                    className={`mt-3 font-body text-[1.125em] ${tone.muted} ${mezzo ? "menu-heading-entrance" : ""}`}
                   >
                     {section.subtitle}
                   </p>
                 )}
-                <ul className={`mt-6 border-t ${t.rule}`}>
+                <ul className={`mt-6 border-t ${tone.rule}`}>
                   {section.items.map((item) => (
                     <li
                       key={item._id}
                       data-menu-entrance
-                      className={`menu-row menu-row-entrance flex items-baseline gap-4 border-b py-4 ${t.rule} ${mezzo ? "mezzo-menu-row" : ""} ${
+                      className={`menu-row menu-row-entrance flex items-baseline gap-4 border-b py-4 ${tone.rule} ${mezzo ? "mezzo-menu-row" : ""} ${
                         item.available ? "" : "opacity-50"
                       }`}
                     >
@@ -159,7 +225,7 @@ export function MenuSections({
                           <span className="font-serif text-[1.25em]">{item.name}</span>
                           {item.flag && (
                             <span
-                              className={`font-serif text-[0.625em] tracking-[0.3em] uppercase ${t.accent}`}
+                              className={`font-serif text-[0.625em] tracking-[0.3em] uppercase ${tone.accent}`}
                             >
                               {item.flag}
                             </span>
@@ -172,14 +238,14 @@ export function MenuSections({
                         </div>
                         {item.desc && (
                           <div
-                            className={`menu-item-description mt-0.5 font-body leading-snug ${t.muted}`}
+                            className={`menu-item-description mt-0.5 font-body leading-snug ${tone.muted}`}
                           >
                             {item.desc}
                           </div>
                         )}
                       </div>
                       {item.price && (
-                        <span className={`font-serif text-[1.125em] tabular-nums ${t.price}`}>
+                        <span className={`font-serif text-[1.125em] tabular-nums ${tone.price}`}>
                           {formatPrice(item.price)}
                         </span>
                       )}

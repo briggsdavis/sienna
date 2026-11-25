@@ -1,9 +1,8 @@
 import { useQuery } from "convex/react"
 import { useEffect, useRef } from "react"
 import { FadeIn } from "@/components/fade-in"
-import { SPECIALS_PHOTOS } from "@/content/mezzo"
-import { unsplash } from "@/lib/site"
-import { WEEKDAYS_LONG } from "@/lib/util"
+import { SPECIALS_SAMPLES } from "@/content/mezzo"
+import { formatPrice, WEEKDAYS_LONG } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 
 const WEEK = [1, 2, 3, 4, 5, 6, 0] as const
@@ -66,7 +65,16 @@ export function MezzoSpecials() {
   const cards = specials
     ? WEEK.flatMap((day) => {
         const forDay = specials.filter((special) => special.days.includes(day))
-        return (forDay.length ? forDay : [null]).map((special) => ({ day, special }))
+        const sample = SPECIALS_SAMPLES[day]
+        return (forDay.length ? forDay : [null]).map((special) => ({
+          key: `${day}-${special?._id ?? "sample"}`,
+          day,
+          isSample: special === null,
+          name: special?.name ?? sample.name,
+          image: special?.image || sample.image,
+          price: special?.price,
+          desc: special ? special.desc : sample.desc,
+        }))
       })
     : []
 
@@ -74,7 +82,7 @@ export function MezzoSpecials() {
     <section
       id="specials"
       aria-labelledby="mezzo-specials-title"
-      className="bg-paper py-16 md:py-24"
+      className="bg-sienna-deep py-16 text-cream md:py-24"
     >
       <div ref={areaRef} className="site-container">
         <div ref={panelRef} className="group top-8 data-[scroll-pinned=true]:sticky sm:top-16">
@@ -85,7 +93,7 @@ export function MezzoSpecials() {
             >
               Daily specials
             </h2>
-            <p className="mt-4 text-[clamp(0.65rem,calc(3.7vw*var(--site-type-scale)),1rem)] leading-relaxed whitespace-nowrap text-ink-soft">
+            <p className="mt-4 text-[clamp(0.65rem,calc(3.7vw*var(--site-type-scale)),1rem)] leading-relaxed whitespace-nowrap text-cream/80">
               See what’s on special at Mezzo throughout the week.
             </p>
           </FadeIn>
@@ -98,32 +106,31 @@ export function MezzoSpecials() {
               aria-busy={specials === undefined}
               className="grid min-h-36 gap-5 [--special-card-width:80%] motion-safe:auto-cols-[min(var(--special-card-width),29.6rem,52svh)] motion-safe:grid-flow-col motion-safe:grid-rows-[auto_auto_1fr] motion-reduce:grid-cols-[min(var(--special-card-width),29.6rem)] md:[--special-card-width:calc((100%_-_2rem)*4/7)] lg:[--special-card-width:calc((100%_-_3.5rem)*4/7)]"
             >
-              {cards.map(({ day, special }) => (
+              {cards.map(({ key, day, isSample, name, image, price, desc }) => (
                 <li
-                  key={`${day}-${special?._id ?? "empty"}`}
+                  key={key}
                   className="grid min-w-0 gap-3 motion-safe:row-span-3 motion-safe:grid-rows-subgrid"
                 >
                   <img
-                    src={special?.image || unsplash(SPECIALS_PHOTOS[day], 960, 80)}
+                    src={image}
                     alt=""
                     loading="lazy"
-                    className="aspect-square w-full bg-paper-deep object-cover"
+                    className="aspect-square w-full bg-ink/25 object-cover"
                   />
                   <h3 className="font-display text-[clamp(1.15rem,calc(2vw*var(--site-type-scale)),1.6rem)] leading-tight">
-                    {special?.name ?? "No special posted"}
+                    {name}
                   </h3>
                   <div>
-                    <p className="text-sm font-medium text-sienna">
+                    <p className="text-sm font-medium text-cream">
                       {WEEKDAYS_LONG[day]}
-                      {special?.price && (
-                        <span className="ml-3 text-ink-soft tabular-nums">
-                          {/^\d/.test(special.price) ? `$${special.price}` : special.price}
+                      {isSample && <span className="ml-3 text-cream/80">Sample</span>}
+                      {price && (
+                        <span className="ml-3 text-cream/80 tabular-nums">
+                          {formatPrice(price)}
                         </span>
                       )}
                     </p>
-                    {special?.desc && (
-                      <p className="mt-2 text-sm leading-relaxed text-ink-soft">{special.desc}</p>
-                    )}
+                    {desc && <p className="mt-2 text-sm leading-relaxed text-cream/80">{desc}</p>}
                   </div>
                 </li>
               ))}

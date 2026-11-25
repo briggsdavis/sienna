@@ -6,7 +6,7 @@ import { MENU_THEMES, MenuSections, SectionChips } from "@/components/menu-view"
 import { ReserveLink, useReservation, useSettings } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { PAGE_SEO } from "@/lib/pages"
-import { FLOORS, type FloorId, unsplash } from "@/lib/site"
+import { FLOORS, type FloorId } from "@/lib/site"
 import { NotFound } from "@/pages/not-found"
 import { api } from "../../convex/_generated/api"
 
@@ -36,15 +36,16 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
   const sections = useQuery(api.menus.get, { menu: restaurant })
   const floor = FLOORS[restaurant]
   const t = MENU_THEMES[restaurant]
+  const mezzo = restaurant === "mezzo"
   const settings = useSettings()
   const reservation = useReservation(restaurant)
   const showReserve = reservation?.mode !== "walkin"
-  const pickupUrl = restaurant !== "mezzo" ? settings?.orderUrl : undefined
+  const pickupUrl = mezzo ? undefined : settings?.orderUrl
 
   return (
     <div className={`min-h-screen ${t.page}`}>
       <Seo path={floor.menuHref} {...PAGE_SEO[floor.menuHref]} jsonLd={JSON_LD[restaurant]} />
-      {restaurant === "mezzo" ? (
+      {mezzo ? (
         <MezzoMenuHero />
       ) : (
         <header
@@ -90,12 +91,10 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
 
       {sections && sections.length > 0 && (
         <nav
-          className={`sticky top-[68px] z-30 backdrop-blur-md ${
-            restaurant === "mezzo"
-              ? "bg-ink/90"
-              : restaurant === "tetto"
-                ? "bg-cream/90"
-                : "bg-paper/90"
+          className={`${
+            mezzo
+              ? "bg-sienna-deep"
+              : `sticky top-[68px] z-30 backdrop-blur-md ${restaurant === "tetto" ? "bg-cream/90" : "bg-paper/90"}`
           }`}
           aria-label="Menu sections"
         >
@@ -105,7 +104,7 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
         </nav>
       )}
 
-      <main className="mx-auto max-w-[1400px] px-6 py-20 lg:px-12">
+      <div className={mezzo ? undefined : "mx-auto max-w-[1400px] px-6 py-20 lg:px-12"}>
         {sections === undefined ? (
           <div className="h-[60vh]" />
         ) : sections.length === 0 ? (
@@ -115,10 +114,12 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
         ) : (
           <MenuSections restaurant={restaurant} sections={sections} />
         )}
-        <p className={`mt-20 font-body text-sm ${t.muted}`}>
+        <p
+          className={`font-body text-sm ${t.muted} ${mezzo ? "mx-auto max-w-[1400px] px-6 py-10 lg:px-12" : "mt-20"}`}
+        >
           Menu and prices change with the season. Please let your server know about any allergies.
         </p>
-      </main>
+      </div>
     </div>
   )
 }
@@ -127,14 +128,14 @@ function MezzoMenuHero() {
   return (
     <PageHero
       image={{
-        src: unsplash("1672636401339-88d7b84cb1df", 2200, 82),
+        src: "/mezzo/pasta-special.webp",
         alt: "",
         className: "object-[center_58%]",
       }}
       overlay={
         <div className="absolute inset-0 bg-linear-to-t from-sienna-deep/90 via-sienna/50 to-ink/25" />
       }
-      viewportHeight={50}
+      viewportHeight={60}
       bottomPadding="pb-8"
     >
       <div className="my-auto flex flex-col items-center gap-4 text-center text-cream">

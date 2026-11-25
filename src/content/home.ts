@@ -16,7 +16,7 @@ export const HOME_FLOORS = [
     ...FLOORS.mezzo,
     sub: "Pizza & Charcuterie",
     tint: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
-    image: unsplash("1571997478779-2adcbbe9ab2f", 1600, 70),
+    image: "/mezzo/date-night-table.webp",
     items: [
       { name: "Soppressata & Hot Honey", price: "25", note: "marinara, mozzarella" },
       { name: "Crab-Stuffed Ravioli", price: "29", note: "white truffle cream" },
@@ -48,10 +48,10 @@ export const FEATURED_DISHES = [
   },
   {
     contentKey: "dishes.0",
-    name: "Warm Burrata",
+    name: "Vanilla Crème Brûlée",
     floor: "mezzo",
-    price: "14",
-    image: unsplash("1608897013039-887f21d8c804", 1100, 75),
+    price: "12",
+    image: "/mezzo/small-plate.webp",
   },
   {
     contentKey: "dishes.tetto",

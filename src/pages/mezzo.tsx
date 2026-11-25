@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { HeroIntro, PageHero } from "@/components/hero"
@@ -6,9 +5,10 @@ import { MezzoSpecials } from "@/components/mezzo-specials"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel, ReserveLink } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
-import { GALLERY_PHOTOS, HIGHLIGHTS, HOURS } from "@/content/mezzo"
+import { GALLERY_PHOTOS, HIGHLIGHTS, HOURS, MENU_SAMPLES } from "@/content/mezzo"
+import { useScrollScale } from "@/hooks/use-scroll-scale"
 import { PAGE_SEO } from "@/lib/pages"
-import { FLOORS, unsplash } from "@/lib/site"
+import { FLOORS } from "@/lib/site"
 
 const JSON_LD = restaurantJsonLd({
   name: "Mezzo at Sienna Mercato",
@@ -27,6 +27,7 @@ export function Mezzo() {
         <Gallery />
         <Highlights />
         <MezzoSpecials />
+        <FeaturedDishes />
         <Reservations />
         <ClosingStrip />
       </div>
@@ -38,12 +39,12 @@ function Hero() {
   const floor = FLOORS.mezzo
 
   return (
-    <EImage k="hero.image" d={unsplash("1571997478779-2adcbbe9ab2f", 2400, 80)}>
+    <EImage k="hero.image" d="/mezzo/hero.webp">
       {(src) => (
         <PageHero
-          image={{ src, alt: "Wood-fired pizza", className: "opacity-80" }}
+          image={{ src, alt: "", className: "object-[center_52%]" }}
           overlay={
-            <div className="absolute inset-0 bg-gradient-to-b from-ink/65 via-ink/50 to-ink/90" />
+            <div className="absolute inset-0 bg-linear-to-b from-ink/45 via-ink/35 to-sienna-deep/75" />
           }
           bottomPadding="pb-0"
         >
@@ -88,14 +89,14 @@ function MezzoActions({ hero = false }: { hero?: boolean }) {
 
 function Intro() {
   return (
-    <section aria-label="About Mezzo" className="bg-paper py-14 md:py-24">
+    <section aria-label="About Mezzo" className="bg-cream py-14 md:py-24">
       <div className="site-container grid items-center gap-8 md:grid-cols-[1.25fr_1fr] md:gap-12 lg:gap-20">
         <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
-          <EImage k="intro.image" d={unsplash("1751563820356-a62570b187ea", 1600, 82)}>
+          <EImage k="intro.image" d="/mezzo/ambiance.webp">
             {(src) => (
               <ParallaxImage
                 src={src}
-                alt="Warm lighting and wood paneling in an Italian restaurant dining room"
+                alt="Wine and a shared plate on a candlelit table"
                 speed={0.08}
               />
             )}
@@ -117,41 +118,7 @@ function Intro() {
 }
 
 function Gallery() {
-  const galleryRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const gallery = galleryRef.current
-    if (!gallery) return
-
-    const frames = gallery.querySelectorAll<HTMLDivElement>("[data-gallery-photo]")
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
-    let frame = 0
-
-    const update = () => {
-      frame = 0
-      const viewport = window.innerHeight
-      for (const photo of frames) {
-        const { top, height } = photo.getBoundingClientRect()
-        const progress = Math.min(1, Math.max(0, (viewport - top) / ((viewport + height) / 2)))
-        photo.style.setProperty("--gallery-photo-scale", String(0.8 + 0.2 * progress))
-      }
-    }
-
-    const schedule = () => {
-      if (!motion.matches && !frame) frame = requestAnimationFrame(update)
-    }
-
-    schedule()
-    window.addEventListener("scroll", schedule, { passive: true })
-    window.addEventListener("resize", schedule)
-    motion.addEventListener("change", schedule)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("scroll", schedule)
-      window.removeEventListener("resize", schedule)
-      motion.removeEventListener("change", schedule)
-    }
-  }, [])
+  const galleryRef = useScrollScale<HTMLDivElement>()
 
   return (
     <section aria-label="Mezzo photo gallery" className="bg-sienna-deep py-10 md:py-20">
@@ -159,11 +126,11 @@ function Gallery() {
         {GALLERY_PHOTOS.map((image, index) => (
           <div
             key={image.id}
-            data-gallery-photo
+            data-scroll-scale
             className={index === 1 ? "aspect-[3/4]" : "aspect-[4/3]"}
           >
-            <div className="relative h-full overflow-hidden bg-paper-deep motion-safe:[scale:var(--gallery-photo-scale,1)]">
-              <EImage k={`gallery.${image.id}.image`} d={unsplash(image.photo, 1200, 80)}>
+            <div className="relative h-full overflow-hidden bg-paper-deep motion-safe:[scale:var(--scroll-image-scale,1)]">
+              <EImage k={`gallery.${image.id}.image`} d={image.photo}>
                 {(src) => (
                   <ParallaxImage
                     src={src}
@@ -198,7 +165,7 @@ function Highlights() {
                 index % 2 === 0 ? "md:order-last" : ""
               }`}
             >
-              <EImage k={`highlights.${feature.id}.image`} d={unsplash(feature.photo, 1400, 80)}>
+              <EImage k={`highlights.${feature.id}.image`} d={feature.photo}>
                 {(src) => <ParallaxImage src={src} alt={feature.alt} loading="lazy" speed={0.08} />}
               </EImage>
             </div>
@@ -214,6 +181,55 @@ function Highlights() {
             </FadeIn>
           </article>
         ))}
+      </div>
+    </section>
+  )
+}
+
+function FeaturedDishes() {
+  const dishesRef = useScrollScale<HTMLUListElement>()
+
+  return (
+    <section aria-labelledby="mezzo-featured-dishes" className="bg-cream py-16 text-ink md:py-24">
+      <div className="site-container">
+        <FadeIn className="mb-8 flex flex-wrap items-end justify-between gap-5 md:mb-10" stagger>
+          <h2
+            id="mezzo-featured-dishes"
+            className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.5rem)] leading-none"
+          >
+            <EText k="sampleMenu.title" d="Featured dishes" />
+          </h2>
+          <ELink
+            k="sampleMenu.link"
+            label="View the full menu"
+            href={FLOORS.mezzo.menuHref}
+            className="btn-lift btn-fill border border-ink/30 text-ink"
+          />
+        </FadeIn>
+        <ul
+          ref={dishesRef}
+          className="grid grid-cols-2 gap-x-[0.8rem] gap-y-[1.6rem] sm:gap-x-[1.2rem] md:grid-cols-3 lg:grid-cols-5"
+        >
+          {MENU_SAMPLES.map((dish) => (
+            <li key={dish.id}>
+              <div data-scroll-scale className="aspect-[4/5]">
+                <div className="relative h-full overflow-hidden bg-paper-deep motion-safe:[scale:var(--scroll-image-scale,1)]">
+                  <EImage k={`sampleMenu.${dish.id}.image`} d={dish.photo}>
+                    {(src) => (
+                      <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    )}
+                  </EImage>
+                </div>
+              </div>
+              <h3 className="mt-4 font-display text-xl leading-tight">
+                <EText k={`sampleMenu.${dish.id}.name`} d={dish.name} />
+              </h3>
+              <p className="mt-2 font-body text-sm leading-relaxed text-ink-soft">
+                <EText k={`sampleMenu.${dish.id}.description`} d={dish.description} />
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   )
