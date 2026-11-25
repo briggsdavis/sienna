@@ -79,7 +79,7 @@ export function AdminLayout() {
           }`}
         >
           <div className="flex items-center gap-2 px-5 py-5">
-            <img src="/siennafav.png" alt="" className="h-7 w-7" />
+            <img src="/images/brand/sienna-mercato-monogram.png" alt="" className="h-7 w-7" />
             <div>
               <div className="text-sm font-semibold">Sienna Mercato</div>
               <div className="text-xs text-ink-soft">Dashboard</div>
@@ -178,7 +178,7 @@ function Login() {
         }}
       >
         <img
-          src="/siennalogo.png"
+          src="/images/brand/sienna-mercato-logo.png"
           alt="Sienna Mercato"
           className="mx-auto h-9 w-auto brightness-0"
         />

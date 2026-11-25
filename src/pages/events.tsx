@@ -96,7 +96,7 @@ function Venues() {
               <h2 className="font-display text-[clamp(3rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.9] text-ink">
                 Three rooms
                 <br />
-                <span className="font-italic text-sienna italic">for private hire.</span>
+                <span className="text-sienna">for private hire.</span>
               </h2>
             </div>
             <p className="font-body text-lg leading-relaxed text-ink-soft md:text-right">
@@ -116,7 +116,7 @@ function Venues() {
               <h3 className="font-display text-3xl leading-tight text-ink">
                 Tell us the date, the headcount,
                 <br />
-                <span className="font-italic text-sienna italic">and we'll handle the rest.</span>
+                <span className="text-sienna">and we'll handle the rest.</span>
               </h3>
               <p className="mt-3 max-w-lg font-body text-base text-ink-soft">
                 The events team replies within one business day with a floor recommendation, a draft
@@ -334,7 +334,7 @@ function Inquiry() {
           <h2 className="font-display text-[clamp(3rem,calc(7vw*var(--site-type-scale)),5.5rem)] leading-[0.85]">
             Tell us about
             <br />
-            <span className="font-italic italic">your night.</span>
+            <span>your night.</span>
           </h2>
           <p className="mt-8 max-w-xl font-body text-xl leading-relaxed text-cream/85">
             The events team replies within one business day. Send us the date, the headcount, and a
@@ -504,7 +504,7 @@ function ClosingStrip() {
           <h3 className="font-display text-5xl leading-[0.9]">
             Two kitchens.
             <br />
-            <span className="font-italic italic">Delivered to you.</span>
+            <span>Delivered to you.</span>
           </h3>
         </div>
         <div className="btn-pair">

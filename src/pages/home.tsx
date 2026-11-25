@@ -70,7 +70,7 @@ function Hero() {
             style={{ animationDelay: "0.35s" }}
           >
             <EText k="hero.title" d="Sienna" />{" "}
-            <span className="font-italic font-light text-cream/90 italic">
+            <span className="font-light text-cream/90">
               <EText k="hero.titleAccent" d="Mercato" />
             </span>
           </h1>
@@ -139,7 +139,7 @@ function Manifesto() {
         <FadeIn>
           <p className="font-display text-[clamp(2.4rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[1.1] text-ink">
             <EText k="manifesto.line1" d="Three floors." />
-            <span className="font-italic text-sienna italic">
+            <span className="text-sienna">
               {" "}
               <EText k="manifesto.line2" d="Three rooms." />{" "}
             </span>
@@ -315,7 +315,7 @@ function FeaturedDishes() {
             className="mb-12 font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink"
           >
             <EText k="dishes.title" d="Featured" />{" "}
-            <span className="font-italic text-sienna italic">
+            <span className="text-sienna">
               <EText k="dishes.titleAccent" d="Dishes." />
             </span>
           </h2>
@@ -402,7 +402,7 @@ function EventsAndCatering() {
             <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
               <EText k="events.title" d="Book a floor." />
               <br />
-              <span className="font-italic text-sienna italic">
+              <span className="text-sienna">
                 <EText k="events.titleAccent" d="Make it yours." />
               </span>
             </h2>
@@ -437,7 +437,7 @@ function EventsAndCatering() {
             <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
               <EText k="catering.title" d="Two kitchens." />
               <br />
-              <span className="font-italic text-sienna italic">
+              <span className="text-sienna">
                 <EText k="catering.titleAccent" d="Delivered to you." />
               </span>
             </h2>
@@ -478,7 +478,7 @@ function Visit() {
             <h2 className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.85]">
               <EText k="visit.title" d="Reserve" />
               <br />
-              <span className="font-italic italic">
+              <span>
                 <EText k="visit.titleAccent" d="a table." />
               </span>
             </h2>

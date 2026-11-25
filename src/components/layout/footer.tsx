@@ -54,7 +54,7 @@ export function Footer() {
     >
       <div className="site-container flex flex-col items-center gap-5 pt-16 lg:pt-20">
         <img
-          src="/siennalogo.png"
+          src="/images/brand/sienna-mercato-logo.png"
           alt="Sienna Mercato"
           className="h-[2.875rem] w-auto brightness-0 invert"
         />
@@ -145,7 +145,7 @@ export function Footer() {
           © {new Date().getFullYear()} Sienna Mercato Restaurant Group
         </span>
         <ExternalLink href="https://socialsatisfaction.agency" className="under">
-          Made by SocialSatisfaction
+          Made by Social Satisfaction
         </ExternalLink>
         <span className="flex gap-6 md:justify-self-end">
           <Link to="/privacy" className="under">

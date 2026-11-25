@@ -110,7 +110,7 @@ function FloorOption({ id, sub, external }: { id: FloorId; sub: string; external
         <div className="font-serif text-sm tracking-wide text-ink transition-colors group-hover:text-sienna">
           {floor.name}
         </div>
-        <div className="font-italic text-2xs text-ink-soft italic">{sub}</div>
+        <div className="text-2xs text-ink-soft">{sub}</div>
       </div>
       <i
         className={`ph ${external ? "ph-arrow-up-right" : "ph-arrow-right"} text-sm text-sienna opacity-0 transition-opacity group-hover:opacity-100`}
@@ -251,7 +251,7 @@ export function Nav() {
             <div className="absolute left-1/2 max-w-[22%] -translate-x-1/2 min-[400px]:max-w-[36%]">
               <Link to="/" className="flex items-center">
                 <img
-                  src="/siennalogo.png"
+                  src="/images/brand/sienna-mercato-logo.png"
                   alt="Sienna Mercato"
                   className={`h-9 w-auto object-contain transition-all duration-500 ${
                     transparent ? "brightness-0 invert" : "brightness-0"
@@ -317,7 +317,7 @@ export function Nav() {
             className="absolute left-1/2 flex -translate-x-1/2 items-center"
           >
             <img
-              src="/siennalogo.png"
+              src="/images/brand/sienna-mercato-logo.png"
               alt="Sienna Mercato"
               className="h-9 w-auto brightness-0 invert"
             />

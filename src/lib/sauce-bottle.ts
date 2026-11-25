@@ -96,9 +96,9 @@ function labelTexture(sauce: (typeof SAUCES)[number], name: string, number: numb
 
   ctx.fillStyle = ink
   ctx.textAlign = "center"
-  ctx.font = "700 39px Georgia, serif"
+  ctx.font = '39px "Octin Vintage"'
   ctx.fillText("E M P O R I O", center, 125)
-  ctx.font = "600 18px system-ui, sans-serif"
+  ctx.font = "700 18px Akzidenz"
   ctx.fillText("S I E N N A   M E R C A T O", center, 154)
 
   ctx.save()
@@ -112,24 +112,24 @@ function labelTexture(sauce: (typeof SAUCES)[number], name: string, number: numb
   ctx.restore()
 
   ctx.fillStyle = ink
-  ctx.font = "bold 82px Georgia, serif"
+  ctx.font = '82px "Octin Vintage"'
   ctx.fillText(name, center, 340, 462)
 
   ctx.fillStyle = accent
   ctx.fillRect(center - 193, 365, 386, 3)
-  ctx.font = "700 27px system-ui, sans-serif"
+  ctx.font = "700 27px Akzidenz"
   ctx.fillText("H O U S E - M A D E   S A U C E", center, 411, 442)
-  ctx.font = "700 19px system-ui, sans-serif"
+  ctx.font = "700 19px Akzidenz"
   ctx.fillText(String(number).padStart(2, "0"), center - 226, 238)
   ctx.fillText(String(number).padStart(2, "0"), center + 226, 238)
 
   ctx.fillStyle = ink
-  ctx.font = "700 29px Georgia, serif"
+  ctx.font = '29px "Octin Vintage"'
   for (const side of [192, 1344]) {
     ctx.fillText("EMPORIO", side, 244)
-    ctx.font = "600 17px system-ui, sans-serif"
+    ctx.font = "700 17px Akzidenz"
     ctx.fillText("HOUSE-MADE SAUCE", side, 273)
-    ctx.font = "700 29px Georgia, serif"
+    ctx.font = '29px "Octin Vintage"'
   }
 
   const texture = new CanvasTexture(label)

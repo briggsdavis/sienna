@@ -101,7 +101,7 @@ export function Emporio() {
 
   return (
     <PageContent page="emporio">
-      <div ref={page} className="relative">
+      <div ref={page} className="type-emporio relative">
         <Seo path="/emporio" {...PAGE_SEO["/emporio"]} jsonLd={JSON_LD} />
         <Hero />
         <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-bright">
@@ -129,7 +129,7 @@ export function Emporio() {
             statement={
               <>
                 <EText k="intro.statement1" d="The meatball is sacred." />
-                <span className="font-italic italic">
+                <span>
                   {" "}
                   <EText k="intro.statement2" d="Everything else" />{" "}
                 </span>
@@ -439,7 +439,7 @@ function ClosingStrip() {
         <h3 className="font-display text-5xl leading-[0.9]">
           <EText k="closing.title" d="Show up hungry." />
           <br />
-          <span className="font-italic italic">
+          <span>
             <EText k="closing.titleAccent" d="Leave slower." />
           </span>
         </h3>

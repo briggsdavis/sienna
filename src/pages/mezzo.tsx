@@ -20,7 +20,7 @@ const JSON_LD = restaurantJsonLd({
 export function Mezzo() {
   return (
     <PageContent page="mezzo">
-      <div className="relative">
+      <div className="type-mezzo relative">
         <Seo path="/mezzo" {...PAGE_SEO["/mezzo"]} jsonLd={JSON_LD} />
         <Hero />
         <Intro />
@@ -39,7 +39,7 @@ function Hero() {
   const floor = FLOORS.mezzo
 
   return (
-    <EImage k="hero.image" d="/mezzo/hero.webp">
+    <EImage k="hero.image" d="/images/mezzo/hero-guest-dining.webp">
       {(src) => (
         <PageHero
           image={{ src, alt: "", className: "object-[center_52%]" }}
@@ -92,7 +92,7 @@ function Intro() {
     <section aria-label="About Mezzo" className="bg-cream py-14 md:py-24">
       <div className="site-container grid items-center gap-8 md:grid-cols-[1.25fr_1fr] md:gap-12 lg:gap-20">
         <div className="relative aspect-[4/5] overflow-hidden bg-paper-deep">
-          <EImage k="intro.image" d="/mezzo/ambiance.webp">
+          <EImage k="intro.image" d="/images/mezzo/dining-room-table.webp">
             {(src) => (
               <ParallaxImage
                 src={src}

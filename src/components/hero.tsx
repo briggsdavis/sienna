@@ -70,7 +70,7 @@ export function RestaurantHero({
           className="rise mb-[clamp(1.5rem,5svh,3.6rem)] h-[min(49svh,69vw,32rem)] w-auto max-w-[76vw] object-contain brightness-0 invert"
         />
         <h1
-          className="rise font-sans text-[clamp(2rem,calc(4.2vw*var(--site-type-scale)),4.3rem)] leading-none font-black tracking-[0.06em] uppercase"
+          className="rise font-display text-[clamp(2.4rem,calc(5.4vw*var(--site-type-scale)),5.4rem)] leading-none tracking-[0.02em] uppercase"
           style={{ animationDelay: "0.25s" }}
         >
           {floor.name}

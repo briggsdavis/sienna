@@ -30,7 +30,7 @@ export const FLOORS = {
     roman: "I",
     href: "/emporio",
     menuHref: "/menus/emporio",
-    logo: "/emporio.avif",
+    logo: "/images/brand/emporio-seal.avif",
   },
   mezzo: {
     id: "mezzo",
@@ -38,7 +38,7 @@ export const FLOORS = {
     roman: "II",
     href: "/mezzo",
     menuHref: "/menus/mezzo",
-    logo: "/mezzo.avif",
+    logo: "/images/brand/mezzo-seal.avif",
   },
   tetto: {
     id: "tetto",
@@ -46,7 +46,7 @@ export const FLOORS = {
     roman: "III",
     href: "/tetto",
     menuHref: "/menus/tetto",
-    logo: "/iltetto.avif",
+    logo: "/images/brand/il-tetto-seal.avif",
   },
 } as const
 

@@ -123,7 +123,11 @@ export function EmporioSauces() {
 
     const initialize = async () => {
       try {
-        const { createSauceBottle } = await import("@/lib/sauce-bottle")
+        const [{ createSauceBottle }] = await Promise.all([
+          import("@/lib/sauce-bottle"),
+          document.fonts.load('82px "Octin Vintage"'),
+          document.fonts.load("700 18px Akzidenz"),
+        ])
         if (disposed) return
         model = createSauceBottle(surface, names)
         if (!model) return

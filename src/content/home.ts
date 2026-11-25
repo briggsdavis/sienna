@@ -16,7 +16,7 @@ export const HOME_FLOORS = [
     ...FLOORS.mezzo,
     sub: "Pizza & Charcuterie",
     tint: "from-[#3a2818] via-[#6e1f12] to-[#a4341f]",
-    image: "/mezzo/date-night-table.webp",
+    image: "/images/mezzo/dinner-for-two.webp",
     items: [
       { name: "Soppressata & Hot Honey", price: "25", note: "marinara, mozzarella" },
       { name: "Crab-Stuffed Ravioli", price: "29", note: "white truffle cream" },
@@ -51,7 +51,7 @@ export const FEATURED_DISHES = [
     name: "Vanilla Crème Brûlée",
     floor: "mezzo",
     price: "12",
-    image: "/mezzo/small-plate.webp",
+    image: "/images/mezzo/creme-brulee.webp",
   },
   {
     contentKey: "dishes.tetto",

@@ -151,7 +151,7 @@ export function MenuSections({
         const itemPhoto = section.items.find((item) => item.available && item.image)?.image
         const image =
           customSectionPhoto ??
-          (mezzo ? (sectionPhoto ?? itemPhoto ?? "/mezzo/hero.webp") : (itemPhoto ?? sectionPhoto))
+          (mezzo ? (sectionPhoto ?? itemPhoto ?? "/images/mezzo/hero-guest-dining.webp") : (itemPhoto ?? sectionPhoto))
         const photoFrame = `aspect-square overflow-hidden ${imageRight ? "lg:order-last" : ""}`
         const photoContent = (
           <div
@@ -222,7 +222,9 @@ export function MenuSections({
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex flex-wrap items-baseline gap-3">
-                          <span className="font-serif text-[1.25em]">{item.name}</span>
+                          <span className="menu-item-name font-serif text-[1.25em]">
+                            {item.name}
+                          </span>
                           {item.flag && (
                             <span
                               className={`font-serif text-[0.625em] tracking-[0.3em] uppercase ${tone.accent}`}
@@ -245,7 +247,9 @@ export function MenuSections({
                         )}
                       </div>
                       {item.price && (
-                        <span className={`font-serif text-[1.125em] tabular-nums ${tone.price}`}>
+                        <span
+                          className={`menu-item-price font-serif text-[1.125em] tabular-nums ${tone.price}`}
+                        >
                           {formatPrice(item.price)}
                         </span>
                       )}

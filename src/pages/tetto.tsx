@@ -32,7 +32,7 @@ const JSON_LD = restaurantJsonLd({
 export function Tetto() {
   return (
     <PageContent page="tetto">
-      <div className="relative">
+      <div className="type-tetto relative">
         <Seo path="/tetto" {...PAGE_SEO["/tetto"]} jsonLd={JSON_LD} />
         <Hero />
         <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-bright">
@@ -59,7 +59,7 @@ export function Tetto() {
             statement={
               <>
                 <EText k="intro.statement1" d="The view is the menu." />
-                <span className="font-italic italic">
+                <span>
                   {" "}
                   <EText k="intro.statement2" d="Everything else" />{" "}
                 </span>
@@ -193,7 +193,7 @@ function WeatherAndHours() {
             <h2 className="font-display text-[clamp(2.5rem,calc(5vw*var(--site-type-scale)),4.5rem)] leading-[0.9] text-ink">
               <EText k="weather.title" d="We open the roof" />
               <br />
-              <span className="font-italic text-sienna italic">
+              <span className="text-sienna">
                 <EText k="weather.titleAccent" d="when the sky lets us." />
               </span>
             </h2>
@@ -242,7 +242,7 @@ function ClosingStrip() {
           <h3 className="font-display text-5xl leading-[0.9]">
             <EText k="closing.title" d="You've reached" />
             <br />
-            <span className="font-italic italic">
+            <span>
               <EText k="closing.titleAccent" d="the top." />
             </span>
           </h3>

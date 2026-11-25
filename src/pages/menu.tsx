@@ -43,7 +43,7 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
   const pickupUrl = mezzo ? undefined : settings?.orderUrl
 
   return (
-    <div className={`min-h-screen ${t.page}`}>
+    <div className={`type-${restaurant} min-h-screen ${t.page}`}>
       <Seo path={floor.menuHref} {...PAGE_SEO[floor.menuHref]} jsonLd={JSON_LD[restaurant]} />
       {mezzo ? (
         <MezzoMenuHero />
@@ -128,7 +128,7 @@ function MezzoMenuHero() {
   return (
     <PageHero
       image={{
-        src: "/mezzo/pasta-special.webp",
+        src: "/images/mezzo/gemelli-vodka.webp",
         alt: "",
         className: "object-[center_58%]",
       }}

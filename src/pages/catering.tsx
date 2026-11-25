@@ -297,7 +297,7 @@ function ProductCard({ item }: { item: CateringItem }) {
 
       <div className="mt-4 flex flex-1 flex-col px-1 text-center">
         <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
-          <h3 className="font-italic text-2xl leading-tight font-bold text-ink italic">
+          <h3 className="text-2xl leading-tight font-bold text-ink">
             {item.name}
           </h3>
           {option && (
@@ -368,7 +368,7 @@ function ClosingStrip() {
           <h3 className="font-display text-5xl leading-[0.9]">
             Book a floor.
             <br />
-            <span className="font-italic italic">We'll handle the rest.</span>
+            <span>We'll handle the rest.</span>
           </h3>
         </div>
         <div className="btn-pair">

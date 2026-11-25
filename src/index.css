@@ -1,11 +1,49 @@
 @import "tailwindcss";
 
-@import "@fontsource-variable/bodoni-moda";
-@import "@fontsource-variable/bodoni-moda/wght-italic.css";
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/fraunces/wght-italic.css";
-@import "@fontsource-variable/cormorant";
-@import "@fontsource-variable/cormorant/wght-italic.css";
+@font-face {
+  font-family: "Knockout 48";
+  src: url("/fonts/knockout-48.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Knockout 26";
+  src: url("/fonts/knockout-26.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akzidenz";
+  src: url("/fonts/akzidenz-roman.ttf") format("truetype");
+  font-weight: 100 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akzidenz";
+  src: url("/fonts/akzidenz-bold.ttf") format("truetype");
+  font-weight: 600 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Akzidenz";
+  src: url("/fonts/akzidenz-black.ttf") format("truetype");
+  font-weight: 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Archive Antique";
+  src: url("/fonts/archive-antique.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Octin Vintage";
+  src: url("/fonts/octin-vintage.ttf") format("truetype");
+  font-display: swap;
+}
 
 @theme {
   --color-paper: #f3ead8;
@@ -20,10 +58,42 @@
   --text-2xs: 0.625rem;
   --text-2xs--line-height: 1rem;
 
-  --font-display: "Bodoni Moda Variable", "Cormorant Variable", serif;
-  --font-serif: "Bodoni Moda Variable", "Cormorant Variable", serif;
-  --font-body: "Fraunces Variable", "Cormorant Variable", serif;
-  --font-italic: "Fraunces Variable", "Cormorant Variable", serif;
+  --font-display: "Knockout 48", "Akzidenz", sans-serif;
+  --font-serif: "Akzidenz", sans-serif;
+  --font-body: "Akzidenz", sans-serif;
+  --font-sans: "Akzidenz", sans-serif;
+  --font-mono: "Akzidenz", sans-serif;
+}
+
+.type-emporio {
+  --font-display: "Octin Vintage", "Akzidenz", sans-serif;
+}
+
+.type-tetto {
+  --font-display: "Knockout 48", "Akzidenz", sans-serif;
+
+  :is(.menu-item-name, .menu-item-price) {
+    font-family: "Knockout 26", "Akzidenz", sans-serif;
+    font-size: 2em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .menu-item-description {
+    margin-top: 0.4em;
+    font-family: "Archive Antique", "Akzidenz", sans-serif;
+    font-size: 0.7em;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+}
+
+.type-mezzo {
+  --font-display: "Knockout 48", "Akzidenz", sans-serif;
+
+  .menu-item-name {
+    font-weight: 700;
+  }
 }
 
 @utility site-container {
@@ -477,6 +547,7 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-weight: 400;
+  font-synthesis: none;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -739,7 +810,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   gap: 0.5rem;
   border-radius: 9999px;
   padding: 0.5rem 1rem;
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: var(--button-text-size, 0.75rem);
   line-height: 1.2;
   letter-spacing: var(--button-letter-spacing, 0.18em);

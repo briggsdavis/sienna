@@ -16,7 +16,7 @@ export function Order() {
         <h1 className="font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),6rem)] leading-none text-ink">
           Emporio
         </h1>
-        <p className="mt-4 font-italic text-xl text-ink-soft italic">
+        <p className="mt-4 text-xl text-ink-soft">
           Taking you to our online ordering system…
         </p>
         <div className="mt-10 flex flex-col items-center gap-4">
@@ -27,7 +27,7 @@ export function Order() {
           </a>
           <Link
             to="/"
-            className="font-italic text-sm text-ink-soft italic underline-offset-2 hover:underline"
+            className="text-sm text-ink-soft underline-offset-2 hover:underline"
           >
             Back to Sienna Mercato
           </Link>
