@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { DailySpecials } from "@/components/daily-specials"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
@@ -5,8 +6,10 @@ import { FloorIntro } from "@/components/floor-intro"
 import { HappyHour } from "@/components/happy-hour"
 import { RestaurantHero } from "@/components/hero"
 import { PageShortcuts } from "@/components/page-shortcuts"
+import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
+import { RooftopDrinks, TettoDrinkModel } from "@/components/tetto-drinks"
 import { FEATURED_DRAFT, HAPPY_HOUR_DEALS, HOURS, STATS } from "@/content/tetto"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, unsplash } from "@/lib/site"
@@ -15,8 +18,9 @@ const SHORTCUTS = [
   { label: "Daily Specials", icon: "ph-star", href: "#specials" },
   { label: "Food & Drafts", icon: "ph-beer-stein", href: FLOORS.tetto.menuHref },
   { label: "Happy Hour", icon: "ph-clock", href: "#happy-hour" },
-  { label: "Hours", icon: "ph-sun-horizon", href: "#reserve" },
 ]
+
+const BEER_MODEL = ["beer"] as const
 
 const JSON_LD = restaurantJsonLd({
   name: "Il Tetto Rooftop at Sienna Mercato",
@@ -31,45 +35,53 @@ export function Tetto() {
       <div className="relative">
         <Seo path="/tetto" {...PAGE_SEO["/tetto"]} jsonLd={JSON_LD} />
         <Hero />
-        <PageShortcuts shortcuts={SHORTCUTS} />
-        <FloorIntro
-          image={
-            <EImage k="intro.image" d={unsplash("1414235077428-338989a2e8c0", 1200, 80)}>
-              {(src) => (
-                <img
-                  src={src}
-                  alt="Il Tetto rooftop"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                />
-              )}
-            </EImage>
-          }
-          photoDetails={{
-            hours: <EText k="intro.hours" d="Thu-Sun from 4 PM" />,
-            badge: <EText k="intro.badge" d="Walk-in only" />,
-            badgeClassName: "bg-ink",
-          }}
-          statement={
-            <>
-              <EText k="intro.statement1" d="The view is the menu." />
-              <span className="font-italic text-sienna italic">
-                {" "}
-                <EText k="intro.statement2" d="Everything else" />{" "}
-              </span>
-              <EText k="intro.statement3" d="is cold pints and good company." />
-            </>
-          }
-          body={
-            <EText
-              k="intro.body"
-              d="No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest."
-            />
-          }
-          stats={STATS}
-        />
-        <DailySpecials restaurant="tetto" tone="dark" title="On the roof today." />
+        <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-bright">
+          <img
+            src={FLOORS.tetto.logo}
+            alt=""
+            className="pointer-events-none absolute top-1/2 right-[-9%] w-[clamp(23rem,60vw,65rem)] max-w-none -translate-y-1/2 -rotate-12 opacity-[0.07] brightness-0 invert"
+          />
+          <PageShortcuts shortcuts={SHORTCUTS} tone="sienna" />
+          <FloorIntro
+            tone="sienna"
+            image={
+              <EImage k="intro.image" d={unsplash("1414235077428-338989a2e8c0", 1200, 80)}>
+                {(src) => (
+                  <ParallaxImage
+                    src={src}
+                    alt="Il Tetto rooftop"
+                    className="transition-transform duration-700 group-hover:scale-[1.03]"
+                    speed={0.12}
+                  />
+                )}
+              </EImage>
+            }
+            statement={
+              <>
+                <EText k="intro.statement1" d="The view is the menu." />
+                <span className="font-italic italic">
+                  {" "}
+                  <EText k="intro.statement2" d="Everything else" />{" "}
+                </span>
+                <EText k="intro.statement3" d="is cold pints and good company." />
+              </>
+            }
+            body={
+              <EText
+                k="intro.body"
+                d="No reservations, no dress code, no ceremony. The retractable roof opens when the forecast agrees. Thirty drafts on the chalkboard, whole pies riding the dumbwaiter up from below, the Pittsburgh skyline doing the rest."
+              />
+            }
+            stats={STATS}
+          />
+        </div>
+        <div id="specials" className="scroll-mt-16 bg-paper">
+          <DailySpecials restaurant="tetto" id="rooftop-daily-specials" hideWhenEmpty />
+          <RooftopDrinks />
+        </div>
         <BeerOfTheMonth />
         <HappyHour
+          tone="paper"
           title={<EText k="happy.title" d="Sunset hour." />}
           titleSize="text-[clamp(2.2rem,calc(5.5vw*var(--site-type-scale)),5rem)]"
           body={
@@ -120,41 +132,53 @@ function Hero() {
 }
 
 function BeerOfTheMonth() {
+  const card = useRef<HTMLDivElement>(null)
+
   return (
-    <section className="relative bg-ink pb-16 text-paper">
-      <div className="mx-auto max-w-[1600px] px-6 lg:px-12">
-        <FadeIn>
-          <div className="grid overflow-hidden lg:grid-cols-[1fr_2fr]">
-            <div className="relative aspect-[4/3] overflow-hidden lg:aspect-auto">
-              <EImage k="botm.image" d={unsplash("1535958636474-b021ee887b13", 1400, 80)}>
-                {(src) => (
-                  <img
-                    src={src}
-                    alt="The beer of the month"
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                )}
-              </EImage>
-            </div>
-            <div className="flex flex-col justify-center bg-paper/[0.04] p-8 lg:p-12">
-              <div className="mb-2 font-serif text-base text-sienna-bright">
-                <EText k="botm.kicker" d="beer of the month" />
-              </div>
-              <h2 className="font-display text-[clamp(2rem,calc(5vw*var(--site-type-scale)),3.5rem)] leading-[0.9]">
-                <EText k="botm.title" d={FEATURED_DRAFT.name} />
-              </h2>
-              <p className="mt-4 max-w-lg font-body text-lg leading-relaxed text-paper/80">
-                <EText k="botm.body" d={FEATURED_DRAFT.notes} />
-              </p>
-              <div className="mt-6 font-serif text-xs tracking-[0.3em] text-paper/55 uppercase">
-                <EText
-                  k="botm.detail"
-                  d={`${FEATURED_DRAFT.brewery} • ${FEATURED_DRAFT.style} • ${FEATURED_DRAFT.abv} ABV • ${FEATURED_DRAFT.ibu} IBU`}
-                />
-              </div>
-            </div>
-          </div>
-        </FadeIn>
+    <section
+      aria-labelledby="tetto-month-title"
+      className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-sienna-deep px-6 py-20 text-cream md:py-24"
+    >
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <EImage k="botm.image" d={unsplash("1747003389183-86aaf6c9189b", 2200, 80)}>
+          {(src) => <ParallaxImage src={src} alt="" speed={0.2} loading="lazy" />}
+        </EImage>
+      </div>
+      <div
+        ref={card}
+        className="relative isolate grid w-full max-w-[55rem] items-center gap-5 overflow-hidden bg-sienna p-6 sm:grid-cols-2 sm:p-9 lg:gap-7 lg:p-12"
+      >
+        <img
+          src={FLOORS.tetto.logo}
+          alt=""
+          className="pointer-events-none absolute -right-[8%] -bottom-[26%] -z-10 w-[min(85%,31rem)] max-w-none -rotate-12 opacity-[0.1] brightness-0 invert sm:w-[55%]"
+        />
+        <TettoDrinkModel
+          shapes={BEER_MODEL}
+          pointerArea={card}
+          icon="ph-beer-stein"
+          className="tetto-month-beer aspect-square"
+        />
+        <div className="font-sans">
+          <p className="mb-3 text-sm font-semibold tracking-wider uppercase">
+            <EText k="botm.kicker" d="Beer of the Month" />
+          </p>
+          <h2
+            id="tetto-month-title"
+            className="text-[clamp(2.25rem,4.9vw,4.8rem)] leading-[0.95] font-black tracking-tight"
+          >
+            <EText k="botm.title" d={FEATURED_DRAFT.name} />
+          </h2>
+          <p className="mt-4 max-w-md text-base leading-relaxed text-cream/95">
+            <EText k="botm.body" d={FEATURED_DRAFT.notes} />
+          </p>
+          <p className="mt-4 text-sm font-semibold text-cream/85">
+            <EText
+              k="botm.detail"
+              d={`${FEATURED_DRAFT.brewery} • ${FEATURED_DRAFT.style} • ${FEATURED_DRAFT.abv} ABV • ${FEATURED_DRAFT.ibu} IBU`}
+            />
+          </p>
+        </div>
       </div>
     </section>
   )

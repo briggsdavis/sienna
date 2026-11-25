@@ -1,11 +1,12 @@
 import { useQuery } from "convex/react"
-import { useParams } from "react-router"
+import { Link, useParams } from "react-router"
 import { ExternalLink } from "@/components/external-link"
+import { PageHero } from "@/components/hero"
 import { MENU_THEMES, MenuSections, SectionChips } from "@/components/menu-view"
 import { ReserveLink, useReservation, useSettings } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { PAGE_SEO } from "@/lib/pages"
-import { FLOORS, type FloorId } from "@/lib/site"
+import { FLOORS, type FloorId, unsplash } from "@/lib/site"
 import { NotFound } from "@/pages/not-found"
 import { api } from "../../convex/_generated/api"
 
@@ -43,45 +44,49 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
   return (
     <div className={`min-h-screen ${t.page}`}>
       <Seo path={floor.menuHref} {...PAGE_SEO[floor.menuHref]} jsonLd={JSON_LD[restaurant]} />
-      <header
-        className={`relative isolate overflow-hidden px-6 pt-32 pb-16 text-center sm:pt-36 ${t.header}`}
-      >
-        <div className="grain pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay" />
-        <div className="relative z-10 mx-auto max-w-[1400px]">
-          <div className="relative flex min-h-36 items-center justify-center sm:min-h-48">
-            <img
-              src={restaurant === "mezzo" ? "/siennalogo.png" : floor.logo}
-              alt=""
-              className="pointer-events-none absolute inset-0 mx-auto h-full w-4/5 max-w-xl object-contain opacity-[0.12] brightness-0 invert"
-            />
-            <h1 className="relative font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),6.5rem)] leading-[0.88] text-balance">
-              {floor.name} Menu
-            </h1>
-          </div>
-          {(showReserve || pickupUrl) && (
-            <div className="mt-6 flex flex-col items-center gap-3">
-              {showReserve && (
-                <ReserveLink
-                  restaurant={restaurant}
-                  className={`btn-lift bg-cream text-ink ${restaurant === "mezzo" ? "btn-fill" : "hover:bg-paper"}`}
-                >
-                  <i className="ph ph-calendar-dots text-sm" />
-                  Reserve
-                </ReserveLink>
-              )}
-              {pickupUrl && (
-                <ExternalLink
-                  href={pickupUrl}
-                  className="btn-lift border border-cream/50 hover:bg-cream/10"
-                >
-                  <i className="ph ph-bag text-sm" />
-                  Order pickup
-                </ExternalLink>
-              )}
+      {restaurant === "mezzo" ? (
+        <MezzoMenuHero />
+      ) : (
+        <header
+          className={`relative isolate overflow-hidden px-6 pt-32 pb-16 text-center sm:pt-36 ${t.header}`}
+        >
+          <div className="grain pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay" />
+          <div className="relative z-10 mx-auto max-w-[1400px]">
+            <div className="relative flex min-h-36 items-center justify-center sm:min-h-48">
+              <img
+                src={floor.logo}
+                alt=""
+                className="pointer-events-none absolute inset-0 mx-auto h-full w-4/5 max-w-xl object-contain opacity-[0.12] brightness-0 invert"
+              />
+              <h1 className="relative font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),6.5rem)] leading-[0.88] text-balance">
+                {floor.name} Menu
+              </h1>
             </div>
-          )}
-        </div>
-      </header>
+            {(showReserve || pickupUrl) && (
+              <div className="mt-6 flex flex-col items-center gap-3">
+                {showReserve && (
+                  <ReserveLink
+                    restaurant={restaurant}
+                    className="btn-lift bg-cream text-ink hover:bg-paper"
+                  >
+                    <i className="ph ph-calendar-dots text-sm" />
+                    Reserve
+                  </ReserveLink>
+                )}
+                {pickupUrl && (
+                  <ExternalLink
+                    href={pickupUrl}
+                    className="btn-lift border border-cream/50 hover:bg-cream/10"
+                  >
+                    <i className="ph ph-bag text-sm" />
+                    Order pickup
+                  </ExternalLink>
+                )}
+              </div>
+            )}
+          </div>
+        </header>
+      )}
 
       {sections && sections.length > 0 && (
         <nav
@@ -115,5 +120,44 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
         </p>
       </main>
     </div>
+  )
+}
+
+function MezzoMenuHero() {
+  return (
+    <PageHero
+      image={{
+        src: unsplash("1672636401339-88d7b84cb1df", 2200, 82),
+        alt: "",
+        className: "object-[center_58%]",
+      }}
+      overlay={
+        <div className="absolute inset-0 bg-linear-to-t from-sienna-deep/90 via-sienna/50 to-ink/25" />
+      }
+      viewportHeight={50}
+      bottomPadding="pb-8"
+    >
+      <div className="my-auto flex flex-col items-center gap-4 text-center text-cream">
+        <img
+          src={FLOORS.mezzo.logo}
+          alt=""
+          className="h-[clamp(2.75rem,7svh,4.5rem)] w-auto max-w-[55vw] object-contain brightness-0 invert"
+        />
+        <h1 className="text-hero-shadow font-display text-[clamp(2.25rem,5.5vw,4.75rem)] leading-none">
+          Mezzo Menu
+        </h1>
+        <div className="mt-1 flex flex-wrap justify-center gap-3">
+          <ReserveLink restaurant="mezzo" className="btn-lift btn-fill bg-cream text-ink">
+            Reserve
+          </ReserveLink>
+          <Link
+            to={FLOORS.mezzo.href}
+            className="btn-lift btn-fill btn-fill-cream border border-cream/60 text-cream"
+          >
+            View the Restaurant
+          </Link>
+        </div>
+      </div>
+    </PageHero>
   )
 }

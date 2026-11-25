@@ -103,15 +103,15 @@ export function MezzoSpecials() {
                   key={`${day}-${special?._id ?? "empty"}`}
                   className="grid min-w-0 gap-3 motion-safe:row-span-3 motion-safe:grid-rows-subgrid"
                 >
-                  <h3 className="font-display text-[clamp(1.15rem,calc(2vw*var(--site-type-scale)),1.6rem)] leading-tight">
-                    {special?.name ?? "No special posted"}
-                  </h3>
                   <img
                     src={special?.image || unsplash(SPECIALS_PHOTOS[day], 960, 80)}
                     alt=""
                     loading="lazy"
                     className="aspect-square w-full bg-paper-deep object-cover"
                   />
+                  <h3 className="font-display text-[clamp(1.15rem,calc(2vw*var(--site-type-scale)),1.6rem)] leading-tight">
+                    {special?.name ?? "No special posted"}
+                  </h3>
                   <div>
                     <p className="text-sm font-medium text-sienna">
                       {WEEKDAYS_LONG[day]}

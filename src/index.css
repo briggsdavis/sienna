@@ -254,28 +254,29 @@
   font-size: clamp(0.65rem, 2svh, 1.35rem);
 }
 
-.emporio-sauces-notes {
+.emporio-sauces-notes,
+.tetto-drink-notes {
   display: grid;
 }
 
-.emporio-sauce-note {
+:is(.emporio-sauce-note, .tetto-drink-note) {
   grid-area: 1 / 1;
   max-width: 36rem;
   opacity: 0;
   pointer-events: none;
 }
 
-.emporio-sauce-note h3 {
+:is(.emporio-sauce-note, .tetto-drink-note) h3 {
   font-size: clamp(2rem, min(5vw, 9svh), 5.4rem);
 }
 
-.emporio-sauce-note[data-active="true"] {
+:is(.emporio-sauce-note, .tetto-drink-note)[data-active="true"] {
   position: relative;
   opacity: 1;
   pointer-events: auto;
 }
 
-.emporio-sauce-picker button {
+:is(.emporio-sauce-picker, .tetto-drink-picker) button {
   display: grid;
   width: clamp(1.6rem, 5.8vw, 2.1rem);
   height: 2rem;
@@ -287,19 +288,19 @@
   font-variant-numeric: tabular-nums;
 }
 
-.emporio-sauce-picker button:hover {
+:is(.emporio-sauce-picker, .tetto-drink-picker) button:hover {
   border-color: var(--color-sienna);
   color: var(--color-sienna);
 }
 
-.emporio-sauce-picker button[aria-current="true"] {
+:is(.emporio-sauce-picker, .tetto-drink-picker) button[aria-current="true"] {
   border-color: var(--color-sienna);
   background: var(--color-sienna);
   color: var(--color-cream);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .emporio-sauce-note {
+  :is(.emporio-sauce-note, .tetto-drink-note) {
     filter: blur(9px);
     transform: translateY(0.4rem);
     transition:
@@ -308,10 +309,73 @@
       transform 260ms ease-out;
   }
 
-  .emporio-sauce-note[data-active="true"] {
+  :is(.emporio-sauce-note, .tetto-drink-note)[data-active="true"] {
     filter: blur(0);
     transform: translateY(0);
   }
+}
+
+.tetto-drinks {
+  min-height: calc(max(100svh, 31rem) + 252svh);
+}
+
+.tetto-drinks-stage {
+  position: sticky;
+  top: 0;
+  display: grid;
+  min-height: max(100svh, 31rem);
+  align-items: center;
+  padding-block: clamp(2.75rem, 8svh, 5rem) 1.5rem;
+  background: radial-gradient(ellipse at 27% 61%, #e6d4b7, var(--color-paper) 63%);
+}
+
+.tetto-drinks-title {
+  font-size: clamp(2.8rem, min(8.4vw, 13svh), 7.6rem);
+  line-height: 0.93;
+}
+
+.tetto-drinks-visual {
+  height: clamp(12rem, 38svh, 25rem);
+}
+
+.tetto-drink-display::before {
+  position: absolute;
+  bottom: 8%;
+  left: 50%;
+  width: min(43%, 11rem);
+  height: 5%;
+  border-radius: 50%;
+  background: #442819;
+  opacity: 0.25;
+  filter: blur(8px);
+  transform: translateX(-50%);
+  content: "";
+}
+
+.tetto-month-beer {
+  background: radial-gradient(ellipse at 48% 56%, #b94a35 0, #a0342a 45%, var(--color-sienna) 78%);
+}
+
+.tetto-drink-display canvas {
+  visibility: hidden;
+}
+
+.tetto-drink-display[data-model-ready="true"] canvas {
+  visibility: visible;
+}
+
+.tetto-drink-display[data-model-ready="true"] .tetto-drink-fallback {
+  display: none;
+}
+
+.tetto-drink-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(5rem, 14svh, 9rem);
+  transform: perspective(25rem) rotateX(var(--drink-tilt-x, 0deg))
+    rotateY(var(--drink-tilt-y, 0deg));
 }
 
 @media (min-width: 48rem) {
@@ -320,6 +384,10 @@
   }
 
   .emporio-sauces-display {
+    height: clamp(15rem, 62svh, 37rem);
+  }
+
+  .tetto-drinks-visual {
     height: clamp(15rem, 62svh, 37rem);
   }
 }

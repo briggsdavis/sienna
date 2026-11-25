@@ -1,3 +1,45 @@
+export const ROOFTOP_DRINKS = [
+  {
+    shape: "beer",
+    name: "Draft Beer",
+    note: "Ask what’s pouring from the rotating taps.",
+    icon: "ph-beer-stein",
+  },
+  {
+    shape: "wine",
+    name: "Wine",
+    note: "Ask about the wines available by the glass.",
+    icon: "ph-wine",
+  },
+  {
+    shape: "cocktail",
+    name: "Cocktail",
+    note: "See the menu for what the bar is mixing.",
+    icon: "ph-martini",
+  },
+  {
+    shape: "spirit",
+    name: "Spirit",
+    note: "Ask the bartender what’s available for a neat pour.",
+    icon: "ph-whiskey",
+  },
+  {
+    shape: "highball",
+    name: "Highball",
+    note: "A tall pour served over ice.",
+    icon: "ph-cocktail",
+  },
+  {
+    shape: "sparkling",
+    name: "Sparkling",
+    note: "Ask about the current sparkling pour.",
+    icon: "ph-champagne",
+  },
+  { shape: "spritz", name: "Spritz", note: "A bubbly cocktail served over ice.", icon: "ph-wine" },
+] as const
+
+export type DrinkShape = (typeof ROOFTOP_DRINKS)[number]["shape"]
+
 export const FEATURED_DRAFT = {
   name: "Big Wave",
   brewery: "Kona Brewing",

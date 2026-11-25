@@ -27,7 +27,7 @@ export function useSmoothWheelScroll(pathname: string) {
   useEffect(() => {
     const path = pathname.toLowerCase().replace(/\/+$/, "")
     const isMezzo = path === FLOORS.mezzo.href || path === FLOORS.mezzo.menuHref
-    const easingMs = isMezzo ? EASING_MS * 1.4 : EASING_MS
+    const easingMs = isMezzo ? EASING_MS * 1.3 : EASING_MS
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
     let frame = 0
     let current = 0

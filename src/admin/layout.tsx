@@ -220,7 +220,7 @@ function Login() {
           </button>
         </p>
         <p className="mt-2 text-center text-xs text-ink-soft/70">
-          Only emails on the admin list can sign in.
+          Only emails on the admin list can create an account or sign in.
         </p>
       </form>
     </div>

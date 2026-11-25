@@ -28,10 +28,14 @@ export function DailySpecials({
   restaurant,
   tone = "light",
   title = "Daily specials.",
+  id = "specials",
+  hideWhenEmpty = false,
 }: {
   restaurant: FloorId
   tone?: keyof typeof TONES
   title?: string
+  id?: string
+  hideWhenEmpty?: boolean
 }) {
   const specials = useQuery(api.specials.list, { restaurant })
   const today = weekdayToday()
@@ -39,8 +43,10 @@ export function DailySpecials({
   const t = TONES[tone]
   const forDay = (specials ?? []).filter((special) => special.days.includes(day))
 
+  if (hideWhenEmpty && !specials?.length) return null
+
   return (
-    <section id="specials" className={`relative py-24 ${t.section}`}>
+    <section id={id} className={`relative py-24 ${t.section}`}>
       <div className="mx-auto max-w-[1400px] px-6 lg:px-12">
         <FadeIn>
           <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">

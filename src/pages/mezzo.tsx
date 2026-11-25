@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { HeroIntro, PageHero } from "@/components/hero"
@@ -116,24 +117,63 @@ function Intro() {
 }
 
 function Gallery() {
+  const galleryRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const gallery = galleryRef.current
+    if (!gallery) return
+
+    const frames = gallery.querySelectorAll<HTMLDivElement>("[data-gallery-photo]")
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let frame = 0
+
+    const update = () => {
+      frame = 0
+      const viewport = window.innerHeight
+      for (const photo of frames) {
+        const { top, height } = photo.getBoundingClientRect()
+        const progress = Math.min(1, Math.max(0, (viewport - top) / ((viewport + height) / 2)))
+        photo.style.setProperty("--gallery-photo-scale", String(0.8 + 0.2 * progress))
+      }
+    }
+
+    const schedule = () => {
+      if (!motion.matches && !frame) frame = requestAnimationFrame(update)
+    }
+
+    schedule()
+    window.addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    motion.addEventListener("change", schedule)
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener("scroll", schedule)
+      window.removeEventListener("resize", schedule)
+      motion.removeEventListener("change", schedule)
+    }
+  }, [])
+
   return (
-    <section aria-label="Mezzo photo gallery" className="bg-cream py-10 md:py-20">
-      <div className="site-container grid grid-cols-3 items-center gap-2 sm:gap-4">
+    <section aria-label="Mezzo photo gallery" className="bg-sienna-deep py-10 md:py-20">
+      <div ref={galleryRef} className="site-container grid grid-cols-3 items-center gap-2 sm:gap-4">
         {GALLERY_PHOTOS.map((image, index) => (
           <div
             key={image.id}
-            className={`relative overflow-hidden bg-paper-deep ${index === 1 ? "aspect-[3/4]" : "aspect-[4/3]"}`}
+            data-gallery-photo
+            className={index === 1 ? "aspect-[3/4]" : "aspect-[4/3]"}
           >
-            <EImage k={`gallery.${image.id}.image`} d={unsplash(image.photo, 1200, 80)}>
-              {(src) => (
-                <ParallaxImage
-                  src={src}
-                  alt={image.alt}
-                  loading="lazy"
-                  speed={index === 1 ? 0.09 : 0.05}
-                />
-              )}
-            </EImage>
+            <div className="relative h-full overflow-hidden bg-paper-deep motion-safe:[scale:var(--gallery-photo-scale,1)]">
+              <EImage k={`gallery.${image.id}.image`} d={unsplash(image.photo, 1200, 80)}>
+                {(src) => (
+                  <ParallaxImage
+                    src={src}
+                    alt={image.alt}
+                    loading="lazy"
+                    speed={index === 1 ? 0.09 : 0.05}
+                  />
+                )}
+              </EImage>
+            </div>
           </div>
         ))}
       </div>

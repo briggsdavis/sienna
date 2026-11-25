@@ -21,8 +21,8 @@ export const HIGHLIGHTS = [
     id: "pasta",
     title: "Hand-rolled pasta",
     body: "The kitchen rolls fresh pasta by hand each day for dishes like crab-stuffed ravioli.",
-    photo: "1748797295394-73a731e54845",
-    alt: "Fresh ravioli and a pasta mold on a floured work surface",
+    photo: "1447279506476-3faec8071eee",
+    alt: "A cook holding strands of fresh pasta above a floured work surface",
   },
   {
     id: "oven",

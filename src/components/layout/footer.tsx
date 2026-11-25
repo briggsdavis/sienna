@@ -52,30 +52,27 @@ export function Footer() {
       ref={footer}
       className="relative bg-sienna text-cream motion-safe:sticky motion-safe:bottom-[var(--footer-sticky-bottom,0px)] motion-safe:has-[:focus-visible]:relative motion-safe:has-[:focus-visible]:bottom-auto"
     >
-      <div className="site-container grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_0.95fr_1.15fr] lg:gap-12 lg:py-20">
-        <div>
-          <img
-            src="/siennalogo.png"
-            alt="Sienna Mercato"
-            className="mb-4 h-10 w-auto brightness-0 invert"
-          />
-          <p className="mt-4 max-w-xs font-body leading-relaxed text-cream/90">
-            Three floors. Three rooms. One Italian house in the Cultural District, open since 2013.
-          </p>
-          <div className="mt-6 flex gap-4">
-            {SOCIAL_LINKS.map((social) => (
-              <ExternalLink
-                key={social.label}
-                href={social.href}
-                aria-label={social.label}
-                className="transition-opacity hover:opacity-75"
-              >
-                <i className={`ph ${social.icon} text-2xl`} />
-              </ExternalLink>
-            ))}
-          </div>
+      <div className="site-container flex flex-col items-center gap-5 pt-16 lg:pt-20">
+        <img
+          src="/siennalogo.png"
+          alt="Sienna Mercato"
+          className="h-[2.875rem] w-auto brightness-0 invert"
+        />
+        <div className="flex flex-wrap justify-center gap-4">
+          {SOCIAL_LINKS.map((social) => (
+            <ExternalLink
+              key={social.label}
+              href={social.href}
+              aria-label={social.label}
+              className="transition-opacity hover:opacity-75"
+            >
+              <i className={`ph ${social.icon} text-2xl`} />
+            </ExternalLink>
+          ))}
         </div>
+      </div>
 
+      <div className="site-container grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[0.8fr_0.95fr_1.15fr] lg:gap-12 lg:py-14">
         <div>
           <Heading>Address</Heading>
           <address className="mt-4 font-serif leading-relaxed not-italic">
@@ -137,18 +134,20 @@ export function Footer() {
             <img
               src={floor.logo}
               alt={floor.name}
-              className="h-6 w-auto opacity-80 brightness-0 invert transition-opacity hover:opacity-100"
+              className="h-[1.65rem] w-auto opacity-80 brightness-0 invert transition-opacity hover:opacity-100"
             />
           </Link>
         ))}
       </div>
 
-      <div className="site-container flex flex-wrap items-center justify-between gap-4 py-6 font-serif text-xs tracking-wider text-cream/90">
-        <span>© {new Date().getFullYear()} Sienna Mercato Restaurant Group</span>
+      <div className="site-container grid items-center justify-items-center gap-4 py-6 text-center font-serif text-xs tracking-wider text-cream/90 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+        <span className="md:justify-self-start md:text-left">
+          © {new Date().getFullYear()} Sienna Mercato Restaurant Group
+        </span>
         <ExternalLink href="https://socialsatisfaction.agency" className="under">
           Made by SocialSatisfaction
         </ExternalLink>
-        <span className="flex gap-6">
+        <span className="flex gap-6 md:justify-self-end">
           <Link to="/privacy" className="under">
             Privacy
           </Link>

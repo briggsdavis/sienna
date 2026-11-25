@@ -13,6 +13,12 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     }),
   ],
   callbacks: {
+    async afterUserCreatedOrUpdated(ctx, { profile }) {
+      // The account creation mutation rolls back if the address is rejected.
+      if (!(await isAdminEmail(ctx as unknown as QueryCtx, profile.email))) {
+        throw new ConvexError("This email is not on the admin list")
+      }
+    },
     async beforeSessionCreation(ctx, { userId }) {
       const queryCtx = ctx as unknown as QueryCtx
       const user = await queryCtx.db.get("users", userId)
