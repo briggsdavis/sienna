@@ -2,7 +2,7 @@ import { useQuery } from "convex/react"
 import { Link, useParams } from "react-router"
 import { ExternalLink } from "@/components/external-link"
 import { PageHero } from "@/components/hero"
-import { MENU_THEMES, MenuSections, SectionChips } from "@/components/menu-view"
+import { MENU_THEMES, MenuSections, SectionChips, type MenuSection } from "@/components/menu-view"
 import { ReserveLink, useReservation, useSettings } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { WordReveal } from "@/components/word-reveal"
@@ -10,6 +10,30 @@ import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, type FloorId } from "@/lib/site"
 import { NotFound } from "@/pages/not-found"
 import { api } from "../../convex/_generated/api"
+import { MENUS } from "../../convex/seedData"
+
+/** Shown on the Mezzo menu until real sections are added in the admin. */
+const MEZZO_SAMPLE_SECTIONS = MENUS.mezzo.slice(0, 2).map((section, sectionIndex) => ({
+  _id: `sample-${sectionIndex}`,
+  _creationTime: 0,
+  menu: "mezzo",
+  title: section.title,
+  subtitle: section.subtitle,
+  order: sectionIndex,
+  image: null,
+  items: section.items.map((item, itemIndex) => ({
+    ...item,
+    imageUrl: undefined,
+    _id: `sample-${sectionIndex}-${itemIndex}`,
+    _creationTime: 0,
+    menu: "mezzo",
+    sectionId: `sample-${sectionIndex}`,
+    available: true,
+    hidden: false,
+    order: itemIndex,
+    image: null,
+  })),
+})) as unknown as MenuSection[]
 
 const JSON_LD = Object.fromEntries(
   (Object.keys(FLOORS) as FloorId[]).map((id) => [
@@ -34,7 +58,8 @@ export function MenuPage() {
 }
 
 function Menu({ restaurant }: { restaurant: FloorId }) {
-  const sections = useQuery(api.menus.get, { menu: restaurant })
+  const loaded = useQuery(api.menus.get, { menu: restaurant })
+  const sections = restaurant === "mezzo" && loaded?.length === 0 ? MEZZO_SAMPLE_SECTIONS : loaded
   const floor = FLOORS[restaurant]
   const t = MENU_THEMES[restaurant]
   const mezzo = restaurant === "mezzo"

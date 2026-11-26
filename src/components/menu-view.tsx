@@ -80,13 +80,6 @@ export const MENU_THEMES = {
   },
 } as const
 
-const MEZZO_CREAM_TEXT = {
-  accent: "text-sienna",
-  price: "text-ink",
-  muted: "text-ink-soft",
-  rule: "border-ink/10 divide-ink/10",
-}
-
 const MEZZO_STOCK_PHOTOS = new Set([
   unsplash("1608897013039-887f21d8c804", 1400, 75),
   unsplash("1571997478779-2adcbbe9ab2f", 1400, 75),
@@ -184,8 +177,8 @@ export function MenuSections({
     <div ref={menu} className={mezzo ? "[--menu-indent-duration:360ms]" : "space-y-20"}>
       {sections.map((section, index) => {
         const imageRight = index % 2 === 1
-        const light = mezzo && imageRight
-        const tone = light ? MEZZO_CREAM_TEXT : t
+        // Mezzo sections alternate between the regular and the darker red.
+        const tone = t
         const sectionPhoto = getMenuSectionPhoto(restaurant, section.title)
         const customSectionPhoto =
           mezzo && section.image && MEZZO_STOCK_PHOTOS.has(section.image) ? null : section.image
@@ -223,14 +216,14 @@ export function MenuSections({
             data-menu-parallax={mezzo || undefined}
             className={
               mezzo
-                ? `scroll-mt-16 py-14 md:py-20 ${light ? "bg-cream text-ink" : "bg-sienna-deep text-cream"}`
+                ? `scroll-mt-16 py-14 text-cream md:py-20 ${imageRight ? "bg-sienna-deep" : "bg-sienna"}`
                 : "scroll-mt-32"
             }
           >
             {mezzo && index > 0 && (
               <SectionBreak
                 icon={icons[index - 1]}
-                className={`mx-auto mb-10 max-w-[1400px] px-6 md:mb-14 lg:px-12 ${light ? "text-ink-soft" : "text-cream/80"}`}
+                className={`mx-auto mb-10 max-w-[1400px] px-6 text-cream/80 md:mb-14 lg:px-12`}
               />
             )}
             <div

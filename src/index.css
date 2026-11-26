@@ -1161,3 +1161,21 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition-duration: 0.01s;
   }
 }
+
+/* Lists that reveal one line at a time (each child sets --line). */
+@media (prefers-reduced-motion: no-preference) {
+  .line-reveal > * {
+    opacity: 0;
+    translate: 0 0.6rem;
+    transition:
+      opacity 0.6s ease,
+      translate 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .line-reveal[data-in-view] > * {
+    opacity: 1;
+    translate: none;
+    transition-delay: calc(0.2s + var(--line, 0) * 0.11s);
+  }
+}
+

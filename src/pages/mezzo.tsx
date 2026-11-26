@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { HeroIntro, PageHero } from "@/components/hero"
@@ -291,6 +292,7 @@ function FeaturedDishes() {
 }
 
 function Reservations() {
+  const hoursRef = useInView<HTMLUListElement>()
   return (
     <section
       id="reserve"
@@ -318,9 +320,13 @@ function Reservations() {
             <div className="mb-5 font-serif text-2xs tracking-[0.4em] text-cream/60 uppercase">
               Hours
             </div>
-            <ul className="divide-y divide-cream/15">
+            <ul ref={hoursRef} className="line-reveal divide-y divide-cream/15">
               {HOURS.map((row, i) => (
-                <li key={row.day} className="flex items-baseline gap-4 py-3">
+                <li
+                  key={row.day}
+                  className="flex items-baseline gap-4 py-3"
+                  style={{ "--line": i } as CSSProperties}
+                >
                   <span className="w-20 font-serif text-xs tracking-[0.2em] text-cream/70 uppercase">
                     <EText k={`hours.${i}.day`} d={row.day} />
                   </span>
