@@ -859,17 +859,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   font-size: 1rem;
 }
 
+/*
+ * Two buttons side by side. At least 26rem wide, but each column grows to fit
+ * its label so wider fonts (Mezzo's Cutive) never spill out of the pill.
+ */
 .btn-pair {
   display: grid;
-  width: min(100%, 26rem);
+  width: fit-content;
+  min-width: min(100%, 26rem);
+  max-width: 100%;
   grid-auto-rows: 1fr;
   gap: 1rem;
 }
 
 @media (min-width: 40rem) {
   .btn-pair {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(max-content, 1fr));
   }
+}
+
+.btn-pair > .btn-lift {
+  padding-inline: 1.5rem;
 }
 
 @media (hover: hover) {

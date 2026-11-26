@@ -4,6 +4,7 @@ import { ExternalLink } from "@/components/external-link"
 import { PageHero } from "@/components/hero"
 import { MENU_THEMES, MenuSections, SectionChips, type MenuSection } from "@/components/menu-view"
 import { ReserveLink, useReservation, useSettings } from "@/components/reserve"
+import { SectionBreak } from "@/components/section-break"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { WordReveal } from "@/components/word-reveal"
 import { PAGE_SEO } from "@/lib/pages"
@@ -119,7 +120,10 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
         <nav
           className={`${
             mezzo
-              ? "bg-sienna-deep"
+              ? // Same red as the first section, which alternates counting from the last.
+                (sections.length - 1) % 2 === 0
+                ? "bg-sienna-deep"
+                : "bg-sienna"
               : `sticky top-[68px] z-30 backdrop-blur-md ${restaurant === "tetto" ? "bg-cream/90" : "bg-paper/90"}`
           }`}
           aria-label="Menu sections"
@@ -139,6 +143,12 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
           </p>
         ) : (
           <MenuSections restaurant={restaurant} sections={sections} />
+        )}
+        {mezzo && (
+          <SectionBreak
+            icon="wine"
+            className="mx-auto max-w-[1400px] px-6 pt-14 text-cream/80 md:pt-20 lg:px-12"
+          />
         )}
         <p
           className={`font-body text-sm ${t.muted} ${mezzo ? "mx-auto max-w-[1400px] px-6 py-10 lg:px-12" : "mt-20"}`}
