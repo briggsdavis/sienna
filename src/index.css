@@ -40,6 +40,18 @@
 }
 
 @font-face {
+  font-family: "Mouse Deco";
+  src: url("/fonts/mouse-deco.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Cutive";
+  src: url("/fonts/cutive.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
   font-family: "Octin Vintage";
   src: url("/fonts/octin-vintage.ttf") format("truetype");
   font-display: swap;
@@ -89,10 +101,15 @@
 }
 
 .type-mezzo {
-  --font-display: "Knockout 48", "Akzidenz", sans-serif;
+  --font-display: "Mouse Deco", "Akzidenz", sans-serif;
+  --font-serif: "Archive Antique", "Akzidenz", sans-serif;
+  --font-body: "Cutive", "Akzidenz", serif;
+  --font-sans: "Cutive", "Akzidenz", serif;
+  font-family: var(--font-body);
 
   .menu-item-name {
-    font-weight: 700;
+    font-family: "Mouse Deco", "Akzidenz", sans-serif;
+    text-transform: uppercase;
   }
 }
 

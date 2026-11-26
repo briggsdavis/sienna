@@ -297,9 +297,7 @@ function ProductCard({ item }: { item: CateringItem }) {
 
       <div className="mt-4 flex flex-1 flex-col px-1 text-center">
         <div className="flex flex-wrap items-baseline justify-center gap-x-3 gap-y-1">
-          <h3 className="text-2xl leading-tight font-bold text-ink">
-            {item.name}
-          </h3>
+          <h3 className="text-2xl leading-tight font-bold text-ink">{item.name}</h3>
           {option && (
             <span className="font-serif text-base text-ink tabular-nums">
               {money(option.price)}
