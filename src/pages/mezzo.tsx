@@ -2,7 +2,7 @@ import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { HeroIntro, PageHero } from "@/components/hero"
 import { MezzoSpecials } from "@/components/mezzo-specials"
-import { MezzoValueIcon } from "@/components/mezzo-value-icon"
+import { MezzoValueIcon, useInView } from "@/components/mezzo-value-icon"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel, ReserveLink } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
@@ -132,16 +132,19 @@ function Intro() {
 }
 
 function Values() {
+  const lineRef = useInView<HTMLDivElement>()
   return (
-    <FadeIn stagger className="site-container mt-14 md:mt-16">
+    <div className="site-container mt-14 md:mt-16">
+      <div ref={lineRef} aria-hidden="true" className="draw-line h-px bg-ink/15" />
       <ul
         aria-label="What Mezzo stands for"
-        className="grid grid-cols-3 gap-4 border-t border-ink/10 pt-10 text-center sm:gap-8 md:pt-14"
+        className="grid grid-cols-3 gap-4 pt-10 text-center sm:gap-8 md:pt-14"
       >
-        {VALUES.map((value) => (
+        {VALUES.map((value, index) => (
           <li key={value.id} className="flex flex-col items-center">
             <MezzoValueIcon
               name={value.icon}
+              delay={0.4 + index * 0.15}
               className="h-auto w-full max-w-[11rem] text-ink-soft/80 md:max-w-[13rem]"
             />
             <p className="mt-4 font-body text-[clamp(0.85rem,2.4vw,1.15rem)] leading-snug text-ink">
@@ -150,7 +153,7 @@ function Values() {
           </li>
         ))}
       </ul>
-    </FadeIn>
+    </div>
   )
 }
 
@@ -218,6 +221,11 @@ function Highlights() {
               <p className="mt-4 max-w-sm font-body text-[0.9rem] leading-relaxed text-ink-soft">
                 <EText k={`highlights.${feature.id}.body`} d={feature.body} words={0.3} />
               </p>
+              <MezzoValueIcon
+                name={feature.icon}
+                delay={0.5}
+                className="mt-6 h-auto w-full max-w-[10rem] text-ink-soft/80 md:mt-5 md:max-w-[7rem] lg:max-w-[9rem]"
+              />
             </FadeIn>
           </article>
         ))}

@@ -19,6 +19,7 @@ export const GALLERY_PHOTOS = [
 export const HIGHLIGHTS = [
   {
     id: "pasta",
+    icon: "rack",
     eyebrow: "Made Daily",
     title: "Hand-rolled pasta",
     body: "The kitchen rolls fresh pasta by hand each day for dishes like crab-stuffed ravioli.",
@@ -27,6 +28,7 @@ export const HIGHLIGHTS = [
   },
   {
     id: "oven",
+    icon: "pizza",
     eyebrow: "From the Oven",
     title: "Wood-fired pizza",
     body: "At 800°F, the wood-fired oven gives each pizza a blistered crust and a light char.",
@@ -35,6 +37,7 @@ export const HIGHLIGHTS = [
   },
   {
     id: "dining-room",
+    icon: "candle",
     eyebrow: "After Dark",
     title: "Candlelit dining",
     body: "Low light, linen and an Italian-led wine list make the second-floor dining room a place to linger.",

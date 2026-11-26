@@ -466,7 +466,7 @@
   .mezzo-highlight {
     --mezzo-highlight-gap: calc(var(--spacing) * 14);
     /* Each image is half the available width and has a 25:24 aspect ratio. */
-    --mezzo-highlight-overlap: calc((100cqi - var(--mezzo-highlight-gap)) * 0.144);
+    --mezzo-highlight-overlap: calc((100cqi - var(--mezzo-highlight-gap)) * 0.05);
     column-gap: var(--mezzo-highlight-gap);
   }
 
@@ -488,6 +488,8 @@
 @media (min-width: 64rem) {
   .mezzo-highlight {
     --mezzo-highlight-gap: calc(var(--spacing) * 20);
+    /* Smaller overlap leaves room for the drawing under each block of text. */
+    --mezzo-highlight-overlap: calc((100cqi - var(--mezzo-highlight-gap)) * 0.09);
   }
 }
 
@@ -955,5 +957,27 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   :is(main, footer) .btn-lift[data-btn-visible] {
     opacity: 1;
     translate: none;
+  }
+}
+
+/* Icons grow from nothing; divider lines draw out from the centre. */
+@media (prefers-reduced-motion: no-preference) {
+  .grow-in {
+    scale: 0;
+    transition: scale 1.1s cubic-bezier(0.22, 1, 0.36, 1) var(--icon-delay, 0s);
+  }
+
+  .grow-in[data-in-view] {
+    scale: 1;
+  }
+
+  .draw-line {
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .draw-line[data-in-view] {
+    transform: scaleX(1);
   }
 }
