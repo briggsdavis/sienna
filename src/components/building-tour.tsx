@@ -17,18 +17,21 @@ const VIEW_H = 1110
 const FLOOR_SHAPES = [
   {
     id: "emporio",
+    emblem: { x: 495, y: 740, size: 240 },
     top: 700,
     bottom: 1018,
     d: "M118 700 L1101 700 L1107 968 L1127 968 L1127 1016 L104 1016 L104 970 L113 970 Z",
   },
   {
     id: "mezzo",
+    emblem: { x: 500, y: 462, size: 220 },
     top: 443,
     bottom: 700,
     d: "M123 445 L1098 445 L1101 700 L118 700 Z",
   },
   {
     id: "tetto",
+    emblem: { x: 530, y: 88, size: 170 },
     top: 63,
     bottom: 300,
     d: "M119 300 L1103 300 L1103 281 L1035 281 L1035 209 L971 209 L971 176 L907 173 C882 96 726 64 610 64 C486 64 344 112 318 176 L230 176 L230 209 L196 209 L196 281 L119 281 Z",
@@ -59,6 +62,7 @@ export function BuildingTour() {
   const panelRef = useRef<HTMLDivElement>(null)
   const washRefs = useRef<(SVGPathElement | null)[]>([])
   const fillRefs = useRef<(SVGGElement | null)[]>([])
+  const emblemRefs = useRef<(SVGGElement | null)[]>([])
   const [stage, setStage] = useState(0)
   const [pinned, setPinned] = useState(true)
 
@@ -83,7 +87,9 @@ export function BuildingTour() {
           "transform",
           `translate(0 ${floor.bottom + 12 - fill * height})`,
         )
-        fillRefs.current[i]?.setAttribute("opacity", String(fill > 0 ? 1 - fade : 0))
+        const shown = String(fill > 0 ? 1 - fade : 0)
+        fillRefs.current[i]?.setAttribute("opacity", shown)
+        emblemRefs.current[i]?.setAttribute("opacity", shown)
       })
       const active = STARTS.reduce((acc, start, i) => (p >= start ? i + 1 : acc), 0)
       setStage(active)
@@ -182,6 +188,39 @@ export function BuildingTour() {
                 className="absolute inset-0 h-full w-full"
                 draggable={false}
               />
+              {/* Each restaurant's emblem rises with its floor's wash, in white at 60%. */}
+              <svg
+                viewBox={`0 0 ${VIEW_W} ${VIEW_H}`}
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full"
+              >
+                <defs>
+                  <filter id="building-emblem-white">
+                    <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0" />
+                  </filter>
+                </defs>
+                {FLOOR_SHAPES.map((floor, i) => (
+                  <g
+                    key={floor.id}
+                    ref={(el) => {
+                      emblemRefs.current[i] = el
+                    }}
+                    opacity={0}
+                    clipPath={`url(#building-wash-${floor.id})`}
+                  >
+                    <image
+                      href={HOME_FLOORS[i].logo}
+                      x={floor.emblem.x}
+                      y={floor.emblem.y}
+                      width={floor.emblem.size}
+                      height={floor.emblem.size}
+                      preserveAspectRatio="xMidYMid meet"
+                      filter="url(#building-emblem-white)"
+                      opacity={0.6}
+                    />
+                  </g>
+                ))}
+              </svg>
             </div>
             <img
               src="/images/brand/sienna-mercato-logo.png"
