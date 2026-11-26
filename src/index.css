@@ -1091,6 +1091,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
  * that reads on the fill. Red and empty buttons fill white; cream ones fill red.
  */
 .type-mezzo .btn-lift {
+  /* Mezzo buttons use Cutive, whose capitals already sit centred, so they skip
+     the Akzidenz offset applied to .btn-lift. */
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   --mz-fill: var(--color-paper);
   --mz-text: var(--color-ink);
   --button-fill-color: transparent;
