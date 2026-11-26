@@ -471,7 +471,7 @@ function EventsAndCatering() {
 function Visit() {
   const settings = useSettings()
   return (
-    <section id="visit" className="relative scroll-mt-20 overflow-hidden bg-sienna text-cream">
+    <section id="visit" className="relative scroll-mt-20 overflow-hidden bg-ink text-cream">
       <FadeIn>
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
           <div>

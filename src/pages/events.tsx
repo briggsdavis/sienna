@@ -323,7 +323,7 @@ function Inquiry() {
   return (
     <section
       id="inquire"
-      className="relative scroll-mt-20 overflow-hidden bg-sienna py-28 text-cream"
+      className="relative scroll-mt-20 overflow-hidden bg-sienna-deep py-28 text-cream"
     >
       <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
       <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
@@ -498,7 +498,7 @@ function Inquiry() {
 
 function ClosingStrip() {
   return (
-    <section className="relative bg-sienna text-cream">
+    <section className="relative bg-sienna-deep text-cream">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <div>
           <h3 className="font-display text-5xl leading-[0.9]">

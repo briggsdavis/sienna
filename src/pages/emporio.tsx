@@ -431,7 +431,7 @@ function BallOfTheMonth() {
 
 function ClosingStrip() {
   return (
-    <section className="relative bg-sienna text-cream">
+    <section className="relative bg-ink text-paper">
       <div
         data-emporio-parallax
         className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12"

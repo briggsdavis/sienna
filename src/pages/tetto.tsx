@@ -236,7 +236,7 @@ function WeatherAndHours() {
 
 function ClosingStrip() {
   return (
-    <section className="relative bg-sienna text-cream">
+    <section className="relative bg-paper text-ink">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-8 px-6 py-20 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <FadeIn delay={0.12}>
           <h3 className="font-display text-5xl leading-[0.9]">
@@ -253,7 +253,7 @@ function ClosingStrip() {
               k="closing.down"
               label="Down to Mezzo"
               href="/mezzo"
-              className="btn-lift group border border-cream/40 text-cream hover:bg-cream/10"
+              className="btn-lift group border border-ink/30 text-ink hover:bg-ink/5"
             >
               {(label) => (
                 <>
@@ -266,7 +266,7 @@ function ClosingStrip() {
               k="closing.home"
               label="All of Sienna"
               href="/"
-              className="btn-lift group bg-cream text-sienna hover:bg-paper"
+              className="btn-lift group bg-sienna text-cream hover:bg-sienna-deep"
             >
               {(label) => (
                 <>

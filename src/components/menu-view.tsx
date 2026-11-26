@@ -177,7 +177,8 @@ export function MenuSections({
     <div ref={menu} className={mezzo ? "[--menu-indent-duration:360ms]" : "space-y-20"}>
       {sections.map((section, index) => {
         const imageRight = index % 2 === 1
-        // Mezzo sections alternate between the regular and the darker red.
+        // Mezzo sections alternate regular and darker red, counted from the end so
+        // the last one (above the footer) is always the darker red.
         const tone = t
         const sectionPhoto = getMenuSectionPhoto(restaurant, section.title)
         const customSectionPhoto =
@@ -216,7 +217,7 @@ export function MenuSections({
             data-menu-parallax={mezzo || undefined}
             className={
               mezzo
-                ? `scroll-mt-16 py-14 text-cream md:py-20 ${imageRight ? "bg-sienna-deep" : "bg-sienna"}`
+                ? `scroll-mt-16 py-14 text-cream md:py-20 ${(sections.length - 1 - index) % 2 === 0 ? "bg-sienna-deep" : "bg-sienna"}`
                 : "scroll-mt-32"
             }
           >

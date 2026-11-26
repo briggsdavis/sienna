@@ -353,7 +353,7 @@ function ClosingStrip() {
   return (
     <section
       aria-label="Explore the other floors"
-      className="bg-sienna px-6 py-12 text-cream md:py-16"
+      className="bg-sienna-deep px-6 py-12 text-cream md:py-16"
     >
       <SectionBreak icon="stairs" className="mx-auto mb-10 max-w-[1400px] text-cream/85 md:mb-12" />
       <FadeIn className="flex justify-center">

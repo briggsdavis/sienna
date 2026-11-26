@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react"
 import { Link, NavLink, useLocation } from "react-router"
 import { ExternalLink } from "@/components/external-link"
 import { AnnouncementBar } from "@/components/marketing"
@@ -18,7 +18,7 @@ const LINKS = [
 ]
 const MENU_COLUMNS =
   "grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-x-4 sm:grid-cols-2 sm:gap-x-8"
-const MENU_LINK = "w-fit underline-offset-[0.15em] hover:underline aria-[current=page]:underline"
+const MENU_LINK = "nav-underline w-fit"
 const MENU_PRIMARY_LINK = `${MENU_LINK} font-display text-[clamp(1.6rem,calc(6.4vw*var(--site-type-scale)),3.1rem)] leading-[1.05]`
 
 function useHideOnScroll() {
@@ -163,7 +163,11 @@ function RestaurantLinks({ onPick }: { onPick: () => void }) {
       {RESTAURANT_IDS.map((id) => {
         const floor = FLOORS[id]
         return (
-          <li key={id} className="col-span-2 grid grid-cols-subgrid items-baseline">
+          <li
+            key={id}
+            className="nav-fade col-span-2 grid grid-cols-subgrid items-baseline"
+            style={{ "--i": RESTAURANT_IDS.indexOf(id) + 1 } as CSSProperties}
+          >
             <NavLink to={floor.href} end onClick={onPick} className={MENU_PRIMARY_LINK}>
               {floor.name}
             </NavLink>
@@ -180,11 +184,6 @@ function RestaurantLinks({ onPick }: { onPick: () => void }) {
 export function Nav() {
   const { scrolled, hidden } = useHideOnScroll()
   const [menuOpen, setMenuOpen] = useState(false)
-  // Only play the closing curtain after the menu has been opened once.
-  const [menuUsed, setMenuUsed] = useState(false)
-  useEffect(() => {
-    if (menuOpen) setMenuUsed(true)
-  }, [menuOpen])
   const [reserveOpen, setReserveOpen] = useState(false)
   const menuTrigger = useRef<HTMLButtonElement>(null)
   const menuClose = useRef<HTMLButtonElement>(null)
@@ -305,8 +304,8 @@ export function Nav() {
 
       <div
         id="site-navigation"
-        data-state={menuOpen ? "open" : menuUsed ? "closing" : "idle"}
-        className="nav-curtain fixed inset-y-0 left-0 z-[145] flex w-[88%] flex-col overflow-y-auto bg-sienna text-cream sm:w-[min(40rem,88vw)] lg:w-[min(44rem,46vw)]"
+        data-state={menuOpen ? "open" : "closed"}
+        className="nav-panel fixed inset-y-0 left-0 z-[145] flex w-[88%] flex-col overflow-y-auto bg-sienna text-cream sm:w-[min(40rem,88vw)] lg:w-[min(44rem,46vw)]"
         aria-hidden={!menuOpen}
         inert={!menuOpen}
       >
@@ -335,17 +334,20 @@ export function Nav() {
 
         <nav
           aria-label="Site navigation"
-          className="nav-curtain-content flex flex-1 flex-col px-6 pt-10 pb-10 font-sans lg:px-12 lg:pt-14"
+          className="flex flex-1 flex-col px-6 pt-10 pb-10 font-sans lg:px-12 lg:pt-14"
         >
-          <h2 className="mb-3 flex items-center gap-3 font-serif text-2xs tracking-[0.4em] uppercase sm:text-xs">
+          <h2
+            style={{ "--i": 0 } as CSSProperties}
+            className="nav-fade mb-3 flex items-center gap-3 font-serif text-2xs tracking-[0.4em] uppercase sm:text-xs"
+          >
             <span aria-hidden="true" className="size-2 rounded-full bg-current" />
             Restaurants
           </h2>
           <RestaurantLinks onPick={closeMenu} />
 
           <ul className="mt-12 grid gap-2 md:mt-16">
-            {LINKS.map(({ to, label }) => (
-              <li key={to}>
+            {LINKS.map(({ to, label }, index) => (
+              <li key={to} className="nav-fade" style={{ "--i": index + 4 } as CSSProperties}>
                 <NavLink to={to} end onClick={closeMenu} className={MENU_PRIMARY_LINK}>
                   {label}
                 </NavLink>
@@ -353,7 +355,7 @@ export function Nav() {
             ))}
           </ul>
 
-          <div className="mt-auto pt-14">
+          <div className="nav-fade mt-auto pt-14" style={{ "--i": 9 } as CSSProperties}>
             <p className="font-display text-[clamp(1.6rem,calc(2.6vw*var(--site-type-scale)),2.4rem)] leading-tight">
               Three floors on Penn Avenue
             </p>
@@ -370,10 +372,10 @@ export function Nav() {
               ))}
             </div>
             <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm text-cream/75">
-              <ExternalLink href={ADDRESS.mapsUrl} className="hover:text-cream hover:underline">
+              <ExternalLink href={ADDRESS.mapsUrl} className="nav-underline hover:text-cream">
                 {ADDRESS.street}, {ADDRESS.city}
               </ExternalLink>
-              <a href={PHONE.href} className="hover:text-cream hover:underline">
+              <a href={PHONE.href} className="nav-underline hover:text-cream">
                 {PHONE.label}
               </a>
               <NavLink
