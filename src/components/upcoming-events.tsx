@@ -8,9 +8,67 @@ import { FLOORS } from "@/lib/site"
 import { addDays, todayKey } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 
+/** Shown until real events are scheduled in the admin. */
+function sampleEvents(today: string) {
+  const sample = (
+    id: string,
+    title: string,
+    venue: string,
+    desc: string,
+    inDays: number,
+    startTime: string,
+    endTime: string,
+    image: string | null,
+  ) =>
+    ({
+      _id: `sample-${id}`,
+      title,
+      venue,
+      desc,
+      image,
+      occurrence: addDays(today, inDays),
+      startTime,
+      endTime,
+      isSample: true,
+    }) as unknown as EventOccurrence & { isSample: true }
+  return [
+    sample(
+      "wine",
+      "Italian Wine Night",
+      "Mezzo",
+      "A guided flight of four Italian reds, with small plates from the kitchen.",
+      4,
+      "19:00",
+      "21:00",
+      "/images/mezzo/chianti-and-pasta.webp",
+    ),
+    sample(
+      "music",
+      "Live Music on the Roof",
+      "Il Tetto",
+      "Local acoustic sets under the open sky, with cold drafts and pies all night.",
+      9,
+      "18:00",
+      "21:00",
+      null,
+    ),
+    sample(
+      "trivia",
+      "Meatball Trivia",
+      "Emporio",
+      "Three rounds of team trivia. Grab a draft and bring your sharpest friends.",
+      14,
+      "19:30",
+      "21:30",
+      "/images/mezzo/meatballs-al-forno.webp",
+    ),
+  ]
+}
+
 export function UpcomingEvents() {
   const today = todayKey()
-  const events = useQuery(api.events.range, { from: today, to: addDays(today, 60) })
+  const loaded = useQuery(api.events.range, { from: today, to: addDays(today, 60) })
+  const events = loaded?.length === 0 ? sampleEvents(today) : loaded
   const region = useScrollCorners<HTMLElement>(events)
   const featured: EventOccurrence[] = []
 
@@ -61,10 +119,11 @@ export function UpcomingEvents() {
                 venue?.includes(name.toLowerCase()),
               )
               const reversed = index >= 2
+              const isSample = "isSample" in event
               return (
                 <article key={event._id}>
                   <Link
-                    to={eventPath(event)}
+                    to={isSample ? "/events" : eventPath(event)}
                     aria-labelledby={titleId}
                     className={`group grid items-end gap-3 sm:gap-5 ${reversed ? "grid-cols-[minmax(0,3fr)_minmax(0,2fr)]" : "grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"}`}
                   >
@@ -83,6 +142,11 @@ export function UpcomingEvents() {
                         className="font-sans text-xl leading-tight group-hover:underline xl:text-2xl"
                       >
                         {event.title}
+                        {isSample && (
+                          <span className="ml-3 align-middle font-serif text-2xs tracking-[0.3em] text-cream/60 uppercase">
+                            Sample
+                          </span>
+                        )}
                       </h3>
                       {event.desc && (
                         <p className="mt-2 text-sm leading-snug text-cream/90">{event.desc}</p>

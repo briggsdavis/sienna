@@ -1,6 +1,7 @@
 import type { ReactNode } from "react"
 import { EText } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
+import { useScrollCorners } from "@/hooks/use-scroll-corners"
 
 export type Stat = { value: string; label: string }
 
@@ -11,6 +12,7 @@ export function FloorIntro({
   body,
   stats,
   tone = "paper",
+  scrollCorners = false,
 }: {
   image: ReactNode
   photoDetails?: { hours: ReactNode; badge: ReactNode; badgeClassName: string }
@@ -18,16 +20,23 @@ export function FloorIntro({
   body: ReactNode
   stats: readonly Stat[]
   tone?: "paper" | "sienna"
+  /** Photo starts fully rounded and straightens to square corners as it scrolls to centre. */
+  scrollCorners?: boolean
 }) {
+  const region = useScrollCorners<HTMLElement>(undefined)
   const sienna = tone === "sienna"
   const muted = sienna ? "text-cream/90" : "text-ink-soft"
   return (
     <section
+      ref={region}
       className={`relative overflow-hidden py-24 ${sienna ? "text-cream" : "bg-paper text-ink"}`}
     >
       <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
         <FadeIn>
-          <div className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0">
+          <div
+            data-scroll-corners={scrollCorners || undefined}
+            className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0"
+          >
             {image}
             {photoDetails && (
               <>

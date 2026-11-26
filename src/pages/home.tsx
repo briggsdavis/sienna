@@ -10,6 +10,7 @@ import { Seo, restaurantJsonLd } from "@/components/seo"
 import { UpcomingEvents } from "@/components/upcoming-events"
 import { FEATURED_DISHES, FLOOR_HOURS, HOME_FLOORS, type HomeFloor } from "@/content/home"
 import { useStaggerReveal } from "@/hooks/use-reveal"
+import { useScrollCorners } from "@/hooks/use-scroll-corners"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, PHONE, unsplash } from "@/lib/site"
 
@@ -261,6 +262,7 @@ function FloorText({ floor }: { floor: HomeFloor }) {
 }
 
 function FeaturedDishes() {
+  const region = useScrollCorners<HTMLElement>(FEATURED_DISHES)
   const gridRef = useRef<HTMLDivElement>(null)
   const firstPhotoRef = useRef<HTMLDivElement>(null)
 
@@ -303,7 +305,11 @@ function FeaturedDishes() {
   }, [])
 
   return (
-    <section aria-labelledby="featured-dishes" className="relative bg-cream py-24 lg:py-32">
+    <section
+      ref={region}
+      aria-labelledby="featured-dishes"
+      className="relative bg-cream py-24 lg:py-32"
+    >
       <div className="site-container">
         <FadeIn>
           <h2
@@ -324,6 +330,7 @@ function FeaturedDishes() {
               <article key={floor.id} className="dish-card flex flex-col">
                 <div
                   ref={index === 0 ? firstPhotoRef : undefined}
+                  data-scroll-corners
                   className="relative aspect-square overflow-hidden bg-paper-deep"
                 >
                   <EImage k={`${dish.contentKey}.image`} d={dish.image}>

@@ -114,6 +114,7 @@ export function Emporio() {
           <PageShortcuts shortcuts={SHORTCUTS} tone="sienna" />
           <FloorIntro
             tone="sienna"
+            scrollCorners
             image={
               <EImage k="intro.image" d={unsplash("1529042410759-befb1204b468", 1200, 80)}>
                 {(src) => (
@@ -320,7 +321,7 @@ function Balls() {
           <div className="lg:col-start-2 lg:max-w-2xl">
             <h2
               id="emporio-balls-title"
-              className="font-sans text-[clamp(3rem,calc(8.6vw*var(--site-type-scale)),7rem)] leading-[0.93] font-black tracking-tight"
+              className="font-display text-[clamp(3rem,calc(8.6vw*var(--site-type-scale)),7rem)] leading-[0.93] tracking-tight"
             >
               <EText k="balls.title" d="Five balls." />
             </h2>
@@ -381,16 +382,13 @@ function Balls() {
 }
 
 function BallOfTheMonth() {
+  const region = useScrollCorners<HTMLElement>(undefined)
   return (
     <section
+      ref={region}
       aria-labelledby="emporio-month-title"
-      className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-sienna-deep px-6 py-20 text-cream md:py-24"
+      className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-cream px-6 py-20 text-cream md:py-24"
     >
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-        <EImage k="botm.background" d={unsplash("1775595712043-50ae4b305124", 2200, 80)}>
-          {(src) => <ParallaxImage src={src} alt="" speed={0.2} loading="lazy" />}
-        </EImage>
-      </div>
       <div
         data-emporio-parallax
         className="relative isolate grid w-full max-w-[55rem] items-center gap-6 overflow-hidden bg-sienna p-6 sm:grid-cols-2 sm:p-9 lg:gap-7 lg:p-12"
@@ -400,7 +398,7 @@ function BallOfTheMonth() {
           alt=""
           className="pointer-events-none absolute -right-[8%] -bottom-[26%] -z-10 w-[min(85%,31rem)] max-w-none -rotate-12 opacity-[0.1] brightness-0 invert sm:w-[55%]"
         />
-        <div className="relative aspect-square overflow-hidden bg-sienna-deep">
+        <div data-scroll-corners className="relative aspect-square overflow-hidden bg-sienna-deep">
           <EImage k="botm.image" d={unsplash("1529042410759-befb1204b468", 1500, 85)}>
             {(src) => (
               <ParallaxImage src={src} alt="A bowl of meatballs" speed={0.13} loading="lazy" />
@@ -408,9 +406,12 @@ function BallOfTheMonth() {
           </EImage>
         </div>
         <div className="font-sans">
+          <p className="mb-3 font-serif text-2xs tracking-[0.4em] text-cream/75 uppercase sm:text-xs">
+            <EText k="botm.label" d="Ball of the month" />
+          </p>
           <h2
             id="emporio-month-title"
-            className="text-[clamp(2.25rem,4.9vw,4.8rem)] leading-[0.95] font-black tracking-tight"
+            className="font-display text-[clamp(2.25rem,4.9vw,4.8rem)] leading-[0.95] tracking-tight"
           >
             <EText k="botm.title" d="Dragon Ball" />
           </h2>

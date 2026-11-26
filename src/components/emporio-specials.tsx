@@ -7,8 +7,38 @@ import { api } from "../../convex/_generated/api"
 
 const FALLBACK_IMAGE = unsplash("1529042410759-befb1204b468", 1200, 80)
 
+/** Shown until real specials are posted in the admin (dishes from the Emporio menu). */
+const SAMPLE_SPECIALS = [
+  {
+    _id: "sample-buffalo",
+    name: "Buffalo Fried Chicken Balls",
+    desc: "Seven balls with bleu cheese and celery.",
+    price: "12",
+    days: [1],
+    image: null,
+  },
+  {
+    _id: "sample-bruschetta",
+    name: "Bruschetta",
+    desc: "Whipped ricotta, roasted tomato, balsamic and arugula.",
+    price: "12",
+    days: [3],
+    image: null,
+  },
+  {
+    _id: "sample-crack-fries",
+    name: "Crack Fries",
+    desc: "Smothered in crack sauce, buffalo and ranch.",
+    price: "12",
+    days: [5],
+    image: null,
+  },
+]
+
 export function EmporioSpecials() {
-  const specials = useQuery(api.specials.list, { restaurant: "emporio" })
+  const loaded = useQuery(api.specials.list, { restaurant: "emporio" })
+  const isSample = loaded?.length === 0
+  const specials = isSample ? SAMPLE_SPECIALS : loaded
   const region = useScrollCorners<HTMLElement>(specials)
 
   return (
@@ -18,11 +48,11 @@ export function EmporioSpecials() {
       aria-labelledby="emporio-specials-title"
       className="min-h-svh scroll-mt-20 bg-cream text-ink"
     >
-      <div className="site-container grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.65fr)] lg:gap-10">
-        <div className="pt-14 lg:sticky lg:top-0 lg:flex lg:min-h-svh lg:flex-col lg:items-start lg:justify-center lg:self-start lg:py-12 lg:pl-10">
+      <div className="site-container grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.65fr)] lg:gap-10">
+        <div className="[container-type:inline-size] pt-14 lg:sticky lg:top-0 lg:flex lg:min-h-svh lg:flex-col lg:items-start lg:justify-center lg:self-start lg:py-12 lg:pl-10">
           <h2
             id="emporio-specials-title"
-            className="font-sans text-[clamp(2.3rem,calc(5.2vw*var(--site-type-scale)),5rem)] leading-[1.18] tracking-tight"
+            className="font-display text-[clamp(3.25rem,calc(27cqi*var(--site-type-scale)),10rem)] leading-[0.95] tracking-tight"
           >
             <span className="lg:block">The</span> <span className="lg:block">Daily</span>{" "}
             <span className="lg:block">Specials</span>
@@ -59,6 +89,11 @@ export function EmporioSpecials() {
                     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                       <h3 className="font-sans text-xl leading-tight xl:text-2xl">
                         {special.name}
+                        {isSample && (
+                          <span className="ml-3 align-middle font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+                            Sample
+                          </span>
+                        )}
                       </h3>
                       {special.price && (
                         <span className="text-lg whitespace-nowrap tabular-nums">
