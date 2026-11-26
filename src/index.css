@@ -964,7 +964,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 @media (prefers-reduced-motion: no-preference) {
   .grow-in {
     scale: 0;
-    transition: scale 1.1s cubic-bezier(0.22, 1, 0.36, 1) var(--icon-delay, 0s);
+    transition: scale 1.54s cubic-bezier(0.22, 1, 0.36, 1) var(--icon-delay, 0s);
   }
 
   .grow-in[data-in-view] {
@@ -978,6 +978,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
   .draw-line[data-in-view] {
+    transform: scaleX(1);
+  }
+}
+
+/* SectionBreak: lines draw outward from the icon. */
+@media (prefers-reduced-motion: no-preference) {
+  .section-break .draw-out {
+    transform: scaleX(0);
+    transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.35s;
+  }
+
+  .section-break .draw-out-left {
+    transform-origin: right;
+  }
+
+  .section-break .draw-out-right {
+    transform-origin: left;
+  }
+
+  .section-break[data-in-view] .draw-out {
     transform: scaleX(1);
   }
 }

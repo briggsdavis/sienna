@@ -1,7 +1,45 @@
 import { useEffect, useRef } from "react"
 import { FadeIn } from "@/components/fade-in"
+import type { IconName } from "@/components/mezzo-value-icon"
 import { ParallaxImage } from "@/components/parallax-image"
+import { SectionBreak } from "@/components/section-break"
 import { WordReveal } from "@/components/word-reveal"
+
+// Drawings used only on the menu page, matched to a section by its title.
+const BREAK_MATCHES: [RegExp, IconName][] = [
+  [/antipast|starter|small|snack|olive/i, "olives"],
+  [/salad|insalat|veg|side|contorn/i, "basil"],
+  [/pizza/i, "tomatoes"],
+  [/pasta|primi/i, "garlic"],
+  [/main|second|entr|carne|pesce|fish|meat/i, "cheese"],
+  [/dessert|dolci|sweet|coffee|caff/i, "espresso"],
+  [/wine|vino|drink|bever|cocktail|bar|beer/i, "corkscrew"],
+  [/kid|bambin|brunch|lunch/i, "lemon"],
+]
+const BREAK_FALLBACK: IconName[] = [
+  "olives",
+  "basil",
+  "tomatoes",
+  "garlic",
+  "cheese",
+  "espresso",
+  "corkscrew",
+  "lemon",
+]
+
+/** One drawing per section break, matched by title where possible, never repeated until all are used. */
+function breakIcons(titles: string[]) {
+  const used = new Set<IconName>()
+  return titles.map((title) => {
+    const match = BREAK_MATCHES.find(([re, icon]) => re.test(title) && !used.has(icon))?.[1]
+    const icon =
+      match ??
+      BREAK_FALLBACK.find((i) => !used.has(i)) ??
+      BREAK_FALLBACK[used.size % BREAK_FALLBACK.length]
+    used.add(icon)
+    return icon
+  })
+}
 import { getMenuSectionPhoto } from "@/content/menu-photos"
 import { FLOORS, type FloorId, unsplash } from "@/lib/site"
 import { formatPrice } from "@/lib/util"
@@ -140,6 +178,8 @@ export function MenuSections({
     }
   }, [mezzo, sections])
 
+  const icons = breakIcons(sections.slice(1).map((section) => section.title))
+
   return (
     <div ref={menu} className={mezzo ? "[--menu-indent-duration:360ms]" : "space-y-20"}>
       {sections.map((section, index) => {
@@ -187,6 +227,12 @@ export function MenuSections({
                 : "scroll-mt-32"
             }
           >
+            {mezzo && index > 0 && (
+              <SectionBreak
+                icon={icons[index - 1]}
+                className={`mx-auto mb-10 max-w-[1400px] px-6 md:mb-14 lg:px-12 ${light ? "text-ink-soft" : "text-cream/80"}`}
+              />
+            )}
             <div
               className={`grid items-start gap-8 lg:gap-16 ${
                 imageRight ? "lg:grid-cols-[1.25fr_1fr]" : "lg:grid-cols-[1fr_1.25fr]"

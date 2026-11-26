@@ -2,6 +2,7 @@ import { useQuery } from "convex/react"
 import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react"
 import { EText, ELink } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
+import { MezzoValueIcon } from "@/components/mezzo-value-icon"
 import { ReserveLink } from "@/components/reserve"
 import { SPECIALS_SAMPLES } from "@/content/mezzo"
 import { FLOORS } from "@/lib/site"
@@ -12,13 +13,14 @@ const WEEK = [1, 2, 3, 4, 5, 6, 0] as const
 /** Scroll distance per special while the section is pinned, in svh. */
 const STEP_SVH = 60
 // Curved carousel geometry, as fractions of the stage width. Cards sit on the
-// inside of a cylinder around the viewer, cut into thin vertical slices so each
-// image bends with the curve.
-const CARD_W = 0.34
+// outside of a turning drum, cut into thin vertical slices so each image bends
+// with the curve.
+const CARD_W = 0.4
 const CARD_GAP = 0.02
-const RADIUS = 1.1
+const RADIUS = 0.9
 const PERSPECTIVE = 1.6
-const CARD_ASPECT = 1.15
+/** Card height over width: 4:3 landscape. */
+const CARD_ASPECT = 0.75
 const SLICES = 20
 /** Angle between neighbouring card centres, in radians. */
 const CARD_ANGLE = (CARD_W + CARD_GAP) / RADIUS
@@ -77,7 +79,7 @@ export function MezzoSpecials() {
     stage.style.setProperty("--ring-w", `${width * CARD_W}px`)
     stage.style.setProperty("--ring-r", `${width * RADIUS}px`)
     stage.style.perspective = `${width * PERSPECTIVE}px`
-    ring.style.transform = `translateZ(${width * RADIUS}px) rotateY(${position * CARD_ANGLE}rad)`
+    ring.style.transform = `translateZ(${-width * RADIUS}px) rotateY(${-position * CARD_ANGLE}rad)`
     cardRefs.current.forEach((card, index) => {
       if (card) card.style.visibility = Math.abs(index - position) < 1.75 ? "visible" : "hidden"
     })
@@ -101,11 +103,7 @@ export function MezzoSpecials() {
       const rect = section.getBoundingClientRect()
       const travel = section.offsetHeight - window.innerHeight
       const progress = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0
-      const raw = progress * (count - 1)
-      const base = Math.min(count - 2, Math.floor(raw))
-      // Hold on each special, then turn to the next one.
-      const t = Math.min(1, Math.max(0, (raw - base - 0.2) / 0.6))
-      const position = base + t * t * (3 - 2 * t)
+      const position = progress * (count - 1)
       layout(position)
       setActive(Math.round(position))
     }
@@ -191,6 +189,50 @@ export function MezzoSpecials() {
     if (Math.abs(dx) > 40) goTo(active + (dx < 0 ? 1 : -1))
   }
 
+  // The slices only change with the data; keep them out of per-step re-renders.
+  const ringCards = useMemo(
+    () =>
+      cards.map((card, index) => (
+        <div
+          key={card.key}
+          ref={(el) => {
+            cardRefs.current[index] = el
+          }}
+          className="absolute inset-0 [transform-style:preserve-3d]"
+          style={{ visibility: index < 2 ? "visible" : "hidden" }}
+        >
+          {Array.from({ length: SLICES }, (_, slice) => {
+            const along = (slice + 0.5) / SLICES - 0.5
+            const angle = (index * (CARD_W + CARD_GAP) + along * CARD_W) / RADIUS
+            return (
+              <div
+                key={slice}
+                className="absolute top-1/2 left-1/2 overflow-hidden bg-ink/25 [backface-visibility:hidden]"
+                style={{
+                  width: `calc(var(--ring-w) / ${SLICES} + 0.6px)`,
+                  height: `calc(var(--ring-w) * ${CARD_ASPECT})`,
+                  margin: `calc(var(--ring-w) * ${-CARD_ASPECT / 2}) 0 0 calc(var(--ring-w) / ${-2 * SLICES})`,
+                  transform: `rotateY(${angle}rad) translateZ(var(--ring-r))`,
+                }}
+              >
+                <img
+                  src={card.image}
+                  alt=""
+                  draggable={false}
+                  className="h-full max-w-none object-cover"
+                  style={{
+                    width: "var(--ring-w)",
+                    marginLeft: `calc(var(--ring-w) * ${-slice / SLICES})`,
+                  }}
+                />
+              </div>
+            )
+          })}
+        </div>
+      )),
+    [cards],
+  )
+
   const current = useBlurSwap(Math.min(active, Math.max(0, count - 1)))
   const shown = cards[current.index]
 
@@ -217,7 +259,7 @@ export function MezzoSpecials() {
             >
               <EText k="specials.title" d="Daily specials" words={0.12} />
             </h2>
-            <p className="mt-3 max-w-sm font-body md:mt-5 text-base leading-relaxed text-cream/80">
+            <p className="mt-3 max-w-sm font-body text-base leading-relaxed text-cream/80 md:mt-5">
               <EText
                 k="specials.body"
                 d="Something new from the kitchen every night of the week. Here’s what’s on at Mezzo."
@@ -230,6 +272,11 @@ export function MezzoSpecials() {
                 label="View the Menu"
                 href={FLOORS.mezzo.menuHref}
                 className="btn-lift btn-fill btn-fill-cream border border-cream/50 text-cream"
+              />
+              <MezzoValueIcon
+                name="chalkboard"
+                delay={0.3}
+                className="mt-12 h-auto w-44 text-cream/80 lg:w-52"
               />
             </div>
           </FadeIn>
@@ -259,47 +306,10 @@ export function MezzoSpecials() {
               onPointerDown={onPointerDown}
               onPointerUp={onPointerUp}
               onPointerCancel={() => (swipe.current = null)}
-              className="relative mt-3 aspect-[100/44] w-full touch-pan-y select-none [perspective-origin:50%_50%] md:mt-5"
+              className="relative mt-3 aspect-[100/34] w-full touch-pan-y select-none [perspective-origin:50%_50%] md:mt-5"
             >
               <div ref={ringRef} className="absolute inset-0 [transform-style:preserve-3d]">
-                {cards.map((card, index) => (
-                  <div
-                    key={card.key}
-                    ref={(el) => {
-                      cardRefs.current[index] = el
-                    }}
-                    className="absolute inset-0 [transform-style:preserve-3d]"
-                    style={{ visibility: index < 2 ? "visible" : "hidden" }}
-                  >
-                    {Array.from({ length: SLICES }, (_, slice) => {
-                      const along = (slice + 0.5) / SLICES - 0.5
-                      const angle = (index * (CARD_W + CARD_GAP) + along * CARD_W) / RADIUS
-                      return (
-                        <div
-                          key={slice}
-                          className="absolute top-1/2 left-1/2 overflow-hidden bg-ink/25 [backface-visibility:hidden]"
-                          style={{
-                            width: `calc(var(--ring-w) / ${SLICES} + 0.6px)`,
-                            height: `calc(var(--ring-w) * ${CARD_ASPECT})`,
-                            margin: `calc(var(--ring-w) * ${-CARD_ASPECT / 2}) 0 0 calc(var(--ring-w) / ${-2 * SLICES})`,
-                            transform: `rotateY(${-angle}rad) translateZ(calc(var(--ring-r) * -1))`,
-                          }}
-                        >
-                          <img
-                            src={card.image}
-                            alt=""
-                            draggable={false}
-                            className="h-full max-w-none object-cover"
-                            style={{
-                              width: "var(--ring-w)",
-                              marginLeft: `calc(var(--ring-w) * ${-slice / SLICES})`,
-                            }}
-                          />
-                        </div>
-                      )
-                    })}
-                  </div>
-                ))}
+                {ringCards}
               </div>
             </div>
 

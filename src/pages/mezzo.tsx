@@ -5,6 +5,7 @@ import { MezzoSpecials } from "@/components/mezzo-specials"
 import { MezzoValueIcon, useInView } from "@/components/mezzo-value-icon"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel, ReserveLink } from "@/components/reserve"
+import { SectionBreak } from "@/components/section-break"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { GALLERY_PHOTOS, HIGHLIGHTS, HOURS, MENU_SAMPLES, VALUES } from "@/content/mezzo"
 import { useScrollScale } from "@/hooks/use-scroll-scale"
@@ -43,9 +44,12 @@ function Hero() {
     <EImage k="hero.image" d="/images/mezzo/hero-guest-dining.webp">
       {(src) => (
         <PageHero
-          image={{ src, alt: "", className: "object-[center_52%]" }}
+          image={{ src, alt: "", className: "object-[center_52%]", zoom: false }}
           overlay={
-            <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/15 to-black/35" />
+            <>
+              <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/15 to-black/35" />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/50 to-transparent" />
+            </>
           }
           bottomPadding="pb-0"
         >
@@ -135,7 +139,7 @@ function Values() {
   const lineRef = useInView<HTMLDivElement>()
   return (
     <div className="site-container mt-14 md:mt-16">
-      <div ref={lineRef} aria-hidden="true" className="draw-line h-px bg-ink/15" />
+      <div ref={lineRef} aria-hidden="true" className="draw-line h-[1.5px] bg-ink/45" />
       <ul
         aria-label="What Mezzo stands for"
         className="grid grid-cols-3 gap-4 pt-10 text-center sm:gap-8 md:pt-14"
@@ -345,6 +349,7 @@ function ClosingStrip() {
       aria-label="Explore the other floors"
       className="bg-sienna px-6 py-12 text-cream md:py-16"
     >
+      <SectionBreak icon="stairs" className="mx-auto mb-10 max-w-[1400px] text-cream/85 md:mb-12" />
       <FadeIn className="flex justify-center">
         <div className="btn-pair">
           <ELink
