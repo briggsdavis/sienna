@@ -971,9 +971,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Buttons fade in as they scroll into view (useButtonReveal). */
+/* Buttons fade in as they scroll into view (useButtonReveal). Heroes opt out with
+   data-no-reveal: their buttons are on screen at load and fade in with the hero. */
 @media (prefers-reduced-motion: no-preference) {
-  :is(main, footer) .btn-lift {
+  :is(main, footer) .btn-lift:not([data-no-reveal] *) {
     opacity: 0;
     translate: 0 12px;
     transition:
@@ -986,7 +987,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
       translate 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
   }
 
-  :is(main, footer) .btn-lift[data-btn-visible] {
+  :is(main, footer) .btn-lift:not([data-no-reveal] *)[data-btn-visible] {
     opacity: 1;
     translate: none;
   }

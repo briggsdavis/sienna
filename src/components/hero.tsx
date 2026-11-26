@@ -44,7 +44,10 @@ export function PageHero({
 }) {
   const minHeight = viewportHeight ? HERO_HEIGHTS[viewportHeight] : undefined
   return (
-    <section className={`relative w-full overflow-hidden bg-ink ${minHeight ?? "h-hero"}`}>
+    <section
+      data-no-reveal
+      className={`relative w-full overflow-hidden bg-ink ${minHeight ?? "h-hero"}`}
+    >
       <HeroImage {...image} />
       {overlay}
       <div
@@ -68,7 +71,10 @@ export function RestaurantHero({
   children: ReactNode
 }) {
   return (
-    <section className="relative isolate grid min-h-svh items-end overflow-hidden bg-sienna">
+    <section
+      data-no-reveal
+      className="relative isolate grid min-h-svh items-end overflow-hidden bg-sienna"
+    >
       <HeroImage {...image} />
       <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-ink/35 via-sienna/40 to-sienna" />
       <div className="relative site-container flex flex-col items-center pt-20 pb-[clamp(2.5rem,11.5svh,7.5rem)] text-center text-cream">

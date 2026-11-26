@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-const SELECTOR = ":is(main, footer) .btn-lift"
+const SELECTOR = ":is(main, footer) .btn-lift:not([data-no-reveal] *)"
 
 /** Fades buttons in the first time they scroll into view (styles in index.css). */
 export function useButtonReveal(pathname: string) {

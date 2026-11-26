@@ -47,7 +47,7 @@ export function Home() {
 
 function Hero() {
   return (
-    <section className="h-hero relative w-full overflow-hidden bg-ink">
+    <section data-no-reveal className="h-hero relative w-full overflow-hidden bg-ink">
       <div className="absolute inset-0">
         <EImage k="hero.image" d={unsplash("1414235077428-338989a2e8c0", 2400, 80)}>
           {(src) => <HeroImage src={src} alt="Sienna Mercato rooftop terrace" />}
@@ -65,17 +65,10 @@ function Hero() {
 
       <div className="relative z-10 mx-auto flex h-full max-w-[1600px] flex-col items-center justify-end px-6 pb-40 text-center lg:px-12">
         <div className="mx-auto max-w-3xl">
-          <h1
-            className="rise text-hero-shadow font-display text-[clamp(2.8rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream"
-            style={{ animationDelay: "0.35s" }}
-          >
-            <EText k="hero.title" d="Sienna" />{" "}
-            <span className="font-light text-cream/90">
-              <EText k="hero.titleAccent" d="Mercato" />
-            </span>
-          </h1>
+          {/* The name stays for search engines and screen readers, not on screen. */}
+          <h1 className="sr-only">Sienna Mercato</h1>
           <div
-            className="rise mt-8 flex flex-col items-center gap-3"
+            className="rise flex flex-wrap items-center justify-center gap-3"
             style={{ animationDelay: "0.65s" }}
           >
             <ELink
