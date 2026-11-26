@@ -12,18 +12,25 @@ import { api } from "../../convex/_generated/api"
 const WEEK = [1, 2, 3, 4, 5, 6, 0] as const
 /** Scroll distance per special while the section is pinned, in svh. */
 const STEP_SVH = 60
-// Curved carousel geometry, as fractions of the stage width. Cards sit on the
-// outside of a turning drum, cut into thin vertical slices so each image bends
-// with the curve.
-const CARD_W = 0.4
-const CARD_GAP = 0.02
-const RADIUS = 0.9
-const PERSPECTIVE = 1.6
+// Curved carousel geometry, relative to the main card's width. Cards sit on
+// the outside of a turning drum, cut into thin vertical slices so each image
+// bends with the curve. The drum wraps, so the week loops.
+const CARD_GAP = 0.04
+const RADIUS = 2.25
+const PERSPECTIVE = 4
 /** Card height over width: 4:3 landscape. */
 const CARD_ASPECT = 0.75
 const SLICES = 20
 /** Angle between neighbouring card centres, in radians. */
-const CARD_ANGLE = (CARD_W + CARD_GAP) / RADIUS
+const CARD_ANGLE = (1 + CARD_GAP) / RADIUS
+
+/** Wraps a card offset into the range -count/2 .. count/2. */
+function wrapOffset(offset: number, count: number) {
+  const d = ((offset % count) + count) % count
+  return d > count / 2 ? d - count : d
+}
+const wrapIndex = (index: number, count: number) => ((index % count) + count) % count
+
 const SWAP_MS = 280
 
 type Card = {
@@ -69,19 +76,28 @@ export function MezzoSpecials() {
   const [pinned, setPinned] = useState(false)
   const [active, setActive] = useState(0)
 
-  // Turn the cylinder so the card at `position` faces forward.
+  // Turn the drum so the card at `position` faces forward. Neighbours peek
+  // in from each side and fade out towards the edges.
   const layout = (position: number) => {
     positionRef.current = position
     const stage = stageRef.current
     const ring = ringRef.current
-    if (!stage || !ring) return
-    const width = stage.offsetWidth
-    stage.style.setProperty("--ring-w", `${width * CARD_W}px`)
-    stage.style.setProperty("--ring-r", `${width * RADIUS}px`)
-    stage.style.perspective = `${width * PERSPECTIVE}px`
-    ring.style.transform = `translateZ(${-width * RADIUS}px) rotateY(${-position * CARD_ANGLE}rad)`
-    cardRefs.current.forEach((card, index) => {
-      if (card) card.style.visibility = Math.abs(index - position) < 1.75 ? "visible" : "hidden"
+    const column = stage?.parentElement
+    if (!stage || !ring || !column || !count) return
+    const card = Math.min(column.clientWidth * 0.8, window.innerHeight * 0.6)
+    const height = card * CARD_ASPECT
+    const fade = Math.max(0, (stage.offsetWidth - card) / 2 - 4)
+    stage.style.height = `${height * 1.06}px`
+    stage.style.setProperty("--ring-w", `${card}px`)
+    stage.style.setProperty("--ring-r", `${card * RADIUS}px`)
+    stage.style.perspective = `${card * PERSPECTIVE}px`
+    stage.style.maskImage = `linear-gradient(to right, transparent, #000 ${fade}px, #000 calc(100% - ${fade}px), transparent)`
+    ring.style.transform = `translateZ(${-card * RADIUS}px)`
+    cardRefs.current.forEach((el, index) => {
+      if (!el) return
+      const d = wrapOffset(index - position, count)
+      el.style.visibility = Math.abs(d) < 1.7 ? "visible" : "hidden"
+      el.style.transform = `rotateY(${d * CARD_ANGLE}rad)`
     })
   }
 
@@ -103,9 +119,9 @@ export function MezzoSpecials() {
       const rect = section.getBoundingClientRect()
       const travel = section.offsetHeight - window.innerHeight
       const progress = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0
-      const position = progress * (count - 1)
+      const position = progress * count
       layout(position)
-      setActive(Math.round(position))
+      setActive(wrapIndex(Math.round(position), count))
     }
 
     const measure = () => {
@@ -147,7 +163,8 @@ export function MezzoSpecials() {
     if (pinned) return
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
     const from = positionRef.current
-    const to = Math.min(active, Math.max(0, count - 1))
+    // Take the short way round the drum.
+    const to = count ? from + wrapOffset(active - from, count) : 0
     if (reduce || from === to) {
       layout(to)
       return
@@ -165,15 +182,18 @@ export function MezzoSpecials() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, pinned, count])
 
-  const goTo = (target: number) => {
-    const index = Math.min(count - 1, Math.max(0, target))
+  /** Step one special forward (1) or back (-1); the week wraps. */
+  const step = (direction: 1 | -1) => {
     const section = sectionRef.current
     if (pinned && section) {
       const travel = section.offsetHeight - window.innerHeight
       const top = section.getBoundingClientRect().top + window.scrollY
-      window.scrollTo({ top: top + (index / (count - 1)) * travel, behavior: "smooth" })
+      let target = Math.round(positionRef.current) + direction
+      if (target < 0) target = count - 1
+      if (target > count) target = 1
+      window.scrollTo({ top: top + (target / count) * travel, behavior: "smooth" })
     } else {
-      setActive(index)
+      setActive((current) => wrapIndex(current + direction, count))
     }
   }
 
@@ -186,7 +206,7 @@ export function MezzoSpecials() {
     if (swipe.current === null) return
     const dx = e.clientX - swipe.current
     swipe.current = null
-    if (Math.abs(dx) > 40) goTo(active + (dx < 0 ? 1 : -1))
+    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1)
   }
 
   // The slices only change with the data; keep them out of per-step re-renders.
@@ -199,11 +219,11 @@ export function MezzoSpecials() {
             cardRefs.current[index] = el
           }}
           className="absolute inset-0 [transform-style:preserve-3d]"
-          style={{ visibility: index < 2 ? "visible" : "hidden" }}
+          style={{ visibility: index < 2 || index === cards.length - 1 ? "visible" : "hidden" }}
         >
           {Array.from({ length: SLICES }, (_, slice) => {
             const along = (slice + 0.5) / SLICES - 0.5
-            const angle = (index * (CARD_W + CARD_GAP) + along * CARD_W) / RADIUS
+            const angle = along / RADIUS
             return (
               <div
                 key={slice}
@@ -242,7 +262,7 @@ export function MezzoSpecials() {
       id="specials"
       aria-labelledby="mezzo-specials-title"
       className="relative bg-sienna-deep text-cream"
-      style={pinned ? { height: `${100 + (count - 1) * STEP_SVH}svh` } : undefined}
+      style={pinned ? { height: `${100 + count * STEP_SVH}svh` } : undefined}
     >
       <div
         ref={panelRef}
@@ -306,7 +326,7 @@ export function MezzoSpecials() {
               onPointerDown={onPointerDown}
               onPointerUp={onPointerUp}
               onPointerCancel={() => (swipe.current = null)}
-              className="relative mt-3 aspect-[100/34] w-full touch-pan-y select-none [perspective-origin:50%_50%] md:mt-5"
+              className="relative -mx-6 mt-3 h-[45vw] touch-pan-y select-none [perspective-origin:50%_50%] md:mt-5 md:h-[30vw] lg:-mx-12"
             >
               <div ref={ringRef} className="absolute inset-0 [transform-style:preserve-3d]">
                 {ringCards}
@@ -337,8 +357,7 @@ export function MezzoSpecials() {
                 <div className="flex shrink-0 items-center gap-3 font-body text-sm text-cream/70 tabular-nums">
                   <button
                     type="button"
-                    onClick={() => goTo(active - 1)}
-                    disabled={active === 0}
+                    onClick={() => step(-1)}
                     aria-label="Previous special"
                     className="grid size-9 place-items-center rounded-full border border-cream/30 transition hover:bg-cream/10 disabled:opacity-30"
                   >
@@ -349,8 +368,7 @@ export function MezzoSpecials() {
                   </span>
                   <button
                     type="button"
-                    onClick={() => goTo(active + 1)}
-                    disabled={active === count - 1}
+                    onClick={() => step(1)}
                     aria-label="Next special"
                     className="grid size-9 place-items-center rounded-full border border-cream/30 transition hover:bg-cream/10 disabled:opacity-30"
                   >

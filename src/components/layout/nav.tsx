@@ -5,7 +5,7 @@ import { AnnouncementBar } from "@/components/marketing"
 import { reserveSummary, useSettings } from "@/components/reserve"
 import { useTrackClick } from "@/lib/analytics"
 import { useCart } from "@/lib/cart"
-import { FLOORS, type FloorId } from "@/lib/site"
+import { ADDRESS, FLOORS, PHONE, type FloorId } from "@/lib/site"
 
 const FLOOR_IDS: FloorId[] = ["tetto", "mezzo", "emporio"]
 const RESTAURANT_IDS: FloorId[] = ["emporio", "mezzo", "tetto"]
@@ -19,7 +19,7 @@ const LINKS = [
 const MENU_COLUMNS =
   "grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-x-4 sm:grid-cols-2 sm:gap-x-8"
 const MENU_LINK = "w-fit underline-offset-[0.15em] hover:underline aria-[current=page]:underline"
-const MENU_PRIMARY_LINK = `${MENU_LINK} text-[clamp(1rem,calc(4.2vw*var(--site-type-scale)),2.4rem)] leading-tight`
+const MENU_PRIMARY_LINK = `${MENU_LINK} text-[clamp(1.25rem,calc(5.6vw*var(--site-type-scale)),2.4rem)] leading-tight`
 
 function useHideOnScroll() {
   const [scrolled, setScrolled] = useState(false)
@@ -180,6 +180,11 @@ function RestaurantLinks({ onPick }: { onPick: () => void }) {
 export function Nav() {
   const { scrolled, hidden } = useHideOnScroll()
   const [menuOpen, setMenuOpen] = useState(false)
+  // Only play the closing curtain after the menu has been opened once.
+  const [menuUsed, setMenuUsed] = useState(false)
+  useEffect(() => {
+    if (menuOpen) setMenuUsed(true)
+  }, [menuOpen])
   const [reserveOpen, setReserveOpen] = useState(false)
   const menuTrigger = useRef<HTMLButtonElement>(null)
   const menuClose = useRef<HTMLButtonElement>(null)
@@ -289,15 +294,23 @@ export function Nav() {
         </div>
       </header>
 
+      {/* The page stays visible behind the panel; clicking it closes the menu. */}
       <div
-        id="site-navigation"
-        className={`fixed inset-0 z-[145] flex flex-col overflow-y-auto bg-sienna text-cream transition-opacity duration-500 ${
+        aria-hidden="true"
+        onClick={closeMenu}
+        className={`fixed inset-0 z-[144] bg-ink/50 transition-opacity duration-700 ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
+      />
+
+      <div
+        id="site-navigation"
+        data-state={menuOpen ? "open" : menuUsed ? "closing" : "idle"}
+        className="nav-curtain fixed inset-y-0 left-0 z-[145] flex w-[88%] flex-col overflow-y-auto bg-sienna text-cream sm:w-[min(40rem,88vw)] lg:w-[min(44rem,46vw)]"
         aria-hidden={!menuOpen}
         inert={!menuOpen}
       >
-        <div className="relative site-container flex items-center py-4">
+        <div className="flex items-center justify-between px-6 py-4 lg:px-12">
           <button
             ref={menuClose}
             type="button"
@@ -311,11 +324,7 @@ export function Nav() {
             <span aria-hidden="true" className="absolute h-px w-5 rotate-45 bg-current" />
             <span aria-hidden="true" className="absolute h-px w-5 -rotate-45 bg-current" />
           </button>
-          <Link
-            to="/"
-            onClick={closeMenu}
-            className="absolute left-1/2 flex -translate-x-1/2 items-center"
-          >
+          <Link to="/" onClick={closeMenu} className="flex items-center">
             <img
               src="/images/brand/sienna-mercato-logo.png"
               alt="Sienna Mercato"
@@ -326,29 +335,51 @@ export function Nav() {
 
         <nav
           aria-label="Site navigation"
-          className="grid flex-1 items-center px-6 pt-8 pb-16 font-sans"
+          className="nav-curtain-content flex flex-1 flex-col px-6 pt-10 pb-10 font-sans lg:px-12 lg:pt-14"
         >
-          <div className="mx-auto w-full max-w-[38rem] lg:translate-x-16">
-            <h2 className="mb-3 flex items-center gap-3 text-base sm:text-xl">
-              <span aria-hidden="true" className="size-2 rounded-full bg-current" />
-              Restaurants
-            </h2>
-            <RestaurantLinks onPick={closeMenu} />
+          <h2 className="mb-3 flex items-center gap-3 text-base sm:text-lg">
+            <span aria-hidden="true" className="size-2 rounded-full bg-current" />
+            Restaurants
+          </h2>
+          <RestaurantLinks onPick={closeMenu} />
 
-            <div className={`${MENU_COLUMNS} mt-14 items-end md:mt-20`}>
-              <ul className="grid gap-2">
-                {LINKS.map(({ to, label }) => (
-                  <li key={to}>
-                    <NavLink to={to} end onClick={closeMenu} className={MENU_PRIMARY_LINK}>
-                      {label}
-                    </NavLink>
-                  </li>
-                ))}
-              </ul>
+          <ul className="mt-12 grid gap-2 md:mt-16">
+            {LINKS.map(({ to, label }) => (
+              <li key={to}>
+                <NavLink to={to} end onClick={closeMenu} className={MENU_PRIMARY_LINK}>
+                  {label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-auto pt-14">
+            <p className="font-display text-[clamp(1.6rem,calc(2.6vw*var(--site-type-scale)),2.4rem)] leading-tight">
+              Three floors on Penn Avenue
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {FLOOR_IDS.map((id) => (
+                <Link
+                  key={id}
+                  to={`${FLOORS[id].href}#reserve`}
+                  onClick={closeMenu}
+                  className="btn-lift btn-fill btn-fill-cream border border-cream/50 text-cream"
+                >
+                  Reserve {FLOORS[id].name}
+                </Link>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2 text-sm text-cream/75">
+              <ExternalLink href={ADDRESS.mapsUrl} className="hover:text-cream hover:underline">
+                {ADDRESS.street}, {ADDRESS.city}
+              </ExternalLink>
+              <a href={PHONE.href} className="hover:text-cream hover:underline">
+                {PHONE.label}
+              </a>
               <NavLink
                 to="/privacy"
                 onClick={closeMenu}
-                className={`${MENU_LINK} text-base sm:text-xl`}
+                className={`${MENU_LINK} hover:text-cream`}
               >
                 Privacy
               </NavLink>

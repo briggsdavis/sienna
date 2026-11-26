@@ -1001,3 +1001,70 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: scaleX(1);
   }
 }
+
+/*
+ * Navigation panel: pulled in from the left like a curtain. The top edge
+ * leads and the bottom follows, then the reverse on close.
+ */
+.nav-curtain {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+}
+
+.nav-curtain[data-state="open"] {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  animation: nav-curtain-in 0.85s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.nav-curtain[data-state="closing"] {
+  animation: nav-curtain-out 0.6s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+.nav-curtain .nav-curtain-content {
+  opacity: 0;
+  translate: -1.5rem 0;
+  transition:
+    opacity 0.3s ease,
+    translate 0.3s ease;
+}
+
+.nav-curtain[data-state="open"] .nav-curtain-content {
+  opacity: 1;
+  translate: none;
+  transition:
+    opacity 0.6s ease 0.35s,
+    translate 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.35s;
+}
+
+@keyframes nav-curtain-in {
+  0% {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+  55% {
+    clip-path: polygon(0 0, 100% 0, 45% 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+@keyframes nav-curtain-out {
+  0% {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+  45% {
+    clip-path: polygon(0 0, 0 0, 55% 100%, 0 100%);
+  }
+  100% {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-curtain[data-state] {
+    animation: none;
+  }
+
+  .nav-curtain .nav-curtain-content {
+    transition: none;
+  }
+}
