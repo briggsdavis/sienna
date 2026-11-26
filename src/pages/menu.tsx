@@ -5,6 +5,7 @@ import { PageHero } from "@/components/hero"
 import { MENU_THEMES, MenuSections, SectionChips } from "@/components/menu-view"
 import { ReserveLink, useReservation, useSettings } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
+import { WordReveal } from "@/components/word-reveal"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, type FloorId } from "@/lib/site"
 import { NotFound } from "@/pages/not-found"
@@ -117,7 +118,11 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
         <p
           className={`font-body text-sm ${t.muted} ${mezzo ? "mx-auto max-w-[1400px] px-6 py-10 lg:px-12" : "mt-20"}`}
         >
-          Menu and prices change with the season. Please let your server know about any allergies.
+          {mezzo ? (
+            <WordReveal text="Menu and prices change with the season. Please let your server know about any allergies." />
+          ) : (
+            "Menu and prices change with the season. Please let your server know about any allergies."
+          )}
         </p>
       </div>
     </div>
@@ -145,7 +150,7 @@ function MezzoMenuHero() {
           className="h-[clamp(2.75rem,7svh,4.5rem)] w-auto max-w-[55vw] object-contain brightness-0 invert"
         />
         <h1 className="text-hero-shadow font-display text-[clamp(2.25rem,5.5vw,4.75rem)] leading-none">
-          Mezzo Menu
+          <WordReveal text="Mezzo Menu" delay={0.2} step={0.1} />
         </h1>
         <div className="mt-1 flex flex-wrap justify-center gap-3">
           <ReserveLink restaurant="mezzo" className="btn-lift btn-fill bg-cream text-ink">

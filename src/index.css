@@ -894,3 +894,66 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transition: none;
   }
 }
+
+/* Word-by-word text reveal (WordReveal). */
+@media (prefers-reduced-motion: no-preference) {
+  .word-reveal .word {
+    display: inline-block;
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(0.45em);
+    transition:
+      opacity 0.6s ease,
+      filter 0.6s ease,
+      transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .word-reveal[data-words-visible] .word {
+    opacity: 1;
+    filter: blur(0);
+    transform: none;
+    transition-delay: var(--word-delay, 0s);
+  }
+
+  /* Blocks that reveal by word skip the block-level fade so the words lead. */
+  .fade-in-stagger > :has(.word-reveal),
+  .fade-in-base:has(> .word-reveal) {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Text that swaps with a blur (specials carousel copy). */
+@media (prefers-reduced-motion: no-preference) {
+  .blur-swap {
+    transition:
+      opacity 0.28s ease,
+      filter 0.28s ease;
+  }
+
+  .blur-swap[data-swap="out"] {
+    opacity: 0;
+    filter: blur(10px);
+  }
+}
+
+/* Buttons fade in as they scroll into view (useButtonReveal). */
+@media (prefers-reduced-motion: no-preference) {
+  :is(main, footer) .btn-lift {
+    opacity: 0;
+    translate: 0 12px;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease,
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      box-shadow 0.25s ease,
+      opacity 0.7s ease 0.15s,
+      translate 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s;
+  }
+
+  :is(main, footer) .btn-lift[data-btn-visible] {
+    opacity: 1;
+    translate: none;
+  }
+}

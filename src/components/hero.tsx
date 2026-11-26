@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { WordReveal } from "@/components/word-reveal"
 import { useParallax } from "@/hooks/use-parallax"
 import type { Floor } from "@/lib/site"
 
@@ -86,14 +87,28 @@ export function RestaurantHero({
   )
 }
 
-export function HeroIntro({ title, blurb }: { title: ReactNode; blurb?: ReactNode }) {
+export function HeroIntro({
+  title,
+  blurb,
+  words = false,
+}: {
+  title: ReactNode
+  blurb?: ReactNode
+  /** Reveal a plain-text title word by word instead of rising as one block. */
+  words?: boolean
+}) {
+  const wordTitle = words && typeof title === "string"
   return (
     <>
       <h1
-        className="rise text-hero-shadow font-display text-[clamp(2.5rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream"
-        style={{ animationDelay: "0.25s" }}
+        className={`${wordTitle ? "" : "rise"} text-hero-shadow font-display text-[clamp(2.5rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream`}
+        style={wordTitle ? undefined : { animationDelay: "0.25s" }}
       >
-        {title}
+        {words && typeof title === "string" ? (
+          <WordReveal text={title} delay={0.25} step={0.08} />
+        ) : (
+          title
+        )}
       </h1>
       {blurb && (
         <p

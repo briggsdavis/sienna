@@ -9,6 +9,7 @@ import {
 } from "react"
 import { Link } from "react-router"
 import { ExternalLink } from "@/components/external-link"
+import { WordReveal } from "@/components/word-reveal"
 import { pickFile, useUpload } from "@/lib/upload"
 import { errorMessage, isInternal } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
@@ -71,11 +72,14 @@ export function EText({
   d,
   multiline = false,
   className = "",
+  words,
 }: {
   k: string
   d: string
   multiline?: boolean
   className?: string
+  /** Reveal the text word by word; a number sets the start delay in seconds. */
+  words?: boolean | number
 }) {
   const { page, loading, entry } = useEntry(k)
   const { editing } = useEditMode()
@@ -85,6 +89,15 @@ export function EText({
   const style = multiline || value.includes("\n") ? "whitespace-pre-line" : ""
 
   if (loading) return <span className={`invisible ${className}`}>{d}</span>
+
+  if (!editing && words !== undefined && words !== false)
+    return (
+      <WordReveal
+        text={value}
+        delay={typeof words === "number" ? words : 0}
+        className={`${style} ${className}`}
+      />
+    )
 
   if (!editing) return <span className={`${style} ${className}`}>{value}</span>
 

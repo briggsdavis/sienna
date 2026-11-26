@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react"
 import { FadeIn } from "@/components/fade-in"
 import { ParallaxImage } from "@/components/parallax-image"
+import { WordReveal } from "@/components/word-reveal"
 import { getMenuSectionPhoto } from "@/content/menu-photos"
 import { FLOORS, type FloorId, unsplash } from "@/lib/site"
 import { formatPrice } from "@/lib/util"
@@ -151,7 +152,9 @@ export function MenuSections({
         const itemPhoto = section.items.find((item) => item.available && item.image)?.image
         const image =
           customSectionPhoto ??
-          (mezzo ? (sectionPhoto ?? itemPhoto ?? "/images/mezzo/hero-guest-dining.webp") : (itemPhoto ?? sectionPhoto))
+          (mezzo
+            ? (sectionPhoto ?? itemPhoto ?? "/images/mezzo/hero-guest-dining.webp")
+            : (itemPhoto ?? sectionPhoto))
         const photoFrame = `aspect-square overflow-hidden ${imageRight ? "lg:order-last" : ""}`
         const photoContent = (
           <div
@@ -197,18 +200,12 @@ export function MenuSections({
                 <FadeIn className={photoFrame}>{photoContent}</FadeIn>
               )}
               <div className="min-w-0 text-[85%]">
-                <h2
-                  data-menu-entrance={mezzo || undefined}
-                  className={`font-display text-[clamp(2.2em,calc(3.4vw*var(--site-type-scale)),3.5em)] leading-[0.95] ${mezzo ? "menu-heading-entrance" : ""}`}
-                >
-                  {section.title}
+                <h2 className="font-display text-[clamp(2.2em,calc(3.4vw*var(--site-type-scale)),3.5em)] leading-[0.95]">
+                  {mezzo ? <WordReveal text={section.title} step={0.07} /> : section.title}
                 </h2>
                 {section.subtitle && (
-                  <p
-                    data-menu-entrance={mezzo || undefined}
-                    className={`mt-3 font-body text-[1.125em] ${tone.muted} ${mezzo ? "menu-heading-entrance" : ""}`}
-                  >
-                    {section.subtitle}
+                  <p className={`mt-3 font-body text-[1.125em] ${tone.muted}`}>
+                    {mezzo ? <WordReveal text={section.subtitle} delay={0.2} /> : section.subtitle}
                   </p>
                 )}
                 <ul className={`mt-6 border-t ${tone.rule}`}>

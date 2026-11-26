@@ -2,10 +2,11 @@ import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { HeroIntro, PageHero } from "@/components/hero"
 import { MezzoSpecials } from "@/components/mezzo-specials"
+import { MezzoValueIcon } from "@/components/mezzo-value-icon"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReservationPanel, ReserveLink } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
-import { GALLERY_PHOTOS, HIGHLIGHTS, HOURS, MENU_SAMPLES } from "@/content/mezzo"
+import { GALLERY_PHOTOS, HIGHLIGHTS, HOURS, MENU_SAMPLES, VALUES } from "@/content/mezzo"
 import { useScrollScale } from "@/hooks/use-scroll-scale"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS } from "@/lib/site"
@@ -44,7 +45,7 @@ function Hero() {
         <PageHero
           image={{ src, alt: "", className: "object-[center_52%]" }}
           overlay={
-            <div className="absolute inset-0 bg-linear-to-b from-ink/45 via-ink/35 to-sienna-deep/75" />
+            <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/15 to-black/35" />
           }
           bottomPadding="pb-0"
         >
@@ -54,12 +55,20 @@ function Hero() {
               alt=""
               className="rise mb-5 h-16 w-auto max-w-[55vw] object-contain brightness-0 invert"
             />
-            <HeroIntro title={floor.name} />
+            <HeroIntro title={floor.name} words />
             <MezzoActions hero />
           </div>
         </PageHero>
       )}
     </EImage>
+  )
+}
+
+function Eyebrow({ k, d, tone = "text-sienna" }: { k: string; d: string; tone?: string }) {
+  return (
+    <p className={`mb-4 font-serif text-2xs tracking-[0.4em] uppercase sm:text-xs ${tone}`}>
+      <EText k={k} d={d} words />
+    </p>
   )
 }
 
@@ -103,17 +112,45 @@ function Intro() {
           </EImage>
         </div>
         <FadeIn delay={0.12} stagger>
-          <h2 className="font-display text-3xl leading-none text-ink md:text-4xl">Mezzo</h2>
+          <Eyebrow k="intro.eyebrow" d="Sienna Mercato, Second Floor" />
+          <h2 className="font-display text-3xl leading-none text-ink md:text-4xl">
+            <EText k="intro.title" d="Mezzo" words={0.15} />
+          </h2>
           <p className="mt-4 max-w-lg font-body text-base leading-relaxed text-ink-soft">
             <EText
               k="intro.summary"
               d="Mezzo is for slowing down. On Sienna Mercato’s second floor, settle in for a candlelit dinner of hand-rolled pasta, wood-fired pizza and Italian wine, with time for another course or a second glass."
+              words={0.3}
             />
           </p>
           <MezzoActions />
         </FadeIn>
       </div>
+      <Values />
     </section>
+  )
+}
+
+function Values() {
+  return (
+    <FadeIn stagger className="site-container mt-14 md:mt-16">
+      <ul
+        aria-label="What Mezzo stands for"
+        className="grid grid-cols-3 gap-4 border-t border-ink/10 pt-10 text-center sm:gap-8 md:pt-14"
+      >
+        {VALUES.map((value) => (
+          <li key={value.id} className="flex flex-col items-center">
+            <MezzoValueIcon
+              name={value.icon}
+              className="h-auto w-full max-w-[11rem] text-ink-soft/80 md:max-w-[13rem]"
+            />
+            <p className="mt-4 font-body text-[clamp(0.85rem,2.4vw,1.15rem)] leading-snug text-ink">
+              <EText k={`values.${value.id}.label`} d={value.label} words />
+            </p>
+          </li>
+        ))}
+      </ul>
+    </FadeIn>
   )
 }
 
@@ -170,13 +207,16 @@ function Highlights() {
               </EImage>
             </div>
             <FadeIn delay={0.12} className="mezzo-highlight-copy" stagger>
+              <div className={index > 0 ? "pt-3" : ""}>
+                <Eyebrow k={`highlights.${feature.id}.eyebrow`} d={feature.eyebrow} />
+              </div>
               <h2
-                className={`font-display text-[clamp(1.16rem,calc(2.4vw*var(--site-type-scale)),2.12rem)] leading-none whitespace-nowrap text-ink ${index > 0 ? "pt-3" : ""}`}
+                className={`font-display text-[clamp(1.16rem,calc(2.4vw*var(--site-type-scale)),2.12rem)] leading-none whitespace-nowrap text-ink`}
               >
-                <EText k={`highlights.${feature.id}.title`} d={feature.title} />
+                <EText k={`highlights.${feature.id}.title`} d={feature.title} words={0.12} />
               </h2>
               <p className="mt-4 max-w-sm font-body text-[0.9rem] leading-relaxed text-ink-soft">
-                <EText k={`highlights.${feature.id}.body`} d={feature.body} />
+                <EText k={`highlights.${feature.id}.body`} d={feature.body} words={0.3} />
               </p>
             </FadeIn>
           </article>
@@ -193,12 +233,15 @@ function FeaturedDishes() {
     <section aria-labelledby="mezzo-featured-dishes" className="bg-cream py-16 text-ink md:py-24">
       <div className="site-container">
         <FadeIn className="mb-8 flex flex-wrap items-end justify-between gap-5 md:mb-10" stagger>
-          <h2
-            id="mezzo-featured-dishes"
-            className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.5rem)] leading-none"
-          >
-            <EText k="sampleMenu.title" d="Featured dishes" />
-          </h2>
+          <div>
+            <Eyebrow k="sampleMenu.eyebrow" d="From the Kitchen" />
+            <h2
+              id="mezzo-featured-dishes"
+              className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.5rem)] leading-none"
+            >
+              <EText k="sampleMenu.title" d="Featured dishes" words={0.12} />
+            </h2>
+          </div>
           <ELink
             k="sampleMenu.link"
             label="View the full menu"
@@ -222,10 +265,10 @@ function FeaturedDishes() {
                 </div>
               </div>
               <h3 className="mt-4 font-display text-xl leading-tight">
-                <EText k={`sampleMenu.${dish.id}.name`} d={dish.name} />
+                <EText k={`sampleMenu.${dish.id}.name`} d={dish.name} words />
               </h3>
               <p className="mt-2 font-body text-sm leading-relaxed text-ink-soft">
-                <EText k={`sampleMenu.${dish.id}.description`} d={dish.description} />
+                <EText k={`sampleMenu.${dish.id}.description`} d={dish.description} words={0.15} />
               </p>
             </li>
           ))}
@@ -244,13 +287,15 @@ function Reservations() {
       <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
       <div className="relative mx-auto grid max-w-[1600px] gap-12 px-6 py-20 lg:grid-cols-2 lg:items-start lg:px-12">
         <FadeIn className="pt-0 lg:pt-2" stagger>
+          <Eyebrow k="reserve.eyebrow" d="Book a Table" tone="text-cream/60" />
           <h2 className="font-display text-[clamp(2.5rem,calc(5vw*var(--site-type-scale)),4rem)] leading-[0.9]">
-            <EText k="reserve.title" d="Reserve at Mezzo" />
+            <EText k="reserve.title" d="Reserve at Mezzo" words={0.12} />
           </h2>
           <p className="mt-6 mb-8 max-w-md font-body text-lg leading-relaxed text-cream/80">
             <EText
               k="reserve.body"
               d="Mezzo takes reservations online, seven days out. Bar seats are walk-in. Larger parties of six or more, call us directly."
+              words={0.3}
             />
           </p>
           <ReservationPanel restaurant="mezzo" tone="dark" fillHover />
@@ -277,7 +322,7 @@ function Reservations() {
               ))}
             </ul>
             <p className="mt-5 font-body text-xs leading-relaxed text-cream/55">
-              <EText k="hours.note" d="Last seating 30 min before close. Bar pours later." />
+              <EText k="hours.note" d="Last seating 30 min before close. Bar pours later." words />
             </p>
           </div>
         </FadeIn>

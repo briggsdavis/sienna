@@ -19,6 +19,7 @@ export const GALLERY_PHOTOS = [
 export const HIGHLIGHTS = [
   {
     id: "pasta",
+    eyebrow: "Made Daily",
     title: "Hand-rolled pasta",
     body: "The kitchen rolls fresh pasta by hand each day for dishes like crab-stuffed ravioli.",
     photo: "/images/mezzo/spaghetti.webp",
@@ -26,6 +27,7 @@ export const HIGHLIGHTS = [
   },
   {
     id: "oven",
+    eyebrow: "From the Oven",
     title: "Wood-fired pizza",
     body: "At 800°F, the wood-fired oven gives each pizza a blistered crust and a light char.",
     photo: "/images/mezzo/pizza-slice.webp",
@@ -33,11 +35,18 @@ export const HIGHLIGHTS = [
   },
   {
     id: "dining-room",
+    eyebrow: "After Dark",
     title: "Candlelit dining",
     body: "Low light, linen and an Italian-led wine list make the second-floor dining room a place to linger.",
     photo: "/images/mezzo/candlelit-dinner.webp",
     alt: "A guest sitting down to dinner at Mezzo",
   },
+] as const
+
+export const VALUES = [
+  { id: "pasta", icon: "pasta", label: "Handmade Pasta" },
+  { id: "oven", icon: "oven", label: "Wood-Fired Oven" },
+  { id: "wine", icon: "wine", label: "Italian Wine" },
 ] as const
 
 export const HOURS = [

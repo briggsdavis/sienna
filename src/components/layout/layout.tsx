@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/footer"
 import { Nav } from "@/components/layout/nav"
 import { ScrollProgress } from "@/components/layout/scroll-progress"
 import { ConsentBanner, MarketingPopup } from "@/components/marketing"
+import { useButtonReveal } from "@/hooks/use-button-reveal"
 import { useSmoothWheelScroll } from "@/hooks/use-smooth-wheel-scroll"
 import { useViewportHeight } from "@/hooks/use-viewport-height"
 import { usePageTracking } from "@/lib/analytics"
@@ -38,6 +39,7 @@ export function Layout() {
   const contactPage = useMatch("/contact")
   useViewportHeight()
   useSmoothWheelScroll(pathname)
+  useButtonReveal(pathname)
 
   return (
     <EditModeProvider>
