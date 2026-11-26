@@ -811,7 +811,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: center;
   gap: 0.5rem;
   border-radius: 9999px;
-  padding: 0.5rem 1rem;
+  /*
+   * Akzidenz puts capitals at the top of its text box (ascender = cap height,
+   * short descender), so all-caps labels sit 0.11em high when centred.
+   * Shifting the padding by that amount centres the capitals in every browser.
+   */
+  padding: calc(0.5rem + 0.11em) 1rem calc(0.5rem - 0.11em);
   font-family: var(--font-sans);
   font-size: var(--button-text-size, 0.75rem);
   line-height: 1.2;
@@ -1039,8 +1044,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   0% {
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
   }
-  55% {
-    clip-path: polygon(0 0, 100% 0, 45% 100%, 0 100%);
+  50% {
+    clip-path: polygon(0 0, 60% 0, 53% 100%, 0 100%);
   }
   100% {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -1051,8 +1056,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   0% {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
-  45% {
-    clip-path: polygon(0 0, 0 0, 55% 100%, 0 100%);
+  50% {
+    clip-path: polygon(0 0, 40% 0, 47% 100%, 0 100%);
   }
   100% {
     clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
@@ -1066,5 +1071,76 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
   .nav-curtain .nav-curtain-content {
     transition: none;
+  }
+}
+
+/*
+ * Mezzo pages: buttons fill from the bottom on hover, slowly, in two staggered
+ * layers (a sheer wash, then the solid fill), and the label fades to a colour
+ * that reads on the fill. Red and empty buttons fill white; cream ones fill red.
+ */
+.type-mezzo .btn-lift {
+  --mz-fill: var(--color-paper);
+  --mz-text: var(--color-ink);
+  --button-fill-color: transparent;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.type-mezzo .btn-lift:is(.bg-sienna, .bg-sienna-deep, .bg-sienna-bright) {
+  --mz-text: var(--color-sienna-deep);
+}
+
+.type-mezzo .btn-lift:is(.bg-cream, .bg-paper) {
+  --mz-fill: var(--color-sienna);
+  --mz-text: var(--color-cream);
+}
+
+.type-mezzo .btn-lift::before,
+.type-mezzo .btn-lift::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--mz-fill);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.type-mezzo .btn-lift::before {
+  opacity: 0.45;
+  transition-delay: 0.12s;
+}
+
+@media (hover: hover) {
+  .type-mezzo .btn-lift:is(a[href], button:enabled):not([aria-disabled="true"]):hover {
+    color: var(--mz-text);
+    border-color: var(--mz-fill);
+    transition:
+      color 0.6s ease 0.25s,
+      border-color 0.6s ease 0.2s,
+      transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.7s ease,
+      translate 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .type-mezzo .btn-lift:is(a[href], button:enabled):not([aria-disabled="true"]):hover::before {
+    transform: scaleY(1);
+    transition-delay: 0s;
+  }
+
+  .type-mezzo .btn-lift:is(a[href], button:enabled):not([aria-disabled="true"]):hover::after {
+    transform: scaleY(1);
+    transition-delay: 0.12s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .type-mezzo .btn-lift::before,
+  .type-mezzo .btn-lift::after {
+    transition-duration: 0.01s;
   }
 }

@@ -19,7 +19,7 @@ const LINKS = [
 const MENU_COLUMNS =
   "grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-x-4 sm:grid-cols-2 sm:gap-x-8"
 const MENU_LINK = "w-fit underline-offset-[0.15em] hover:underline aria-[current=page]:underline"
-const MENU_PRIMARY_LINK = `${MENU_LINK} text-[clamp(1.25rem,calc(5.6vw*var(--site-type-scale)),2.4rem)] leading-tight`
+const MENU_PRIMARY_LINK = `${MENU_LINK} font-display text-[clamp(1.6rem,calc(6.4vw*var(--site-type-scale)),3.1rem)] leading-[1.05]`
 
 function useHideOnScroll() {
   const [scrolled, setScrolled] = useState(false)
@@ -337,7 +337,7 @@ export function Nav() {
           aria-label="Site navigation"
           className="nav-curtain-content flex flex-1 flex-col px-6 pt-10 pb-10 font-sans lg:px-12 lg:pt-14"
         >
-          <h2 className="mb-3 flex items-center gap-3 text-base sm:text-lg">
+          <h2 className="mb-3 flex items-center gap-3 font-serif text-2xs tracking-[0.4em] uppercase sm:text-xs">
             <span aria-hidden="true" className="size-2 rounded-full bg-current" />
             Restaurants
           </h2>
