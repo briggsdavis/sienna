@@ -1188,3 +1188,30 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
+/* Building tour: the right-hand panels cross-fade as each floor takes over. */
+.tour-panel {
+  opacity: 0;
+  translate: 0 1rem;
+  filter: blur(4px);
+  pointer-events: none;
+  transition:
+    opacity 0.45s ease,
+    translate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s ease;
+}
+
+.tour-panel[data-active] {
+  opacity: 1;
+  translate: none;
+  filter: none;
+  pointer-events: auto;
+  transition-delay: 0.18s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-panel,
+  .tour-panel[data-active] {
+    transition: none;
+  }
+}
+

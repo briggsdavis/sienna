@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react"
 import { Link } from "react-router"
+import { BuildingTour } from "@/components/building-tour"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
 import { HeroImage } from "@/components/hero"
@@ -31,6 +32,8 @@ export function Home() {
         <Seo path="/" {...PAGE_SEO["/"]} jsonLd={JSON_LD} />
         <Hero />
         <Manifesto />
+        {/* Alternate version of the section above, kept side by side to compare. */}
+        <BuildingTour />
         <section className="relative">
           {HOME_FLOORS.map((floor, index) => (
             <FloorFeature key={floor.id} floor={floor} index={index} />
