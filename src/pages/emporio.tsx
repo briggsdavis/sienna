@@ -33,8 +33,14 @@ const BOWL_SECTIONS = [
   { label: "Choose a sauce", href: "#sauces" },
 ] as const
 
-const MEATBALL_PHOTO = unsplash("1529042410759-befb1204b468", 650, 80)
-const FEATURED_MEATBALL_PHOTO = unsplash("1574484284002-952d92456975", 650, 80)
+/** One photo per ball, in BALL_TYPES order (the last is Ball of the Month). */
+const MEATBALL_PHOTOS = [
+  unsplash("1529042410759-befb1204b468", 650, 80),
+  unsplash("1620167790054-de54f34308bb", 650, 80),
+  unsplash("1520218508822-998633d997e6", 650, 80),
+  unsplash("1714383611462-f730359f9145", 650, 80),
+  unsplash("1574484284002-952d92456975", 650, 80),
+]
 
 const BASES = [
   {
@@ -312,9 +318,9 @@ function Balls() {
           <div className="lg:col-start-2 lg:max-w-2xl">
             <h2
               id="emporio-balls-title"
-              className="font-display text-[clamp(3rem,calc(8.6vw*var(--site-type-scale)),7rem)] leading-[0.93] tracking-tight"
+              className="font-display text-[clamp(3rem,calc(8.6vw*var(--site-type-scale)),7rem)] leading-[0.93] tracking-tight uppercase"
             >
-              <EText k="balls.title" d="Five balls." />
+              <EText k="balls.title" d="Five Meatballs" />
             </h2>
             <p className="mt-5 max-w-xl font-sans text-base leading-relaxed uppercase lg:text-lg">
               <EText
@@ -345,7 +351,7 @@ function Balls() {
                       return (
                         <li key={ball.name} className="bg-white p-1.5 text-ink shadow-lg">
                           <img
-                            src={ball.featured ? FEATURED_MEATBALL_PHOTO : MEATBALL_PHOTO}
+                            src={MEATBALL_PHOTOS[index]}
                             alt=""
                             loading="lazy"
                             className="aspect-[4/5] w-full object-cover"

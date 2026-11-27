@@ -163,7 +163,7 @@
     }
 
     .emporio-balls-strip[data-direction="down"] {
-      --balls-strip-angle: 22deg;
+      --balls-strip-angle: 11deg;
       display: block;
       left: 54%;
 
@@ -1314,4 +1314,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Photos that grow from 80% as their scroll corners straighten (useScrollCorners). */
 .scroll-grow {
   scale: calc(1 - 0.2 * var(--scroll-progress, 0));
+}
+
+/* Same, but also slides in from the right, so it travels diagonally up across the screen. */
+.scroll-diagonal {
+  scale: calc(1 - 0.2 * var(--scroll-progress, 0));
+  translate: calc(var(--scroll-progress, 0) * 30%) 0;
 }

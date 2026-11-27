@@ -46,13 +46,13 @@ export function EmporioSpecials() {
       id="specials"
       ref={region}
       aria-labelledby="emporio-specials-title"
-      className="min-h-svh scroll-mt-20 bg-cream text-ink"
+      className="min-h-svh scroll-mt-20 overflow-x-clip bg-cream text-ink"
     >
-      <div className="site-container grid lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1.65fr)] lg:gap-10">
+      <div className="site-container grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1.9fr)] lg:gap-10">
         <div className="[container-type:inline-size] pt-14 lg:sticky lg:top-0 lg:flex lg:min-h-svh lg:flex-col lg:items-start lg:justify-center lg:self-start lg:py-12 lg:pl-10">
           <h2
             id="emporio-specials-title"
-            className="font-display text-[clamp(3.25rem,calc(27cqi*var(--site-type-scale)),10rem)] leading-[0.95] tracking-tight"
+            className="font-display text-[clamp(2.75rem,calc(27cqi*var(--site-type-scale)),8.5rem)] leading-[0.95] tracking-tight"
           >
             <span className="lg:block">The</span> <span className="lg:block">Daily</span>{" "}
             <span className="lg:block">Specials</span>
@@ -89,11 +89,6 @@ export function EmporioSpecials() {
                     <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                       <h3 className="font-sans text-xl leading-tight xl:text-2xl">
                         {special.name}
-                        {isSample && (
-                          <span className="ml-3 align-middle font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                            Sample
-                          </span>
-                        )}
                       </h3>
                       {special.price && (
                         <span className="text-lg whitespace-nowrap tabular-nums">
@@ -114,7 +109,7 @@ export function EmporioSpecials() {
                   </div>
                   <div
                     data-scroll-corners
-                    className="order-first aspect-[3/2] overflow-hidden bg-paper-deep sm:order-none"
+                    className="scroll-diagonal order-first aspect-[3/2] overflow-hidden bg-paper-deep sm:order-none"
                   >
                     <img
                       src={special.image || FALLBACK_IMAGE}
