@@ -19,9 +19,12 @@ import { NotFound } from "@/pages/not-found"
 import { api } from "../../convex/_generated/api"
 import { MENUS } from "../../convex/seedData"
 
-/** The first two sections of each menu, shown until real sections are added in the admin. */
+/**
+ * The first sections of each menu, shown until real sections are added in the admin.
+ * Mezzo gets six so its cream and dark red sections alternate a few times.
+ */
 function sampleSections(menu: FloorId) {
-  return MENUS[menu].slice(0, 2).map((section, sectionIndex) => ({
+  return MENUS[menu].slice(0, menu === "mezzo" ? 6 : 2).map((section, sectionIndex) => ({
     _id: `sample-${sectionIndex}`,
     _creationTime: 0,
     menu,

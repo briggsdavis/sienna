@@ -253,8 +253,21 @@ export function MenuSections({
             key={section._id}
             id={slug(section.title)}
             data-menu-parallax={mezzo || undefined}
-            className={`py-14 md:py-20 ${tone.bg} ${tone.text} ${mezzo ? "scroll-mt-16" : "scroll-mt-32"}`}
+            className={`relative isolate overflow-hidden py-14 md:py-20 ${tone.bg} ${tone.text} ${mezzo ? "scroll-mt-16" : "scroll-mt-32"}`}
           >
+            {mezzo && !tone.dark && (
+              // Mezzo's cream sections get an illustration behind them: the olive branches
+              // on the first, the wine bottle at 8% on the rest.
+              <img
+                src={index === 0 ? "/images/3.webp" : "/images/4.webp"}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                className={`pointer-events-none absolute inset-0 -z-10 h-full w-full ${
+                  index === 0 ? "object-cover" : "object-contain opacity-[0.08]"
+                }`}
+              />
+            )}
             {mezzo && index > 0 && (
               <SectionBreak
                 icon={icons[index - 1]}
