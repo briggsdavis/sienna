@@ -81,7 +81,7 @@ export function EventsCalendar() {
                 setMonth(monthStart(today))
                 setSelected(null)
               }}
-              className="rounded-full border border-ink/25 px-4 font-serif text-2xs tracking-[0.25em] uppercase hover:border-sienna hover:text-sienna"
+              className="inline-flex h-10 items-center rounded-full border border-ink/25 px-4 pt-[0.22em] font-serif text-2xs leading-none tracking-[0.25em] uppercase hover:border-sienna hover:text-sienna"
             >
               Today
             </button>
@@ -171,7 +171,7 @@ export function EventsCalendar() {
       </div>
 
       <div aria-live="polite">
-        <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
+        <div className="mb-6 flex h-10 items-center font-serif text-xs tracking-[0.4em] text-sienna uppercase">
           {selected
             ? formatDay(selected, { weekday: "long", month: "long", day: "numeric" })
             : "This month"}
@@ -206,12 +206,7 @@ export function EventsCalendar() {
                 <div className="p-6">
                   <h4 className="font-display text-3xl leading-tight">
                     {isSampleEvent(event) ? (
-                      <>
-                        {event.title}
-                        <span className="ml-3 align-middle font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                          Sample
-                        </span>
-                      </>
+                      event.title
                     ) : (
                       <Link to={eventPath(event)} className="under">
                         {event.title}

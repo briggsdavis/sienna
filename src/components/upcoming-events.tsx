@@ -90,26 +90,16 @@ export function UpcomingEvents() {
                           />
                         </div>
                       )}
-                      <h3
-                        id={titleId}
-                        className="font-display text-3xl leading-[0.95] group-hover:underline xl:text-4xl"
-                      >
-                        {event.title}
-                        {isSample && (
-                          <span className="ml-3 align-middle font-serif text-2xs tracking-[0.3em] text-cream/60 uppercase">
-                            Sample
-                          </span>
-                        )}
+                      <h3 id={titleId} className="font-display text-3xl leading-[0.95] xl:text-4xl">
+                        <span className="title-draw">{event.title}</span>
                       </h3>
                       {event.desc && (
                         <p className="mt-2 font-body text-sm leading-snug text-cream/90">
                           {event.desc}
                         </p>
                       )}
-                      <div
-                        className={`mt-3 font-serif tracking-[0.2em] text-cream uppercase ${reversed ? "" : "[&>div]:justify-end"}`}
-                      >
-                        <EventDateTime {...event} />
+                      <div className="mt-3 font-serif tracking-[0.2em] text-cream uppercase">
+                        <EventDateTime {...event} iconsAfter={!reversed} />
                       </div>
                     </FadeIn>
                     <div
@@ -120,7 +110,7 @@ export function UpcomingEvents() {
                         src={event.image || EVENT_FALLBACK_IMAGE}
                         alt=""
                         loading="lazy"
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-110"
                       />
                     </div>
                   </Link>

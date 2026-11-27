@@ -52,7 +52,7 @@ export function Footer() {
       ref={footer}
       className="relative bg-sienna text-cream motion-safe:sticky motion-safe:bottom-[var(--footer-sticky-bottom,0px)] motion-safe:has-[:focus-visible]:relative motion-safe:has-[:focus-visible]:bottom-auto"
     >
-      <div className="site-container flex flex-col items-center gap-5 pt-16 lg:pt-20">
+      <div className="site-container flex flex-col items-center gap-3 pt-8 lg:pt-10">
         <img
           src="/images/brand/sienna-mercato-logo.png"
           alt="Sienna Mercato"
@@ -72,10 +72,10 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="site-container grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-[0.8fr_0.95fr_1.15fr] lg:gap-12 lg:py-14">
+      <div className="site-container grid grid-cols-2 gap-x-6 gap-y-6 py-6 lg:grid-cols-[0.8fr_0.95fr_1.15fr] lg:gap-10 lg:py-8">
         <div>
           <Heading>Address</Heading>
-          <address className="mt-4 font-serif leading-relaxed not-italic">
+          <address className="mt-3 font-serif leading-relaxed not-italic">
             <ExternalLink href={ADDRESS.mapsUrl} className="under">
               {ADDRESS.street}
               <br />
@@ -90,7 +90,7 @@ export function Footer() {
 
         <div>
           <Heading>Explore</Heading>
-          <ul className="mt-4 space-y-2 font-serif">
+          <ul className="mt-3 grid gap-x-6 gap-y-1.5 font-serif sm:grid-cols-2">
             {EXPLORE_LINKS.map((link) => (
               <li key={link.label}>
                 <Link className="under" to={link.to}>
@@ -119,28 +119,28 @@ export function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="col-span-2 lg:col-span-1">
           <Heading>Newsletter</Heading>
-          <p className="mt-4 font-body leading-relaxed text-cream/90">
+          <p className="mt-3 font-body leading-relaxed text-cream/90">
             Pre-release menus, ball of the month, secret cocktails.
           </p>
           <SignupForm source="footer" tone="sienna" />
         </div>
       </div>
 
-      <div className="site-container flex flex-wrap items-center justify-center gap-8 py-6 sm:gap-12">
+      <div className="site-container flex flex-wrap items-center justify-center gap-8 py-2 sm:gap-12">
         {Object.values(FLOORS).map((floor) => (
           <Link key={floor.href} to={floor.href} aria-label={floor.name}>
             <img
               src={floor.logo}
               alt={floor.name}
-              className="h-[3.3rem] w-auto opacity-80 brightness-0 invert transition-opacity hover:opacity-100"
+              className="h-[4.5rem] w-auto opacity-80 brightness-0 invert transition-opacity hover:opacity-100 sm:h-[6.6rem]"
             />
           </Link>
         ))}
       </div>
 
-      <div className="site-container grid items-center justify-items-center gap-4 py-6 text-center font-serif text-xs tracking-wider text-cream/90 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+      <div className="site-container grid items-center justify-items-center gap-1.5 py-4 text-center font-serif text-xs tracking-wider text-cream/90 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-3">
         <span className="md:justify-self-start md:text-left">
           © {new Date().getFullYear()} Sienna Mercato Restaurant Group
         </span>

@@ -7,24 +7,32 @@ export function EventDateTime({
   occurrence,
   startTime,
   endTime,
-}: Pick<EventOccurrence, "occurrence" | "startTime" | "endTime">) {
+  iconsAfter = false,
+}: Pick<EventOccurrence, "occurrence" | "startTime" | "endTime"> & {
+  /** Put the icons after the text, for right-aligned layouts. */
+  iconsAfter?: boolean
+}) {
+  const row = `inline-flex flex-wrap items-center gap-x-1.5 ${iconsAfter ? "flex-row-reverse" : ""}`
   return (
-    <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm">
-      <span className="inline-flex items-center gap-2">
-        <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full bg-current" />
+    <div className={`flex flex-col gap-y-1 text-sm ${iconsAfter ? "items-end" : "items-start"}`}>
+      <span className={row}>
+        <i aria-hidden="true" className="ph ph-calendar-blank text-base" />
         <time dateTime={occurrence}>
           {formatDay(occurrence, { weekday: "short", month: "short", day: "numeric" })}
         </time>
       </span>
       {startTime && (
-        <span className="inline-flex flex-wrap items-center gap-x-1.5">
+        <span className={row}>
           <i aria-hidden="true" className="ph ph-clock text-base" />
-          <time dateTime={startTime}>{formatTime(startTime)}</time>
-          {endTime && (
-            <>
-              to <time dateTime={endTime}>{formatTime(endTime)}</time>
-            </>
-          )}
+          <span>
+            <time dateTime={startTime}>{formatTime(startTime)}</time>
+            {endTime && (
+              <>
+                {" "}
+                to <time dateTime={endTime}>{formatTime(endTime)}</time>
+              </>
+            )}
+          </span>
         </span>
       )}
     </div>

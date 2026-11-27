@@ -241,15 +241,21 @@ function Shop() {
             <div className="mb-8 flex justify-end">
               <label className="flex items-center gap-3 font-body text-sm text-ink-soft">
                 <span className="font-serif text-xs tracking-[0.3em] uppercase">Sort</span>
-                <select
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as Sort)}
-                  className="min-h-10 rounded-full border border-ink/40 bg-cream px-4 py-2 font-serif text-sm text-ink transition-colors hover:border-sienna hover:bg-paper-deep focus-visible:border-sienna"
-                >
-                  <option value="recommended">Recommended</option>
-                  <option value="price-asc">Price: low to high</option>
-                  <option value="price-desc">Price: high to low</option>
-                </select>
+                <span className="relative inline-flex">
+                  <select
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as Sort)}
+                    className="min-h-10 cursor-pointer appearance-none rounded-full border border-ink/40 bg-cream py-2 pr-11 pl-4 font-serif text-sm text-ink transition-colors hover:border-sienna hover:bg-paper-deep focus-visible:border-sienna"
+                  >
+                    <option value="recommended">Recommended</option>
+                    <option value="price-asc">Price: low to high</option>
+                    <option value="price-desc">Price: high to low</option>
+                  </select>
+                  <i
+                    aria-hidden="true"
+                    className="ph ph-caret-down pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-sm text-ink"
+                  />
+                </span>
               </label>
             </div>
 
