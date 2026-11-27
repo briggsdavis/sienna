@@ -1,7 +1,17 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, type RefObject } from "react"
 
-export function useScrollCorners<T extends HTMLElement>(items: readonly unknown[] | undefined) {
-  const region = useRef<T>(null)
+/**
+ * Rounds `[data-scroll-corners]` elements inside the returned region while they sit below
+ * the middle of the screen. Also sets `--scroll-progress` (1 entering, 0 at the middle) so
+ * CSS can scale them in step, e.g. `scale: calc(1 - 0.2 * var(--scroll-progress, 0))`.
+ * Pass `existing` to use a ref the component already has.
+ */
+export function useScrollCorners<T extends HTMLElement>(
+  items: readonly unknown[] | undefined,
+  existing?: RefObject<T | null>,
+) {
+  const own = useRef<T>(null)
+  const region = existing ?? own
 
   useEffect(() => {
     const photos = region.current?.querySelectorAll<HTMLElement>("[data-scroll-corners]")
@@ -23,6 +33,7 @@ export function useScrollCorners<T extends HTMLElement>(items: readonly unknown[
           "--scroll-corner-radius",
           `${Math.min(max, (height / 2) * progress)}px`,
         )
+        photo.style.setProperty("--scroll-progress", progress.toFixed(4))
       }
     }
 
@@ -44,7 +55,7 @@ export function useScrollCorners<T extends HTMLElement>(items: readonly unknown[
       motion.removeEventListener("change", update)
       if (frame) cancelAnimationFrame(frame)
     }
-  }, [items])
+  }, [items, region])
 
   return region
 }
