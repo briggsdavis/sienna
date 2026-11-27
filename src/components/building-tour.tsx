@@ -4,7 +4,7 @@ import { EText } from "@/components/editable"
 import { HOME_FLOORS } from "@/content/home"
 
 /*
- * Home page, alternate version of the "Three floors" intro: a line drawing of
+ * Home page "Three floors" intro: a line drawing of
  * the building pins to the screen, and each floor washes red from the bottom up
  * as you scroll, with that restaurant's details beside it.
  */

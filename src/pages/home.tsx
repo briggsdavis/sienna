@@ -8,8 +8,7 @@ import { ParallaxImage } from "@/components/parallax-image"
 import { ReserveLink, reserveSummary, useSettings } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { UpcomingEvents } from "@/components/upcoming-events"
-import { FEATURED_DISHES, FLOOR_HOURS, HOME_FLOORS, type HomeFloor } from "@/content/home"
-import { useStaggerReveal } from "@/hooks/use-reveal"
+import { FEATURED_DISHES, FLOOR_HOURS } from "@/content/home"
 import { useScrollCorners } from "@/hooks/use-scroll-corners"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, PHONE, unsplash } from "@/lib/site"
@@ -32,14 +31,7 @@ export function Home() {
       <div className="relative">
         <Seo path="/" {...PAGE_SEO["/"]} jsonLd={JSON_LD} />
         <Hero />
-        <Manifesto />
-        {/* Alternate version of the section above, kept side by side to compare. */}
         <BuildingTour />
-        <section className="relative">
-          {HOME_FLOORS.map((floor, index) => (
-            <FloorFeature key={floor.id} floor={floor} index={index} />
-          ))}
-        </section>
         <FeaturedDishes />
         <UpcomingEvents />
         <EventsAndCatering />
@@ -119,145 +111,6 @@ function HeroOrder() {
         </>
       )}
     </ELink>
-  )
-}
-
-function Manifesto() {
-  return (
-    <section className="grain relative overflow-hidden bg-paper py-40 text-center">
-      <div className="pointer-events-none absolute inset-0">
-        <img
-          src={unsplash("1555396273-367ea4eb4db5", 2000, 60)}
-          alt=""
-          className="h-full w-full object-cover opacity-[0.045] mix-blend-multiply"
-        />
-      </div>
-      <div className="relative mx-auto max-w-5xl px-6">
-        <FadeIn>
-          <p className="font-display text-[clamp(2.4rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[1.1] text-ink">
-            <EText k="manifesto.line1" d="Three floors." />
-            <span className="text-sienna">
-              {" "}
-              <EText k="manifesto.line2" d="Three rooms." />{" "}
-            </span>
-            <EText k="manifesto.line3" d="One Italian house on Penn Avenue." />
-          </p>
-          <p className="mx-auto mt-10 max-w-2xl font-body text-lg leading-relaxed text-ink-soft">
-            <EText
-              k="manifesto.body"
-              d="A Cultural District landmark since 2013. One address at 942 Penn Avenue: 230 indoor seats, 120 on the rooftop, an Italian-led wine list of 90+ bottles, and 30 rotating drafts."
-            />
-          </p>
-        </FadeIn>
-      </div>
-    </section>
-  )
-}
-
-function FloorFeature({ floor, index }: { floor: HomeFloor; index: number }) {
-  const flipped = index % 2 === 1
-  const corner = flipped ? "right-8" : "left-8"
-
-  return (
-    <FadeIn delay={0.05}>
-      <div
-        id={floor.id}
-        className="relative overflow-hidden"
-        style={{ background: index === 1 ? "var(--color-cream)" : undefined }}
-      >
-        <div
-          className={`mx-auto grid max-w-[1600px] gap-0 lg:min-h-[720px] ${
-            flipped ? "lg:grid-cols-[1.1fr_1fr]" : "lg:grid-cols-[1fr_1.1fr]"
-          }`}
-        >
-          <div
-            className={`group relative h-[420px] overflow-hidden lg:h-auto ${flipped ? "lg:order-2" : ""}`}
-          >
-            <EImage k={`floor.${floor.id}.image`} d={floor.image}>
-              {(src) => (
-                <ParallaxImage
-                  src={src}
-                  alt={floor.name}
-                  className="transition-transform duration-700 group-hover:scale-[1.04]"
-                  speed={0.13}
-                />
-              )}
-            </EImage>
-            <div
-              className={`absolute inset-0 bg-gradient-to-t ${floor.tint} opacity-25 mix-blend-multiply`}
-            />
-            <div
-              className={`absolute ${corner} top-8 font-display text-8xl leading-none text-cream/90 drop-shadow-[0_8px_24px_rgba(0,0,0,0.5)] md:text-9xl`}
-            >
-              {floor.roman}
-            </div>
-          </div>
-
-          <FloorText floor={floor} />
-        </div>
-      </div>
-    </FadeIn>
-  )
-}
-
-function FloorText({ floor }: { floor: HomeFloor }) {
-  const staggerRef = useStaggerReveal<HTMLDivElement>()
-
-  return (
-    <div ref={staggerRef} className="relative flex flex-col justify-center px-6 py-20 lg:px-20">
-      <img
-        src={floor.logo}
-        alt={`${floor.name} logo`}
-        className="mb-6 h-16 w-auto object-left opacity-70 brightness-0"
-        style={{ objectFit: "contain", objectPosition: "left" }}
-      />
-      <h2 className="font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),7rem)] leading-[0.9] text-ink">
-        {floor.name}
-      </h2>
-      <div className="mt-4 font-serif text-lg tracking-[0.3em] text-ink-soft uppercase">
-        <EText k={`floor.${floor.id}.sub`} d={floor.sub} />
-      </div>
-      <ul className="mt-5 max-w-xl divide-y divide-ink/10 border-y border-ink/10">
-        {floor.items.map((item, i) => (
-          <li key={item.name} className="menu-row flex items-baseline gap-4 py-4">
-            <span className="font-serif text-base tracking-wide text-ink">
-              <EText k={`floor.${floor.id}.item${i}.name`} d={item.name} />
-            </span>
-            <span className="hidden font-body text-sm text-ink-soft sm:inline">
-              <EText k={`floor.${floor.id}.item${i}.note`} d={item.note} />
-            </span>
-            <span className="font-serif text-base text-sienna tabular-nums">
-              <EText
-                k={`floor.${floor.id}.item${i}.price`}
-                d={item.price ? `$${item.price}` : ""}
-              />
-            </span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-6 flex flex-wrap gap-4">
-        <ELink
-          k={`floor.${floor.id}.link`}
-          label="Explore the floor"
-          href={floor.href}
-          className="btn-lift group border border-ink text-ink hover:bg-ink hover:text-cream"
-        >
-          {(label) => (
-            <>
-              {label}
-              <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
-            </>
-          )}
-        </ELink>
-        <Link
-          to={floor.menuHref}
-          className="under inline-flex items-center gap-2 font-serif text-sienna hover:text-sienna-bright"
-        >
-          <i className="ph ph-list-magnifying-glass text-lg" />
-          Menu
-        </Link>
-      </div>
-    </div>
   )
 }
 
