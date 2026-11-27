@@ -402,29 +402,6 @@
   }
 }
 
-.tetto-drinks {
-  min-height: calc(max(100svh, 31rem) + 252svh);
-}
-
-.tetto-drinks-stage {
-  position: sticky;
-  top: 0;
-  display: grid;
-  min-height: max(100svh, 31rem);
-  align-items: center;
-  padding-block: clamp(2.75rem, 8svh, 5rem) 1.5rem;
-  background: radial-gradient(ellipse at 27% 61%, #e6d4b7, var(--color-paper) 63%);
-}
-
-.tetto-drinks-title {
-  font-size: clamp(2.8rem, min(8.4vw, 13svh), 7.6rem);
-  line-height: 0.93;
-}
-
-.tetto-drinks-visual {
-  height: clamp(12rem, 38svh, 25rem);
-}
-
 .tetto-drink-display::before {
   position: absolute;
   bottom: 8%;
@@ -471,10 +448,6 @@
   }
 
   .emporio-sauces-display {
-    height: clamp(15rem, 62svh, 37rem);
-  }
-
-  .tetto-drinks-visual {
     height: clamp(15rem, 62svh, 37rem);
   }
 }
@@ -1212,6 +1185,41 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   .tour-panel,
   .tour-panel[data-active] {
     transition: none;
+  }
+}
+
+/* Il Tetto "On the Roof": the skyline window opens to full screen, then the card rises. */
+.roof-window {
+  clip-path: inset(
+    calc((1 - var(--roof-zoom, 0)) * 15%) calc((1 - var(--roof-zoom, 0)) * 15%)
+      round calc((1 - var(--roof-zoom, 0)) * 2.5rem)
+  );
+}
+
+.roof-skyline {
+  transform: scale(calc(1.14 - var(--roof-zoom, 0) * 0.14));
+}
+
+.roof-shade {
+  opacity: var(--roof-card, 0);
+}
+
+.roof-card-wrap {
+  opacity: var(--roof-card, 0);
+  translate: 0 calc((1 - var(--roof-card, 0)) * 3rem);
+}
+
+.roof-card-wrap[inert] {
+  pointer-events: none;
+}
+
+.roof-drink-visual {
+  height: clamp(11rem, 30svh, 24rem);
+}
+
+@media (min-width: 48rem) {
+  .roof-drink-visual {
+    height: clamp(14rem, 44svh, 28rem);
   }
 }
 

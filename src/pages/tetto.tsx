@@ -75,9 +75,9 @@ export function Tetto() {
             stats={STATS}
           />
         </div>
+        <RooftopDrinks />
         <div id="specials" className="scroll-mt-16 bg-paper">
           <DailySpecials restaurant="tetto" id="rooftop-daily-specials" hideWhenEmpty />
-          <RooftopDrinks />
         </div>
         <BeerOfTheMonth />
         <HappyHour

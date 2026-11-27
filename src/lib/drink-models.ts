@@ -13,6 +13,7 @@ import {
   OrthographicCamera,
   Scene,
   SphereGeometry,
+  SplineCurve,
   TorusGeometry,
   Vector2,
   WebGLRenderer,
@@ -29,6 +30,8 @@ type Vessel = {
   foam?: boolean
   ice?: boolean
   bubbly?: boolean
+  /** Curved glassware: the profile is smoothed into a continuous curve. */
+  round?: boolean
 }
 
 const VESSELS: Record<DrinkShape, Vessel> = {
@@ -48,33 +51,37 @@ const VESSELS: Record<DrinkShape, Vessel> = {
   },
   wine: {
     profile: [
-      [0.1, -0.65],
-      [0.3, -0.57],
-      [0.61, -0.4],
-      [0.81, -0.12],
-      [0.88, 0.25],
-      [0.85, 0.6],
-      [0.75, 0.94],
-      [0.68, 1.24],
+      [0.1, -0.66],
+      [0.45, -0.56],
+      [0.74, -0.34],
+      [0.92, -0.02],
+      [0.96, 0.3],
+      [0.9, 0.66],
+      [0.78, 0.98],
+      [0.66, 1.24],
     ],
-    fill: 0.33,
-    color: "#854054",
+    fill: 0.3,
+    color: "#6c0c1b",
     stem: true,
+    round: true,
   },
+
   cocktail: {
     profile: [
-      [0.12, -0.28],
-      [0.36, -0.24],
-      [0.63, -0.08],
-      [0.89, 0.16],
-      [1.03, 0.43],
-      [1.1, 0.72],
-      [1.12, 0.79],
+      [0.11, -0.27],
+      [0.42, -0.22],
+      [0.74, -0.08],
+      [0.98, 0.14],
+      [1.1, 0.4],
+      [1.14, 0.62],
+      [1.14, 0.72],
     ],
-    fill: 0.62,
+    fill: 0.5,
     color: "#d28261",
     stem: true,
+    round: true,
   },
+
   spirit: {
     profile: [
       [0.74, -1.7],
@@ -100,45 +107,57 @@ const VESSELS: Record<DrinkShape, Vessel> = {
   },
   sparkling: {
     profile: [
-      [0.1, -0.4],
-      [0.22, -0.33],
-      [0.36, -0.18],
-      [0.49, 0.18],
-      [0.53, 0.66],
-      [0.5, 1.25],
+      [0.07, -0.42],
+      [0.25, -0.36],
+      [0.4, -0.18],
+      [0.49, 0.15],
+      [0.52, 0.6],
+      [0.5, 1.15],
       [0.46, 1.65],
     ],
     fill: 1.03,
     color: "#d9a865",
     stem: true,
     bubbly: true,
+    round: true,
   },
+
   spritz: {
     profile: [
-      [0.12, -0.7],
-      [0.4, -0.62],
-      [0.73, -0.42],
-      [0.96, -0.04],
-      [1.02, 0.31],
-      [0.97, 0.68],
-      [0.88, 0.99],
+      [0.11, -0.72],
+      [0.52, -0.62],
+      [0.86, -0.38],
+      [1.04, -0.02],
+      [1.08, 0.3],
+      [1.01, 0.68],
+      [0.9, 0.99],
     ],
     fill: 0.51,
     color: "#cf6c4d",
     stem: true,
     ice: true,
+    round: true,
   },
+
 }
 
 function lathe(profile: Profile) {
   return new LatheGeometry(
     profile.map(([r, y]) => new Vector2(r, y)),
-    64,
+    128,
   )
 }
 
+/** Turns a handful of control points into a smooth curve, so bowls read as round. */
+function smooth(profile: Profile): Profile {
+  const curve = new SplineCurve(profile.map(([r, y]) => new Vector2(r, y)))
+  return curve.getPoints(48).map(({ x, y }) => [x, y] as const)
+}
+
 function makeDrink(shape: DrinkShape) {
-  const { profile, fill, color, stem, foam, ice, bubbly } = VESSELS[shape]
+  const vessel = VESSELS[shape]
+  const { fill, color, stem, foam, ice, bubbly } = vessel
+  const profile = vessel.round ? smooth(vessel.profile) : vessel.profile
   const group = new Group()
   const [bottomRadius, bottom] = profile[0]
   const [rimRadius, rimHeight] = profile[profile.length - 1]
@@ -167,7 +186,7 @@ function makeDrink(shape: DrinkShape) {
   shell.renderOrder = 2
   group.add(shell)
 
-  const rim = new Mesh(new TorusGeometry(rimRadius - 0.018, 0.021, 10, 64), glass)
+  const rim = new Mesh(new TorusGeometry(rimRadius - 0.018, 0.021, 12, 128), glass)
   rim.rotation.x = Math.PI / 2
   rim.position.y = rimHeight
   rim.renderOrder = 3
