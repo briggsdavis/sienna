@@ -3,6 +3,7 @@ import { useState, type FormEvent } from "react"
 import { Link } from "react-router"
 import { EventsCalendar } from "@/components/events-calendar"
 import { FadeIn } from "@/components/fade-in"
+import { FloorPicker } from "@/components/floor-picker"
 import {
   FormError,
   Honeypot,
@@ -15,7 +16,7 @@ import { HeroIntro, HeroLogos, PageHero } from "@/components/hero"
 import { ParallaxImage } from "@/components/parallax-image"
 import { ReserveLink } from "@/components/reserve"
 import { Seo } from "@/components/seo"
-import { CONTACTS, EVENT_TYPE_OPTIONS, FLOOR_OPTIONS, SPACES } from "@/content/events"
+import { CONTACTS, EVENT_TYPE_OPTIONS, FLOOR_OPTIONS } from "@/content/events"
 import { PAGE_SEO } from "@/lib/pages"
 import { unsplash } from "@/lib/site"
 import { addDays, errorMessage, todayKey } from "@/lib/util"
@@ -97,12 +98,13 @@ function Venues() {
         </FadeIn>
 
         <FadeIn delay={0.1}>
-          <VenueAccordion />
+          <FloorPicker />
         </FadeIn>
 
         <FadeIn delay={0.1}>
           <div className="mt-14 grid gap-px bg-ink/10 sm:grid-cols-[1fr_auto]">
-            <div className="bg-paper px-8 py-8">
+            {/* No left padding, so the text lines up with the site margin. */}
+            <div className="bg-paper py-8 pr-8">
               <h3 className="font-display text-3xl leading-tight text-ink">
                 Tell us the date, the headcount,
                 <br />
@@ -139,111 +141,6 @@ function Venues() {
         </FadeIn>
       </div>
     </section>
-  )
-}
-
-function VenueAccordion() {
-  const [openId, setOpenId] = useState<string | null>(null)
-
-  return (
-    <div className="divide-y divide-ink/10 border-t border-b border-ink/10">
-      {SPACES.map((space) => {
-        const isOpen = openId === space.id
-        return (
-          <div key={space.id}>
-            <button
-              onClick={() => setOpenId(isOpen ? null : space.id)}
-              className="group flex w-full items-center justify-between gap-6 px-2 py-6 text-left transition-colors hover:text-sienna"
-            >
-              <div className="flex items-center gap-6">
-                <span className="font-display text-4xl text-ink/20 transition-colors group-hover:text-sienna/30">
-                  {space.roman}
-                </span>
-                <div>
-                  <h3 className="font-display text-3xl text-ink transition-colors group-hover:text-sienna">
-                    {space.name}
-                  </h3>
-                  <div className="font-body text-sm text-ink-soft">{space.sub}</div>
-                </div>
-              </div>
-              <div className="flex shrink-0 items-center gap-6">
-                <span className="hidden font-serif text-xs tracking-[0.3em] text-ink-soft uppercase sm:block">
-                  up to {space.capacity} guests
-                </span>
-                <i
-                  className={`ph ph-caret-${isOpen ? "up" : "down"} text-xl text-ink/40 transition-transform`}
-                />
-              </div>
-            </button>
-
-            <div
-              style={{
-                display: "grid",
-                gridTemplateRows: isOpen ? "1fr" : "0fr",
-                transition: "grid-template-rows 0.65s cubic-bezier(0.4, 0, 0.2, 1)",
-              }}
-            >
-              <div className="overflow-hidden">
-                <div className="grid gap-0 border-t border-ink/8 bg-cream/40 pb-8 lg:grid-cols-[1.1fr_1fr]">
-                  <div className="relative aspect-[16/9] overflow-hidden lg:aspect-auto lg:min-h-[340px]">
-                    <img
-                      src={space.image}
-                      alt={`${space.name} private event space`}
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink/60 via-transparent to-transparent" />
-                    <div className="absolute right-4 bottom-4 left-4 flex items-baseline justify-between">
-                      <span className="font-body text-sm text-cream/80">{space.vibe}</span>
-                      <span className={`font-display text-2xl ${space.accent}`}>
-                        {space.capacity}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex flex-col justify-center px-8 py-6">
-                    <img
-                      src={space.logo}
-                      alt=""
-                      aria-hidden="true"
-                      className="mb-5 h-7 w-auto object-left opacity-30 brightness-0"
-                      style={{ objectFit: "contain", objectPosition: "left" }}
-                    />
-                    <p className="font-body text-base leading-relaxed text-ink-soft">
-                      {space.desc}
-                    </p>
-                    <ul className="mt-5 space-y-2">
-                      {space.highlights.map((highlight) => (
-                        <li
-                          key={highlight}
-                          className="flex items-start gap-2 font-body text-sm text-ink-soft"
-                        >
-                          <i className="ph ph-check mt-0.5 shrink-0 text-sienna" />
-                          {highlight}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-5">
-                      <div className="font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
-                        Perfect for
-                      </div>
-                      <div className="mt-1.5 font-body text-sm text-ink">
-                        {space.perfect.join(" • ")}
-                      </div>
-                    </div>
-                    <Link
-                      to={space.href}
-                      className="under mt-6 inline-flex w-fit items-center gap-2 font-serif text-xs tracking-[0.3em] text-sienna uppercase hover:text-sienna"
-                    >
-                      See the floor
-                      <i className="ph ph-arrow-right text-sm" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
   )
 }
 
