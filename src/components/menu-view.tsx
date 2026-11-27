@@ -256,15 +256,17 @@ export function MenuSections({
             className={`relative isolate overflow-hidden py-14 md:py-20 ${tone.bg} ${tone.text} ${mezzo ? "scroll-mt-16" : "scroll-mt-32"}`}
           >
             {mezzo && !tone.dark && (
-              // Mezzo's cream sections get an illustration behind them: the olive branches
-              // on the first, the wine bottle at 8% on the rest.
+              // Mezzo's cream sections get an illustration behind them: the olive branches,
+              // tilted on the right, on the first; the wine bottle at 8% on the rest.
               <img
                 src={index === 0 ? "/images/3.webp" : "/images/4.webp"}
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
-                className={`pointer-events-none absolute inset-0 -z-10 h-full w-full ${
-                  index === 0 ? "object-cover" : "object-contain opacity-[0.08]"
+                className={`pointer-events-none absolute -z-10 object-contain ${
+                  index === 0
+                    ? "top-1/2 right-0 aspect-square w-1/2 translate-x-1/4 -translate-y-1/2 rotate-45 opacity-80"
+                    : "inset-0 m-auto h-4/5 w-4/5 opacity-[0.08]"
                 }`}
               />
             )}
