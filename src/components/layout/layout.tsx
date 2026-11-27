@@ -48,7 +48,7 @@ export function Layout() {
           <ScrollManager />
           <Tracker />
           <ScrollProgress />
-          {!contactPage && <Nav />}
+          <Nav solid={Boolean(contactPage)} />
           <main key={pathname} className="page-enter relative z-[1] bg-paper">
             <Outlet />
           </main>

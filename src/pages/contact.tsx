@@ -1,12 +1,13 @@
 import { useMutation } from "convex/react"
 import { useState, type FormEvent } from "react"
+import { Link } from "react-router"
 import { ExternalLink } from "@/components/external-link"
 import { FadeIn } from "@/components/fade-in"
 import { FormError, Honeypot, TextArea, TextField, useFormGuard } from "@/components/form"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { CONTACTS } from "@/content/events"
 import { PAGE_SEO } from "@/lib/pages"
-import { ADDRESS, PHONE } from "@/lib/site"
+import { ADDRESS, FLOORS, PHONE } from "@/lib/site"
 import { errorMessage } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 
@@ -14,11 +15,26 @@ const JSON_LD = restaurantJsonLd({ name: "Sienna Mercato", path: "/contact", res
 
 export function Contact() {
   return (
-    <div className="relative mx-auto max-w-[1300px] px-6 py-12 md:py-16 lg:px-12">
+    <div className="relative mx-auto max-w-[1300px] px-6 pt-36 pb-12 md:pb-16 lg:px-12">
       <Seo path="/contact" {...PAGE_SEO["/contact"]} jsonLd={JSON_LD} />
-      <h1 className="mb-10 font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),5rem)] leading-none text-ink">
-        Contact
-      </h1>
+      <div className="mb-10 flex flex-col gap-6 border-b border-ink/10 pb-8 sm:flex-row sm:items-end sm:justify-between">
+        <h1 className="font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),5rem)] leading-none text-ink">
+          Contact
+        </h1>
+        <ul aria-label="Our restaurants" className="flex items-center gap-6 sm:gap-8">
+          {Object.values(FLOORS).map((floor) => (
+            <li key={floor.id}>
+              <Link to={floor.href} className="block transition-opacity hover:opacity-70">
+                <img
+                  src={floor.logo}
+                  alt={floor.name}
+                  className="h-14 w-auto object-contain brightness-0 sm:h-16"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
       <section className="grid gap-12 lg:grid-cols-[1fr_1.25fr] lg:gap-20">
         <Details />
         <ContactForm />

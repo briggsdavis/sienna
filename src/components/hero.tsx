@@ -1,7 +1,7 @@
 import type { ReactNode } from "react"
 import { WordReveal } from "@/components/word-reveal"
 import { useParallax } from "@/hooks/use-parallax"
-import type { Floor } from "@/lib/site"
+import { FLOORS, type Floor, type FloorId } from "@/lib/site"
 
 const HERO_HEIGHTS = { 50: "min-h-[50svh]", 60: "min-h-[60svh]" } as const
 
@@ -100,21 +100,42 @@ export function RestaurantHero({
   )
 }
 
+/** Row of white restaurant seals, sized to sit above a hero title. */
+export function HeroLogos({ floors }: { floors: FloorId[] }) {
+  return (
+    <div
+      className="rise mb-6 flex items-center justify-center gap-6 sm:gap-10"
+      style={{ animationDelay: "0.1s" }}
+    >
+      {floors.map((id) => (
+        <img
+          key={id}
+          src={FLOORS[id].logo}
+          alt={FLOORS[id].name}
+          className="h-16 w-auto object-contain brightness-0 invert sm:h-20 lg:h-24"
+        />
+      ))}
+    </div>
+  )
+}
+
 export function HeroIntro({
   title,
   blurb,
   words = false,
+  center = false,
 }: {
   title: ReactNode
   blurb?: ReactNode
   /** Reveal a plain-text title word by word instead of rising as one block. */
   words?: boolean
+  center?: boolean
 }) {
   const wordTitle = words && typeof title === "string"
   return (
     <>
       <h1
-        className={`${wordTitle ? "" : "rise"} text-hero-shadow font-display text-[clamp(2.5rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream`}
+        className={`${wordTitle ? "" : "rise"} text-hero-shadow font-display text-[clamp(2.5rem,calc(7vw*var(--site-type-scale)),6rem)] leading-[0.88] tracking-tight text-cream ${center ? "text-center" : ""}`}
         style={wordTitle ? undefined : { animationDelay: "0.25s" }}
       >
         {words && typeof title === "string" ? (
@@ -125,7 +146,7 @@ export function HeroIntro({
       </h1>
       {blurb && (
         <p
-          className="rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75"
+          className={`rise mt-6 max-w-xl font-body text-base leading-relaxed text-cream/75 ${center ? "mx-auto text-center" : ""}`}
           style={{ animationDelay: "0.45s" }}
         >
           {blurb}

@@ -181,7 +181,8 @@ function RestaurantLinks({ onPick }: { onPick: () => void }) {
   )
 }
 
-export function Nav() {
+/** `solid` keeps the light bar from the top, for pages with no dark hero behind it. */
+export function Nav({ solid = false }: { solid?: boolean }) {
   const { scrolled, hidden } = useHideOnScroll()
   const [menuOpen, setMenuOpen] = useState(false)
   const [reserveOpen, setReserveOpen] = useState(false)
@@ -213,7 +214,7 @@ export function Nav() {
     }
   }, [menuOpen])
 
-  const transparent = !scrolled && !reserveOpen
+  const transparent = !solid && !scrolled && !reserveOpen
   const tone = transparent ? "text-cream hover:text-sienna-bright" : "text-ink hover:text-sienna"
   const mezzoPage = currentPath === FLOORS.mezzo.href || currentPath === FLOORS.mezzo.menuHref
   const reserveHover = mezzoPage
@@ -323,13 +324,6 @@ export function Nav() {
             <span aria-hidden="true" className="absolute h-px w-5 rotate-45 bg-current" />
             <span aria-hidden="true" className="absolute h-px w-5 -rotate-45 bg-current" />
           </button>
-          <Link to="/" onClick={closeMenu} className="flex items-center">
-            <img
-              src="/images/brand/sienna-mercato-logo.png"
-              alt="Sienna Mercato"
-              className="h-9 w-auto brightness-0 invert"
-            />
-          </Link>
         </div>
 
         <nav

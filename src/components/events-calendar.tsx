@@ -63,7 +63,7 @@ export function EventsCalendar() {
               type="button"
               onClick={() => go(-1)}
               aria-label="Previous month"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/25 hover:border-cream hover:bg-cream/10"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/25 hover:border-sienna hover:text-sienna"
             >
               <i className="ph ph-caret-left" />
             </button>
@@ -73,7 +73,7 @@ export function EventsCalendar() {
                 setMonth(monthStart(today))
                 setSelected(null)
               }}
-              className="rounded-full border border-paper/25 px-4 font-serif text-2xs tracking-[0.25em] uppercase hover:border-cream hover:bg-cream/10"
+              className="rounded-full border border-ink/25 px-4 font-serif text-2xs tracking-[0.25em] uppercase hover:border-sienna hover:text-sienna"
             >
               Today
             </button>
@@ -81,18 +81,18 @@ export function EventsCalendar() {
               type="button"
               onClick={() => go(1)}
               aria-label="Next month"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-paper/25 hover:border-cream hover:bg-cream/10"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/25 hover:border-sienna hover:text-sienna"
             >
               <i className="ph ph-caret-right" />
             </button>
           </div>
         </div>
 
-        <div className="grid grid-cols-7 gap-px border border-paper/15 bg-paper/15" role="grid">
+        <div className="grid grid-cols-7 gap-px border border-ink/15 bg-ink/15" role="grid">
           {WEEKDAYS.map((label) => (
             <div
               key={label}
-              className="bg-ink py-2 text-center font-serif text-2xs tracking-[0.3em] text-paper/50 uppercase"
+              className="bg-cream py-2 text-center font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase"
             >
               {label}
             </div>
@@ -115,12 +115,16 @@ export function EventsCalendar() {
                 }`}
                 onClick={() => setSelected(day)}
                 className={`flex min-h-16 flex-col items-start gap-1 p-1.5 text-left transition-colors sm:min-h-24 sm:p-2 ${
-                  isSelected ? "bg-sienna-deep" : "bg-ink hover:bg-paper/[0.06]"
-                } ${inMonth ? "" : "opacity-35"}`}
+                  isSelected ? "bg-sienna text-cream" : "bg-cream hover:bg-paper"
+                } ${inMonth ? "" : "[&>*]:opacity-35"}`}
               >
                 <span
                   className={`flex h-6 w-6 items-center justify-center rounded-full font-serif text-xs tabular-nums ${
-                    isToday ? "bg-sienna-bright text-cream" : "text-paper/80"
+                    isToday
+                      ? "bg-sienna-bright text-cream"
+                      : isSelected
+                        ? "text-cream"
+                        : "text-ink/80"
                   }`}
                 >
                   {Number(day.slice(8))}
@@ -129,13 +133,15 @@ export function EventsCalendar() {
                   {dayEvents.slice(0, 2).map((event) => (
                     <span
                       key={event._id}
-                      className="truncate rounded-sm bg-sienna-bright/25 px-1.5 py-0.5 font-body text-[0.7rem] leading-tight text-cream"
+                      className={`truncate rounded-sm px-1.5 py-0.5 font-body text-[0.7rem] leading-tight ${
+                        isSelected ? "bg-cream/20 text-cream" : "bg-sienna/15 text-sienna-deep"
+                      }`}
                     >
                       {event.title}
                     </span>
                   ))}
                   {dayEvents.length > 2 && (
-                    <span className="px-1.5 font-body text-[0.7rem] text-paper/60">
+                    <span className="px-1.5 font-body text-[0.7rem] opacity-60">
                       +{dayEvents.length - 2} more
                     </span>
                   )}
@@ -143,7 +149,10 @@ export function EventsCalendar() {
                 {dayEvents.length > 0 && (
                   <span className="flex gap-0.5 sm:hidden">
                     {dayEvents.slice(0, 3).map((event) => (
-                      <span key={event._id} className="h-1.5 w-1.5 rounded-full bg-sienna-bright" />
+                      <span
+                        key={event._id}
+                        className={`h-1.5 w-1.5 rounded-full ${isSelected ? "bg-cream" : "bg-sienna-bright"}`}
+                      />
                     ))}
                   </span>
                 )}
@@ -154,7 +163,7 @@ export function EventsCalendar() {
       </div>
 
       <div aria-live="polite">
-        <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna-bright uppercase">
+        <div className="mb-6 font-serif text-xs tracking-[0.4em] text-sienna uppercase">
           {selected
             ? formatDay(selected, { weekday: "long", month: "long", day: "numeric" })
             : "This month"}
@@ -162,7 +171,7 @@ export function EventsCalendar() {
         {events === undefined ? (
           <div className="h-40" />
         ) : selected && selectedEvents.length === 0 ? (
-          <p className="font-body text-lg text-paper/65">
+          <p className="font-body text-lg text-ink-soft">
             Nothing scheduled this day. All three floors are open for walk-ins on their regular
             hours.
           </p>
@@ -171,7 +180,7 @@ export function EventsCalendar() {
             {(selected ? selectedEvents : monthEvents).map((event) => (
               <li
                 key={`${event._id}-${event.occurrence}`}
-                className="overflow-hidden border border-paper/15 bg-paper/[0.03]"
+                className="overflow-hidden border border-ink/10 bg-paper"
               >
                 {event.image && (
                   <img
@@ -187,7 +196,7 @@ export function EventsCalendar() {
                       {event.title}
                     </Link>
                   </h4>
-                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-serif text-2xs tracking-[0.3em] text-paper/60 uppercase">
+                  <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
                     {!selected && (
                       <span>{formatDay(event.occurrence, { month: "short", day: "numeric" })}</span>
                     )}
@@ -212,7 +221,7 @@ export function EventsCalendar() {
                     )}
                   </div>
                   {event.desc && (
-                    <p className="mt-4 font-body leading-relaxed text-paper/80">{event.desc}</p>
+                    <p className="mt-4 font-body leading-relaxed text-ink-soft">{event.desc}</p>
                   )}
                   {event.buttonUrl && (
                     <EventButton href={event.buttonUrl} label={event.buttonText || "Learn more"} />

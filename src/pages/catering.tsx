@@ -3,7 +3,7 @@ import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import { EImage, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
-import { HeroIntro, PageHero } from "@/components/hero"
+import { HeroIntro, HeroLogos, PageHero } from "@/components/hero"
 import type { MenuSection } from "@/components/menu-view"
 import { Seo } from "@/components/seo"
 import { FEES } from "@/content/catering"
@@ -61,7 +61,8 @@ function Hero() {
           overlay={<div className="absolute inset-0 bg-black/62" />}
           viewportHeight={60}
         >
-          <HeroIntro title={<EText k="hero.title" d="Catering." />} />
+          <HeroLogos floors={["emporio", "mezzo"]} />
+          <HeroIntro center title={<EText k="hero.title" d="Catering" />} />
         </PageHero>
       )}
     </EImage>

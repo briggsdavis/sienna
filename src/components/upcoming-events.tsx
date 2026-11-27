@@ -92,7 +92,7 @@ export function UpcomingEvents() {
         >
           <h2
             id="upcoming-events-title"
-            className="font-sans text-[clamp(1.45rem,calc(5vw*var(--site-type-scale)),4.25rem)] leading-none tracking-tight uppercase"
+            className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.9]"
           >
             Upcoming events
           </h2>
@@ -139,7 +139,7 @@ export function UpcomingEvents() {
                       )}
                       <h3
                         id={titleId}
-                        className="font-sans text-xl leading-tight group-hover:underline xl:text-2xl"
+                        className="font-display text-3xl leading-[0.95] group-hover:underline xl:text-4xl"
                       >
                         {event.title}
                         {isSample && (
@@ -149,9 +149,11 @@ export function UpcomingEvents() {
                         )}
                       </h3>
                       {event.desc && (
-                        <p className="mt-2 text-sm leading-snug text-cream/90">{event.desc}</p>
+                        <p className="mt-2 font-body text-sm leading-snug text-cream/90">
+                          {event.desc}
+                        </p>
                       )}
-                      <div className="mt-3 text-cream">
+                      <div className="mt-3 font-serif tracking-[0.2em] text-cream uppercase">
                         <EventDateTime {...event} />
                       </div>
                     </FadeIn>

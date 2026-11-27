@@ -11,7 +11,7 @@ import {
   TextField,
   useFormGuard,
 } from "@/components/form"
-import { HeroIntro, PageHero } from "@/components/hero"
+import { HeroIntro, HeroLogos, PageHero } from "@/components/hero"
 import { ReserveLink } from "@/components/reserve"
 import { Seo } from "@/components/seo"
 import { CONTACTS, EVENT_TYPE_OPTIONS, FLOOR_OPTIONS, SPACES } from "@/content/events"
@@ -42,20 +42,18 @@ function Hero() {
         className: "opacity-85",
       }}
       overlay={<div className="absolute inset-0 bg-black/58" />}
-      viewportHeight={50}
+      viewportHeight={60}
     >
+      <HeroLogos floors={["emporio", "mezzo", "tetto"]} />
       <HeroIntro
+        center
         title="Events."
         blurb="What's on across all three floors, and how to make one of them yours. Private hire for up to 400 guests."
       />
       <div
-        className="rise mt-8 flex flex-wrap items-center gap-3"
+        className="rise mt-8 flex flex-wrap items-center justify-center gap-3"
         style={{ animationDelay: "0.62s" }}
       >
-        <a href="#calendar" className="btn-lift group bg-cream text-ink hover:bg-paper">
-          <i className="ph ph-calendar-dots text-sm" />
-          What's on
-        </a>
         <a href="#inquire" className="btn-lift group bg-sienna text-cream hover:bg-sienna-bright">
           <i className="ph ph-envelope text-sm" />
           Private event inquiry
@@ -68,14 +66,14 @@ function Hero() {
 
 function Calendar() {
   return (
-    <section id="calendar" className="relative scroll-mt-20 bg-ink py-24 text-paper">
+    <section id="calendar" className="relative scroll-mt-20 bg-cream py-24 text-ink">
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <FadeIn>
           <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <h2 className="font-display text-[clamp(3rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9]">
               What's on.
             </h2>
-            <p className="max-w-sm font-body text-base leading-relaxed text-paper/65">
+            <p className="max-w-sm font-body text-base leading-relaxed text-ink-soft">
               Walk-ins welcome unless noted. Pick a day to see details and tickets.
             </p>
           </div>
