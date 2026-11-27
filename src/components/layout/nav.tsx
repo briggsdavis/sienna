@@ -219,8 +219,9 @@ export function Nav({ solid = false }: { solid?: boolean }) {
   const transparent = !solid && !scrolled && !reserveOpen
   const tone = transparent ? "text-cream hover:text-sienna-bright" : "text-ink hover:text-sienna"
   const mezzoPage = currentPath === FLOORS.mezzo.href || currentPath === FLOORS.mezzo.menuHref
+  // Mezzo pages keep the darker red for the Reserve button.
   const reserveHover = mezzoPage
-    ? `btn-fill ${transparent ? "btn-fill-cream" : "[--button-fill-color:var(--color-sienna-deep)]"}`
+    ? `btn-fill ${transparent ? "btn-fill-cream" : "[--button-fill-color:var(--color-ink)]"}`
     : "hover:bg-sienna-bright"
   const closeMenu = () => setMenuOpen(false)
 
@@ -285,8 +286,14 @@ export function Nav({ solid = false }: { solid?: boolean }) {
                 label={<span>Reserve</span>}
                 open={reserveOpen}
                 setOpen={setReserveOpen}
-                className={`btn-lift nav-reserve bg-sienna text-cream [--button-letter-spacing:0.12em] ${reserveHover} ${
-                  reserveOpen ? "bg-sienna-deep" : ""
+                className={`btn-lift nav-reserve text-cream [--button-letter-spacing:0.12em] ${reserveHover} ${
+                  mezzoPage
+                    ? reserveOpen
+                      ? "bg-ink"
+                      : "bg-sienna-deep"
+                    : reserveOpen
+                      ? "bg-sienna-deep"
+                      : "bg-sienna"
                 }`}
               >
                 <ReserveOptions onPick={() => setReserveOpen(false)} />

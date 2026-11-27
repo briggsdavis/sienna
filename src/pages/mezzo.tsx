@@ -69,7 +69,7 @@ function Hero() {
   )
 }
 
-function Eyebrow({ k, d, tone = "text-sienna" }: { k: string; d: string; tone?: string }) {
+function Eyebrow({ k, d, tone = "text-sienna-deep" }: { k: string; d: string; tone?: string }) {
   return (
     <p className={`mb-4 font-serif text-2xs tracking-[0.4em] uppercase sm:text-xs ${tone}`}>
       <EText k={k} d={d} words />
@@ -80,7 +80,7 @@ function Eyebrow({ k, d, tone = "text-sienna" }: { k: string; d: string; tone?: 
 function MezzoActions({ hero = false }: { hero?: boolean }) {
   const reserveTone = hero
     ? "bg-paper text-ink"
-    : "bg-sienna text-cream [--button-fill-color:var(--color-sienna-deep)]"
+    : "bg-sienna-deep text-cream [--button-fill-color:var(--color-ink)]"
   const menuTone = hero ? "btn-fill-cream border-cream/50 text-cream" : "border-ink/30 text-ink"
 
   return (
@@ -362,7 +362,7 @@ function ClosingStrip() {
             k="closing.up"
             label="Climb to Il Tetto"
             href={FLOORS.tetto.href}
-            className="btn-lift btn-fill bg-cream whitespace-nowrap text-sienna [--button-fill-color:var(--color-sienna-deep)]"
+            className="btn-lift btn-fill bg-cream whitespace-nowrap text-sienna-deep [--button-fill-color:var(--color-sienna-deep)]"
           >
             {(label) => (
               <>

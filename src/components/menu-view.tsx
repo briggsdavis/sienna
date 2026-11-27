@@ -52,7 +52,7 @@ export type MenuSection = Doc<"menuSections"> & {
 
 export const MENU_THEMES = {
   emporio: {
-    page: "bg-paper text-ink",
+    page: "bg-cream text-ink",
     header: "bg-sienna text-cream",
     accent: "text-sienna",
     price: "text-ink",
@@ -79,6 +79,35 @@ export const MENU_THEMES = {
     chip: "border-ink/20 text-ink hover:border-sienna hover:text-sienna",
   },
 } as const
+
+const DARK_TONE = {
+  text: "text-cream",
+  accent: "text-cream/85",
+  price: "text-white",
+  muted: "text-cream/80",
+  rule: "border-paper/15 divide-paper/10",
+}
+
+/**
+ * Menu sections alternate a red and cream, counted from the last section.
+ * Mezzo uses its darker red and ends on red; Emporio and Il Tetto use the regular red
+ * and end on cream, so the last section never runs into the red footer.
+ */
+export function sectionTone(restaurant: FloorId, index: number, count: number) {
+  const mezzo = restaurant === "mezzo"
+  const fromEnd = (count - 1 - index) % 2 === 0
+  const red = mezzo ? fromEnd : !fromEnd
+  if (red) return { ...DARK_TONE, bg: mezzo ? "bg-sienna-deep" : "bg-sienna", dark: true }
+  return {
+    bg: "bg-cream",
+    text: "text-ink",
+    accent: mezzo ? "text-sienna-deep" : "text-sienna",
+    price: "text-ink",
+    muted: "text-ink-soft",
+    rule: "border-ink/10 divide-ink/10",
+    dark: false,
+  }
+}
 
 const MEZZO_STOCK_PHOTOS = new Set([
   unsplash("1608897013039-887f21d8c804", 1400, 75),
@@ -174,12 +203,10 @@ export function MenuSections({
   const icons = breakIcons(sections.slice(1).map((section) => section.title))
 
   return (
-    <div ref={menu} className={mezzo ? "[--menu-indent-duration:360ms]" : "space-y-20"}>
+    <div ref={menu} className={mezzo ? "[--menu-indent-duration:360ms]" : undefined}>
       {sections.map((section, index) => {
         const imageRight = index % 2 === 1
-        // Mezzo sections alternate regular and darker red, counted from the end so
-        // the last one (above the footer) is always the darker red.
-        const tone = t
+        const tone = sectionTone(restaurant, index, sections.length)
         const sectionPhoto = getMenuSectionPhoto(restaurant, section.title)
         const customSectionPhoto =
           mezzo && section.image && MEZZO_STOCK_PHOTOS.has(section.image) ? null : section.image
@@ -215,22 +242,18 @@ export function MenuSections({
             key={section._id}
             id={slug(section.title)}
             data-menu-parallax={mezzo || undefined}
-            className={
-              mezzo
-                ? `scroll-mt-16 py-14 text-cream md:py-20 ${(sections.length - 1 - index) % 2 === 0 ? "bg-sienna-deep" : "bg-sienna"}`
-                : "scroll-mt-32"
-            }
+            className={`py-14 md:py-20 ${tone.bg} ${tone.text} ${mezzo ? "scroll-mt-16" : "scroll-mt-32"}`}
           >
             {mezzo && index > 0 && (
               <SectionBreak
                 icon={icons[index - 1]}
-                className={`mx-auto mb-10 max-w-[1400px] px-6 text-cream/80 md:mb-14 lg:px-12`}
+                className={`mx-auto mb-10 max-w-[1400px] px-6 md:mb-14 lg:px-12 ${tone.muted}`}
               />
             )}
             <div
               className={`grid items-start gap-8 lg:gap-16 ${
                 imageRight ? "lg:grid-cols-[1.25fr_1fr]" : "lg:grid-cols-[1fr_1.25fr]"
-              } ${mezzo ? "mx-auto max-w-[1400px] px-6 motion-safe:translate-y-[var(--menu-section-offset,0px)] lg:px-12" : ""}`}
+              } mx-auto max-w-[1400px] px-6 lg:px-12 ${mezzo ? "motion-safe:translate-y-[var(--menu-section-offset,0px)]" : ""}`}
             >
               {mezzo ? (
                 <div className={`${photoFrame} menu-photo-entrance`} data-menu-entrance>
@@ -305,11 +328,19 @@ export function MenuSections({
 export function SectionChips({
   restaurant,
   sections,
+  onCream = false,
 }: {
   restaurant: FloorId
   sections: MenuSection[]
+  /** Mezzo chips sit on cream when the first section is cream. */
+  onCream?: boolean
 }) {
-  const t = MENU_THEMES[restaurant]
+  const t =
+    restaurant === "mezzo" && onCream
+      ? {
+          chip: "btn-fill border-sienna-deep/30 text-sienna-deep [--button-fill-color:var(--color-sienna-deep)]",
+        }
+      : MENU_THEMES[restaurant]
   return (
     <div className="flex flex-wrap justify-center gap-2">
       {sections.map((section) => (

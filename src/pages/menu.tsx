@@ -2,39 +2,54 @@ import { useQuery } from "convex/react"
 import { Link, useParams } from "react-router"
 import { ExternalLink } from "@/components/external-link"
 import { PageHero } from "@/components/hero"
-import { MENU_THEMES, MenuSections, SectionChips, type MenuSection } from "@/components/menu-view"
+import {
+  MENU_THEMES,
+  MenuSections,
+  SectionChips,
+  sectionTone,
+  type MenuSection,
+} from "@/components/menu-view"
 import { ReserveLink, useReservation, useSettings } from "@/components/reserve"
 import { SectionBreak } from "@/components/section-break"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { WordReveal } from "@/components/word-reveal"
 import { PAGE_SEO } from "@/lib/pages"
-import { FLOORS, type FloorId } from "@/lib/site"
+import { FLOORS, unsplash, type FloorId } from "@/lib/site"
 import { NotFound } from "@/pages/not-found"
 import { api } from "../../convex/_generated/api"
 import { MENUS } from "../../convex/seedData"
 
-/** Shown on the Mezzo menu until real sections are added in the admin. */
-const MEZZO_SAMPLE_SECTIONS = MENUS.mezzo.slice(0, 2).map((section, sectionIndex) => ({
-  _id: `sample-${sectionIndex}`,
-  _creationTime: 0,
-  menu: "mezzo",
-  title: section.title,
-  subtitle: section.subtitle,
-  order: sectionIndex,
-  image: null,
-  items: section.items.map((item, itemIndex) => ({
-    ...item,
-    imageUrl: undefined,
-    _id: `sample-${sectionIndex}-${itemIndex}`,
+/** The first two sections of each menu, shown until real sections are added in the admin. */
+function sampleSections(menu: FloorId) {
+  return MENUS[menu].slice(0, 2).map((section, sectionIndex) => ({
+    _id: `sample-${sectionIndex}`,
     _creationTime: 0,
-    menu: "mezzo",
-    sectionId: `sample-${sectionIndex}`,
-    available: true,
-    hidden: false,
-    order: itemIndex,
+    menu,
+    title: section.title,
+    subtitle: section.subtitle,
+    order: sectionIndex,
     image: null,
-  })),
-})) as unknown as MenuSection[]
+    items: section.items.map((item, itemIndex) => ({
+      ...item,
+      imageUrl: undefined,
+      _id: `sample-${sectionIndex}-${itemIndex}`,
+      _creationTime: 0,
+      menu,
+      sectionId: `sample-${sectionIndex}`,
+      available: true,
+      hidden: false,
+      order: itemIndex,
+      image: null,
+    })),
+  })) as unknown as MenuSection[]
+}
+
+/** Hero photo for each menu page. */
+const MENU_HERO_IMAGES: Record<FloorId, { src: string; position?: string }> = {
+  emporio: { src: unsplash("1515516969-d4008cc6241a", 2400, 80) },
+  mezzo: { src: "/images/mezzo/gemelli-vodka.webp", position: "object-[center_58%]" },
+  tetto: { src: unsplash("1570560258879-af7f8e1447ac", 2400, 80) },
+}
 
 const JSON_LD = Object.fromEntries(
   (Object.keys(FLOORS) as FloorId[]).map((id) => [
@@ -60,7 +75,7 @@ export function MenuPage() {
 
 function Menu({ restaurant }: { restaurant: FloorId }) {
   const loaded = useQuery(api.menus.get, { menu: restaurant })
-  const sections = restaurant === "mezzo" && loaded?.length === 0 ? MEZZO_SAMPLE_SECTIONS : loaded
+  const sections = loaded?.length === 0 ? sampleSections(restaurant) : loaded
   const floor = FLOORS[restaurant]
   const t = MENU_THEMES[restaurant]
   const mezzo = restaurant === "mezzo"
@@ -72,69 +87,28 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
   return (
     <div className={`type-${restaurant} min-h-screen ${t.page}`}>
       <Seo path={floor.menuHref} {...PAGE_SEO[floor.menuHref]} jsonLd={JSON_LD[restaurant]} />
-      {mezzo ? (
-        <MezzoMenuHero />
-      ) : (
-        <header
-          className={`relative isolate overflow-hidden px-6 pt-32 pb-16 text-center sm:pt-36 ${t.header}`}
-        >
-          <div className="grain pointer-events-none absolute inset-0 opacity-40 mix-blend-overlay" />
-          <div className="relative z-10 mx-auto max-w-[1400px]">
-            <div className="relative flex min-h-36 items-center justify-center sm:min-h-48">
-              <img
-                src={floor.logo}
-                alt=""
-                className="pointer-events-none absolute inset-0 mx-auto h-full w-4/5 max-w-xl object-contain opacity-[0.12] brightness-0 invert"
-              />
-              <h1 className="relative font-display text-[clamp(3rem,calc(8vw*var(--site-type-scale)),6.5rem)] leading-[0.88] text-balance">
-                {floor.name} Menu
-              </h1>
-            </div>
-            {(showReserve || pickupUrl) && (
-              <div className="mt-6 flex flex-col items-center gap-3">
-                {showReserve && (
-                  <ReserveLink
-                    restaurant={restaurant}
-                    className="btn-lift bg-cream text-ink hover:bg-paper"
-                  >
-                    <i className="ph ph-calendar-dots text-sm" />
-                    Reserve
-                  </ReserveLink>
-                )}
-                {pickupUrl && (
-                  <ExternalLink
-                    href={pickupUrl}
-                    className="btn-lift border border-cream/50 hover:bg-cream/10"
-                  >
-                    <i className="ph ph-bag text-sm" />
-                    Order pickup
-                  </ExternalLink>
-                )}
-              </div>
-            )}
-          </div>
-        </header>
-      )}
+      <MenuHero restaurant={restaurant} showReserve={showReserve} pickupUrl={pickupUrl} />
 
       {sections && sections.length > 0 && (
         <nav
           className={`${
             mezzo
-              ? // Same red as the first section, which alternates counting from the last.
-                (sections.length - 1) % 2 === 0
-                ? "bg-sienna-deep"
-                : "bg-sienna"
-              : `sticky top-[68px] z-30 backdrop-blur-md ${restaurant === "tetto" ? "bg-cream/90" : "bg-paper/90"}`
+              ? sectionTone("mezzo", 0, sections.length).bg
+              : "sticky top-[68px] z-30 bg-cream/90 backdrop-blur-md"
           }`}
           aria-label="Menu sections"
         >
           <div className="mx-auto max-w-[1400px] overflow-x-auto px-6 py-4 lg:px-12">
-            <SectionChips restaurant={restaurant} sections={sections} />
+            <SectionChips
+              restaurant={restaurant}
+              sections={sections}
+              onCream={!sectionTone(restaurant, 0, sections.length).dark}
+            />
           </div>
         </nav>
       )}
 
-      <div className={mezzo ? undefined : "mx-auto max-w-[1400px] px-6 py-20 lg:px-12"}>
+      <div>
         {sections === undefined ? (
           <div className="h-[60vh]" />
         ) : sections.length === 0 ? (
@@ -150,9 +124,7 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
             className="mx-auto max-w-[1400px] px-6 pt-14 text-cream/80 md:pt-20 lg:px-12"
           />
         )}
-        <p
-          className={`font-body text-sm ${t.muted} ${mezzo ? "mx-auto max-w-[1400px] px-6 py-10 lg:px-12" : "mt-20"}`}
-        >
+        <p className={`mx-auto max-w-[1400px] px-6 py-10 font-body text-sm lg:px-12 ${t.muted}`}>
           {mezzo ? (
             <WordReveal text="Menu and prices change with the season. Please let your server know about any allergies." />
           ) : (
@@ -164,35 +136,49 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
   )
 }
 
-function MezzoMenuHero() {
+function MenuHero({
+  restaurant,
+  showReserve,
+  pickupUrl,
+}: {
+  restaurant: FloorId
+  showReserve: boolean
+  pickupUrl?: string
+}) {
+  const floor = FLOORS[restaurant]
+  const image = MENU_HERO_IMAGES[restaurant]
   return (
     <PageHero
-      image={{
-        src: "/images/mezzo/gemelli-vodka.webp",
-        alt: "",
-        className: "object-[center_58%]",
-      }}
-      overlay={
-        <div className="absolute inset-0 bg-linear-to-t from-sienna-deep/90 via-sienna/50 to-ink/25" />
-      }
+      image={{ src: image.src, alt: "", className: image.position ?? "" }}
+      overlay={<div className="absolute inset-0 bg-linear-to-t from-ink/90 via-ink/50 to-ink/25" />}
       viewportHeight={60}
       bottomPadding="pb-8"
     >
       <div className="my-auto flex flex-col items-center gap-4 text-center text-cream">
         <img
-          src={FLOORS.mezzo.logo}
+          src={floor.logo}
           alt=""
           className="h-[clamp(2.75rem,7svh,4.5rem)] w-auto max-w-[55vw] object-contain brightness-0 invert"
         />
         <h1 className="text-hero-shadow font-display text-[clamp(2.25rem,5.5vw,4.75rem)] leading-none">
-          <WordReveal text="Mezzo Menu" delay={0.2} step={0.1} />
+          <WordReveal text={`${floor.name} Menu`} delay={0.2} step={0.1} />
         </h1>
         <div className="mt-1 flex flex-wrap justify-center gap-3">
-          <ReserveLink restaurant="mezzo" className="btn-lift btn-fill bg-cream text-ink">
-            Reserve
-          </ReserveLink>
+          {showReserve && (
+            <ReserveLink restaurant={restaurant} className="btn-lift btn-fill bg-cream text-ink">
+              Reserve
+            </ReserveLink>
+          )}
+          {pickupUrl && (
+            <ExternalLink
+              href={pickupUrl}
+              className="btn-lift btn-fill btn-fill-cream border border-cream/60 text-cream"
+            >
+              Order pickup
+            </ExternalLink>
+          )}
           <Link
-            to={FLOORS.mezzo.href}
+            to={floor.href}
             className="btn-lift btn-fill btn-fill-cream border border-cream/60 text-cream"
           >
             View the Restaurant
