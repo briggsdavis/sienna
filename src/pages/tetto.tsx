@@ -58,16 +58,7 @@ export function Tetto() {
                 )}
               </EImage>
             }
-            statement={
-              <>
-                <EText k="intro.statement1" d="The view is the menu." />
-                <span>
-                  {" "}
-                  <EText k="intro.statement2" d="Everything else" />{" "}
-                </span>
-                <EText k="intro.statement3" d="is cold pints and good company." />
-              </>
-            }
+            statement={<EText k="intro.title" d="The view is the menu." />}
             body={
               <EText
                 k="intro.body"

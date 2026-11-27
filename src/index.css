@@ -1311,8 +1311,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: calc((1 - var(--roof-card, 0)) * 3rem);
 }
 
-/* Emporio and Il Tetto menu photos: grow from 80% and lose their rounding on scroll. */
-.menu-photo-grow {
-  border-radius: var(--grow-radius, 0);
-  scale: var(--grow-scale, 1);
+/* Photos that grow from 80% as their scroll corners straighten (useScrollCorners). */
+.scroll-grow {
+  scale: calc(1 - 0.2 * var(--scroll-progress, 0));
 }

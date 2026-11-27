@@ -4,6 +4,7 @@ import type { IconName } from "@/components/mezzo-value-icon"
 import { ParallaxImage } from "@/components/parallax-image"
 import { SectionBreak } from "@/components/section-break"
 import { WordReveal } from "@/components/word-reveal"
+import { useScrollCorners } from "@/hooks/use-scroll-corners"
 
 // Drawings used only on the menu page, matched to a section by its title.
 const BREAK_MATCHES: [RegExp, IconName][] = [
@@ -175,47 +176,8 @@ export function MenuSections({
     return () => observer.disconnect()
   }, [sections])
 
-  // Emporio and Il Tetto: each section photo starts at 80% size with fully rounded
-  // corners and grows square and full size as it reaches the middle of the screen.
-  useEffect(() => {
-    if (mezzo) return
-    const photos = menu.current?.querySelectorAll<HTMLElement>("[data-menu-grow]")
-    if (!photos?.length) return
-
-    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
-    let frame = 0
-
-    const update = () => {
-      frame = 0
-      const middle = window.innerHeight / 2
-      for (const photo of photos) {
-        if (motion.matches) {
-          photo.style.removeProperty("--grow-radius")
-          photo.style.removeProperty("--grow-scale")
-          continue
-        }
-        const { top, height } = photo.getBoundingClientRect()
-        const progress = Math.min(1, Math.max(0, (top + height / 2 - middle) / middle))
-        photo.style.setProperty("--grow-radius", `${(height / 2) * progress}px`)
-        photo.style.setProperty("--grow-scale", (1 - 0.2 * progress).toFixed(4))
-      }
-    }
-
-    const schedule = () => {
-      if (!frame) frame = requestAnimationFrame(update)
-    }
-
-    update()
-    window.addEventListener("scroll", schedule, { passive: true })
-    window.addEventListener("resize", schedule)
-    motion.addEventListener("change", schedule)
-    return () => {
-      cancelAnimationFrame(frame)
-      window.removeEventListener("scroll", schedule)
-      window.removeEventListener("resize", schedule)
-      motion.removeEventListener("change", schedule)
-    }
-  }, [mezzo, sections])
+  // Emporio and Il Tetto photos round and grow from 80% as they scroll in (see .scroll-grow).
+  useScrollCorners(mezzo ? [] : sections, menu)
 
   useEffect(() => {
     if (!mezzo) return
@@ -271,8 +233,8 @@ export function MenuSections({
         const photoFrame = `aspect-square overflow-hidden ${imageRight ? "lg:order-last" : ""}`
         const photoContent = (
           <div
-            data-menu-grow={mezzo ? undefined : ""}
-            className={`relative flex h-full w-full items-center justify-center ${t.header} ${mezzo ? "menu-photo-mask" : "menu-photo-grow overflow-hidden"}`}
+            data-scroll-corners={mezzo ? undefined : ""}
+            className={`relative flex h-full w-full items-center justify-center ${t.header} ${mezzo ? "menu-photo-mask" : "scroll-grow overflow-hidden"}`}
           >
             {image ? (
               <ParallaxImage src={image} alt="" loading="lazy" speed={0.11} />

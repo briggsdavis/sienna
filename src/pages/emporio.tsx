@@ -127,16 +127,7 @@ export function Emporio() {
                 )}
               </EImage>
             }
-            statement={
-              <>
-                <EText k="intro.statement1" d="The meatball is sacred." />
-                <span>
-                  {" "}
-                  <EText k="intro.statement2" d="Everything else" />{" "}
-                </span>
-                <EText k="intro.statement3" d="is a delivery system, bun, bowl, hoagie, fork." />
-              </>
-            }
+            statement={<EText k="intro.title" d="The meatball is sacred." />}
             body={
               <>
                 <EText

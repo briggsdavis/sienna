@@ -103,7 +103,7 @@ export function UpcomingEvents() {
                       </div>
                     </FadeIn>
                     <div
-                      className={`aspect-[3/2] w-full overflow-hidden bg-sienna-deep ${reversed ? "order-first" : ""}`}
+                      className={`scroll-grow aspect-[3/2] w-full overflow-hidden bg-sienna-deep ${reversed ? "order-first" : ""}`}
                       data-scroll-corners
                     >
                       <img

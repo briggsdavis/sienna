@@ -59,7 +59,9 @@ export function FloorIntro({
 
         <FadeIn delay={0.15}>
           <div className="flex flex-col justify-center">
-            <p className="font-display text-3xl leading-[1.15] md:text-4xl">{statement}</p>
+            <h2 className="font-display text-[clamp(2rem,3.6vw,3.25rem)] leading-none text-balance">
+              {statement}
+            </h2>
             <p className={`mt-8 max-w-xl font-body text-xl leading-relaxed ${muted}`}>{body}</p>
             <div
               className={`mt-10 grid grid-cols-3 gap-6 border-t pt-10 ${sienna ? "border-cream/30" : "border-ink/10"}`}

@@ -284,7 +284,7 @@ function FeaturedDishes() {
       const viewport = window.innerHeight
       const distance = top + height / 2 - viewport / 2
       const progress = Math.min(1, Math.max(0, distance / (viewport / 2)))
-      const stagger = Math.min(52, height * 0.12)
+      const stagger = Math.min(140, height * 0.3)
       grid.style.setProperty("--featured-dish-offset", `${progress * stagger}px`)
     }
 
@@ -314,14 +314,14 @@ function FeaturedDishes() {
         <FadeIn className="mb-12 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
           <h2
             id="featured-dishes"
-            className="font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink"
+            className="font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink uppercase"
           >
             <EText k="dishes.title" d="Featured" />{" "}
             <span className="text-sienna">
-              <EText k="dishes.titleAccent" d="Dishes." />
+              <EText k="dishes.titleAccent" d="Dishes" />
             </span>
           </h2>
-          <p className="max-w-[16rem] pb-1 font-body text-sm leading-snug text-ink-soft sm:text-right">
+          <p className="pb-1 font-body text-sm leading-snug text-ink-soft sm:text-right md:whitespace-nowrap">
             <EText k="dishes.note" d="One favorite from every floor, picked by our chefs." />
           </p>
         </FadeIn>

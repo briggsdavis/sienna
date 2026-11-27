@@ -54,15 +54,17 @@ export function AnnouncementBar() {
     >
       <div className="mx-auto flex max-w-[1600px] items-center justify-center gap-3 px-10 py-2.5 text-center font-body text-sm">
         <span>{current.message}</span>
-        {cta && <span className="font-serif text-xs tracking-[0.2em] uppercase">{cta}</span>}
+        {cta && (
+          <span className="font-serif text-xs font-bold tracking-[0.2em] uppercase">{cta}</span>
+        )}
         {current.dismissible && (
           <button
             type="button"
             onClick={dismiss}
             aria-label="Dismiss announcement"
-            className="absolute right-3 opacity-70 hover:opacity-100"
+            className="absolute top-1/2 right-3 grid size-7 -translate-y-1/2 place-items-center opacity-70 hover:opacity-100"
           >
-            <i className="ph ph-x text-base" />
+            <i className="ph ph-x block text-base leading-none" />
           </button>
         )}
       </div>
