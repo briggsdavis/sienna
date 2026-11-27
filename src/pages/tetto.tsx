@@ -108,6 +108,7 @@ function Hero() {
       {(src) => (
         <RestaurantHero
           floor={FLOORS.tetto}
+          redFade={false}
           image={{
             src,
             alt: "The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind",

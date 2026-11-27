@@ -134,7 +134,7 @@ export function Footer() {
             <img
               src={floor.logo}
               alt={floor.name}
-              className="h-[1.65rem] w-auto opacity-80 brightness-0 invert transition-opacity hover:opacity-100"
+              className="h-[3.3rem] w-auto opacity-80 brightness-0 invert transition-opacity hover:opacity-100"
             />
           </Link>
         ))}
@@ -150,9 +150,6 @@ export function Footer() {
         <span className="flex gap-6 md:justify-self-end">
           <Link to="/privacy" className="under">
             Privacy
-          </Link>
-          <Link to="/admin" className="under">
-            Staff
           </Link>
         </span>
       </div>

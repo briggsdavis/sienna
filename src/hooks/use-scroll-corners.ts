@@ -17,7 +17,12 @@ export function useScrollCorners<T extends HTMLElement>(items: readonly unknown[
       for (const photo of photos) {
         const { top, height } = photo.getBoundingClientRect()
         const progress = Math.max(0, Math.min(1, (top + height / 2 - middle) / middle))
-        photo.style.setProperty("--scroll-corner-radius", `${(height / 2) * progress}px`)
+        // data-scroll-corners-max caps the radius, so a text card never clips its content.
+        const max = Number(photo.dataset.scrollCornersMax) || Infinity
+        photo.style.setProperty(
+          "--scroll-corner-radius",
+          `${Math.min(max, (height / 2) * progress)}px`,
+        )
       }
     }
 

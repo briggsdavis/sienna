@@ -105,16 +105,31 @@ export function SignupForm({
           onChange={(e) => setEmail(e.target.value)}
           className={`min-w-0 flex-1 bg-transparent py-3 font-body focus:outline-none ${input}`}
         />
-        <button
-          type="submit"
-          disabled={status === "sending"}
-          className={`px-3 font-serif text-xs tracking-[0.2em] uppercase transition-colors disabled:opacity-50 ${accent} ${
-            dark ? "hover:text-cream" : "hover:text-sienna-deep"
-          }`}
-          aria-label="Subscribe"
-        >
-          {buttonLabel ?? <i className="ph ph-arrow-right text-2xl" />}
-        </button>
+        {buttonLabel ? (
+          // A written label gets the site-wide pill; the bare form keeps its arrow.
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className={`btn-lift my-1.5 ml-3 shrink-0 disabled:opacity-50 ${
+              dark
+                ? "bg-cream text-sienna hover:bg-paper"
+                : "bg-sienna text-cream hover:bg-sienna-deep"
+            }`}
+          >
+            {buttonLabel}
+          </button>
+        ) : (
+          <button
+            type="submit"
+            disabled={status === "sending"}
+            className={`px-3 font-serif text-xs tracking-[0.2em] uppercase transition-colors disabled:opacity-50 ${accent} ${
+              dark ? "hover:text-cream" : "hover:text-sienna-deep"
+            }`}
+            aria-label="Subscribe"
+          >
+            <i className="ph ph-arrow-right text-2xl" />
+          </button>
+        )}
       </div>
       <label
         className={`mt-4 flex items-start gap-2.5 font-body text-xs leading-relaxed ${

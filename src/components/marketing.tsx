@@ -134,6 +134,7 @@ export function MarketingPopup() {
           <p className="mt-4 font-body text-lg leading-relaxed text-cream/85">{popup.body}</p>
           <SignupForm
             source="popup"
+            tone="sienna"
             askName={popup.askName}
             buttonLabel={popup.buttonLabel}
             successMessage={popup.successMessage}

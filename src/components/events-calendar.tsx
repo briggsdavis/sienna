@@ -2,7 +2,7 @@ import { useQuery } from "convex/react"
 import { useEffect, useMemo, useState } from "react"
 import { Link } from "react-router"
 import { EventButton } from "@/components/event-info"
-import { eventPath } from "@/lib/events"
+import { eventPath, isSampleEvent, sampleEvents } from "@/lib/events"
 import { WEEKDAYS, addDays, formatDay, formatTime, todayKey } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 
@@ -26,7 +26,15 @@ export function EventsCalendar() {
   const [month, setMonth] = useState(monthStart(today))
   const [selected, setSelected] = useState<string | null>(null)
   const days = useMemo(() => gridDays(month), [month])
-  const events = useQuery(api.events.range, { from: days[0], to: days[days.length - 1] })
+  const loaded = useQuery(api.events.range, { from: days[0], to: days[days.length - 1] })
+  // Samples fill the calendar only while nothing real is scheduled in the coming two months.
+  const upcoming = useQuery(api.events.range, { from: today, to: addDays(today, 60) })
+  const events =
+    upcoming?.length === 0
+      ? sampleEvents(today).filter(
+          ({ occurrence }) => occurrence >= days[0] && occurrence <= days[days.length - 1],
+        )
+      : loaded
 
   const byDay = useMemo(() => {
     const map = new Map<string, NonNullable<typeof events>>()
@@ -170,6 +178,11 @@ export function EventsCalendar() {
         </div>
         {events === undefined ? (
           <div className="h-40" />
+        ) : !selected && monthEvents.length === 0 ? (
+          <p className="font-body text-lg text-ink-soft">
+            Nothing scheduled this month yet. All three floors are open for walk-ins on their
+            regular hours.
+          </p>
         ) : selected && selectedEvents.length === 0 ? (
           <p className="font-body text-lg text-ink-soft">
             Nothing scheduled this day. All three floors are open for walk-ins on their regular
@@ -192,9 +205,18 @@ export function EventsCalendar() {
                 )}
                 <div className="p-6">
                   <h4 className="font-display text-3xl leading-tight">
-                    <Link to={eventPath(event)} className="under">
-                      {event.title}
-                    </Link>
+                    {isSampleEvent(event) ? (
+                      <>
+                        {event.title}
+                        <span className="ml-3 align-middle font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
+                          Sample
+                        </span>
+                      </>
+                    ) : (
+                      <Link to={eventPath(event)} className="under">
+                        {event.title}
+                      </Link>
+                    )}
                   </h4>
                   <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-serif text-2xs tracking-[0.3em] text-ink-soft uppercase">
                     {!selected && (

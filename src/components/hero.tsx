@@ -64,10 +64,13 @@ export function PageHero({
 export function RestaurantHero({
   floor,
   image,
+  redFade = true,
   children,
 }: {
   floor: Floor
   image: { src: string; alt: string }
+  /** The red gradient over the photo. Off leaves a plain dark shade for legibility. */
+  redFade?: boolean
   children: ReactNode
 }) {
   return (
@@ -76,7 +79,11 @@ export function RestaurantHero({
       className="relative isolate grid min-h-svh items-end overflow-hidden bg-sienna"
     >
       <HeroImage {...image} />
-      <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-ink/35 via-sienna/40 to-sienna" />
+      <div
+        className={`pointer-events-none absolute inset-0 ${
+          redFade ? "bg-linear-to-b from-ink/35 via-sienna/40 to-sienna" : "bg-ink/40"
+        }`}
+      />
       <div className="relative site-container flex flex-col items-center pt-20 pb-[clamp(2.5rem,11.5svh,7.5rem)] text-center text-cream">
         <img
           src={floor.logo}

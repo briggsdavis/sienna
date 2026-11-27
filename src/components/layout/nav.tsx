@@ -89,11 +89,13 @@ function Dropdown({
           <i className={`ph ph-caret-${open ? "up" : "down"}`} />
         </span>
       </button>
-      {open && (
-        <div className="absolute top-full right-0 z-50 mt-2 w-72 border border-ink/10 bg-paper text-ink shadow-2xl">
-          {children}
-        </div>
-      )}
+      <div
+        data-state={open ? "open" : "closed"}
+        inert={!open}
+        className="nav-dropdown absolute top-full right-0 z-50 mt-2 w-72 border border-ink/10 bg-paper text-ink shadow-2xl"
+      >
+        {children}
+      </div>
     </div>
   )
 }

@@ -3,13 +3,13 @@ import { useMemo, useState } from "react"
 import { Link } from "react-router"
 import { EImage, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
-import { HeroIntro, HeroLogos, PageHero } from "@/components/hero"
+import { PageHero } from "@/components/hero"
 import type { MenuSection } from "@/components/menu-view"
 import { Seo } from "@/components/seo"
 import { FEES } from "@/content/catering"
 import { useCart } from "@/lib/cart"
 import { PAGE_SEO } from "@/lib/pages"
-import { unsplash } from "@/lib/site"
+import { FLOORS, unsplash } from "@/lib/site"
 import { money } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
 import type { Id } from "../../convex/_generated/dataModel"
@@ -29,6 +29,111 @@ function orderOption(item: CateringItem) {
     undefined,
   )
 }
+
+/** Shown until real catering items are added in the admin. Samples can't be ordered. */
+function sampleItem(
+  section: string,
+  id: string,
+  name: string,
+  kitchen: "emporio" | "mezzo",
+  options: { label: string; price: number }[],
+  image: string,
+  serves: string,
+) {
+  return {
+    _id: `sample-${id}`,
+    _creationTime: 0,
+    menu: "catering",
+    sectionId: `sample-${section}`,
+    name,
+    kitchen,
+    options,
+    serves,
+    image,
+    available: true,
+    hidden: false,
+    order: 0,
+  } as unknown as CateringItem
+}
+
+const SAMPLE_SECTIONS = [
+  {
+    _id: "sample-trays",
+    _creationTime: 0,
+    menu: "catering",
+    title: "Party Trays",
+    order: 0,
+    image: null,
+    items: [
+      sampleItem(
+        "trays",
+        "meatballs",
+        "Classic Meatball Tray",
+        "emporio",
+        [
+          { label: "Half tray (25 balls)", price: 85 },
+          { label: "Full tray (50 balls)", price: 160 },
+        ],
+        "/images/mezzo/meatballs-al-forno.webp",
+        "Serves 10 to 20",
+      ),
+      sampleItem(
+        "trays",
+        "shells",
+        "Stuffed Shells",
+        "mezzo",
+        [
+          { label: "Half tray", price: 70 },
+          { label: "Full tray", price: 130 },
+        ],
+        "/images/mezzo/stuffed-shells.webp",
+        "Serves 10 to 20",
+      ),
+      sampleItem(
+        "trays",
+        "lasagna",
+        "Lasagna al Forno",
+        "mezzo",
+        [
+          { label: "Half tray", price: 90 },
+          { label: "Full tray", price: 170 },
+        ],
+        "/images/mezzo/lasagna.webp",
+        "Serves 10 to 20",
+      ),
+    ],
+  },
+  {
+    _id: "sample-boards",
+    _creationTime: 0,
+    menu: "catering",
+    title: "Boards & Sweets",
+    order: 1,
+    image: null,
+    items: [
+      sampleItem(
+        "boards",
+        "crostini",
+        "Ricotta Crostini Platter",
+        "mezzo",
+        [{ label: "24 pieces", price: 55 }],
+        "/images/mezzo/ricotta-radish-crostini.webp",
+        "Serves 8 to 12",
+      ),
+      sampleItem(
+        "boards",
+        "tortino",
+        "Chocolate Tortino Box",
+        "mezzo",
+        [{ label: "12 cakes", price: 48 }],
+        "/images/mezzo/chocolate-tortino.webp",
+        "Serves 12",
+      ),
+    ],
+  },
+] as unknown as MenuSection[]
+
+const isSampleItem = (item: CateringItem) => String(item._id).startsWith("sample-")
 
 function displayPrice(item: CateringItem) {
   return orderOption(item)?.price ?? Number.POSITIVE_INFINITY
@@ -61,8 +166,26 @@ function Hero() {
           overlay={<div className="absolute inset-0 bg-black/62" />}
           viewportHeight={60}
         >
-          <HeroLogos floors={["emporio", "mezzo"]} />
-          <HeroIntro center title={<EText k="hero.title" d="Catering" />} />
+          <div className="flex items-center justify-center gap-[clamp(1rem,4vw,3.5rem)]">
+            <img
+              src={FLOORS.emporio.logo}
+              alt="Emporio"
+              className="rise h-[clamp(3rem,9vw,7.8rem)] w-auto shrink-0 object-contain brightness-0 invert"
+              style={{ animationDelay: "0.1s" }}
+            />
+            <h1
+              className="rise text-hero-shadow font-display text-[clamp(3.5rem,calc(9.8vw*var(--site-type-scale)),8.4rem)] leading-[0.88] tracking-tight text-cream uppercase"
+              style={{ animationDelay: "0.25s" }}
+            >
+              <EText k="hero.title" d="Catering" />
+            </h1>
+            <img
+              src={FLOORS.mezzo.logo}
+              alt="Mezzo"
+              className="rise h-[clamp(3rem,9vw,7.8rem)] w-auto shrink-0 object-contain brightness-0 invert"
+              style={{ animationDelay: "0.1s" }}
+            />
+          </div>
         </PageHero>
       )}
     </EImage>
@@ -70,7 +193,8 @@ function Hero() {
 }
 
 function Shop() {
-  const sections = useQuery(api.menus.get, { menu: "catering" })
+  const loaded = useQuery(api.menus.get, { menu: "catering" })
+  const sections = loaded?.length === 0 ? SAMPLE_SECTIONS : loaded
   const [filters, setFilters] = useState<Filters>({
     category: "all",
     kitchen: "all",
@@ -306,7 +430,9 @@ function ProductCard({ item }: { item: CateringItem }) {
           )}
         </div>
         <div className="mt-auto pt-4">
-          {item.available && option ? (
+          {isSampleItem(item) ? (
+            <div className="btn-lift w-full border border-ink/20 text-ink-soft">Sample item</div>
+          ) : item.available && option ? (
             <button
               type="button"
               onClick={addToCart}

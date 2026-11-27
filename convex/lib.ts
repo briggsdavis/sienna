@@ -160,11 +160,11 @@ export async function notify(
     replyTo: options.replyTo ? [options.replyTo] : undefined,
     idempotencyKey: options.idempotencyKey,
     html: `<div style="font-family:Georgia,serif;max-width:640px">
-      <h2 style="color:#912020;margin:0 0 8px">${escapeHtml(options.subject)}</h2>
+      <h2 style="color:#e03c31;margin:0 0 8px">${escapeHtml(options.subject)}</h2>
       <p style="color:#4a3a2a">${escapeHtml(options.intro)}</p>
       <table style="border-collapse:collapse">${rows}</table>
       ${table}
-      ${adminUrl ? `<p style="margin-top:24px"><a href="${adminUrl}" style="color:#912020">Open the dashboard</a></p>` : ""}
+      ${adminUrl ? `<p style="margin-top:24px"><a href="${adminUrl}" style="color:#e03c31">Open the dashboard</a></p>` : ""}
     </div>`,
   })
 }

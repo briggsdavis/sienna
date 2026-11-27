@@ -383,88 +383,128 @@ function FeaturedDishes() {
 }
 
 function EventsAndCatering() {
+  const section = useRef<HTMLElement>(null)
+  const corners = useScrollCorners<HTMLDivElement>(undefined)
+
+  // The photo opens from a rounded window at 60% size to full bleed as the section scrolls in.
+  useEffect(() => {
+    const el = section.current
+    if (!el) return
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const vh = window.innerHeight
+      const top = el.getBoundingClientRect().top
+      const open = motion.matches ? 1 : Math.min(1, Math.max(0, (vh - top) / vh))
+      el.style.setProperty("--card-photo-open", (open * open * (3 - 2 * open)).toFixed(4))
+    }
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    motion.addEventListener("change", schedule)
+    return () => {
+      window.removeEventListener("scroll", schedule)
+      window.removeEventListener("resize", schedule)
+      motion.removeEventListener("change", schedule)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [])
+
   return (
     <section
+      ref={section}
       aria-label="Private events and catering"
-      className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-ink px-6 py-16"
+      className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-paper px-6 py-24"
     >
-      <EImage k="eventsCatering.image" d={unsplash("1519671482749-fd09be7ccebf", 2400, 80)}>
-        {(src) => (
-          <ParallaxImage
-            src={src}
-            alt="A candlelit dining table set for a private event"
-            speed={0.18}
-            loading="lazy"
-          />
-        )}
-      </EImage>
-      <div className="pointer-events-none absolute inset-0 bg-ink/15" />
-      <div className="relative grid w-full max-w-4xl bg-white shadow-2xl sm:grid-cols-2">
-        <div className="flex flex-col justify-between gap-6 p-6 sm:gap-8 sm:p-10 lg:p-12">
-          <div>
-            <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
-              <EText k="events.title" d="Book a floor." />
-              <br />
-              <span className="text-sienna">
-                <EText k="events.titleAccent" d="Make it yours." />
-              </span>
-            </h2>
-            <p className="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
-              <EText
-                k="events.body"
-                d="Three floors available for private hire. Up to 400 guests. The events team handles the rest."
-              />
-            </p>
+      <div className="card-photo-window absolute inset-0 overflow-hidden bg-ink">
+        <EImage k="eventsCatering.image" d={unsplash("1519671482749-fd09be7ccebf", 2400, 80)}>
+          {(src) => (
+            <ParallaxImage
+              src={src}
+              alt="A candlelit dining table set for a private event"
+              speed={0.18}
+              loading="lazy"
+            />
+          )}
+        </EImage>
+        <div className="pointer-events-none absolute inset-0 bg-ink/15" />
+      </div>
+      <div ref={corners} className="relative w-full max-w-4xl">
+        <div
+          data-scroll-corners
+          data-scroll-corners-max="48"
+          className="grid overflow-hidden bg-white shadow-2xl sm:grid-cols-2"
+        >
+          <div className="flex flex-col justify-between gap-8 px-8 py-12 sm:gap-12 sm:px-12 sm:py-20 lg:px-14 lg:py-24">
+            <div>
+              <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
+                <EText k="events.title" d="Book a floor." />
+                <br />
+                <span className="text-sienna">
+                  <EText k="events.titleAccent" d="Make it yours." />
+                </span>
+              </h2>
+              <p className="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
+                <EText
+                  k="events.body"
+                  d="Three floors available for private hire. Up to 400 guests. The events team handles the rest."
+                />
+              </p>
+            </div>
+            <ELink
+              k="events.link"
+              label="Events & private dining"
+              href="/events"
+              className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-deep"
+            >
+              {(label) => (
+                <>
+                  <i className="ph ph-calendar-dots text-base" />
+                  {label}
+                  <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+                </>
+              )}
+            </ELink>
           </div>
-          <ELink
-            k="events.link"
-            label="Events & private dining"
-            href="/events"
-            className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-deep"
-          >
-            {(label) => (
-              <>
-                <i className="ph ph-calendar-dots text-base" />
-                {label}
-                <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
-              </>
-            )}
-          </ELink>
-        </div>
-        <div className="relative flex flex-col justify-between gap-6 p-6 sm:gap-8 sm:p-10 lg:p-12">
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-6 top-0 h-px bg-ink/10 sm:inset-y-10 sm:right-auto sm:left-0 sm:h-auto sm:w-px lg:inset-y-12"
-          />
-          <div>
-            <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
-              <EText k="catering.title" d="Two kitchens." />
-              <br />
-              <span className="text-sienna">
-                <EText k="catering.titleAccent" d="Delivered to you." />
-              </span>
-            </h2>
-            <p className="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
-              <EText
-                k="catering.body"
-                d="Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice."
-              />
-            </p>
+          <div className="relative flex flex-col justify-between gap-8 px-8 py-12 sm:gap-12 sm:px-12 sm:py-20 lg:px-14 lg:py-24">
+            <span
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-x-8 top-0 h-px bg-ink/10 sm:inset-y-20 sm:right-auto sm:left-0 sm:h-auto sm:w-px lg:inset-y-24"
+            />
+            <div>
+              <h2 className="font-display text-[clamp(2rem,calc(4vw*var(--site-type-scale)),3.25rem)] leading-[0.95] text-ink">
+                <EText k="catering.title" d="Two kitchens." />
+                <br />
+                <span className="text-sienna">
+                  <EText k="catering.titleAccent" d="Delivered to you." />
+                </span>
+              </h2>
+              <p className="mt-4 max-w-md font-body leading-relaxed text-ink-soft">
+                <EText
+                  k="catering.body"
+                  d="Casual family-style or plated-ready charcuterie. Citywide delivery, 48-hour notice."
+                />
+              </p>
+            </div>
+            <ELink
+              k="catering.link"
+              label="Catering menu"
+              href="/catering"
+              className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-deep"
+            >
+              {(label) => (
+                <>
+                  <i className="ph ph-bag text-base" />
+                  {label}
+                  <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
+                </>
+              )}
+            </ELink>
           </div>
-          <ELink
-            k="catering.link"
-            label="Catering menu"
-            href="/catering"
-            className="btn-lift group w-fit bg-sienna text-cream hover:bg-sienna-deep"
-          >
-            {(label) => (
-              <>
-                <i className="ph ph-bag text-base" />
-                {label}
-                <i className="ph ph-arrow-right text-base transition-transform group-hover:translate-x-1" />
-              </>
-            )}
-          </ELink>
         </div>
       </div>
     </section>
@@ -479,8 +519,7 @@ function Visit() {
         <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 py-28 lg:grid-cols-[1.3fr_1fr] lg:px-12">
           <div>
             <h2 className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.85]">
-              <EText k="visit.title" d="Reserve" />
-              <br />
+              <EText k="visit.title" d="Reserve" />{" "}
               <span>
                 <EText k="visit.titleAccent" d="a table." />
               </span>

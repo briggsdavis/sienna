@@ -12,6 +12,7 @@ import {
   useFormGuard,
 } from "@/components/form"
 import { HeroIntro, HeroLogos, PageHero } from "@/components/hero"
+import { ParallaxImage } from "@/components/parallax-image"
 import { ReserveLink } from "@/components/reserve"
 import { Seo } from "@/components/seo"
 import { CONTACTS, EVENT_TYPE_OPTIONS, FLOOR_OPTIONS, SPACES } from "@/content/events"
@@ -45,11 +46,7 @@ function Hero() {
       viewportHeight={60}
     >
       <HeroLogos floors={["emporio", "mezzo", "tetto"]} />
-      <HeroIntro
-        center
-        title="Events."
-        blurb="What's on across all three floors, and how to make one of them yours. Private hire for up to 400 guests."
-      />
+      <HeroIntro center title="Events." />
       <div
         className="rise mt-8 flex flex-wrap items-center justify-center gap-3"
         style={{ animationDelay: "0.62s" }}
@@ -69,14 +66,9 @@ function Calendar() {
     <section id="calendar" className="relative scroll-mt-20 bg-cream py-24 text-ink">
       <div className="relative mx-auto max-w-[1600px] px-6 lg:px-12">
         <FadeIn>
-          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <h2 className="font-display text-[clamp(3rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9]">
-              What's on.
-            </h2>
-            <p className="max-w-sm font-body text-base leading-relaxed text-ink-soft">
-              Walk-ins welcome unless noted. Pick a day to see details and tickets.
-            </p>
-          </div>
+          <h2 className="mb-12 font-display text-[clamp(3rem,calc(6vw*var(--site-type-scale)),5rem)] leading-[0.9]">
+            What's on.
+          </h2>
         </FadeIn>
         <EventsCalendar />
       </div>
@@ -131,11 +123,15 @@ function Venues() {
                 </a>
               </div>
             </div>
-            <div className="relative hidden overflow-hidden sm:block" style={{ minWidth: "420px" }}>
-              <img
-                src={unsplash("1519671482749-fd09be7ccebf", 800, 80)}
+            <div
+              className="relative hidden overflow-hidden sm:block"
+              style={{ minWidth: "min(546px, 50vw)", minHeight: "312px" }}
+            >
+              <ParallaxImage
+                src={unsplash("1519671482749-fd09be7ccebf", 1200, 80)}
                 alt="Private event at Sienna Mercato"
-                className="absolute inset-0 h-full w-full object-cover"
+                speed={0.15}
+                loading="lazy"
               />
               <div className="absolute inset-0 bg-ink/30" />
             </div>

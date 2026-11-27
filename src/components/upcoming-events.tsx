@@ -3,67 +3,16 @@ import { Link } from "react-router"
 import { EventDateTime } from "@/components/event-info"
 import { FadeIn } from "@/components/fade-in"
 import { useScrollCorners } from "@/hooks/use-scroll-corners"
-import { EVENT_FALLBACK_IMAGE, eventPath, type EventOccurrence } from "@/lib/events"
+import {
+  EVENT_FALLBACK_IMAGE,
+  eventPath,
+  isSampleEvent,
+  sampleEvents,
+  type EventOccurrence,
+} from "@/lib/events"
 import { FLOORS } from "@/lib/site"
 import { addDays, todayKey } from "@/lib/util"
 import { api } from "../../convex/_generated/api"
-
-/** Shown until real events are scheduled in the admin. */
-function sampleEvents(today: string) {
-  const sample = (
-    id: string,
-    title: string,
-    venue: string,
-    desc: string,
-    inDays: number,
-    startTime: string,
-    endTime: string,
-    image: string | null,
-  ) =>
-    ({
-      _id: `sample-${id}`,
-      title,
-      venue,
-      desc,
-      image,
-      occurrence: addDays(today, inDays),
-      startTime,
-      endTime,
-      isSample: true,
-    }) as unknown as EventOccurrence & { isSample: true }
-  return [
-    sample(
-      "wine",
-      "Italian Wine Night",
-      "Mezzo",
-      "A guided flight of four Italian reds, with small plates from the kitchen.",
-      4,
-      "19:00",
-      "21:00",
-      "/images/mezzo/chianti-and-pasta.webp",
-    ),
-    sample(
-      "music",
-      "Live Music on the Roof",
-      "Il Tetto",
-      "Local acoustic sets under the open sky, with cold drafts and pies all night.",
-      9,
-      "18:00",
-      "21:00",
-      null,
-    ),
-    sample(
-      "trivia",
-      "Meatball Trivia",
-      "Emporio",
-      "Three rounds of team trivia. Grab a draft and bring your sharpest friends.",
-      14,
-      "19:30",
-      "21:30",
-      "/images/mezzo/meatballs-al-forno.webp",
-    ),
-  ]
-}
 
 export function UpcomingEvents() {
   const today = todayKey()
@@ -92,7 +41,7 @@ export function UpcomingEvents() {
         >
           <h2
             id="upcoming-events-title"
-            className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.9]"
+            className="font-display text-[clamp(2.5rem,calc(6vw*var(--site-type-scale)),5.5rem)] leading-[0.9] uppercase"
           >
             Upcoming events
           </h2>
@@ -119,7 +68,7 @@ export function UpcomingEvents() {
                 venue?.includes(name.toLowerCase()),
               )
               const reversed = index >= 2
-              const isSample = "isSample" in event
+              const isSample = isSampleEvent(event)
               return (
                 <article key={event._id}>
                   <Link
@@ -127,13 +76,17 @@ export function UpcomingEvents() {
                     aria-labelledby={titleId}
                     className={`group grid items-end gap-3 sm:gap-5 ${reversed ? "grid-cols-[minmax(0,3fr)_minmax(0,2fr)]" : "grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"}`}
                   >
-                    <FadeIn stagger delay={index * 0.08} className="upcoming-event-reveal min-w-0">
+                    <FadeIn
+                      stagger
+                      delay={index * 0.08}
+                      className={`upcoming-event-reveal min-w-0 ${reversed ? "" : "text-right"}`}
+                    >
                       {host && (
                         <div className="mb-3">
                           <img
                             src={host.logo}
                             alt={`Hosted by ${host.name}`}
-                            className="h-11 w-auto max-w-full object-contain object-left brightness-0 invert md:h-13"
+                            className={`h-11 w-auto max-w-full object-contain brightness-0 invert md:h-13 ${reversed ? "object-left" : "ml-auto object-right"}`}
                           />
                         </div>
                       )}
@@ -153,7 +106,9 @@ export function UpcomingEvents() {
                           {event.desc}
                         </p>
                       )}
-                      <div className="mt-3 font-serif tracking-[0.2em] text-cream uppercase">
+                      <div
+                        className={`mt-3 font-serif tracking-[0.2em] text-cream uppercase ${reversed ? "" : "[&>div]:justify-end"}`}
+                      >
                         <EventDateTime {...event} />
                       </div>
                     </FadeIn>
