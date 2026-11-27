@@ -1306,3 +1306,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .group:is(:hover, :focus-visible) .title-draw {
   background-size: 100% 2px;
 }
+
+/* Il Tetto "Big Wave" card: grows from 70% as the section scrolls in. */
+.botm-card {
+  scale: var(--botm-scale, 1);
+}
+
+/* "On the Roof" card: rounded while it rises in, square once it has arrived. */
+.roof-card {
+  border-radius: calc((1 - var(--roof-card, 0)) * 3rem);
+}

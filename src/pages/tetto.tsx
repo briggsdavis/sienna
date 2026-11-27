@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { DailySpecials } from "@/components/daily-specials"
 import { EImage, ELink, EText, PageContent } from "@/components/editable"
 import { FadeIn } from "@/components/fade-in"
@@ -11,6 +11,7 @@ import { ReservationPanel } from "@/components/reserve"
 import { Seo, restaurantJsonLd } from "@/components/seo"
 import { RooftopDrinks, TettoDrinkModel } from "@/components/tetto-drinks"
 import { FEATURED_DRAFT, HAPPY_HOUR_DEALS, HOURS, STATS } from "@/content/tetto"
+import { useScrollCorners } from "@/hooks/use-scroll-corners"
 import { PAGE_SEO } from "@/lib/pages"
 import { FLOORS, unsplash } from "@/lib/site"
 
@@ -35,7 +36,7 @@ export function Tetto() {
       <div className="type-tetto relative">
         <Seo path="/tetto" {...PAGE_SEO["/tetto"]} jsonLd={JSON_LD} />
         <Hero />
-        <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-bright">
+        <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-deep">
           <img
             src={FLOORS.tetto.logo}
             alt=""
@@ -108,7 +109,6 @@ function Hero() {
       {(src) => (
         <RestaurantHero
           floor={FLOORS.tetto}
-          redFade={false}
           image={{
             src,
             alt: "The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind",
@@ -135,9 +135,41 @@ function Hero() {
 
 function BeerOfTheMonth() {
   const card = useRef<HTMLDivElement>(null)
+  const section = useScrollCorners<HTMLElement>(undefined)
+
+  // The card starts at 70% size and grows to full as the section scrolls into view.
+  useEffect(() => {
+    const el = section.current
+    const panel = card.current
+    if (!el || !panel) return
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const vh = window.innerHeight
+      const top = el.getBoundingClientRect().top
+      const grow = motion.matches ? 1 : Math.min(1, Math.max(0, (vh - top) / vh))
+      const eased = grow * grow * (3 - 2 * grow)
+      panel.style.setProperty("--botm-scale", (0.7 + 0.3 * eased).toFixed(4))
+    }
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener("scroll", schedule, { passive: true })
+    window.addEventListener("resize", schedule)
+    motion.addEventListener("change", schedule)
+    return () => {
+      window.removeEventListener("scroll", schedule)
+      window.removeEventListener("resize", schedule)
+      motion.removeEventListener("change", schedule)
+      if (frame) cancelAnimationFrame(frame)
+    }
+  }, [section])
 
   return (
     <section
+      ref={section}
       aria-labelledby="tetto-month-title"
       className="relative isolate grid min-h-svh place-items-center overflow-hidden bg-sienna-deep px-6 py-20 text-cream md:py-24"
     >
@@ -148,7 +180,9 @@ function BeerOfTheMonth() {
       </div>
       <div
         ref={card}
-        className="relative isolate grid w-full max-w-[55rem] items-center gap-5 overflow-hidden bg-sienna p-6 sm:grid-cols-2 sm:p-9 lg:gap-7 lg:p-12"
+        data-scroll-corners
+        data-scroll-corners-max="48"
+        className="botm-card relative isolate grid w-full max-w-[55rem] items-center gap-5 overflow-hidden bg-sienna p-6 sm:grid-cols-2 sm:p-9 lg:gap-7 lg:p-12"
       >
         <img
           src={FLOORS.tetto.logo}

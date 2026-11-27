@@ -104,7 +104,7 @@ export function Emporio() {
       <div ref={page} className="type-emporio relative">
         <Seo path="/emporio" {...PAGE_SEO["/emporio"]} jsonLd={JSON_LD} />
         <Hero />
-        <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-bright">
+        <div className="relative isolate overflow-hidden bg-linear-to-b from-sienna to-sienna-deep">
           <img
             src={FLOORS.emporio.logo}
             alt=""

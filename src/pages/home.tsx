@@ -311,16 +311,19 @@ function FeaturedDishes() {
       className="relative bg-cream py-24 lg:py-32"
     >
       <div className="site-container">
-        <FadeIn>
+        <FadeIn className="mb-12 flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
           <h2
             id="featured-dishes"
-            className="mb-12 font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink"
+            className="font-display text-[clamp(1.4rem,calc(5.6vw*var(--site-type-scale)),4.8rem)] leading-[0.9] whitespace-nowrap text-ink"
           >
             <EText k="dishes.title" d="Featured" />{" "}
             <span className="text-sienna">
               <EText k="dishes.titleAccent" d="Dishes." />
             </span>
           </h2>
+          <p className="max-w-[16rem] pb-1 font-body text-sm leading-snug text-ink-soft sm:text-right">
+            <EText k="dishes.note" d="One favorite from every floor, picked by our chefs." />
+          </p>
         </FadeIn>
 
         <div ref={gridRef} className="featured-dishes-grid grid gap-x-8 gap-y-10 md:grid-cols-3">
