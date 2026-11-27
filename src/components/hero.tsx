@@ -101,21 +101,35 @@ export function RestaurantHero({
   )
 }
 
-/** Row of white restaurant seals, sized to sit above a hero title. */
-export function HeroLogos({ floors }: { floors: FloorId[] }) {
+/**
+ * White restaurant seals above a hero title. `arch` fans them like a rainbow:
+ * the outer seals sit lower and tilt outward, the middle one sits highest.
+ */
+export function HeroLogos({ floors, arch = false }: { floors: FloorId[]; arch?: boolean }) {
+  const middle = (floors.length - 1) / 2
   return (
     <div
-      className="rise mb-6 flex items-center justify-center gap-6 sm:gap-10"
+      className={`rise flex justify-center ${arch ? "mb-10 items-end gap-4 sm:mb-12 sm:gap-8" : "mb-6 items-center gap-6 sm:gap-10"}`}
       style={{ animationDelay: "0.1s" }}
     >
-      {floors.map((id) => (
-        <img
-          key={id}
-          src={FLOORS[id].logo}
-          alt={FLOORS[id].name}
-          className="h-16 w-auto object-contain brightness-0 invert sm:h-20 lg:h-24"
-        />
-      ))}
+      {floors.map((id, index) => {
+        const step = index - middle
+        return (
+          <img
+            key={id}
+            src={FLOORS[id].logo}
+            alt={FLOORS[id].name}
+            className="h-16 w-auto object-contain brightness-0 invert sm:h-20 lg:h-24"
+            style={
+              arch
+                ? {
+                    transform: `translateY(${Math.abs(step) * 1.5}rem) rotate(${step * 22}deg)`,
+                  }
+                : undefined
+            }
+          />
+        )
+      })}
     </div>
   )
 }

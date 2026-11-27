@@ -217,15 +217,23 @@ export function RooftopDrinks() {
       frame = 0
       const vh = window.innerHeight
       const top = el.getBoundingClientRect().top
+      const still = motion.matches || editing
       // Opens from when the window is half on screen until 80% of the zoom distance.
-      const zoom =
-        motion.matches || editing
-          ? 1
-          : Math.min(1, Math.max(0, (vh * 0.5 - top) / (vh * 0.5 + (ZOOM_SVH / 100) * vh * 0.8)))
+      const travelled = vh * 0.5 - top
+      const zoomSpan = vh * 0.5 + (ZOOM_SVH / 100) * vh * 0.8
+      const zoom = still ? 1 : Math.min(1, Math.max(0, travelled / zoomSpan))
       const eased = zoom * zoom * (3 - 2 * zoom)
       view.style.setProperty("--roof-zoom", eased.toFixed(4))
-      const card = Math.min(1, Math.max(0, (zoom - 0.86) / 0.14))
-      view.style.setProperty("--roof-card", card.toFixed(4))
+      // The card fades in and grows over the last 30% of the zoom.
+      const card = Math.min(1, Math.max(0, (zoom - 0.7) / 0.3))
+      view.style.setProperty("--roof-card", (card * card * (3 - 2 * card)).toFixed(4))
+      // Its corners straighten over a longer stretch: from when it appears until
+      // 60% of a screen after the skyline has fully opened.
+      const roundStart = zoomSpan * 0.7
+      const round = still
+        ? 1
+        : Math.min(1, Math.max(0, (travelled - roundStart) / (zoomSpan - roundStart + vh * 0.6)))
+      view.style.setProperty("--roof-round", round.toFixed(4))
       setCardShown(card > 0.5)
     }
     const schedule = () => {

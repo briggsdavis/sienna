@@ -45,8 +45,8 @@ function Hero() {
       overlay={<div className="absolute inset-0 bg-black/58" />}
       viewportHeight={60}
     >
-      <HeroLogos floors={["emporio", "mezzo", "tetto"]} />
-      <HeroIntro center title="Events." />
+      <HeroLogos arch floors={["emporio", "mezzo", "tetto"]} />
+      <HeroIntro center title={<span className="uppercase">Events</span>} />
       <div
         className="rise mt-8 flex flex-wrap items-center justify-center gap-3"
         style={{ animationDelay: "0.62s" }}
@@ -317,7 +317,7 @@ function Inquiry() {
   return (
     <section
       id="inquire"
-      className="relative scroll-mt-20 overflow-hidden bg-sienna-deep py-28 text-cream"
+      className="relative scroll-mt-20 overflow-hidden bg-sienna py-28 text-cream"
     >
       <div className="grain pointer-events-none absolute inset-0 opacity-50 mix-blend-overlay" />
       <div className="relative mx-auto grid max-w-[1600px] gap-16 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-12">
