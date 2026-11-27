@@ -191,10 +191,10 @@ export function TettoDrinkModel({
 const ZOOM_SVH = 110
 /** Scroll distance spent turning through the drinks, in svh. */
 const DRINKS_SVH = 252
-const SKYLINE = unsplash("1687707755638-01e3b6f14964", 2400, 80)
+const SKYLINE = unsplash("1619697940685-5c224f34dfbd", 2400, 80)
 
 /*
- * "On the Roof": a Pittsburgh skyline starts as a rounded window at 70% of the
+ * "On the Roof": a Pittsburgh skyline starts as a rounded window at half the size of the
  * screen and opens to fill it as you scroll. Once it fills, a cream card rises
  * over it with the rooftop drinks, which then turn as you keep scrolling.
  */
@@ -275,7 +275,7 @@ export function RooftopDrinks() {
             {(src) => (
               <img
                 src={src}
-                alt="The Pittsburgh skyline at night"
+                alt="The Pittsburgh skyline"
                 loading="lazy"
                 className="roof-skyline h-full w-full object-cover"
               />

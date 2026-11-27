@@ -1188,10 +1188,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 }
 
-/* Il Tetto "On the Roof": the skyline window opens to full screen, then the card rises. */
+/* Il Tetto "On the Roof": the skyline starts at half the screen, opens to full screen,
+   then the card rises. */
 .roof-window {
   clip-path: inset(
-    calc((1 - var(--roof-zoom, 0)) * 15%) calc((1 - var(--roof-zoom, 0)) * 15%)
+    calc((1 - var(--roof-zoom, 0)) * 25%) calc((1 - var(--roof-zoom, 0)) * 25%)
       round calc((1 - var(--roof-zoom, 0)) * 2.5rem)
   );
 }

@@ -44,6 +44,7 @@ export function Tetto() {
           <PageShortcuts shortcuts={SHORTCUTS} tone="sienna" />
           <FloorIntro
             tone="sienna"
+            scrollCorners
             image={
               <EImage k="intro.image" d={unsplash("1414235077428-338989a2e8c0", 1200, 80)}>
                 {(src) => (
