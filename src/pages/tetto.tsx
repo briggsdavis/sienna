@@ -47,11 +47,11 @@ export function Tetto() {
             tone="sienna"
             scrollCorners
             image={
-              <EImage k="intro.image" d={unsplash("1414235077428-338989a2e8c0", 1200, 80)}>
+              <EImage k="intro.image" d="/images/tetto/intro.webp">
                 {(src) => (
                   <ParallaxImage
                     src={src}
-                    alt="Il Tetto rooftop"
+                    alt="A busy evening under the Il Tetto glass roof, with the downtown towers above"
                     className="transition-transform duration-700 group-hover:scale-[1.03]"
                     speed={0.12}
                   />
