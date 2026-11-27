@@ -1,24 +1,32 @@
 import {
   ACESFilmicToneMapping,
-  BoxGeometry,
+  Color,
   DirectionalLight,
   Group,
-  HemisphereLight,
+  IcosahedronGeometry,
   InstancedMesh,
   LatheGeometry,
   Matrix4,
   Mesh,
   MeshPhysicalMaterial,
-  MeshStandardMaterial,
   OrthographicCamera,
+  Quaternion,
   Scene,
   SphereGeometry,
   SplineCurve,
   TorusGeometry,
   Vector2,
+  Vector3,
   WebGLRenderer,
 } from "three"
 import type { DrinkShape } from "@/content/tetto"
+import {
+  contactShadow,
+  noiseNormalMap,
+  pageBackground,
+  studioEnvironment,
+  thinGlass,
+} from "@/lib/render-realism"
 
 type Profile = readonly (readonly [radius: number, height: number])[]
 
@@ -26,6 +34,8 @@ type Vessel = {
   profile: Profile
   fill: number
   color: string
+  /** How far light travels through the drink before taking on its full colour (lower is deeper). */
+  depth: number
   stem?: boolean
   foam?: boolean
   ice?: boolean
@@ -45,7 +55,8 @@ const VESSELS: Record<DrinkShape, Vessel> = {
       [0.85, 1.47],
     ],
     fill: 0.98,
-    color: "#b96b15",
+    color: "#c27a1c",
+    depth: 1.6,
     foam: true,
     bubbly: true,
   },
@@ -61,7 +72,8 @@ const VESSELS: Record<DrinkShape, Vessel> = {
       [0.66, 1.24],
     ],
     fill: 0.3,
-    color: "#6c0c1b",
+    color: "#7a0f20",
+    depth: 0.35,
     stem: true,
     round: true,
   },
@@ -77,7 +89,8 @@ const VESSELS: Record<DrinkShape, Vessel> = {
       [1.14, 0.72],
     ],
     fill: 0.5,
-    color: "#d28261",
+    color: "#d98a62",
+    depth: 1.3,
     stem: true,
     round: true,
   },
@@ -91,7 +104,8 @@ const VESSELS: Record<DrinkShape, Vessel> = {
       [0.97, 0.1],
     ],
     fill: -0.97,
-    color: "#d7a553",
+    color: "#d9a04a",
+    depth: 1.1,
   },
   highball: {
     profile: [
@@ -103,6 +117,7 @@ const VESSELS: Record<DrinkShape, Vessel> = {
     ],
     fill: 1.03,
     color: "#bfc87a",
+    depth: 1.4,
     ice: true,
   },
   sparkling: {
@@ -117,6 +132,7 @@ const VESSELS: Record<DrinkShape, Vessel> = {
     ],
     fill: 1.03,
     color: "#d9a865",
+    depth: 1.2,
     stem: true,
     bubbly: true,
     round: true,
@@ -133,7 +149,8 @@ const VESSELS: Record<DrinkShape, Vessel> = {
       [0.9, 0.99],
     ],
     fill: 0.51,
-    color: "#cf6c4d",
+    color: "#e0663f",
+    depth: 1.0,
     stem: true,
     ice: true,
     round: true,
@@ -153,23 +170,25 @@ function smooth(profile: Profile): Profile {
   return curve.getPoints(48).map(({ x, y }) => [x, y] as const)
 }
 
-function makeDrink(shape: DrinkShape) {
+/** Surface textures shared by every drink, made once per scene. */
+type Textures = ReturnType<typeof makeTextures>
+
+function makeTextures() {
+  return {
+    ripple: noiseNormalMap(5, 3, 5, 21, 2),
+    foam: noiseNormalMap(24, 3, 14, 5, 2),
+    ice: noiseNormalMap(8, 4, 10, 13, 1),
+  }
+}
+
+function makeDrink(shape: DrinkShape, textures: Textures) {
   const vessel = VESSELS[shape]
-  const { fill, color, stem, foam, ice, bubbly } = vessel
+  const { fill, color, depth, stem, foam, ice, bubbly } = vessel
   const profile = vessel.round ? smooth(vessel.profile) : vessel.profile
   const group = new Group()
   const [bottomRadius, bottom] = profile[0]
   const [rimRadius, rimHeight] = profile[profile.length - 1]
-  const glass = new MeshPhysicalMaterial({
-    color: "#e9eee2",
-    metalness: 0.08,
-    roughness: 0.12,
-    clearcoat: 1,
-    clearcoatRoughness: 0.12,
-    transparent: true,
-    opacity: 0.28,
-    depthWrite: false,
-  })
+  const glass = thinGlass()
   const thickness = stem ? 0.035 : 0.13
   const cavity = [
     [bottomRadius - 0.04, bottom + thickness] as const,
@@ -216,11 +235,22 @@ function makeDrink(shape: DrinkShape) {
   const [upperRadius, upperHeight] = cavity[fillProfile.length]
   const radius =
     lowerRadius + ((upperRadius - lowerRadius) * (fill - lowerHeight)) / (upperHeight - lowerHeight)
+  // The drink refracts what is behind it and deepens in colour the further light travels
+  // through it, so the middle of the glass reads richer than the edges. A faint ripple
+  // texture keeps the surface from looking like solid plastic.
+  const tint = new Color(color)
   const liquidMaterial = new MeshPhysicalMaterial({
-    color,
-    roughness: 0.27,
-    clearcoat: 0.82,
-    clearcoatRoughness: 0.15,
+    color: new Color("#ffffff").lerp(tint, 0.15),
+    transmission: 1,
+    thickness: radius * 2,
+    ior: 1.34,
+    roughness: 0.05,
+    attenuationColor: tint,
+    attenuationDistance: depth,
+    specularIntensity: 1,
+    envMapIntensity: 1.2,
+    normalMap: textures.ripple,
+    normalScale: new Vector2(0.06, 0.06),
   })
   group.add(
     new Mesh(
@@ -246,20 +276,39 @@ function makeDrink(shape: DrinkShape) {
           [radius * 0.58, fill + 0.34],
           [0, fill + 0.32],
         ]),
-        new MeshStandardMaterial({ color: "#fff4d7", roughness: 0.92 }),
+        new MeshPhysicalMaterial({
+          color: "#fff6e0",
+          roughness: 0.9,
+          normalMap: textures.foam,
+          normalScale: new Vector2(0.9, 0.9),
+          sheen: 0.6,
+          sheenColor: new Color("#fffaf0"),
+          sheenRoughness: 0.7,
+        }),
       ),
     )
   }
   if (bubbly) {
+    // Streams of small, glossy bubbles of varying size, clinging near the glass.
     const bubbles = new InstancedMesh(
-      new SphereGeometry(0.018, 8, 6),
-      new MeshStandardMaterial({ color: foam ? "#ffdc90" : "#fff0bd", roughness: 0.3 }),
-      24,
+      new SphereGeometry(0.011, 10, 8),
+      new MeshPhysicalMaterial({
+        color: "#ffffff",
+        emissive: "#fffaf0",
+        emissiveIntensity: 0.9,
+        roughness: 0.05,
+        clearcoat: 1,
+        envMapIntensity: 1.6,
+      }),
+      90,
     )
     const placement = new Matrix4()
+    const size = new Vector3()
+    const turn = new Quaternion()
+    const spot = new Vector3()
     for (let i = 0; i < bubbles.count; i++) {
-      const angle = i * 2.4
-      const progress = ((i * 17) % 25) / 25
+      const angle = i * 2.399 + Math.sin(i * 1.7) * 0.4
+      const progress = ((i * 37) % 89) / 89
       const surface = cavity.findIndex(
         ([, y]) => y > bottom + thickness + progress * (fill - bottom - thickness),
       )
@@ -267,19 +316,29 @@ function makeDrink(shape: DrinkShape) {
       const [endRadius, endY] = cavity[Math.max(1, surface)]
       const y = bottom + thickness + progress * (fill - bottom - thickness)
       const width = startRadius + ((endRadius - startRadius) * (y - startY)) / (endY - startY)
-      placement.makeTranslation(width * Math.sin(angle), y, width * Math.cos(angle))
+      const inset = 0.88 + 0.1 * Math.abs(Math.sin(i * 3.1))
+      spot.set(width * inset * Math.sin(angle), y, width * inset * Math.cos(angle))
+      size.setScalar(0.45 + 0.9 * Math.abs(Math.sin(i * 5.3)))
+      placement.compose(spot, turn, size)
       bubbles.setMatrixAt(i, placement)
     }
     group.add(bubbles)
   }
   if (ice) {
-    const geometry = new BoxGeometry(0.4, 0.37, 0.39)
+    // Clear, slightly frosted ice with melted, rounded corners.
+    const geometry = new IcosahedronGeometry(0.24, 1)
+    geometry.scale(1, 0.9, 0.95)
     const material = new MeshPhysicalMaterial({
-      color: "#f2fafa",
-      roughness: 0.26,
-      clearcoat: 1,
-      transparent: true,
-      opacity: 0.82,
+      color: "#f4fbff",
+      transmission: 1,
+      thickness: 0.4,
+      ior: 1.31,
+      roughness: 0.12,
+      attenuationColor: new Color("#dff1f7"),
+      attenuationDistance: 1.2,
+      normalMap: textures.ice,
+      normalScale: new Vector2(0.5, 0.5),
+      flatShading: false,
     })
     for (let i = 0; i < 3; i++) {
       const cube = new Mesh(geometry, material)
@@ -305,16 +364,20 @@ export function createDrinkScene(canvas: HTMLCanvasElement, shapes: readonly Dri
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.toneMapping = ACESFilmicToneMapping
 
+  // A studio environment to reflect, on the card's own cream, so the glasses have
+  // highlights, refraction and a soft shadow instead of flat shading.
   const scene = new Scene()
+  const environment = studioEnvironment(renderer)
+  scene.environment = environment
+  scene.background = pageBackground(canvas)
+  const textures = makeTextures()
   const tilt = new Group()
-  const models = shapes.map(makeDrink)
+  const models = shapes.map((shape) => makeDrink(shape, textures))
   tilt.add(...models)
-  scene.add(tilt, new HemisphereLight("#fff5e8", "#825c42", 2.2))
-  const key = new DirectionalLight("#fff4e2", 3.2)
+  const key = new DirectionalLight("#fff4e2", 1.2)
   key.position.set(-3, 3, 5)
-  const rim = new DirectionalLight("#e4f1fa", 2.4)
-  rim.position.set(3, 4, -3)
-  scene.add(key, rim)
+  const shadow = contactShadow(2.8, 1.4, -1.71, 0.45)
+  scene.add(tilt, key, shadow)
 
   const camera = new OrthographicCamera(-2.3, 2.3, 2.3, -2.3, 0.1, 30)
   camera.position.set(0, 2, 10)
@@ -342,8 +405,10 @@ export function createDrinkScene(canvas: HTMLCanvasElement, shapes: readonly Dri
       renderer.setSize(width, height, false)
     },
     dispose() {
-      const geometries = new Set<LatheGeometry | TorusGeometry | BoxGeometry | SphereGeometry>()
-      const materials = new Set<MeshPhysicalMaterial | MeshStandardMaterial>()
+      const geometries = new Set<
+        LatheGeometry | TorusGeometry | SphereGeometry | IcosahedronGeometry
+      >()
+      const materials = new Set<MeshPhysicalMaterial>()
       tilt.traverse((object) => {
         if (object instanceof Mesh) {
           geometries.add(object.geometry)
@@ -353,6 +418,11 @@ export function createDrinkScene(canvas: HTMLCanvasElement, shapes: readonly Dri
       })
       geometries.forEach((geometry) => geometry.dispose())
       materials.forEach((material) => material.dispose())
+      shadow.geometry.dispose()
+      shadow.material.map?.dispose()
+      shadow.material.dispose()
+      environment.dispose()
+      Object.values(textures).forEach((texture) => texture.dispose())
       renderer.dispose()
     },
   }

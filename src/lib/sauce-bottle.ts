@@ -5,13 +5,11 @@ import {
   CylinderGeometry,
   DirectionalLight,
   Group,
-  HemisphereLight,
   InstancedMesh,
   LatheGeometry,
   Matrix4,
   Mesh,
   MeshPhysicalMaterial,
-  MeshStandardMaterial,
   OrthographicCamera,
   Scene,
   SRGBColorSpace,
@@ -19,6 +17,13 @@ import {
   WebGLRenderer,
 } from "three"
 import { SAUCES } from "@/content/emporio"
+import {
+  contactShadow,
+  noiseNormalMap,
+  pageBackground,
+  studioEnvironment,
+  thinGlass,
+} from "@/lib/render-realism"
 
 const LABEL_ICONS = {
   tomato:
@@ -145,37 +150,36 @@ export function createSauceBottle(canvas: HTMLCanvasElement, names: readonly str
   const renderer = new WebGLRenderer({ canvas, context, alpha: true, antialias: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
   renderer.toneMapping = ACESFilmicToneMapping
-  renderer.toneMappingExposure = 1.08
+  renderer.toneMappingExposure = 1
 
   const camera = new OrthographicCamera(-1.65, 1.65, 2.45, -2.45, 0.1, 30)
   camera.position.set(0, 1.24, 10)
   camera.lookAt(0, 0.02, 0)
 
+  // Lit by a studio environment rather than flat lights, on the page's own cream, so the
+  // glass reflects softboxes and the cap and sauce pick up believable highlights.
   const scene = new Scene()
+  const environment = studioEnvironment(renderer)
+  scene.environment = environment
+  scene.background = pageBackground(canvas)
   const tilt = new Group()
   const bottle = new Group()
   tilt.add(bottle)
-  scene.add(tilt, new HemisphereLight("#fff5df", "#685142", 2.5))
-  const key = new DirectionalLight("#fff3e1", 4.1)
+  const key = new DirectionalLight("#fff3e1", 1.4)
   key.position.set(-3, 5, 6)
-  const rim = new DirectionalLight("#fff0d9", 2.9)
-  rim.position.set(4, 2, -4)
-  scene.add(key, rim)
+  const shadow = contactShadow(2.6, 1.3, -2.02, 0.5)
+  scene.add(tilt, key, shadow)
+
+  const sauceGrain = noiseNormalMap(4, 3, 4, 3, 1)
+  const paperGrain = noiseNormalMap(48, 3, 3, 7, 1)
+  const knurl = noiseNormalMap(32, 2, 4, 11, 1)
 
   const glass = new Mesh(
     new LatheGeometry(
       GLASS_PROFILE.map(([radius, height]) => new Vector2(radius, height)),
       80,
     ),
-    new MeshPhysicalMaterial({
-      color: "#e6efd8",
-      transparent: true,
-      opacity: 0.29,
-      depthWrite: false,
-      roughness: 0.09,
-      clearcoat: 1,
-      clearcoatRoughness: 0.05,
-    }),
+    thinGlass({ color: "#2f3d2e", opacity: 0.03 }, 0.45),
   )
   glass.renderOrder = 2
 
@@ -189,7 +193,18 @@ export function createSauceBottle(canvas: HTMLCanvasElement, names: readonly str
       ],
       72,
     ),
-    new MeshStandardMaterial({ color: SAUCES[0].label.fill, roughness: 0.48 }),
+    // A thick, glossy sauce with a little texture, as if pressed against the glass.
+    new MeshPhysicalMaterial({
+      color: SAUCES[0].label.fill,
+      roughness: 0.32,
+      clearcoat: 0.5,
+      clearcoatRoughness: 0.2,
+      normalMap: sauceGrain,
+      normalScale: new Vector2(0.12, 0.12),
+      sheen: 0.3,
+      sheenColor: new Color("#ffffff"),
+      sheenRoughness: 0.6,
+    }),
   )
 
   const capProfile = [
@@ -205,10 +220,22 @@ export function createSauceBottle(canvas: HTMLCanvasElement, names: readonly str
       capProfile.map(([radius, height]) => new Vector2(radius, height)),
       64,
     ),
-    new MeshStandardMaterial({ color: "#25211e", metalness: 0.35, roughness: 0.37 }),
+    new MeshPhysicalMaterial({
+      color: "#2a2521",
+      metalness: 0.85,
+      roughness: 0.3,
+      normalMap: knurl,
+      normalScale: new Vector2(0.2, 0.2),
+      clearcoat: 0.6,
+      clearcoatRoughness: 0.25,
+    }),
   )
   const ribGeometry = new CylinderGeometry(0.009, 0.009, 0.26, 5)
-  const ribMaterial = new MeshStandardMaterial({ color: "#352e28", roughness: 0.45 })
+  const ribMaterial = new MeshPhysicalMaterial({
+    color: "#3a322b",
+    metalness: 0.85,
+    roughness: 0.34,
+  })
   const ribs = new InstancedMesh(ribGeometry, ribMaterial, 56)
   const ribPosition = new Matrix4()
   for (let rib = 0; rib < ribs.count; rib += 1) {
@@ -220,10 +247,19 @@ export function createSauceBottle(canvas: HTMLCanvasElement, names: readonly str
 
   const textures = SAUCES.map((sauce, index) => labelTexture(sauce, names[index], index + 1))
   const fillColors = SAUCES.map((sauce) => new Color(sauce.label.fill))
-  const labelMaterial = new MeshStandardMaterial({ map: textures[0], roughness: 0.68 })
-  const overlayMaterial = new MeshStandardMaterial({
+  // Uncoated paper: matte, with a fine grain that catches the light.
+  const paper = {
+    roughness: 0.82,
+    normalMap: paperGrain,
+    normalScale: new Vector2(0.18, 0.18),
+    sheen: 0.25,
+    sheenRoughness: 0.8,
+    envMapIntensity: 0.8,
+  }
+  const labelMaterial = new MeshPhysicalMaterial({ map: textures[0], ...paper })
+  const overlayMaterial = new MeshPhysicalMaterial({
     map: textures[1],
-    roughness: 0.68,
+    ...paper,
     transparent: true,
     depthWrite: false,
   })
@@ -272,6 +308,10 @@ export function createSauceBottle(canvas: HTMLCanvasElement, names: readonly str
           object.material.dispose()
         }
       })
+      shadow.geometry.dispose()
+      shadow.material.map?.dispose()
+      shadow.material.dispose()
+      ;[environment, sauceGrain, paperGrain, knurl].forEach((texture) => texture.dispose())
       ribs.dispose()
       ribGeometry.dispose()
       ribMaterial.dispose()
