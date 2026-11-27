@@ -45,7 +45,7 @@ function Hero() {
     <EImage k="hero.image" d="/images/mezzo/hero-guest-dining.webp">
       {(src) => (
         <PageHero
-          image={{ src, alt: "", className: "object-[center_52%]", zoom: false }}
+          image={{ src, alt: "", className: "object-[center_52%]" }}
           overlay={
             <>
               <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/15 to-black/35" />

@@ -84,6 +84,13 @@
 .type-tetto {
   --font-display: "Knockout 48", "Akzidenz", sans-serif;
 
+  /* Il Tetto headings are always Knockout, in capitals. */
+  :is(h1, h2, h3, h4) {
+    font-family: "Knockout 48", "Akzidenz", sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+
   :is(.menu-item-name, .menu-item-price) {
     font-family: "Knockout 26", "Akzidenz", sans-serif;
     font-size: 2em;
@@ -615,23 +622,6 @@ body {
   height: 14px;
   background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 14'><path d='M0 7 Q 16 0, 32 7 T 64 7' fill='none' stroke='%23a4341f' stroke-width='1.5'/><circle cx='32' cy='7' r='1.6' fill='%23a4341f'/></svg>")
     no-repeat center / contain;
-}
-
-@keyframes slowzoom {
-  from {
-    opacity: 0;
-    transform: scale(1.06);
-  }
-  10% {
-    opacity: 1;
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.slow-zoom {
-  animation: slowzoom 12s ease-out both;
 }
 
 .dish-img {

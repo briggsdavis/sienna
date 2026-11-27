@@ -9,22 +9,15 @@ export function HeroImage({
   src,
   alt,
   className = "",
-  zoom = true,
 }: {
   src: string
   alt: string
   className?: string
-  /** Slow zoom-out on load. Off leaves only the parallax. */
-  zoom?: boolean
 }) {
   const ref = useParallax()
   return (
     <div ref={ref} className="parallax-hero-wrap">
-      <img
-        src={src}
-        alt={alt}
-        className={`${zoom ? "slow-zoom" : ""} h-full w-full object-cover ${className}`}
-      />
+      <img src={src} alt={alt} className={`h-full w-full object-cover ${className}`} />
     </div>
   )
 }
@@ -36,7 +29,7 @@ export function PageHero({
   bottomPadding = viewportHeight ? "pb-10" : "pb-20",
   children,
 }: {
-  image: { src: string; alt: string; className?: string; zoom?: boolean }
+  image: { src: string; alt: string; className?: string }
   overlay: ReactNode
   viewportHeight?: keyof typeof HERO_HEIGHTS
   bottomPadding?: string

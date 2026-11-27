@@ -222,11 +222,7 @@ export function MenuSections({
             className={`relative flex h-full w-full items-center justify-center ${t.header} ${mezzo ? "menu-photo-mask" : ""}`}
           >
             {image ? (
-              mezzo ? (
-                <ParallaxImage src={image} alt="" loading="lazy" speed={0.11} />
-              ) : (
-                <img src={image} alt="" loading="lazy" className="h-full w-full object-cover" />
-              )
+              <ParallaxImage src={image} alt="" loading="lazy" speed={0.11} />
             ) : (
               <img
                 src={FLOORS[restaurant].logo}
@@ -332,15 +328,16 @@ export function SectionChips({
 }: {
   restaurant: FloorId
   sections: MenuSection[]
-  /** Mezzo chips sit on cream when the first section is cream. */
+  /** The chips sit on cream when the first section is cream, otherwise on red. */
   onCream?: boolean
 }) {
-  const t =
-    restaurant === "mezzo" && onCream
-      ? {
-          chip: "btn-fill border-sienna-deep/30 text-sienna-deep [--button-fill-color:var(--color-sienna-deep)]",
-        }
-      : MENU_THEMES[restaurant]
+  const t = {
+    chip: !onCream
+      ? "btn-fill btn-fill-cream border-paper/25 text-paper"
+      : restaurant === "mezzo"
+        ? "btn-fill border-sienna-deep/30 text-sienna-deep [--button-fill-color:var(--color-sienna-deep)]"
+        : "btn-fill border-sienna/30 text-sienna [--button-fill-color:var(--color-sienna)]",
+  }
   return (
     <div className="flex flex-wrap justify-center gap-2">
       {sections.map((section) => (

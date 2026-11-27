@@ -105,13 +105,13 @@ export function Tetto() {
 
 function Hero() {
   return (
-    <EImage k="hero.image" d={unsplash("1414235077428-338989a2e8c0", 2400, 80)}>
+    <EImage k="hero.image" d={unsplash("1563138216-f4d79398013c", 2400, 80)}>
       {(src) => (
         <RestaurantHero
           floor={FLOORS.tetto}
           image={{
             src,
-            alt: "The Il Tetto rooftop at golden hour, with the Pittsburgh skyline behind",
+            alt: "Groups of friends at tables on a rooftop terrace under string lights at dusk",
           }}
         >
           <ELink
