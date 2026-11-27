@@ -31,11 +31,11 @@ export function FloorIntro({
       ref={region}
       className={`relative overflow-hidden py-24 ${sienna ? "text-cream" : "bg-paper text-ink"}`}
     >
-      <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:gap-20 lg:px-12">
+      <div className="mx-auto grid max-w-[1600px] gap-0 px-6 lg:grid-cols-[1fr_1.3fr] lg:items-center lg:gap-20 lg:px-12">
         <FadeIn>
           <div
             data-scroll-corners={scrollCorners || undefined}
-            className="group relative mb-12 aspect-[4/5] overflow-hidden lg:mb-0"
+            className={`group relative mb-12 aspect-[8/7] overflow-hidden lg:mb-0 ${scrollCorners ? "scroll-grow" : ""}`}
           >
             {image}
             {photoDetails && (
