@@ -115,7 +115,7 @@ export function Emporio() {
             src={FLOORS.emporio.logo}
             alt=""
             aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 right-[-9%] w-[clamp(23rem,60vw,65rem)] max-w-none -translate-y-1/2 -rotate-12 opacity-[0.07] brightness-0 invert"
+            className="pointer-events-none absolute top-1/2 right-[-9%] w-[clamp(16rem,42vw,45.5rem)] max-w-none -translate-y-1/2 -rotate-12 opacity-[0.07] brightness-0 invert"
           />
           <PageShortcuts shortcuts={SHORTCUTS} tone="sienna" />
           <FloorIntro

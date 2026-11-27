@@ -120,6 +120,25 @@ export function sectionTone(restaurant: FloorId, index: number, count: number) {
   }
 }
 
+/**
+ * Illustration behind a cream Mezzo menu section: olive branches, tilted on the right,
+ * on the first; the gelato cup, slightly right, on Dessert; the wine bottle at 8% on the rest.
+ */
+function mezzoBackdrop(title: string, index: number) {
+  if (index === 0)
+    return {
+      src: "/images/3.webp",
+      className:
+        "top-1/2 right-0 aspect-square w-1/2 translate-x-1/4 -translate-y-1/2 rotate-45 opacity-80",
+    }
+  if (/dessert/i.test(title))
+    return {
+      src: "/images/5.webp",
+      className: "top-1/2 right-[6%] aspect-square h-4/5 -translate-y-1/2 opacity-[0.85]",
+    }
+  return { src: "/images/4.webp", className: "inset-0 m-auto h-4/5 w-4/5 opacity-[0.08]" }
+}
+
 const MEZZO_STOCK_PHOTOS = new Set([
   unsplash("1608897013039-887f21d8c804", 1400, 75),
   unsplash("1571997478779-2adcbbe9ab2f", 1400, 75),
@@ -221,6 +240,7 @@ export function MenuSections({
       {sections.map((section, index) => {
         const imageRight = index % 2 === 1
         const tone = sectionTone(restaurant, index, sections.length)
+        const backdrop = mezzo && !tone.dark ? mezzoBackdrop(section.title, index) : null
         const sectionPhoto = getMenuSectionPhoto(restaurant, section.title)
         const customSectionPhoto =
           mezzo && section.image && MEZZO_STOCK_PHOTOS.has(section.image) ? null : section.image
@@ -255,19 +275,14 @@ export function MenuSections({
             data-menu-parallax={mezzo || undefined}
             className={`relative isolate overflow-hidden py-14 md:py-20 ${tone.bg} ${tone.text} ${mezzo ? "scroll-mt-16" : "scroll-mt-32"}`}
           >
-            {mezzo && !tone.dark && (
-              // Mezzo's cream sections get an illustration behind them: the olive branches,
-              // tilted on the right, on the first; the wine bottle at 8% on the rest.
+            {backdrop && (
+              // Mezzo's cream sections get an illustration behind them.
               <img
-                src={index === 0 ? "/images/3.webp" : "/images/4.webp"}
+                src={backdrop.src}
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
-                className={`pointer-events-none absolute -z-10 object-contain ${
-                  index === 0
-                    ? "top-1/2 right-0 aspect-square w-1/2 translate-x-1/4 -translate-y-1/2 rotate-45 opacity-80"
-                    : "inset-0 m-auto h-4/5 w-4/5 opacity-[0.08]"
-                }`}
+                className={`pointer-events-none absolute -z-10 object-contain ${backdrop.className}`}
               />
             )}
             {mezzo && index > 0 && (
