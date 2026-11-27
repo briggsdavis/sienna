@@ -211,7 +211,9 @@ export function EmporioSauces() {
           >
             10 sauces
           </h2>
-          <p className="mt-3 text-center font-body text-lg text-ink-soft">All ten are made in-house.</p>
+          <p className="mt-3 text-center font-body text-lg text-ink-soft">
+            All ten are made in-house.
+          </p>
           <div className="emporio-sauces-layout">
             <div
               ref={display}

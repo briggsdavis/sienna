@@ -138,7 +138,6 @@ const VESSELS: Record<DrinkShape, Vessel> = {
     ice: true,
     round: true,
   },
-
 }
 
 function lathe(profile: Profile) {
