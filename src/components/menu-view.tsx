@@ -97,9 +97,19 @@ export function sectionTone(restaurant: FloorId, index: number, count: number) {
   const mezzo = restaurant === "mezzo"
   const fromEnd = (count - 1 - index) % 2 === 0
   const red = mezzo ? fromEnd : !fromEnd
-  if (red) return { ...DARK_TONE, bg: mezzo ? "bg-sienna-deep" : "bg-sienna", dark: true }
+  if (red)
+    return mezzo
+      ? { ...DARK_TONE, bg: "bg-sienna-deep", navBg: "bg-sienna-deep", dark: true }
+      : {
+          ...DARK_TONE,
+          // The same deep-to-bright red gradient as Upcoming Events on the home page.
+          bg: "bg-linear-to-b from-sienna-deep via-sienna to-sienna-bright",
+          navBg: "bg-sienna-deep",
+          dark: true,
+        }
   return {
     bg: "bg-cream",
+    navBg: "bg-cream",
     text: "text-ink",
     accent: mezzo ? "text-sienna-deep" : "text-sienna",
     price: "text-ink",

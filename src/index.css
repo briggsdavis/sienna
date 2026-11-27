@@ -497,12 +497,16 @@
 }
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .menu-row {
-    transition: padding-inline-start var(--menu-indent-duration, 200ms) ease-out;
+  /*
+   * Hovering a menu row nudges the name and description right. It moves them with a
+   * transform rather than padding so the text keeps its width and never re-wraps.
+   */
+  .menu-row > :first-child {
+    transition: translate var(--menu-indent-duration, 200ms) ease-out;
   }
 
-  .menu-row:hover {
-    padding-inline-start: 0.5rem;
+  .menu-row:hover > :first-child {
+    translate: 0.5rem 0;
   }
 }
 

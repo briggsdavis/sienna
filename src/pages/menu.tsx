@@ -92,7 +92,7 @@ function Menu({ restaurant }: { restaurant: FloorId }) {
       {sections && sections.length > 0 && (
         <nav
           // Same colour as the first section, and it scrolls away with the page.
-          className={sectionTone(restaurant, 0, sections.length).bg}
+          className={sectionTone(restaurant, 0, sections.length).navBg}
           aria-label="Menu sections"
         >
           <div className="mx-auto max-w-[1400px] overflow-x-auto px-6 py-4 lg:px-12">

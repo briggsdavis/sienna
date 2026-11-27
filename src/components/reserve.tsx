@@ -68,9 +68,15 @@ export function ReservationPanel({
   const reservation = useReservation(restaurant)
   const track = useTrackClick()
   const dark = tone === "dark"
+  // Mezzo keeps its darker red; the other floors use the regular red.
+  const mezzo = restaurant === "mezzo"
   const button = dark
-    ? `bg-cream text-sienna ${fillHover ? "btn-fill" : "hover:bg-paper"}`
-    : `bg-sienna text-cream ${fillHover ? "btn-fill [--button-fill-color:var(--color-sienna-deep)]" : "hover:bg-sienna-bright"}`
+    ? mezzo
+      ? `bg-cream text-sienna-deep ${fillHover ? "btn-fill [--button-fill-color:var(--color-sienna-deep)]" : "hover:bg-paper"}`
+      : `bg-cream text-sienna ${fillHover ? "btn-fill" : "hover:bg-paper"}`
+    : mezzo
+      ? `bg-sienna-deep text-cream ${fillHover ? "btn-fill [--button-fill-color:var(--color-ink)]" : "hover:bg-ink"}`
+      : `bg-sienna text-cream ${fillHover ? "btn-fill [--button-fill-color:var(--color-sienna-deep)]" : "hover:bg-sienna-bright"}`
   const outline = dark
     ? `border-cream/50 ${fillHover ? "btn-fill btn-fill-cream" : "hover:bg-cream/10"}`
     : `border-ink/30 text-ink ${fillHover ? "btn-fill" : "hover:bg-ink/5"}`
