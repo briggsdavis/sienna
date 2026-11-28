@@ -378,6 +378,8 @@ function Balls() {
   )
 }
 
+const CURRENT_MONTH = new Date().toLocaleDateString("en-US", { month: "long", year: "numeric" })
+
 function BallOfTheMonth() {
   const region = useScrollCorners<HTMLElement>(undefined)
   return (
@@ -390,7 +392,7 @@ function BallOfTheMonth() {
         data-emporio-parallax
         data-scroll-corners
         data-scroll-corners-max="48"
-        className="relative isolate grid w-full max-w-[55rem] items-center gap-6 overflow-hidden bg-cream p-6 sm:grid-cols-2 sm:p-9 lg:gap-7 lg:p-12"
+        className="relative isolate grid w-full max-w-[72rem] items-center gap-8 overflow-hidden bg-cream p-6 sm:grid-cols-2 sm:p-10 lg:gap-12 lg:p-16"
       >
         <img
           src={FLOORS.emporio.logo}
@@ -405,15 +407,19 @@ function BallOfTheMonth() {
           </EImage>
         </div>
         <div className="font-sans">
+          {/* The month updates itself, so the card never looks out of date. */}
           <p className="mb-3 font-serif text-2xs tracking-[0.4em] text-sienna uppercase sm:text-xs">
-            <EText k="botm.label" d="Ball of the month" />
+            {CURRENT_MONTH}
           </p>
           <h2
             id="emporio-month-title"
-            className="font-display text-[clamp(2.25rem,4.9vw,4.8rem)] leading-[0.95] tracking-tight"
+            className="font-display text-[clamp(2.5rem,5.2vw,5.5rem)] leading-[0.92] tracking-tight"
           >
-            <EText k="botm.title" d="Dragon Ball" />
+            <EText k="botm.label" d="Ball of the Month" />
           </h2>
+          <h3 className="mt-6 border-t border-ink/10 pt-5 font-display text-[clamp(1.75rem,3vw,2.75rem)] leading-none text-sienna">
+            <EText k="botm.title" d="Dragon Ball" />
+          </h3>
           <p className="mt-3 text-xl font-semibold">
             <EText k="botm.price" d="$14" />
           </p>
