@@ -230,6 +230,11 @@
   height: clamp(10rem, 37svh, 25rem);
 }
 
+/* The CSS shadow is only for the flat fallback; the 3D bottle casts its own. */
+.emporio-sauces-display[data-model-ready="true"]::before {
+  display: none;
+}
+
 .emporio-sauces-display::before {
   position: absolute;
   inset: auto 0 8% 50%;
@@ -391,6 +396,27 @@
   border-color: var(--color-sienna);
   background: var(--color-sienna);
   color: var(--color-cream);
+}
+
+/* Emporio's sauce picker sits on the red card, so it flips to cream. */
+.emporio-sauces-card .emporio-sauce-picker button {
+  color: color-mix(in srgb, var(--color-cream) 75%, transparent);
+}
+
+.emporio-sauces-card .emporio-sauce-picker button:hover {
+  border-color: var(--color-cream);
+  color: var(--color-cream);
+}
+
+.emporio-sauces-card .emporio-sauce-picker button[aria-current="true"] {
+  border-color: var(--color-cream);
+  background: var(--color-cream);
+  color: var(--color-sienna);
+}
+
+/* The red card holding the 10 sauces. */
+.emporio-sauces-card {
+  padding: clamp(1.75rem, 4svh, 3rem) clamp(1.25rem, 4vw, 3.5rem);
 }
 
 @media (prefers-reduced-motion: no-preference) {

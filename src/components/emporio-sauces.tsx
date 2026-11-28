@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react"
 import { EText, useEditablePageContent, useEditMode } from "@/components/editable"
+import { FadeIn } from "@/components/fade-in"
 import { SAUCES } from "@/content/emporio"
+import { useScrollCorners } from "@/hooks/use-scroll-corners"
 import type { createSauceBottle } from "@/lib/sauce-bottle"
 
 const HEAT_LEVELS = ["No heat", "Mild", "Medium", "Hot"]
@@ -26,6 +28,8 @@ export function EmporioSauces() {
   const section = useRef<HTMLElement>(null)
   const stage = useRef<HTMLDivElement>(null)
   const display = useRef<HTMLDivElement>(null)
+  // The red card rounds and grows from 80% as the section scrolls in.
+  useScrollCorners(undefined, section)
   const canvas = useRef<HTMLCanvasElement>(null)
   const [active, setActive] = useState(0)
   const [modelReady, setModelReady] = useState(false)
@@ -204,91 +208,101 @@ export function EmporioSauces() {
       style={{ "--sauce-steps": LAST_SAUCE } as CSSProperties}
     >
       <div ref={stage} className="emporio-sauces-stage">
-        <div data-emporio-parallax className="site-container">
-          <h2
-            id="emporio-sauces-title"
-            className="emporio-sauces-title text-center font-display tracking-tight"
+        <div className="site-container">
+          <div
+            data-scroll-corners
+            data-scroll-corners-max="48"
+            className="emporio-sauces-card scroll-grow overflow-hidden bg-linear-to-b from-sienna to-sienna-deep text-cream"
           >
-            10 sauces
-          </h2>
-          <p className="mt-3 text-center font-body text-lg text-ink-soft">
-            All ten are made in-house.
-          </p>
-          <div className="emporio-sauces-layout">
-            <div
-              ref={display}
-              aria-hidden="true"
-              data-model-ready={modelReady}
-              className="emporio-sauces-display"
-            >
-              <canvas ref={canvas} className="emporio-sauces-canvas" />
-              <div
-                className="emporio-sauce-fallback"
-                style={
-                  {
-                    "--label-paper": label.paper,
-                    "--label-ink": label.ink,
-                    "--label-accent": label.accent,
-                    "--sauce-fill": label.fill,
-                  } as CSSProperties
-                }
-              >
-                <div className="emporio-sauce-fallback-cap" />
-                <div className="emporio-sauce-fallback-body">
-                  <div className="emporio-sauce-fallback-label">
-                    <b>Emporio</b>
-                    <i className={`ph ${SAUCE_ICONS[active]}`} />
-                    <strong>{names[active]}</strong>
-                    <span>House-made sauce</span>
+            <div data-emporio-parallax>
+              <FadeIn stagger>
+                <h2
+                  id="emporio-sauces-title"
+                  className="emporio-sauces-title text-center font-display tracking-tight"
+                >
+                  10 sauces
+                </h2>
+                <p className="mt-3 text-center font-body text-lg text-cream/80">
+                  All ten are made in-house.
+                </p>
+              </FadeIn>
+              <FadeIn stagger delay={0.15} className="emporio-sauces-layout">
+                <div
+                  ref={display}
+                  aria-hidden="true"
+                  data-model-ready={modelReady}
+                  className="emporio-sauces-display"
+                >
+                  <canvas ref={canvas} className="emporio-sauces-canvas" />
+                  <div
+                    className="emporio-sauce-fallback"
+                    style={
+                      {
+                        "--label-paper": label.paper,
+                        "--label-ink": label.ink,
+                        "--label-accent": label.accent,
+                        "--sauce-fill": label.fill,
+                      } as CSSProperties
+                    }
+                  >
+                    <div className="emporio-sauce-fallback-cap" />
+                    <div className="emporio-sauce-fallback-body">
+                      <div className="emporio-sauce-fallback-label">
+                        <b>Emporio</b>
+                        <i className={`ph ${SAUCE_ICONS[active]}`} />
+                        <strong>{names[active]}</strong>
+                        <span>House-made sauce</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div className="emporio-sauces-details">
-              <div className="emporio-sauces-notes">
-                {SAUCES.map((sauce, index) => (
-                  <article
-                    key={sauce.name}
-                    className="emporio-sauce-note"
-                    data-active={index === active}
-                    inert={index !== active}
+                <div className="emporio-sauces-details">
+                  <div className="emporio-sauces-notes">
+                    {SAUCES.map((sauce, index) => (
+                      <article
+                        key={sauce.name}
+                        className="emporio-sauce-note"
+                        data-active={index === active}
+                        inert={index !== active}
+                      >
+                        <h3 className="font-display leading-none">
+                          <EText k={`sauces.${index}.name`} d={sauce.name} />
+                        </h3>
+                        <p className="mt-3 font-body text-lg text-cream/85">
+                          <EText k={`sauces.${index}.note`} d={sauce.note} />
+                        </p>
+                        <div className="mt-5 flex flex-wrap items-center gap-2 font-sans text-sm">
+                          <span className="inline-flex gap-0.5" aria-hidden="true">
+                            {[1, 2, 3].map((level) => (
+                              <i
+                                key={level}
+                                className={`${level <= sauce.heat ? "ph-fill text-cream" : "ph text-cream/35"} ph-flame`}
+                              />
+                            ))}
+                          </span>
+                          <span className="text-cream/80">{HEAT_LEVELS[sauce.heat]}</span>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                  <nav
+                    aria-label="Choose a sauce"
+                    className="emporio-sauce-picker mt-5 flex flex-wrap gap-1.5 font-sans"
                   >
-                    <h3 className="font-display leading-none">
-                      <EText k={`sauces.${index}.name`} d={sauce.name} />
-                    </h3>
-                    <p className="mt-3 font-body text-lg text-ink-soft">
-                      <EText k={`sauces.${index}.note`} d={sauce.note} />
-                    </p>
-                    <div className="mt-5 flex flex-wrap items-center gap-2 font-sans text-sm">
-                      <span className="inline-flex gap-0.5" aria-hidden="true">
-                        {[1, 2, 3].map((level) => (
-                          <i
-                            key={level}
-                            className={`${level <= sauce.heat ? "ph-fill text-sienna" : "ph text-ink/40"} ph-flame`}
-                          />
-                        ))}
-                      </span>
-                      <span className="text-ink-soft">{HEAT_LEVELS[sauce.heat]}</span>
-                    </div>
-                  </article>
-                ))}
-              </div>
-              <nav
-                aria-label="Choose a sauce"
-                className="emporio-sauce-picker mt-5 flex flex-wrap gap-1.5 font-sans"
-              >
-                {SAUCES.map((sauce, index) => (
-                  <button
-                    type="button"
-                    key={sauce.name}
-                    aria-label={`Show ${names[index]}`}
-                    aria-current={index === active ? "true" : undefined}
-                    onClick={() => chooseSauce(index)}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </button>
-                ))}
-              </nav>
+                    {SAUCES.map((sauce, index) => (
+                      <button
+                        type="button"
+                        key={sauce.name}
+                        aria-label={`Show ${names[index]}`}
+                        aria-current={index === active ? "true" : undefined}
+                        onClick={() => chooseSauce(index)}
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </FadeIn>
             </div>
           </div>
         </div>

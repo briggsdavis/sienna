@@ -17,13 +17,7 @@ import {
   WebGLRenderer,
 } from "three"
 import { SAUCES } from "@/content/emporio"
-import {
-  contactShadow,
-  noiseNormalMap,
-  pageBackground,
-  studioEnvironment,
-  thinGlass,
-} from "@/lib/render-realism"
+import { contactShadow, noiseNormalMap, studioEnvironment, thinGlass } from "@/lib/render-realism"
 
 const LABEL_ICONS = {
   tomato:
@@ -156,12 +150,12 @@ export function createSauceBottle(canvas: HTMLCanvasElement, names: readonly str
   camera.position.set(0, 1.24, 10)
   camera.lookAt(0, 0.02, 0)
 
-  // Lit by a studio environment rather than flat lights, on the page's own cream, so the
-  // glass reflects softboxes and the cap and sauce pick up believable highlights.
+  // Lit by a studio environment rather than flat lights, so the glass reflects softboxes
+  // and the cap and sauce pick up believable highlights. The background stays transparent
+  // (the glass needs no backdrop to refract), so the bottle sits on the red card.
   const scene = new Scene()
   const environment = studioEnvironment(renderer)
   scene.environment = environment
-  scene.background = pageBackground(canvas)
   const tilt = new Group()
   const bottle = new Group()
   tilt.add(bottle)

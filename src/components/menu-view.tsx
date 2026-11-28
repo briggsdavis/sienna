@@ -122,7 +122,7 @@ export function sectionTone(restaurant: FloorId, index: number, count: number) {
 
 /**
  * Illustration behind a cream Mezzo menu section: olive branches, tilted on the right,
- * on the first; the gelato cup, slightly right, on Dessert; the wine bottle at 8% on the rest.
+ * on the first; the gelato cup at 8%, slightly right, on Dessert; the wine bottle at 8% on the rest.
  */
 function mezzoBackdrop(title: string, index: number) {
   if (index === 0)
@@ -134,7 +134,7 @@ function mezzoBackdrop(title: string, index: number) {
   if (/dessert/i.test(title))
     return {
       src: "/images/5.webp",
-      className: "top-1/2 right-[6%] aspect-square h-4/5 -translate-y-1/2 opacity-[0.85]",
+      className: "top-1/2 right-[6%] aspect-square h-4/5 -translate-y-1/2 opacity-[0.08]",
     }
   return { src: "/images/4.webp", className: "inset-0 m-auto h-4/5 w-4/5 opacity-[0.08]" }
 }
